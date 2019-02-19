@@ -1,0 +1,25 @@
+<form [formGroup]="formGroup" (submit)="onSubmit()">
+  <div>
+    <label>Name *</label>
+    <input type="text" formControlName="name" />
+    <div style="color:red" *ngIf="formGroup.controls['name'].errors && formGroup.dirty">
+      This Field is invalid
+    </div>
+  </div>
+  <div>
+    <label>Group</label>
+    <select formControlName="group">
+      <option *ngFor="let group of groups$ | async" [value]="group">{{group}}</option>
+    </select>
+  </div>
+  <div>
+    <label>Tasty?</label>
+    <input type="checkbox" formControlName="tasty" />
+  </div>
+  <div>
+    <label>Description</label>
+    <textarea formControlName="description"></textarea>
+  </div>
+  <button type="submit" [disabled]="!formGroup.valid">Submit</button>
+</form>
+<pre>{{result | json}}</pre>
