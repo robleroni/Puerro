@@ -4,14 +4,59 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Vanilla - Form</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css">
-    <script src="main.js"></script>
 </head>
 <body>
 
-    <form>
+    <form onsubmit="submitForm()">
+        <div>
+            <label>Name: </label>
+            <input id="name" type="text" required>
+        </div>
         
+        <div>
+            <label>Description: </label>
+            <textarea id="desc"></textarea>
+        </div>
+
+        <div>
+            <label>Vegetable Group: </label>
+            <select id="vegetables-list"></select>
+        </div>
+
+        <div>
+            <label>Tastey: </label>
+            <input id="tasty" type="checkbox">
+        </div>
+
+        <button id="submit" type="submit" disabled>Save</button>
     </form>
-    
+
 </body>
+
+<script>
+    const select = document.getElementById("vegetables-list");
+    const vegetablesGroup = ["Bulps", "Flowers", "Fruits", "Fungi", "Leaves", "Roots", "Seeds", "Steams", "Tubers"];
+
+    vegetablesGroup.forEach(group => {
+        const option = document.createElement("option");
+        option.text = group;
+        select.add(option);
+    });
+
+    document.getElementById("name").addEventListener("input", event => {
+        if(event.target.value.length == 0) {
+            document.getElementById("submit").disabled = true;
+        } else {
+            document.getElementById("submit").disabled = false;
+        }
+    });
+
+    function submitForm() {
+        if(document.getElementById("name").value.length == 0) {
+            console.log("empty");
+        }
+    }
+
+
+</script>
 </html>
