@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View</title>
+    <script src="observable.js"></script>
+</head>
+<body>
+
+<input id="name" type="text">
+<div id="label"></div>
+<div id="size"></div>
+
+<script>
+    const nameInput = document.getElementById("name");
+    const label     = document.getElementById("label");
+    const size      = document.getElementById("size");
+
+    const inputAttr = Observable("");
+    inputAttr.onChange(val => label.innerText  = val);
+    inputAttr.onChange(val => size.innerText   = val.length);
+
+    nameInput.oninput = _ => inputAttr.setValue(nameInput.value);
+
+</script>
+
+</body>
+</html>
