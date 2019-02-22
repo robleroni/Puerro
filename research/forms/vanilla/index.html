@@ -1,62 +1,71 @@
 <!DOCTYPE html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Vanilla - Form</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <style>
+        form {
+            background-color: lightgray;
+            border-radius: 5px;
+            padding: 20px;
+        }
+
+        input, textarea, select, button {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: green;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 
-    <form onsubmit="submitForm()">
-        <div>
-            <label>Name: </label>
-            <input id="name" type="text" required>
-        </div>
-        
-        <div>
-            <label>Description: </label>
-            <textarea id="desc"></textarea>
-        </div>
+    <form id="form">
+        <label for="name">Name</label>
+        <input id='name' name='Vegetable Name' type='text' placeholder="Vegetable Name.." maxlength='10' required>
+    
+        <label for="desc">Description</label>
+        <textarea id='desc' name="Vegetable Description" placeholder="Vegetable Description.." minlength="10" required></textarea>
 
-        <div>
-            <label>Vegetable Group: </label>
-            <select id="vegetables-list"></select>
-        </div>
+        <label for="category">Category</label>
+        <select id='category' name="Vegetable Category"></select>
 
-        <div>
-            <label>Tastey: </label>
-            <input id="tasty" type="checkbox">
-        </div>
-
-        <button id="submit" type="submit" disabled>Save</button>
+        <button>Save</button>
     </form>
+
+    <p id="result"></p>
 
 </body>
 
 <script>
-    const select = document.getElementById("vegetables-list");
-    const vegetablesGroup = ["Bulps", "Flowers", "Fruits", "Fungi", "Leaves", "Roots", "Seeds", "Steams", "Tubers"];
-
-    vegetablesGroup.forEach(group => {
-        const option = document.createElement("option");
-        option.text = group;
-        select.add(option);
+    const vegetableCategories = ['Bulps', 'Flowers', 'Fruits', 'Fungi', 'Leaves', 'Roots', 'Seeds', 'Steams', 'Tubers'];
+    const categoriesElement = document.getElementById('category');
+    
+    vegetableCategories.forEach(vegetableCategory => {
+        const category = document.createElement('option');
+        category.textContent = vegetableCategory;
+        categoriesElement.add(category);
     });
 
-    document.getElementById("name").addEventListener("input", event => {
-        if(event.target.value.length == 0) {
-            document.getElementById("submit").disabled = true;
-        } else {
-            document.getElementById("submit").disabled = false;
-        }
-    });
+    const form = document.getElementById('form');
+    const formElements = form.querySelectorAll('input, textarea, select');
+    const result = document.getElementById('result');
 
-    function submitForm() {
-        if(document.getElementById("name").value.length == 0) {
-            console.log("empty");
-        }
-    }
-
+    form.addEventListener('submit', (e => {
+        result.textContent = '';
+        formElements.forEach(e => result.textContent += e.value + " ");
+        e.preventDefault();
+    }));
 
 </script>
 </html>

@@ -2,7 +2,23 @@
 
 This is what's happening in the Puerro Project (newest first):
 
+# Simple Forms (19.02.2019)
+
+To start the research process, we decided to look at the most common [UI patterns](http://ui-patterns.com/).
+
+The first patterns that appear are about *getting input* from an user.
+
+So we created two simple forms. One with the help of the angular framework and one without a framework.
+
+## Result
+For this simple case of a form, the framework is clearly an overkill.
+
+**TODO**: We probably should define some criterias to evaluate results..
+Problem -> Idea/Approach -> Implementation -> Evaluation
+
+
 # Kick-Off (19.02.2019)
+
 We started our IP5 project with the goal to research the most simple approaches to develop user interfaces for modern web applications.
 
 ## The Problem
