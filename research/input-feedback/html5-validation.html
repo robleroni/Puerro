@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Input Feedback using HTML5 Validation</title>
+    <style>
+        form {
+            padding: 10px;
+        }
+
+        #input2:invalid {
+            border-color: red;
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAeVJREFUeNqkU01oE1EQ/mazSTdRmqSxLVSJVKU9RYoHD8WfHr16kh5EFA8eSy6hXrwUPBSKZ6E9V1CU4tGf0DZWDEQrGkhprRDbCvlpavan3ezu+LLSUnADLZnHwHvzmJlvvpkhZkY7IqFNaTuAfPhhP/8Uo87SGSaDsP27hgYM/lUpy6lHdqsAtM+BPfvqKp3ufYKwcgmWCug6oKmrrG3PoaqngWjdd/922hOBs5C/jJA6x7AiUt8VYVUAVQXXShfIqCYRMZO8/N1N+B8H1sOUwivpSUSVCJ2MAjtVwBAIdv+AQkHQqbOgc+fBvorjyQENDcch16/BtkQdAlC4E6jrYHGgGU18Io3gmhzJuwub6/fQJYNi/YBpCifhbDaAPXFvCBVxXbvfbNGFeN8DkjogWAd8DljV3KRutcEAeHMN/HXZ4p9bhncJHCyhNx52R0Kv/XNuQvYBnM+CP7xddXL5KaJw0TMAF8qjnMvegeK/SLHubhpKDKIrJDlvXoMX3y9xcSMZyBQ+tpyk5hzsa2Ns7LGdfWdbL6fZvHn92d7dgROH/730YBLtiZmEdGPkFnhX4kxmjVe2xgPfCtrRd6GHRtEh9zsL8xVe+pwSzj+OtwvletZZ/wLeKD71L+ZeHHWZ/gowABkp7AwwnEjFAAAAAElFTkSuQmCC);
+            background-position: right top;
+            background-repeat: no-repeat;
+        }
+
+        input.invalid {
+            border-color: red;
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAeVJREFUeNqkU01oE1EQ/mazSTdRmqSxLVSJVKU9RYoHD8WfHr16kh5EFA8eSy6hXrwUPBSKZ6E9V1CU4tGf0DZWDEQrGkhprRDbCvlpavan3ezu+LLSUnADLZnHwHvzmJlvvpkhZkY7IqFNaTuAfPhhP/8Uo87SGSaDsP27hgYM/lUpy6lHdqsAtM+BPfvqKp3ufYKwcgmWCug6oKmrrG3PoaqngWjdd/922hOBs5C/jJA6x7AiUt8VYVUAVQXXShfIqCYRMZO8/N1N+B8H1sOUwivpSUSVCJ2MAjtVwBAIdv+AQkHQqbOgc+fBvorjyQENDcch16/BtkQdAlC4E6jrYHGgGU18Io3gmhzJuwub6/fQJYNi/YBpCifhbDaAPXFvCBVxXbvfbNGFeN8DkjogWAd8DljV3KRutcEAeHMN/HXZ4p9bhncJHCyhNx52R0Kv/XNuQvYBnM+CP7xddXL5KaJw0TMAF8qjnMvegeK/SLHubhpKDKIrJDlvXoMX3y9xcSMZyBQ+tpyk5hzsa2Ns7LGdfWdbL6fZvHn92d7dgROH/730YBLtiZmEdGPkFnhX4kxmjVe2xgPfCtrRd6GHRtEh9zsL8xVe+pwSzj+OtwvletZZ/wLeKD71L+ZeHHWZ/gowABkp7AwwnEjFAAAAAElFTkSuQmCC);
+            background-position: right top;
+            background-repeat: no-repeat;
+        }
+
+        input.styled:valid {
+            border-color: green;
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAepJREFUeNrEk79PFEEUx9/uDDd7v/AAQQnEQokmJCRGwc7/QeM/YGVxsZJQYI/EhCChICYmUJigNBSGzobQaI5SaYRw6imne0d2D/bYmZ3dGd+YQKEHYiyc5GUyb3Y+77vfeWNpreFfhvXfAWAAJtbKi7dff1rWK9vPHx3mThP2Iaipk5EzTg8Qmru38H7izmkFHAF4WH1R52654PR0Oamzj2dKxYt/Bbg1OPZuY3d9aU82VGem/5LtnJscLxWzfzRxaWNqWJP0XUadIbSzu5DuvUJpzq7sfYBKsP1GJeLB+PWpt8cCXm4+2+zLXx4guKiLXWA2Nc5ChOuacMEPv20FkT+dIawyenVi5VcAbcigWzXLeNiDRCdwId0LFm5IUMBIBgrp8wOEsFlfeCGm23/zoBZWn9a4C314A1nCoM1OAVccuGyCkPs/P+pIdVIOkG9pIh6YlyqCrwhRKD3GygK9PUBImIQQxRi4b2O+JcCLg8+e8NZiLVEygwCrWpYF0jQJziYU/ho2TUuCPTn8hHcQNuZy1/94sAMOzQHDeqaij7Cd8Dt8CatGhX3iWxgtFW/m29pnUjR7TSQcRCIAVW1FSr6KAVYdi+5Pj8yunviYHq7f72po3Y9dbi7CxzDO1+duzCXH9cEPAQYAhJELY/AqBtwAAAAASUVORK5CYII=);
+            background-position: right top;
+            background-repeat: no-repeat;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <form>
+        <label>Input 1: </label>
+        <input id="input1" placeholder=you@example.com type="email" required>
+        <button>Submit</button>
+        <span>No style for validation. Tooltip after submit - HTML5 used only</span>
+    </form>
+
+    <form>
+        <label>Input 2: </label>
+        <input id="input2" class="styled" placeholder=you@example.com type="email" required>
+        <button>Submit</button>
+        <span>Marked invalid from the beginning (bad UX) - no JS required</span>
+    </form>
+
+    <form>
+        <label>Input 3: </label>
+        <input id="input3" placeholder=you@example.com type="email" required>
+        <button>Submit</button>
+        <span>Marked invalid on submit</span>
+    </form>
+
+    <form>
+        <label>Input 4: </label>
+        <input id="input4" class="styled" placeholder=you@example.com type="email" required>
+        <button>Submit</button>
+        <span>Marked invalid after leaving input</span>
+    </form>
+
+    <form>
+        <label>Input 5: </label>
+        <input id="input5" class="styled" placeholder=you@example.com type="email" required>
+        <button>Submit</button>
+        <span>Custom Tooltip on Input</span>
+    </form>
+
+    <form>
+        <label>Input 6: </label>
+        <input id="input6" class="styled" placeholder=you@example.com type="email" required>
+        <button>Submit</button>
+        <span>Shows Tooltip from with the focus</span>
+    </form>
+
+    <script>
+        // right before submit -> checks validity
+        const input3 = document.getElementById('input3');
+        input3.oninvalid = _ => input3.classList.add('invalid');
+
+        // checkValidity on blur event
+        const input4 = document.getElementById('input4');
+        input4.oninvalid = _ => input4.classList.add('invalid');
+        input4.onblur = _ => input4.checkValidity();
+
+        // custom tooltip
+        const input5 = document.getElementById('input5');
+        input5.oninvalid = e => e.preventDefault();
+        input5.oninput = e => {
+            const parent = input5.parentNode;
+            const error = parent.querySelector('.error')
+                || document.createElement('span');
+
+            if (!input5.validity.valid && input5.validationMessage) {
+                error.className = 'error';
+                error.textContent = input5.validationMessage;
+
+                parent.insertBefore(error, input5); // insert after
+            } else {
+                error.remove();
+            }
+        }
+
+        // show tooltip with focus
+        const input6 = document.getElementById('input6');
+        input6.onfocus = _ => input6.reportValidity();
+    </script>
+
+</body>
+
+</html>
