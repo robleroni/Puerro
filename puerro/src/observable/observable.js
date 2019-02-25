@@ -31,9 +31,16 @@ const ObservableList = list => {
         count:   ()   => list.length,
         countIf: pred => list.reduce( (sum, item) => pred(item) ? sum + 1 : sum, 0)
     }
-};const ObservableForm = form => {
-    const elements = form.querySelectorAll('input, textarea, select');
-    return {
-        onInput: callback => elements.forEach(e => e.addEventListener('input', _ => callback(e)))
-    }
+};
+
+const ObservableForm = form => {
+    return Object.getOwnPropertyNames(HTMLElement.prototype)
+        .filter(p => p.startsWith('on'))
+        .reduce((events, event) => {
+            events[event] = callback => selector =>  {
+                const elements = selector ? form.querySelectorAll(selector) : form.querySelectorAll('*');
+                elements.forEach(e => e.addEventListener(event.substring(2), _ => callback(e)));
+            }
+            return events;
+    }, {});
 }
