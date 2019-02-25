@@ -39,7 +39,7 @@ const ObservableForm = form => {
         .reduce((events, event) => {
             events[event] = callback => selector =>  {
                 const elements = selector ? form.querySelectorAll(selector) : form.querySelectorAll('*');
-                elements.forEach(e => e.addEventListener(event.substring(2), _ => callback(e)));
+                elements.forEach(element => element.addEventListener(event.substring(2), e => callback(e)));
             }
             return events;
     }, {});

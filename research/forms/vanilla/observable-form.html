@@ -59,9 +59,8 @@
     const result = document.querySelector('pre');
 
     const form = ObservableForm(document.getElementById('form'));
-    form.oninput(element => result.textContent = `<${element.tagName} name='${element.name}'>: ${element.value}`)('input, select');
-    form.onclick(element => result.textContent = `The label '${element.textContent}' has just been clicked`)('label');
+    form.oninput(e => result.textContent = `<${e.target.tagName} name='${e.target.name}'>: ${e.target.value}`)('input, select');
+    form.onclick(e => result.textContent = `The label '${e.target.textContent}' has just been clicked`)('label');
     
-
 </script>
 </html>
