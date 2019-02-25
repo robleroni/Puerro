@@ -31,4 +31,9 @@ const ObservableList = list => {
         count:   ()   => list.length,
         countIf: pred => list.reduce( (sum, item) => pred(item) ? sum + 1 : sum, 0)
     }
-};
+};const ObservableForm = form => {
+    const elements = form.querySelectorAll('input, textarea, select');
+    return {
+        onInput: callback => elements.forEach(e => e.addEventListener('input', _ => callback(e)))
+    }
+}
