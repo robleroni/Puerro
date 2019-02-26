@@ -3,10 +3,30 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>IP5 - Puerro</title>
+  <title>Huerto</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-  <pre>This could be a web prototyp to showcase the use of the <strong>Puerro</strong> project.</pre>
+  <h1>Huerto - Your vegetable garden</h1>
+  <label>Add vegetable</label>
+  <input id="vegetable">
+  <ul id="vegetables"></ul>
 </body>
+<script>
+  const vegetables = [];
+  const $vegetable = document.getElementById('vegetable'),
+    $vegetables = document.getElementById('vegetables');
+
+  function renderVegetables() {
+    $vegetables.innerHTML = vegetables.map(v => `<li>${v}</li>`).join('');
+  }
+
+  $vegetable.addEventListener('keydown', e => {
+    if (e.keyCode === 13) {
+      vegetables.push($vegetable.value);
+      $vegetable.value = '';
+      renderVegetables();
+    }
+  });
+</script>
 </html>
