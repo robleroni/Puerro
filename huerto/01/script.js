@@ -1,32 +1,27 @@
-const Huerto = (() => {
+export const ENTER_KEYCODE = 13;
+
+/**
+ * Constructor function to create the Huerto UI
+ *
+ * @param {HTMLInputElement} $vegetable - Input element to add new vegetables
+ * @param {HTMLElement} $vegetables - Container for the vegetables
+ */
+export default function Huerto($vegetable, $vegetables) {
   const vegetables = [];
-  const $vegetable = document.getElementById('vegetable'),
-    $vegetables = document.getElementById('vegetables');
 
   function bindEvents() {
     $vegetable.addEventListener('keydown', e => {
-      if (e.keyCode === 13) {
-        addVegetable($vegetable.value);
+      if (e.keyCode === ENTER_KEYCODE) {
+        vegetables.push($vegetable.value);
         $vegetable.value = '';
-        $vegetables.innerHTML = renderVegetables();
+        renderVegetables();
       }
     });
   }
 
-  function addVegetable(vegetable) {
-    vegetables.push(vegetable);
-  }
-
   function renderVegetables() {
-    return vegetables.map(v => `<li>${v}</li>`).join('');
+    return $vegetables.innerHTML = vegetables.map(v => `<li>${v}</li>`).join('');
   }
 
-  if ($vegetables && $vegetable) {
-    bindEvents();
-  }
-
-  return {
-    addVegetable,
-    renderVegetables,
-  }
-})();
+  bindEvents();
+};

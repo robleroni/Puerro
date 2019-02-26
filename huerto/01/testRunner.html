@@ -10,22 +10,23 @@
 <body>
   <h1>Tests in console</h1>
 </body>
-<script src="../../puerro/test/test.js"></script>
-<script src="script.js"></script>
-<script>
+<script type="module">
+import {test} from '../../puerro/test/test.js';
+import Huerto, { ENTER_KEYCODE } from './script.js';
 
-  test('renderVegetables', assert => {
-    // given
-    ['carrot', 'tomato'].forEach(v => {
-      Huerto.addVegetable(v);
-    });
+test('renderVegetables', assert => {
+  // given
+  const $vegetable = document.createElement('input'),
+    $vegetables = document.createElement('ul');
+  Huerto($vegetable, $vegetables);
 
-    // when
-    const ret = Huerto.renderVegetables();
+  // when
+  $vegetable.value = 'tomato';
+  $vegetable.dispatchEvent(new KeyboardEvent('keydown', { keyCode: ENTER_KEYCODE }));
 
-    // then
-    assert.is(ret, '<li>carrot</li><li>tomato</li>');
-  });
-
+  // then
+  assert.is($vegetables.innerHTML, '<li>tomato</li>');
+  assert.is($vegetable.value, '');
+});
 </script>
 </html>
