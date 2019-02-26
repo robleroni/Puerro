@@ -1,5 +1,5 @@
 script:
-  - cp huerto/ docs/huerto
+  - cp -r huerto/ docs/huerto
 deploy:
   provider: pages
   skip-cleanup: true
