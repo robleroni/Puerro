@@ -1,0 +1,31 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Huerto Tests</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <h1>Tests in console</h1>
+</body>
+<script src="../../puerro/test/test.js"></script>
+<script src="script.js"></script>
+<script>
+
+  test('renderVegetables', assert => {
+    // given
+    ['carrot', 'tomato'].forEach(v => {
+      Huerto.addVegetable(v);
+    });
+
+    // when
+    const ret = Huerto.renderVegetables();
+
+    // then
+    assert.is(ret, '<li>carrot</li><li>tomato</li>');
+  });
+
+</script>
+</html>
