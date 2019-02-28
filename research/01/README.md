@@ -8,8 +8,23 @@ Problem -> Idea/Approach -> Implementation -> Evaluation
 
 ## Ideas/Approaches
 
-- EventListeners
-- Frontend Framework
+- [Event Listeners](event-listeners.html)
+- Front-end Framework
+
+### Event Listeners
+
+| **Pro** | **Contra** |
+| ------- | ---------- |
+| ...     | ...        |
+|         |            |
+|         |            |
+
+
+
+
+### Front-end Framework
+
+
 
 ## Evaluation
 
