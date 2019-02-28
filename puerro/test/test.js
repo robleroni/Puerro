@@ -37,7 +37,7 @@ function report(origin, ok) {
  * @param {String} name
  * @param {Function} callback
  */
-function test(name, callback) {
+export function test(name, callback) {
     const assert = Assert();
     callback(assert);
     report(name, assert.getOk());

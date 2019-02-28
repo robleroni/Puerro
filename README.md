@@ -12,7 +12,7 @@ The idea is to build a showcase project by simulating interactions between a dev
 - **Customer**: wants an easy to use and modern web application
 - **Developer**: wants to develop the application as simple as possible
 
-Therefore, the developer needs to research and evaluate different approches to build the application as simple as possible while still satisfieing the usefulness demanded by the customer.
+Therefore, the developer needs to research and evaluate different approches to build the application as simple as possible while still satisfying the usefulness demanded by the customer.
 
 The showcase application should contain as many UI-Patterns as possible.
 

@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>All Tests</title>
-    <script src="test.js"></script>
 </head>
 <body>
 
     <h1>All Tests in VanillaJS</h1>
 
-    <script>
+    <script type="module">
+
+        import {test} from './test.js';
 
         const testSuite         = x => y => z => f => f(x)(y)(z);
         const testSuiteName     = t => t(x => y => z => x);
