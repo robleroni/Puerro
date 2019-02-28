@@ -25,7 +25,7 @@ function Assert() {
  */
 function report(origin, ok) {
     const $report = document.createElement('div');
-    $report.innerHTML = `
+    $report.textContent = `
         ${ok.filter(elem => elem).length}/${ok.length} Tests in ${origin} ok.
     `;
     document.body.appendChild($report);
@@ -37,7 +37,7 @@ function report(origin, ok) {
  * @param {String} name
  * @param {Function} callback
  */
-export function test(name, callback) {
+function test(name, callback) {
     const assert = Assert();
     callback(assert);
     report(name, assert.getOk());

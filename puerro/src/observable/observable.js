@@ -5,10 +5,10 @@ const Observable = value => {
     return {
         onChange: callback => listeners.push(callback),
         getValue: ()       => value,
-        setValue: val      => {
-            if (value === val) return;
-            value = val;
-            listeners.forEach(notify => notify(val));
+        setValue: newValue => {
+            if (value === newValue) return;
+            listeners.forEach(notify => notify(newValue, value));
+            value = newValue;
         }
     }
 };
