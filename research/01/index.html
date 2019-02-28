@@ -20,7 +20,7 @@
   $vegetableInput.addEventListener('keydown', e => {
     if (e.keyCode === ENTER_KEYCODE) {
       const $vegetable = document.createElement('li');
-      $vegetable.textContent = $vegetable.value;
+      $vegetable.textContent = $vegetableInput.value;
       $vegetables.appendChild($vegetable);
     }
   });
