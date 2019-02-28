@@ -16,4 +16,4 @@ The developer thinks about the different ways he could approach this problem:
 - Use a framework and tooling around it to create the web application.
 - Start small and try to implement the first requirement with pure HTML and JavaScript.
 
-He decides to go for the most lean way and simply start with a single input element with pure HTML and JavaScript, which lead to the following [result](https://github.com/robin-fhnw/IP5-Puerro/tree/master/huerto/Iteration%2001).
+He decides to go for the most lean way and simply start with a single input element with pure HTML and JavaScript, which lead to the following [result](01).

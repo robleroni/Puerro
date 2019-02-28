@@ -1,4 +1,4 @@
-# Puerro - Blog
+# Puerro - Logbook
 
 This is what's happening in the Puerro Project (newest first):
 
