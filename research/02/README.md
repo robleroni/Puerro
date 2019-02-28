@@ -1,16 +1,16 @@
-# Iteration 1
+# Iteration 2
 
 Problem -> Idea/Approach -> Implementation -> Evaluation
 
 ## Requirements/Problems
 
-- Handeling data from an input field
+- Validation
 
 ## Ideas/Approaches
 
-- EventListeners
-- Frontend Framework
+- HTML5 Validation
+- JS Validation
 
 ## Evaluation
 
-We decided ... because ...
+Pros/Cons of approaches

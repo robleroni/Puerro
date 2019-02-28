@@ -2,6 +2,18 @@
 
 This is what's happening in the Puerro Project (newest first):
 
+# Showcase Project for Structure (26.02.2019)
+
+After looking at some simple forms things got crowdy very fast.
+There are a million things which can be considered.
+We knew that we can not cover everything with this project.
+
+We decided that we need some more structre to not get lost in our train of thought.
+Eventually, the idea came to life to build a showcase project by simulation interactions between developer and customer.
+
+The project should cover the most important UI-patterns while keeping it as simple but still very usable at the same time.
+
+
 # Simple Forms (19.02.2019)
 
 To start the research process, we decided to look at the most common [UI patterns](http://ui-patterns.com/).
