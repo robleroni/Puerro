@@ -1,4 +1,5 @@
 
+"use strict";
 
 const Observable = value => {
     const listeners = [];
@@ -9,6 +10,21 @@ const Observable = value => {
             if (value === newValue) return;
             listeners.forEach(notify => notify(newValue, value));
             value = newValue;
+        }
+    }
+};
+
+const EventObservable = obj => {
+    const events = { CHANGED: 0, ADDED: 1, REMOVED: 2, MADE_INVALID: 3 };
+    const observers = [];
+    return {
+        events,
+        get: () => obj,
+        onChange: observer => observers.push(observer),
+        changeTo: (newObj, event = events.CHANGED) => {
+            if (obj === newObj) return;
+            observers.forEach(notify => notify(newObj, event, obj));
+            obj = newObj;
         }
     }
 };

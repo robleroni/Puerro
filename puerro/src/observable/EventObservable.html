@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Observable</title>
+    <script src="observable.js"></script>
+</head>
+<body>
+
+<input id="name" type="text">
+<div id="label"></div>
+
+<script>
+    const nameInput     = document.getElementById("name");
+    const label         = document.getElementById("label");
+
+    const name = EventObservable("");
+    name.onChange((val, event) => {
+        switch(event) {
+            case name.events.MADE_INVALID:
+                label.textContent = val + '(invalid)';
+                break;
+            default:
+                label.textContent = val;
+        }
+    });
+
+    nameInput.addEventListener('input', () => {
+        if(nameInput.value.length !== 3) {
+            name.changeTo(nameInput.value, name.events.MADE_INVALID);
+        } else {
+            name.changeTo(nameInput.value);
+        }
+    });
+
+</script>
+
+</body>
+</html>
