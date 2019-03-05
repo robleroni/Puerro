@@ -25,3 +25,6 @@ export default function Huerto($vegetable, $vegetables) {
 
   bindEvents();
 };
+
+Huerto(document.getElementById('vegetable'),
+  document.getElementById('vegetables'));

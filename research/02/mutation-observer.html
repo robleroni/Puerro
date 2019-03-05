@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Research - 02</title>
+</head>
+
+<body>
+    <label>Add vegetable</label>
+    <input id="vegetable">
+    <ul id="vegetables"></ul>
+</body>
+
+<script>
+    const ENTER_KEYCODE = 13;
+
+    const $vegetableInput = document.getElementById('vegetable');
+    const $vegetables = document.getElementById('vegetables');
+
+    $vegetableInput.addEventListener('keydown', e => {
+        if (e.keyCode === ENTER_KEYCODE) {
+            const $vegetable = document.createElement('li');
+            $vegetable.textContent = $vegetableInput.value;
+            $vegetables.appendChild($vegetable);
+        }
+    });
+
+    const config = {
+        attributes: true,
+        attributeOldValue: true,
+        characterData: true,
+        characterDataOldValue: true,
+        childList: true,
+        subtree: true
+    };
+
+    const observer = new IntersectionObserver(mutations => {
+        mutations.forEach(console.log);
+    })
+
+    observer.observe($vegetableInput, config)
+</script>
+
+</html>
