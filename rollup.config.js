@@ -1,5 +1,3 @@
-import { forInStatement } from '@babel/types';
-
 const fs = require('fs');
 const path = require('path');
 
