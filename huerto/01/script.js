@@ -6,7 +6,7 @@ export const ENTER_KEYCODE = 13;
  * @param {HTMLInputElement} $vegetable - Input element to add new vegetables
  * @param {HTMLElement} $vegetables - Container for the vegetables
  */
-export default function Huerto($vegetable, $vegetables) {
+export function Huerto($vegetable, $vegetables) {
   const vegetables = [];
 
   function bindEvents() {
@@ -20,11 +20,10 @@ export default function Huerto($vegetable, $vegetables) {
   }
 
   function renderVegetables() {
-    return $vegetables.innerHTML = vegetables.map(v => `<li>${v}</li>`).join('');
+    return ($vegetables.innerHTML = vegetables
+      .map(v => `<li>${v}</li>`)
+      .join(''));
   }
 
   bindEvents();
-};
-
-Huerto(document.getElementById('vegetable'),
-  document.getElementById('vegetables'));
+}

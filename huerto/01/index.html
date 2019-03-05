@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Huerto</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script async src="bundle.js"></script>
-</head>
-<body>
-  <h1>Huerto - Your vegetable garden</h1>
-  <label>Add vegetable</label>
-  <input id="vegetable">
-  <ul id="vegetables"></ul>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Huerto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script async src="bundle.js"></script>
+  </head>
+  <body>
+    <h1>Huerto - Your vegetable garden</h1>
+    <label>Add vegetable</label>
+    <input id="vegetable" />
+    <ul id="vegetables"></ul>
+
+    <script>
+      huerto.Huerto(
+        document.getElementById('vegetable'),
+        document.getElementById('vegetables')
+      );
+    </script>
+  </body>
 </html>

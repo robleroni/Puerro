@@ -23,16 +23,16 @@ var huerto = (function (exports) {
     }
 
     function renderVegetables() {
-      return $vegetables.innerHTML = vegetables.map(v => `<li>${v}</li>`).join('');
+      return ($vegetables.innerHTML = vegetables
+        .map(v => `<li>${v}</li>`)
+        .join(''));
     }
 
     bindEvents();
   }
-  Huerto(document.getElementById('vegetable'),
-    document.getElementById('vegetables'));
 
   exports.ENTER_KEYCODE = ENTER_KEYCODE;
-  exports.default = Huerto;
+  exports.Huerto = Huerto;
 
   return exports;
 
