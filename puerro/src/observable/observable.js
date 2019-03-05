@@ -14,6 +14,12 @@ const Observable = value => {
     }
 };
 
+const Observer = callback => {
+    return {
+        observe: observable => observable.onChange(callback)
+    }
+}
+
 const EventObservable = obj => {
     const events = { CHANGED: 0, ADDED: 1, REMOVED: 2, MADE_INVALID: 3 };
     const observers = [];
