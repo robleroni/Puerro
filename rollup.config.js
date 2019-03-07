@@ -1,50 +1,50 @@
 const fs = require('fs');
 const path = require('path');
 
-const entryPoint = 'script.js';
-const testFile = 'test.js';
-const huertoDir = path.join(__dirname, 'huerto');
-const dirs = fs
-  .readdirSync(huertoDir, { withFileTypes: true })
-  .filter(d => d.isDirectory())
-  .filter(d => fs.existsSync(path.join(huertoDir, d.name, entryPoint)));
+const configs = [];
 
-const configs = dirs.map(d => ({
-  input: path.join(huertoDir, d.name, entryPoint),
-  output: {
-    name: 'huerto',
-    file: path.join(huertoDir, d.name, 'bundle.js'),
-    format: 'iife',
-  },
-}));
+const dirsToCheck = ['huerto', 'puerro', 'research', 'test'];
+const allTestsFile = 'all.tests.js';
+const testsEnding = '.test.js';
+const entryPoints = ['script.js', testsEnding, allTestsFile];
+const name = '_';
+const format = 'iife';
 
-configs.push({
-  input: path.join(__dirname, 'test', 'allTests.js'),
+const bundleOutputName = file => `dist/${delFileEnding(file)}.bundle.js`;
+const delFileEnding = s => s.replace(/\.[^/.]+$/, '');
+
+const createConfig = (d, f) => ({
+  input: path.join(d, f),
   output: {
-    name: 'tests',
-    file: path.join(__dirname, 'test', 'bundle.js'),
-    format: 'iife',
+    file: path.join(d, bundleOutputName(f)),
+    name,
+    format,
   },
 });
 
-let testImports = `// Generated file\n\n`;
+function fillConfigsFromFile(dir) {
+  const dirContent = fs.readdirSync(dir, { withFileTypes: true });
 
-function findTests(dir) {
-  const dirs = fs.readdirSync(dir, { withFileTypes: true });
-  dirs
-    .filter(d => d.isDirectory())
-    .filter(d => d.name !== 'node_modules' && d.name !== '.git')
-    .forEach(d => findTests(path.join(dir, d.name)));
+  dirContent
+    .filter(c => c.isDirectory())
+    .forEach(d => fillConfigsFromFile(path.join(dir, d.name)));
 
-  testImports += dirs
-    .filter(d => d.name.endsWith('.test.js'))
-    .map(f => `import '../${dir}/${f.name}';\n`)
-    .join('');
-
-  console.log(testImports);
+  dirContent
+    .filter(c => c.isFile())
+    .filter(f => entryPoints.some(e => f.name.endsWith(e)))
+    .forEach(f => configs.push(createConfig(dir, f.name)));
 }
-findTests('.');
 
-fs.writeFileSync(path.join(__dirname, 'test', 'allTests.js'), testImports);
+dirsToCheck.forEach(fillConfigsFromFile);
+
+let testImports = `// Generated file\n\n`;
+testImports += configs
+  .filter(c => c.input.endsWith(testsEnding))
+  .map(c => `import '../${c.input}';\n`)
+  .join('');
+
+console.log(configs);
+
+fs.writeFileSync(path.join('test', allTestsFile), testImports);
 
 export default configs;

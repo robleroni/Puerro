@@ -1,3 +1,4 @@
 node_modules/
 .DS_Store
-bundle.js
+*.bundle.js
+all.tests.js
