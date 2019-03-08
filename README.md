@@ -26,10 +26,14 @@ The showcase application should contain as many UI-Patterns as possible.
 | [huerto/](huerto/)     | The showcase project of the research process              |
 | [puerro/](puerro/)     | The actual project including mainly the abstractions used |
 | [research/](research/) | The different ideas/approaches which have been evaluated  |
+| [test/](test/)         | All the test results combined in one place                |
 
 ## Build instructions
 
-todo: fill here
+```javascript
+npm install     // to install the dev dependency 'rollup'
+npm start       // to bundle the scripts and watch for changes
+```
 
 ### How to test/verify
 
