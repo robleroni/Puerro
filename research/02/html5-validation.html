@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Huerto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <h1>Huerto - Your vegetable garden</h1>
+    <form id="vegetableForm">
+      <h2>Add vegetable</h2>
+      <div>
+        <label for="name">Vegetable name</label>
+        <input name="name" required />
+      </div>
+      <div>
+        <label for="amount">Amount</label>
+        <input name="amount" type="number" required />
+      </div>
+      <button type="submit" disabled>Submit</button>
+    </form>
+    <ul id="vegetables"></ul>
+    <script>
+      function Huerto($form, $vegetables) {
+        const vegetables = [];
+        const $name = $form.querySelector('input[name="name"]'),
+          $amount = $form.querySelector('input[name="amount"]'),
+          $submit = $form.querySelector('button[type="submit"]');
+
+        function setDisabled() {
+          if ($name.value && $amount.value) {
+            $submit.removeAttribute('disabled');
+          } else {
+            $submit.setAttribute('disabled', true);
+          }
+        }
+
+        function onFormSubmit(e) {
+          e.preventDefault();
+          vegetables.push({ name: $name.value, amount: $amount.value });
+          $form.reset();
+          setDisabled();
+          renderVegetables();
+        }
+
+        function renderVegetables() {
+          return ($vegetables.innerHTML = vegetables
+            .map(v => `<li>${v.amount}x ${v.name}</li>`)
+            .join(''));
+        }
+
+        function bindEvents() {
+          $name.addEventListener('input', setDisabled);
+          $amount.addEventListener('input', setDisabled);
+          $form.addEventListener('submit', onFormSubmit);
+        }
+
+        bindEvents();
+      }
+
+      Huerto(
+        document.getElementById('vegetableForm'),
+        document.getElementById('vegetables')
+      );
+    </script>
+  </body>
+</html>
