@@ -8,7 +8,7 @@
     <h1>All Tests in VanillaJS</h1>
 
     <script type="module">
-      import { test } from './test.js';
+      import { test } from '../util/test.js';  // todo dk: this does not work reliably (e.g. FF)
 
       const testSuite = x => y => z => f => f(x)(y)(z);
       const testSuiteName = t => t(x => y => z => x);
@@ -21,8 +21,10 @@
         ),
       ];
 
+      // dk: this is a nice trick but when using modules, we no longer need this.
+
       testSuites.forEach(testSuite => {
-        document.writeln('<div>' + testSuiteName(testSuite) + '</div>');
+        document.writeln('<div>' + testSuiteName(testSuite) + '</div>'); // todo dk: since modules are _a_synchronous, you cannot use writeln
         document.writeln(
           '<script src="' + sourceLocation(testSuite) + '"><\/script>'
         );

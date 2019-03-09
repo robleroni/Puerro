@@ -30,11 +30,21 @@ The showcase application should contain as many UI-Patterns as possible.
 
 ## Build instructions
 
-```javascript
+### Requirements
+
+npm  version **todo**\
+node version **todo** 
+
+### How to run
+
+```
 npm install     // to install the dev dependency 'rollup'
 npm start       // to bundle the scripts and watch for changes
 ```
 
 ### How to test/verify
 
-todo: fill here
+| Repository online                                                   | verify local code                |
+| --------------------------------------------------------------------| -------------------------------- |
+| [All Tests](http://IP5-Puerror.github.io/puerro/test/AllTests.html) | `open puerro/test/AllTests.html` |
+| [Huerto 01](http://IP5-Puerror.github.io/huerto/01/index.html)      | `open huerto/01/index.html`      |
