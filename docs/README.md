@@ -4,11 +4,11 @@ This is what's happening in the Puerro Project (newest first):
 
 # Showcase Project for Structure (26.02.2019)
 
-After looking at some simple forms things got crowdy very fast.
-There are a million things which can be considered.
+After looking at some simple forms, things got crowdy very fast.
+There are a million things, which can be considered.
 We knew that we can not cover everything with this project.
 
-We decided that we need some more structre to not get lost in our train of thought.
+We decided that we need some more structure to not get lost in our train of thought.
 Eventually, the idea came to life to build a showcase project by simulation interactions between developer and customer.
 
 The project should cover the most important UI-patterns while keeping it as simple but still very usable at the same time.
@@ -25,7 +25,7 @@ So we created two simple forms. One with the help of the angular framework and o
 ## Result
 For this simple case of a form, the framework is clearly an overkill.
 
-**TODO**: We probably should define some criterias to evaluate results..
+**TODO**: We probably should define some criteria to evaluate results..
 Problem -> Idea/Approach -> Implementation -> Evaluation
 
 
