@@ -20,13 +20,13 @@ The showcase application should contain as many UI-Patterns as possible.
 
 ## Folder Structure
 
-| Folder                 | Description                                               |
-| ---------------------- | --------------------------------------------------------- |
-| [docs/](docs/)         | Includes the documentation like the logbook or paper      |
-| [huerto/](huerto/)     | The showcase project of the research process              |
-| [puerro/](puerro/)     | The actual project including mainly the abstractions used |
-| [research/](research/) | The different ideas/approaches which have been evaluated  |
-| [test/](test/)         | All the test results combined in one place                |
+| Folder                        | Description                                               |
+| ----------------------------- | --------------------------------------------------------- |
+| [docs/](docs/)                | Includes the documentation like the logbook or paper      |
+| [huerto/](huerto/)            | The showcase project of the research process              |
+| [puerro/](puerro/)            | The actual project including mainly the abstractions used |
+| [research/](research/)        | The different ideas/approaches which have been evaluated  |
+| [test/](test/AllTests.html)   | All the test results combined in one place                |
 
 ## Build instructions
 

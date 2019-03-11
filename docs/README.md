@@ -2,6 +2,20 @@
 
 This is what's happening in the Puerro Project (newest first):
 
+# Using the ES6 module system (05.03.2019)
+To make the developing process more modular and better testable, we decided to use the integrated module system.
+With this we can simply `export` and `import` the reusable code.
+However, ES6 modules are loaded using CORS. Therefore, we can not simply import the external file locally like with the `<script>` tag.
+To solve this problem we can choose either option:
+- Running a local webserver which serves the files with the CORS header
+    - This could return in caching problems
+- Allow the browser to load files without the CORS header
+    - Very unsafe, if the browser is used for normal use as well.
+- Use a module manager which bundles the module in a single file and include this file with the `<script>` tag.
+    - Possible name clashes
+
+We decided to use the lightweight module bundler *rollup.js*.
+
 # Showcase Project for Structure (26.02.2019)
 
 After looking at some simple forms, things got crowdy very fast.
