@@ -2,6 +2,12 @@
 
 This is what's happening in the Puerro Project (newest first):
 
+# ... (12.03.2019)
+- Bewertungsbogen
+- Testing
+- rollup.js automated, dist to git
+- Forms - Getting Input
+
 # Using the ES6 module system (05.03.2019)
 To make the developing process more modular and better testable, we decided to use the integrated module system.
 With this we can simply `export` and `import` the reusable code.

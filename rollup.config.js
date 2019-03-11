@@ -48,4 +48,6 @@ testImports += configs
 
 fs.writeFileSync(`${testFolder}/${allTestsFile}`, testImports);
 
+configs.push(createConfig(testFolder, allTestsFile)); 
+
 export default configs;

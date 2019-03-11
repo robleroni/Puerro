@@ -8,5 +8,5 @@ The Project itself is about a customer who want's to manage their vegetable gard
 | Implementation                             | Test Results        |
 | ------------------------------------------ | ------------------- |
 | [01 - The Beginning of Huerto](index.html) | [Tests](tests.html) |
-| 02 - Forms..                               | ...                 |
+| 02 - Forms                                 | Tests               |
 
