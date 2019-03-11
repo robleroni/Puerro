@@ -2,7 +2,6 @@
 
 The goal of this project is to research how to build modern web applications as simple as possible.
 
-
 ## Idea
 
 To not loose our train of thought, we need to have a structured method on how to handle the research process. 

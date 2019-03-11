@@ -5,6 +5,7 @@ This is a showcase project, showing how an interaction between a developer and a
 The Project itself is about a customer who want's to manage their vegetable garden and has new ideas for each iteration of the project. The goal of the customer as well as the developer is to keep the project as simple as possible.
 
 ## Seasons
+
 | Implementation                                | Test Results              |
 | --------------------------------------------- | ------------------------- |
 | [01 - The Beginning of Huerto](01/index.html) | [Tests](01/tests.html)    |
