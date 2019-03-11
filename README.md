@@ -44,7 +44,7 @@ npm start       // to bundle the scripts and watch for changes
 
 ### How to test/verify
 
-| Repository online                                                   | verify local code                |
-| --------------------------------------------------------------------| -------------------------------- |
-| [All Tests](http://IP5-Puerro.github.io/test/AllTests.html)  | `open puerro/test/AllTests.html` |
-| [Huerto 01](http://IP5-Puerro.github.io/huerto/01/tests.html)       | `open huerto/01/index.html`      |
+| Repository online                 | verify local code                |
+| ----------------------------------| -------------------------------- |
+| [All Tests](test/AllTests.html)   | `open puerro/test/AllTests.html` |
+| [Huerto 01](huerto/01/tests.html) | `open huerto/01/index.html`      |
