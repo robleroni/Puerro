@@ -1,6 +1,6 @@
 {
   "name": "puerro",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Keeping the Web as Lean as a Leek",
   "scripts": {
     "start": "rollup -c -w",
@@ -18,6 +18,6 @@
   },
   "homepage": "https://github.com/robin-fhnw/IP5-Puerro#readme",
   "devDependencies": {
-    "rollup": "^1.4.1"
+    "rollup": "1.4.1"
   }
 }
