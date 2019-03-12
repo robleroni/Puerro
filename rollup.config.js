@@ -1,15 +1,17 @@
 // using node to generate the bundles and an all.tests.js file
 // by scanning the directory structure recursively for test files
 
-const fs   = require('fs');
+const fs = require('fs');
 
 const configs = [];
 
-const dirsToCheck         = ['huerto', 'puerro', 'research', 'test'];
-const testFolder          = 'test';
+const projects            = ['puerro', 'huerto', 'research'];
+const testFiles           = ['puerro.tests.js', 'huerto.tests.js', 'research.tests.js'];
 const allTestsFile        = 'all.tests.js';
+const testFolder          = 'test/src';
 const testsEnding         = '.test.js';
-const entryPoints         = ['script.js', testsEnding, allTestsFile];
+const entryPointEndings   = ['script.js', testsEnding];
+
 const configOutputName    = '_';
 const configOutputFormat  = 'iife';
 
@@ -25,29 +27,42 @@ const createConfig = (dir, filename) => ({
   },
 });
 
-const fillConfigsFromDir = dir => {
+const fillConfigs = dir => {
   const dirContent = fs.readdirSync(dir, { withFileTypes: true });
 
+  // descent recursive into subdirs
   dirContent
     .filter (d => d.isDirectory())
-    .forEach(d => fillConfigsFromDir(`${dir}/${d.name}`)); // recursive descent into subdirs DFS
+    .forEach(d => fillConfigs(`${dir}/${d.name}`)); // recursive descent into subdirs DFS
 
+  // push entry points to configs
   dirContent
     .filter (f => f.isFile())
-    .filter (f => entryPoints.some(e => f.name.endsWith(e)))
+    .filter (f => entryPointEndings.some(e => f.name.endsWith(e)))
     .forEach(f => configs.push(createConfig(dir, f.name)));
 };
 
-dirsToCheck.forEach(fillConfigsFromDir);
+projects.forEach(fillConfigs);
 
+const generateTestBundle = testFile => {
+  let testImports = `// Generated file\n\n`;
+
+  testImports += configs
+    .filter(c => c.input.startsWith(testFile.split('.')[0]))
+    .filter(c => c.input.endsWith(testsEnding))
+    .map   (c => `import '../../${c.output.file}';\n`)
+    .join  ('');
+
+  fs.writeFileSync(`${testFolder}/${testFile}`, testImports);
+  configs.push(createConfig(testFolder, testFile)); 
+}
+
+testFiles.forEach(generateTestBundle);
+
+// Generate all.tests.js file
 let testImports = `// Generated file\n\n`;
-testImports += configs
-  .filter(c => c.input.endsWith(testsEnding))
-  .map   (c => `import '../${c.input}';\n`)
-  .join  ('');
-
+testImports += testFiles.map(file => `import './${file}';\n`).join('');
 fs.writeFileSync(`${testFolder}/${allTestsFile}`, testImports);
-
 configs.push(createConfig(testFolder, allTestsFile)); 
 
 export default configs;

@@ -2,8 +2,8 @@ language: node_js
 node_js: 'node'
 script: npm run build
 before_deploy:
-  - sed -i '/\*.bundle.js/d' .gitignore # removes all bundles
-  - sed -i '/all.tests.js/d' .gitignore # removes all.tests.js
+  - sed -i '/\*.bundle.js/d' .gitignore # removes all *.bundle.js files from gitignore
+  - sed -i '/*.tests.js/d' .gitignore # removes *.tests.js files from gitignore
 deploy:
   provider: pages
   skip-cleanup: true
