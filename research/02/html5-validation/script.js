@@ -7,7 +7,7 @@ function Huerto($form, $vegetables) {
     $submit = $form.querySelector('button[type="submit"]');
 
   function setDisabled() {
-    if ($name.validity.valid && $amount.validity.valid) {
+    if ($form.checkValidity()) {
       $submit.removeAttribute('disabled');
     } else {
       $submit.setAttribute('disabled', true);

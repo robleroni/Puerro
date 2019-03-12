@@ -24,7 +24,13 @@ The evaluation of the different ideas can be found [here](../../research/02)
 
 ## Result
 
-We decided.. because.. (link to proto)
-Also: (link to tests)?
+Using a `form` tag has many advantages, some of them are the following:
+
+- Ability to [reset](<https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/reset>) the whole form
+- Ability check the validity of all form elements if HTML5 validation is used
+- Ability to get all form [elements](<https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/elements>) within the form without knowing the elements specifically
+- Increased accessibility for screen readers
+
+All of these contributed to desicion to use `form` tags for our project.
 
 
