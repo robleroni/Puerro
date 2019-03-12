@@ -1,5 +1,7 @@
 "use strict";
 
+import { createElement } from '../src/util/dom';
+
 function Assert() {
   const ok = [];
   return {
@@ -27,12 +29,13 @@ function Assert() {
  * @param {Array<bool>} ok
  */
 function report(origin, ok) {
-  const $report = document.createElement('div');
-  $report.style.color = ok.every(elem => elem) ? 'green' : 'red';
-  $report.style.paddingLeft = '20px';
-  $report.textContent = `
+  const style = `
+    color: ${ok.every(elem => elem) ? 'green' : 'red'};
+    padding-left: 20px;
+  `
+  const $report = createElement('div', { style })(`
     ${ok.filter(elem => elem).length}/${ok.length} Tests in ${origin} ok.
-  `;
+  `);
   document.body.appendChild($report);
 }
 
@@ -42,10 +45,11 @@ function report(origin, ok) {
  * @param {string} name
  */
 function reportGroup(name) {
-  const $reportGroup = document.createElement('div');
-  $reportGroup.style.fontWeight = 'bold';
-  $reportGroup.style.marginTop = '10px';
-  $reportGroup.textContent = `Test ${name}`
+  const style = `
+    font-weight: bold;
+    margin-top: 10px;
+  `
+  const $reportGroup = createElement('div', { style })(`Test ${name}`);
   document.body.appendChild($reportGroup);
 }
 
