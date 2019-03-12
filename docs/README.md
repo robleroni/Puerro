@@ -2,11 +2,10 @@
 
 This is what's happening in the Puerro Project (newest first):
 
-# ... (12.03.2019)
-- Bewertungsbogen
-- Testing
-- rollup.js automated, dist to git
-- Forms - Getting Input
+# Dependency management and form visualisation (12.03.2019)
+We don't use many dependencies (at the moment only one direct dependency - rollup.js) and want to keep it that way. To ensure the best possible consistency we will use fixed version numbers in our package.json.
+
+Forms increase in complexity the more inputs there are and the more the inputs interact with each other and the rest of the DOM. We will try to visualize all inputs and interactions of our demos to get and idea of how much the complexity rises and find out where to begin with abstractions for our project.
 
 # Using the ES6 module system (05.03.2019)
 To make the developing process more modular and better testable, we decided to use the integrated module system.
