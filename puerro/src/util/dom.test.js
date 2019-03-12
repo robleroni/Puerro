@@ -29,3 +29,16 @@ test('createElement with child nodes', assert => {
   assert.is($el.childElementCount, 2);
   assert.is($el.childElementCount, 2);
 });
+
+test('createElement with attribute', assert => {
+  // given
+  const tagName = 'p';
+  const content = 'test';
+  const attributes = { style: 'color: green' };
+
+  // when
+  const $el = createElement(tagName, attributes)(content);
+
+  // then
+  assert.is($el.getAttribute('style'), 'color: green');
+})
