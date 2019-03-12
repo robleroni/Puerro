@@ -28,16 +28,12 @@
 - It should be testable right away.
   - Testframeworks?
 
-The evaluation of the different ideas can be found [here](../../research/01)
-
 ## Result
 
 We are going for the most simple way and start with a single input element with pure HTML and JavaScript.
 
-| Implementation                             | Test Results        |
-| ------------------------------------------ | ------------------- |
-| [01 - The Beginning of Huerto](index.html) | [Tests](tests.html) |
-
-
+| Evaluation                  | Implementation (Demo)                         | Test Results               |
+| --------------------------- | --------------------------------------------- | -------------------------- |
+| [Season 01](../research/01) | [01 - The Beginning of Huerto](src/demo.html) | [Tests 01](src/tests.html) |
 
 
