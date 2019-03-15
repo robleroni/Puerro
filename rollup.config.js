@@ -8,7 +8,7 @@ const configs = [];
 const projects            = ['puerro', 'huerto', 'research'];
 const testFiles           = ['puerro.tests.js', 'huerto.tests.js', 'research.tests.js'];
 const allTestsFile        = 'all.tests.js';
-const testFolder          = 'test/src';
+const testFolder          = 'test/';
 const testsEnding         = '.test.js';
 const entryPointEndings   = ['script.js', testsEnding];
 
