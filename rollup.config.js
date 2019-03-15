@@ -50,7 +50,7 @@ const generateTestBundle = testFile => {
   testImports += configs
     .filter(c => c.input.startsWith(testFile.split('.')[0]))
     .filter(c => c.input.endsWith(testsEnding))
-    .map   (c => `import '../../${c.output.file}';\n`)
+    .map   (c => `import '../${c.output.file}';\n`)
     .join  ('');
 
   fs.writeFileSync(`${testFolder}/${testFile}`, testImports);
