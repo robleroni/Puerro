@@ -31,6 +31,6 @@ Using a `form` tag has many advantages, some of them are the following:
 
 All of these contributed to desicion to use `form` tags for our project.
 
-| Evaluation                  | Implementation (Demo)           | Test Results           |
-| --------------------------- | ------------------------------- | ---------------------- |
-| [Season 02](../research/02) | [02 - Getting input](demo.html) | [Tests 02](tests.html) |
+| Evaluation                     | Implementation (Demo)           | Test Results           |
+| ------------------------------ | ------------------------------- | ---------------------- |
+| [Season 02](../../research/02) | [02 - Getting input](demo.html) | [Tests 02](tests.html) |

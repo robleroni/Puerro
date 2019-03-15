@@ -11,4 +11,9 @@ The Project itself is about a customer who want's to manage their vegetable gard
 | Requirements    | Evaluation                    | Implementation (Demo)                        | Test Results              |
 | --------------- | ----------------------------- | -------------------------------------------- | ------------------------- |
 | [Season 01](01) | [Research 01](../research/01) | [01 - The Beginning of Huerto](01/demo.html) | [Tests 01](01/tests.html) |
-| [Season 02](02) | [Research 02](../research/02) | [01 - Handeling Input](02/demo.html)         | [Tests 02](02/tests.html) |
+| [Season 02](02) | [Research 02](../research/02) | [02 - Getting Input]()                       | [Tests 02]()              |
+| [Season 03]()   | [Research 03]()               | [03 - Validation]()                          | [Tests 03]()              |
+| [Season 04]()   | [Research 04]()               | [04 - Changing Input]()                      | [Tests 04]()              |
+| [Season 05]()   | [Research 05]()               | [05 - Different Views]()                     | [Tests 05]()              |
+| [Season 06]()   | [Research 06]()               | [06 - Storing Data]()                        | [Tests 06]()              |
+| [...]()         | [...]()                       | [...]()                                      | [...]()                   |
