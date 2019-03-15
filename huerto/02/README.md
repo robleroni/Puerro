@@ -21,16 +21,16 @@
 - Handeling empty input fields
 
 ## Result
+
 Using a `form` tag has many advantages, some of them are the following:
 
-- Ability to [reset](<https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/reset>) the whole form
+- Ability to [reset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/reset) the whole form
 - Ability check the validity of all form elements if HTML5 validation is used
-- Ability to get all form [elements](<https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/elements>) within the form without knowing the elements specifically
+- Ability to get all form [elements](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/elements) within the form without knowing the elements specifically
 - Increased accessibility for screen readers
 
 All of these contributed to desicion to use `form` tags for our project.
 
-
-| Evaluation                  | Implementation (Demo)               | Test Results               |
-| --------------------------- | ----------------------------------- | -------------------------- |
-| [Season 02](../research/02) | [02 - Getting input](src/demo.html) | [Tests 02](src/tests.html) |
+| Evaluation                  | Implementation (Demo)           | Test Results           |
+| --------------------------- | ------------------------------- | ---------------------- |
+| [Season 02](../research/02) | [02 - Getting input](demo.html) | [Tests 02](tests.html) |

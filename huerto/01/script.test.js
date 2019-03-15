@@ -1,4 +1,4 @@
-import { describe } from '../../../puerro/util/test';
+import { describe } from '../../puerro/util/test';
 import { Huerto, ENTER_KEYCODE } from './script';
 
 describe('huerto 01', test => {
