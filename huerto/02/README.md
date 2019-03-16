@@ -10,15 +10,19 @@
 >
 > > **Developer**: Will do!
 >
-> > **Customer**: Nice! Oh, and before I forget.. It took me a while to figure out that I need to press _Enter_ to submit my entry. Sometimes, I accidentally pressed it twice and than I had empty entries in my list. Can you please add an _Add_ button for me and also prevent me from entering empty items. You're the best!
+> > **Customer**: Perfect since I also add vegetables which I didn't plant yet, could you make sure, that I only need to fill out the amount if I already planted it?
+>
+> > **Developer**: For sure!
+>
+> > **Customer**: Nice! Oh, and before I forget.. It took me a while to figure out that I need to press _Enter_ to submit my entry. Sometimes, I accidentally pressed it twice and than I had empty entries in my list. Can you please add an _Add_ button for me, you're the best!
 >
 > > **Developer**: Ok.
 
 ## Developer Thoughts
 
-- Should I use `<form>`
-- HTML5 vs JS Validation
-- Handeling empty input fields
+- Should I use a `<form>`?
+- What would be the best way to conditionally show the amount-field?
+- This is getting quite complicated, maybe I should draw out how the form inputs interact with each other.
 
 ## Result
 
