@@ -4,13 +4,11 @@
  *
  * @returns {function(content): HTMLElement}
  */
-export function createElement(tagName, attributes = {}) {
+export const createElement = (tagName, attributes = {}) => content => {
   const $el = document.createElement(tagName);
+  $el.innerHTML = content;
   Object.keys(attributes).forEach(attribute => {
     $el.setAttribute(attribute, attributes[attribute]);
   });
-  return (content) => {
-    $el.innerHTML = content;
-    return $el;
-  }
-}
+  return $el;
+};
