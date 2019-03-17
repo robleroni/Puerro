@@ -26,6 +26,8 @@
 
 ## Result
 
+### Form
+
 Using a `form` tag has many advantages, some of them are the following:
 
 - Ability to [reset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/reset) the whole form
@@ -34,6 +36,10 @@ Using a `form` tag has many advantages, some of them are the following:
 - Increased accessibility for screen readers
 
 All of these contributed to desicion to use `form` tags for our project.
+
+### Diagram
+
+![diagram](asssets/form-diagram.png)
 
 | Evaluation                     | Implementation (Demo)           | Test Results           |
 | ------------------------------ | ------------------------------- | ---------------------- |
