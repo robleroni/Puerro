@@ -35,7 +35,7 @@ A website is **static** when its content is fixed. It only uses HTML/CSS and the
 
 A website is **dynamic** when its content can change. This can be achieved with server-side (backend) or client-side (frontend) scripting. When the content changes from being just informational to being more interactive, we say that it is a **web application**.
 
-With **Server-Side Scripting**, the script runs on the server, modifies the web page and sends the result back to the client. There are multiple languages available for it, like _PHP_, _Ruby_, etc.
+With **Server-Side Scripting**, the script runs on the server, modifies the web page and sends the result back to the client. There are multiple programming languages available to work with it, like _PHP_, _Ruby_, etc.
 
 With **Client-Side Scripting** the script runs in the browser of the user. This is being achieved with the delivered **JavaScript**. It runs after the content is received.
 
@@ -49,10 +49,10 @@ Client-side scripting allows for **Ajax** calls. With these the browser can asyn
 
 ### Ground Rules
 
-This project is going to be implemented with the client-side scripting (frontend) approach. To make the project usable in a real-life scenario, we would also need a backend part which delivers and stores the data. However, we are only interested in how to build the frontend part and therefore simply ignore or simulate the backend.
+This project is going to be implemented with the client-side scripting (frontend) approach. To make the project usable in a real-life scenario, we would also need a backend part which delivers and stores the data. However, we are only interested in how to build the frontend part and therefore simply ignoring or simulating the backend.
 
 One challenge is to support multiple browsers and versions.
-There are different companies which provide browsers and each company decides how to handle the received content (HTML, CSS, JS). Therefore, each browser behaves a little different.
+There are different companies which provide different browsers and each company decides how to handle the received content (HTML, CSS, JS). Therefore, each browser behaves a little different.
 
 Luckily, there are standards and the modern browsers behave mostly the same.
 To fully support different browsers however, we would either need to develop a little different version for each browser (and version) or use a compiler to handle this.
@@ -72,9 +72,9 @@ For every just so little problem there are multiple solutions ready to be used.
 
 The big names for building frontend web applications are _Angular_, _React_ and _Vue_.
 
-The question is: Should I use any of these? And if yes, which one(s)?
+The question is: Should we use any of these? And if so, which ones?
 
-The challenge in this first iteration is to handle the one input given from the user and simply add it to a list.
+The challenge in this first iteration is to handle the one input given from the user and simply add its value to a list.
 Since this is already an interaction with the website it requires JavaScript to change the list dynamically.
 
 Let's start and try to implement it with and without a framework.
@@ -103,12 +103,12 @@ If only one of the dependencies is insecurely built, fails, or runs something wh
 
 Building this first example with one of these frameworks would require a much bigger initial effort than using pure JavaScript.
 
-Because of this and the other downsides from above, we will avoid a framework for the time being and won't create examples for them.
+Because of that and the other downsides from above, we will avoid a framework for the time being and won't create examples for them.
 
 ### Testability
 
 Since the code for the web behaves differently for each browser and version, it is especially important to write test cases.
-At the same time, the technologies are changing constantly and very often in the web community.
+At the same time, the technologies are changing constantly in the web community.
 Therefore, we need a way to always make sure that the code is running as it is supposed to.
 
 There are many different types of testing. We want to use unit testing and functional (frontend) testing.
@@ -128,26 +128,26 @@ These modules, however, are loaded using the _Same-Origin_ policy. This basicall
 To develop locally, we would need to run a local web server or use a bundler.
 
 - The local web server would add the needed headers to comply with the _Same-Origin_ policy but could create cashing problems.
-- The bundler would create IIFE's out of the modules and put it all together in one file. With this approach name clashes could happen.
+- The bundler would create IIFE's out of the modules and put it all together in one file. With this approach name clashes could appear.
 
 We decided to use the bundler _rollupjs_ to allow us to develop locally without the use of a web server.
 
 For the actual testing, there are again many different tools available to support the process.
-These are for our usage as well to powerful and only make the testing more complicating.
+These are powerful but also complicated.
 That is why we decided to write our own [testing utility](../../puerro/util/test.js).
 
-Basically, we just need a way to compare two values for equality, report the result and give some detail information in case of failure.
+Basically, we just need a way to compare two values for equality, report the result and give some detailed information in case of failure.
 Most of our tests will run in the browser and are using the DOM.
 With this testing utility, we are using the executional context of the tests simultaneously for the final report.
 
 This also brings the advantage of being able to run the tests with a desired browser and check if it still works.
 
-A usage example => [here](../../research/testability)
+A usage example => [here](../../research/01/testability/tests.html)
 
 ## Result
 
 Because of simplicity, safety and maintainability, we are implementing this first iteration with pure HTML and JavaScript.
-ES6 modules are being used for making it modular and easy testable with test utility written in Vanilla.
+ES6 modules are being used for making it modular and easy testable with a test utility written in VanillaJS.
 
 | Demo                                      | Tests                  |
 | ----------------------------------------- | ---------------------- |
