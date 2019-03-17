@@ -74,7 +74,7 @@ The big names for building frontend web applications are _Angular_, _React_ and 
 
 The question is: Should I use any of these? And if yes, which one(s)?
 
-The challange in this first iteration is to handle the one input given from the user and simply add it to a list.
+The challenge in this first iteration is to handle the one input given from the user and simply add it to a list.
 Since this is already an interaction with the website it requires JavaScript to change the list dynamically.
 
 Let's start and try to implement it with and without a framework.
@@ -92,18 +92,18 @@ Nowadays, most web UI's depend on front-end frameworks/libraries (like Angular, 
 
 Each technology has their own _way of working_ which doesn't integrate with others.
 
-This makes it, especially in the fast chaning web front-end world, a challenging problem.
+This makes it, especially in the fast-changing web front-end world, a challenging problem.
 
 It takes a lot of time to learn a new framework/library and to build an application with it.
 
-This could be a bad investiment, as the technology is very likely outdated soon and the application would need to be rebuild nearly from scratch.
+This could be a bad investment, as the technology is very likely outdated soon, and the application would need to be rebuild nearly from scratch.
 
 Additionally, they usually build up a huge dependency chain. This means that you, as the end-developer, can't control every part of your application.
 If only one of the dependencies is insecurely built, fails, or runs something which it is not supposed to, it puts your entire application at risk.
 
-Building this first example with one of these frameworks would require a much bigger inital effort than using pure JavaScript.
+Building this first example with one of these frameworks would require a much bigger initial effort than using pure JavaScript.
 
-Because of this and the other aboves downsides, we will avoid a framework for the time being and won't create examples for them.
+Because of this and the other downsides from above, we will avoid a framework for the time being and won't create examples for them.
 
 ### Testability
 
@@ -114,12 +114,12 @@ Therefore, we need a way to always make sure that the code is running as it is s
 There are many different types of testing. We want to use unit testing and functional (frontend) testing.
 
 - Unit Testing: To test the created abstractions (developer-view)
-- Functional (frontend-only) Testing: To test the huerto iterations for it's functionality (customer-view)
+- Functional (frontend-only) Testing: To test the Huerto iterations for its functionality (customer-view)
 
 To test certain functions independently, the application must provide the interfaces.
-In JavaScript, the code to be tested needs to be loaded into the same namespace. This can create name clashes and comes with some saftey issues, as suddendly external code can run a modules internal methods.
+In JavaScript, the code to be tested needs to be loaded into the same namespace. This can create name clashes and comes with some safety issues, as suddenly external code can run a module's internal methods.
 
-Until ES5 this problem has been handeld with the _Revealing Module Pattern_ which uses IIFE's and it's function scope to hide the internal variabels and methods.
+Until ES5 this problem has been handled with the _Revealing Module Pattern_ which uses IIFE's and its function scope to hide the internal variables and methods.
 Since ES6, JavaScript supports modules which can be exported and imported.
 
 In this project we presuppose an ES6 environment and use the ES6 modules.
@@ -133,14 +133,14 @@ To develop locally, we would need to run a local web server or use a bundler.
 We decided to use the bundler _rollupjs_ to allow us to develop locally without the use of a web server.
 
 For the actual testing, there are again many different tools available to support the process.
-These are for our usage as well to powerfull and only make the testing more complicating.
+These are for our usage as well to powerful and only make the testing more complicating.
 That is why we decided to write our own [testing utility](../../puerro/util/test.js).
 
-Basically, we just need a way to compare two values for equality, report the result and give some detailes information in case of failure.
+Basically, we just need a way to compare two values for equality, report the result and give some detail information in case of failure.
 Most of our tests will run in the browser and are using the DOM.
-With this testing utility, We are using the executal context of the tests simulatnisly for the final report.
+With this testing utility, we are using the executional context of the tests simultaneously for the final report.
 
-This also brings the advantage of being able to run the tests with a desired browsers and check if it still works.
+This also brings the advantage of being able to run the tests with a desired browser and check if it still works.
 
 A usage example => [here](../../research/testability)
 
