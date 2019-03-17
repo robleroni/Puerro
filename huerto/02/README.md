@@ -39,7 +39,7 @@ All of these contributed to desicion to use `form` tags for our project.
 
 ### Diagram
 
-![diagram](asssets/form-diagram.png)
+![diagram](assets/form-diagram.png)
 
 | Evaluation                     | Implementation (Demo)           | Test Results           |
 | ------------------------------ | ------------------------------- | ---------------------- |
