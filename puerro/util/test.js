@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import { createElement } from '../src/util/dom';
 
@@ -9,17 +9,17 @@ function Assert() {
     is: (actual, expected) => {
       const result = actual === expected;
       if (!result) {
-        console.log(`expected "${expected}" but was "${actual}"`)
+        console.log(`expected "${expected}" but was "${actual}"`);
         try {
           throw Error();
         } catch (err) {
-          console.log(err)
-        };
+          console.log(err);
+        }
       }
       ok.push(result);
     },
-    true: cond => ok.push(cond)
-  }
+    true: cond => ok.push(cond),
+  };
 }
 
 /**
@@ -32,7 +32,7 @@ function report(origin, ok) {
   const style = `
     color: ${ok.every(elem => elem) ? 'green' : 'red'};
     padding-left: 20px;
-  `
+  `;
   const $report = createElement('div', { style })(`
     ${ok.filter(elem => elem).length}/${ok.length} Tests in ${origin} ok.
   `);
@@ -48,7 +48,7 @@ function reportGroup(name) {
   const style = `
     font-weight: bold;
     margin-top: 10px;
-  `
+  `;
   const $reportGroup = createElement('div', { style })(`Test ${name}`);
   document.body.appendChild($reportGroup);
 }
