@@ -1,4 +1,4 @@
-import {createElement} from '../../../puerro/src/util/dom';
+import {createElement} from '../../../../puerro/src/util/dom';
 
 function Huerto($form, $vegetables) {
   const vegetables = [];

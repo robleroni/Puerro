@@ -55,23 +55,13 @@ const render = node => {
 }
 
 /**
- * renders given stateless view into given container
- *
- * @param {HTMLElement} $root
- * @param {function(): object} view
- */
-const createView = ($root, view) => {
-  $root.appendChild(render(view()));
-}
-
-/**
  * renders given stateful view into given container
  *
  * @param {HTMLElement} $root
  * @param {function(): object} view
  * @param {object} initialState
  */
-const createStatefulView = ($root, view, initialState) =>  {
+const mount = ($root, view, initialState) =>  {
   const refresh = () => {
     const newView = render(view(state, setState));
     $root.replaceChild(newView, place);
@@ -88,4 +78,4 @@ const createStatefulView = ($root, view, initialState) =>  {
   $root.appendChild(place);
 }
 
-export { h, createView, createStatefulView, createElement }
+export { h, mount, createElement }

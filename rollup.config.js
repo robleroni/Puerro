@@ -5,8 +5,8 @@ const fs = require('fs');
 
 const configs = [];
 
-const projects            = ['puerro', 'huerto', 'research'];
-const testFiles           = ['puerro.tests.js', 'huerto.tests.js', 'research.tests.js'];
+const projects            = ['puerro', 'huerto'];
+const testFiles           = ['puerro.tests.js', 'huerto.tests.js'];
 const allTestsFile        = 'all.tests.js';
 const testFolder          = 'test';
 const testsEnding         = '.test.js';
@@ -54,7 +54,7 @@ const generateTestBundle = testFile => {
     .join  ('');
 
   fs.writeFileSync(`${testFolder}/${testFile}`, testImports);
-  configs.push(createConfig(testFolder, testFile)); 
+  configs.push(createConfig(testFolder, testFile));
 }
 
 testFiles.forEach(generateTestBundle);
@@ -63,6 +63,6 @@ testFiles.forEach(generateTestBundle);
 let testImports = `// Generated file\n\n`;
 testImports += testFiles.map(file => `import './${file}';\n`).join('');
 fs.writeFileSync(`${testFolder}/${allTestsFile}`, testImports);
-configs.push(createConfig(testFolder, allTestsFile)); 
+configs.push(createConfig(testFolder, allTestsFile));
 
 export default configs;

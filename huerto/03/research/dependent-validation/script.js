@@ -1,4 +1,4 @@
-import { h, createStatefulView } from "../../../puerro/src/util/dom";
+import { mount } from '../../../../puerro/src/util/dom';
 
 const $form = document.querySelector('form');
 const initialState = {
@@ -22,4 +22,4 @@ const view = (state, setState) => {
   ]);
 }
 
-createStatefulView($form, view, initialState);
+mount($form, view, initialState);

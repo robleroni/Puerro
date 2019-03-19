@@ -1,4 +1,4 @@
-import { describe } from '../../../puerro/util/test';
+import { describe } from '../../../../puerro/util/test';
 import sum from './script';
 
 describe('01 - Research', test => {
