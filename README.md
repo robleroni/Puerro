@@ -23,7 +23,6 @@ The showcase application should contain as many UI-Patterns as possible.
 | [docs/](docs/)         | Documentation like the logbook                        |
 | [huerto/](huerto/)     | Showcase project of the research process              |
 | [puerro/](puerro/)     | Actual project including mainly the abstractions used |
-| [research/](research/) | Different ideas/approaches which have been evaluated  |
 | [test/](test/)         | Test results combined in one place                    |
 
 ## Build instructions

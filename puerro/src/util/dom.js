@@ -41,11 +41,13 @@ const h = (tagName, attributes, node) => {
  * renders a given node object
  *
  * @param {object} node
+ *
+ * @returns {HTMLElement}
  */
 const render = node => {
   if (typeof node === "string" ||
     typeof node === "number") {
-    return document.createTextNode(node)
+    return document.createTextNode(node);
   }
   const $element = createElement(node.tagName, node.attributes)('');
   node.children.forEach(c => $element.appendChild(render(c)));
@@ -53,7 +55,7 @@ const render = node => {
 }
 
 /**
- * renders given view into given container
+ * renders given stateless view into given container
  *
  * @param {HTMLElement} $root
  * @param {function(): object} view
@@ -62,4 +64,28 @@ const createView = ($root, view) => {
   $root.appendChild(render(view()));
 }
 
-export { h, createView, createElement }
+/**
+ * renders given stateful view into given container
+ *
+ * @param {HTMLElement} $root
+ * @param {function(): object} view
+ * @param {object} initialState
+ */
+const createStatefulView = ($root, view, initialState) =>  {
+  const refresh = () => {
+    const newView = render(view(state, setState));
+    $root.replaceChild(newView, place);
+    place = newView;
+  }
+
+  const setState = (newState) => {
+    state = {...state, ...newState};
+    refresh();
+  }
+
+  let state = initialState;
+  let place = render(view(state, setState));
+  $root.appendChild(place);
+}
+
+export { h, createView, createStatefulView, createElement }

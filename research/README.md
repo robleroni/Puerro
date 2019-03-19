@@ -1,3 +1,0 @@
-# Research
-
-The research section
