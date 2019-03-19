@@ -3,46 +3,51 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Huerto - 01</title>
+    <title>Huerto - 02</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script defer src="dist/script.bundle.js"></script>
-    <link rel="stylesheet" href="../../assets/css/style.css" />
+    <link rel="stylesheet" href="../../assets/css/huerto.css" />
   </head>
   <body>
-    <h1>Huerto - Your Vegetable Garden</h1>
+    <div class="container">
+      <h1>Huerto - Your Vegetable Garden</h1>
 
-    <main>
-      <form>
-        <label for="name">Vegi</label>
-        <input type="text" id="name" name="name" />
+      <main>
+        <form>
+          <h3>Add vegetable</h3>
+          <label for="name">Vegi</label>
+          <input type="text" id="name" name="name" />
 
-        <label for="classification">Classification</label>
-        <select id="classification" name="classification"></select>
+          <label for="classification">Classification</label>
+          <select id="classification" name="classification"></select>
 
-        <label>Origin</label>
-        <div class="origin">
-          <input type="radio" id="europe" name="origin" value="Europe" />
-          <label for="europe">Europe</label>
-          <input type="radio" id="asia" name="origin" value="Europe" />
-          <label for="asia">Asia</label>
-          <input type="radio" id="america" name="origin" value="Europe" />
-          <label for="america">America</label>
+          <label>Origin</label>
+          <div class="origin">
+            <input type="radio" id="europe" name="origin" value="Europe" />
+            <label for="europe">Europe</label>
+            <input type="radio" id="asia" name="origin" value="Europe" />
+            <label for="asia">Asia</label>
+            <input type="radio" id="america" name="origin" value="Europe" />
+            <label for="america">America</label>
+          </div>
+
+          <label>Amount</label>
+          <div>
+            <input type="checkbox" id="planted" name="planted" checked />
+            <label for="planted">Planted</label>
+            <input type="number" id="amount" name="amount" value="0" />
+          </div>
+
+          <label for="comments">Comments</label>
+          <textarea id="comments" name="comments"></textarea>
+
+          <button>Add</button>
+        </form>
+        <div class="output">
+          <h3>My vegetables</h3>
+          <ul id="vegetables"></ul>
         </div>
-
-        <label>Amount</label>
-        <div>
-          <input type="checkbox" id="planted" name="planted" checked />
-          <label for="planted">Planted</label>
-          <input type="number" id="amount" name="amount" value="0" />
-        </div>
-
-        <label for="comments">Comments</label>
-        <textarea id="comments" name="comments"></textarea>
-
-        <button>Add</button>
-      </form>
-
-      <ul id="vegetables"></ul>
-    </main>
+      </main>
+    </div>
   </body>
 </html>
