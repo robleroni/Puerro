@@ -2,6 +2,13 @@
 
 This is what's happening in the Puerro Project (newest first):
 
+# Module systems and persistence problems (19.03.2019)
+We have to figure out how use our module system more consistently, currently we have some inline exports and some at the end of the files. Furthermore we have to decide if we will continue to use a module bundler (rollup) or es6-modules and a Dev-Server during development.
+
+Interacting with persistence systems (or services, which in turn interact with those systems), is a difficult problem in web development. We could think about simulating a persistence system to analyze and solve occuring problems. One main problem which was discussed, is getting the identity of a new entry in a frontend system which is hard to solve.
+
+Validation should not only be looked at from the angle of isolated fields. We should take into consideration validation problems which occur on fields that interact with each other. The typical example would be validating if a begin-date is smaller than an end-date.
+
 # Dependency management and form visualisation (12.03.2019)
 We don't use many dependencies (at the moment only one direct dependency - rollup.js) and want to keep it that way. To ensure the best possible consistency we will use fixed version numbers in our package.json.
 
@@ -58,7 +65,7 @@ Nowadays, most web UI's depend on front-end frameworks/libraries (like Angular, 
 
 Each technology has their own *way of working* which doesn't integrate with others.
 
-This makes it, especially in the fast chaning web front-end world, a challenging problem. 
+This makes it, especially in the fast chaning web front-end world, a challenging problem.
 
 It takes a lot of time to learn a new framework/library and to build an application with it.
 
