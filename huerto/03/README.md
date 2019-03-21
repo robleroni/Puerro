@@ -2,14 +2,29 @@
 
 ## Conversation
 
-> > **Customer**: TODO I accidentally pressed it twice and than I had empty entries in my list
+> > **Customer**: The Website looks great, thank you so much!
 >
-> > **Developer**: TODO
+> > **Developer**: No worries!
+>
+> > **Customer**: I do have a slight problem though: Currently I can just add anything I want even if it doesn't make sense. For instance a vegetable without a name, or tubers which came from Asia, imagine that!
+>
+> > **Developer**: Sure I could validate what you put in and check if it meets your expectations. Could you provide me with a list of what you think is expected from an entry to be considered as a valid vegetable?
+>
+> > **Customer**: Of course I would think the following restrictions are essential:
+> >
+> > - Vegetables have to have a name
+> > - I can't have 0 vegetables planted
+> > - Tubers cannot originate from Asia
+> > - Fungi cannot originate from America
+>
+> > **Developer**: Perfect thank you very much.
 
 ## Development Process
 
-- HTML5 vs JS Validation
-- Handeling empty input fields
+- How should I handle required fields and min values?
+- How should I validate combined values?
+- Do I use HTML5 or pure JS Validation?
+- Should I somehow abstract the form-input creation and validation?
 
 ## Result
 
@@ -20,4 +35,3 @@ To get JS-validation to work on a larger scale we would need to abstract the val
 | Implementation (Demo) | Test Results |
 | --------------------- | ------------ |
 | [03 - Validation]()   | [Tests 03]() |
-

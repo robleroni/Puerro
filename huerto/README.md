@@ -11,7 +11,7 @@ The Project itself is about a customer who want's to manage their vegetable gard
 | Development     | Demo                                         | Tests                     |
 | --------------- | -------------------------------------------- | ------------------------- |
 | [Season 01](01) | [01 - The Beginning of Huerto](01/demo.html) | [Tests 01](01/tests.html) |
-| [Season 02](02) | [02 - Getting Input]()                       | [Tests 02]()              |
+| [Season 02](02) | [02 - Getting Input](02/demo.html)           | [Tests 02](02/tests.html) |
 | [Season 03]()   | [03 - Validation]()                          | [Tests 03]()              |
 | [Season 04]()   | [04 - Changing Input]()                      | [Tests 04]()              |
 | [Season 05]()   | [05 - Different Views]()                     | [Tests 05]()              |

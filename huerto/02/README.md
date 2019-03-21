@@ -36,6 +36,10 @@ Using a `form` tag has many advantages, some of them are the following:
 
 All of these contributed to desicion to use `form` tags for our project.
 
+### Conditionally show fields
+
+For now the fastest and easiest way is to listen to events of one field and with that information toggle the visibility of others.
+
 ### Diagram
 
 ![diagram](assets/form-diagram.png)
