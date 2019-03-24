@@ -13,6 +13,7 @@
 > > **Customer**: Of course I would think the following restrictions are essential:
 > >
 > > - Vegetables have to have a name
+> > - Vegetables have to have an origin
 > > - I can't have 0 vegetables planted
 > > - Tubers cannot originate from Asia
 > > - Fungi cannot originate from America

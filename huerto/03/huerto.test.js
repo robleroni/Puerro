@@ -71,13 +71,14 @@ describe('03 Huerto', test => {
     onClassification($origin)('Fungi')({ target: classification });
 
     // then
-    assert.is($origin.style.display, 'none');
+    assert.is($origin.disabled, true);
+    assert.is($origin.checked, false);
 
     // when
     classification.value = 'Fruits';
     onClassification($origin)('Fungi')({ target: classification });
 
     // then
-    assert.is($origin.style.display, 'inline');
-  })
+    assert.is($origin.disabled, false);
+  });
 });
