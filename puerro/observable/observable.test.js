@@ -1,4 +1,4 @@
-import { describe } from '../../util/test';
+import { describe } from '../test/test';
 import { Observable, ObservableList } from './observable';
 
 describe('observable', test => {
@@ -72,4 +72,4 @@ describe('observable', test => {
     assert.is(list.count(), 0);
     assert.is(raw.length, 0);
   });
-})
+});

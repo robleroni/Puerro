@@ -1,4 +1,4 @@
-import { describe } from '../../puerro/util/test';
+import { describe } from '../../puerro/test/test';
 import { Huerto, ENTER_KEYCODE } from './script';
 
 describe('huerto 01', test => {
@@ -10,9 +10,7 @@ describe('huerto 01', test => {
 
     // when
     $vegetable.value = 'tomato';
-    $vegetable.dispatchEvent(
-      new KeyboardEvent('keydown', { keyCode: ENTER_KEYCODE })
-    );
+    $vegetable.dispatchEvent(new KeyboardEvent('keydown', { keyCode: ENTER_KEYCODE }));
 
     // then
     assert.is($vegetables.innerHTML, '<li>tomato</li>');

@@ -1,4 +1,4 @@
-import { describe } from '../../puerro/util/test';
+import { describe } from '../../puerro/test/test';
 import {
   renderVegetableClassifications,
   onFormSubmit,

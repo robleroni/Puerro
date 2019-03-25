@@ -1,4 +1,4 @@
-import { describe } from '../../util/test';
+import { describe } from '../test/test';
 import { vNode, createNode, render } from './vdom';
 
 describe('vdom util', test => {

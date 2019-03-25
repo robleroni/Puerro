@@ -1,4 +1,4 @@
-import { describe } from '../../util/test';
+import { describe } from '../test/test';
 import { createElement, changed } from './dom';
 
 describe('dom util', test => {

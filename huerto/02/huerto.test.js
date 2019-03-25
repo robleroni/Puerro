@@ -1,9 +1,5 @@
-import { describe } from '../../puerro/util/test';
-import {
-  renderVegetableClassifications,
-  onFormSubmit,
-  onPlantedChecked,
-} from './huerto';
+import { describe } from '../../puerro/test/test';
+import { renderVegetableClassifications, onFormSubmit, onPlantedChecked } from './huerto';
 
 describe('02 Huerto', test => {
   test('renderVegetableClassifications', assert => {
