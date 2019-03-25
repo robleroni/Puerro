@@ -18,7 +18,7 @@
 > > - Tubers cannot originate from Asia
 > > - Fungi cannot originate from America
 >
-> > **Developer**: Perfect thank you very much.
+> > **Developer**: Perfect, thank you very much.
 
 ## Development Process
 

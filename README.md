@@ -1,6 +1,6 @@
 # Puerro Project
 
-The goal of this project is to research how to build modern web applications as simple as possible.
+The goal of this project is to acquire knowledge about how to build modern frontend web applications as simple as possible by researching different approaches.
 
 ## Idea
 
@@ -14,16 +14,16 @@ The idea is to build a showcase project by simulating interactions between a dev
 Therefore, the developer needs to research and evaluate different approaches to build the application
 as simple as possible while still meeting customer demands.
 
-The showcase application should contain as many UI-Patterns as possible.
+The showcase application should build up on well-known [UI-Patterns](http://ui-patterns.com/patterns).
 
 ## Folder Structure
 
-| Folder                 | Description                                           |
-| ---------------------- | ----------------------------------------------------- |
-| [docs/](docs/)         | Documentation like the logbook                        |
-| [huerto/](huerto/)     | Showcase project of the research process              |
-| [puerro/](puerro/)     | Actual project including mainly the abstractions used |
-| [test/](test/)         | Test results combined in one place                    |
+| Folder             | Description                                       |
+| ------------------ | ------------------------------------------------- |
+| [docs/](docs/)     | Documentation like the logbook                    |
+| [huerto/](huerto/) | Showcase project of the research process          |
+| [puerro/](puerro/) | Abstractions and utilities for the huerto project |
+| [test/](test/)     | All the test results combined in one place        |
 
 ## Build instructions
 
