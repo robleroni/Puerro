@@ -1,5 +1,9 @@
 # Season 02 - Getting Input
 
+| Implementation (Demo)           | Test Results           |
+| ------------------------------- | ---------------------- |
+| [02 - Getting input](demo.html) | [Tests 02](tests.html) |
+
 ## Conversation
 
 > > **Customer**: Wow! That was quick!
@@ -43,7 +47,3 @@ For now the fastest and easiest way is to listen to events of one field and with
 ### Diagram
 
 ![diagram](assets/form-diagram.png)
-
-| Implementation (Demo)           | Test Results           |
-| ------------------------------- | ---------------------- |
-| [02 - Getting input](demo.html) | [Tests 02](tests.html) |

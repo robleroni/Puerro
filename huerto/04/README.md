@@ -1,5 +1,9 @@
 # Season 04 - Changing Input
 
+| Implementation (Demo) | Test Results |
+| --------------------- | ------------ |
+| [03 - Validation]()   | [Tests 03]() |
+
 ## Conversation
 
 > > **Developer**: What do you think about the validation?
@@ -19,7 +23,3 @@
 ### ID Management
 
 ## Result
-
-| Implementation (Demo) | Test Results |
-| --------------------- | ------------ |
-| [03 - Validation]()   | [Tests 03]() |

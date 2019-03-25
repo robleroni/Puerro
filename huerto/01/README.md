@@ -1,5 +1,9 @@
 # Season 01 - The Beginning of Huerto
 
+| Demo                                      | Tests                  |
+| ----------------------------------------- | ---------------------- |
+| [01 - The Beginning of Huerto](demo.html) | [Tests 01](tests.html) |
+
 ## Conversation
 
 > > **Customer**: Yo, I've heard that you are studying something with computers. Can you create a quick homepage for me?
@@ -148,7 +152,3 @@ A usage example => [here](../../research/01/testability/tests.html)
 
 Because of simplicity, safety and maintainability, we are implementing this first iteration with pure HTML and JavaScript.
 ES6 modules are being used for making it modular and easy testable with a test utility written in VanillaJS.
-
-| Demo                                      | Tests                  |
-| ----------------------------------------- | ---------------------- |
-| [01 - The Beginning of Huerto](demo.html) | [Tests 01](tests.html) |
