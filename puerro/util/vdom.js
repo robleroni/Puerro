@@ -12,9 +12,7 @@ const createNode = vNode => {
   }
 
   let $node = document.createElement(vNode.tag);
-  Object.keys(vNode.attributes).forEach(a =>
-    $node.setAttribute(a, vNode.attributes[a])
-  );
+  Object.keys(vNode.attributes).forEach(a => $node.setAttribute(a, vNode.attributes[a]));
 
   vNode.children.forEach(c => $node.appendChild(createNode(c))); // append child nodes
 

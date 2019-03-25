@@ -1,6 +1,6 @@
 'use strict';
 
-import { createElement } from '../src/util/dom';
+import { createElement } from '../util/dom';
 
 function Assert() {
   const ok = [];

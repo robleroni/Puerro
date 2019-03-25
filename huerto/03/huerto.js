@@ -1,4 +1,4 @@
-import { createElement } from '../../puerro/src/util/dom';
+import { createElement } from '../../puerro/util/dom';
 
 export {
   renderVegetableClassifications,

@@ -1,4 +1,4 @@
-import { createElement } from '../../puerro/src/util/dom';
+import { createElement } from '../../puerro/util/dom';
 
 const vegetableClassifications = [
   'Bulbs',
@@ -17,9 +17,7 @@ const vegetableClassifications = [
  * @param {HTMLFormElement} $form
  */
 const createVegetableOutputString = $form =>
-  `${$form.name.value} (${$form.classification.value}) from ${
-    $form.origin.value
-  }, ${
+  `${$form.name.value} (${$form.classification.value}) from ${$form.origin.value}, ${
     $form.planted.checked ? `planted (${$form.amount.value})` : 'not planted'
   }, ${$form.comments.value}`;
 
@@ -29,9 +27,7 @@ const createVegetableOutputString = $form =>
  */
 export const renderVegetableClassifications = $select => {
   vegetableClassifications
-    .map(classification =>
-      createElement('option', { value: classification })(classification)
-    )
+    .map(classification => createElement('option', { value: classification })(classification))
     .forEach($select.appendChild.bind($select));
 };
 
@@ -42,9 +38,7 @@ export const renderVegetableClassifications = $select => {
  */
 export const onFormSubmit = $list => event => {
   event.preventDefault(); // Prevent Form Submission
-  $list.appendChild(
-    createElement('li')(createVegetableOutputString(event.target))
-  );
+  $list.appendChild(createElement('li')(createVegetableOutputString(event.target)));
 };
 
 /**

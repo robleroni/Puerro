@@ -1,4 +1,4 @@
-import {createElement} from '../../../../puerro/src/util/dom';
+import { createElement } from '../../../../puerro/util/dom';
 
 function Huerto($form, $vegetables) {
   const vegetables = [];
@@ -38,7 +38,4 @@ function Huerto($form, $vegetables) {
   bindEvents();
 }
 
-Huerto(
-  document.getElementById('vegetableForm'),
-  document.getElementById('vegetables')
-);
+Huerto(document.getElementById('vegetableForm'), document.getElementById('vegetables'));

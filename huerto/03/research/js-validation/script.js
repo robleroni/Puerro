@@ -1,4 +1,4 @@
-import {createElement} from '../../../../puerro/src/util/dom';
+import { createElement } from '../../../../puerro/util/dom';
 
 /**
  *
@@ -8,8 +8,8 @@ import {createElement} from '../../../../puerro/src/util/dom';
 function Huerto($form, $vegetables) {
   const vegetables = [];
   const $name = $form.name,
-        $amount = $form.amount,
-        $submit = $form.querySelector('button[type="submit"]');
+    $amount = $form.amount,
+    $submit = $form.querySelector('button[type="submit"]');
 
   function setDisabled() {
     if ($name.value && $amount.value) {
@@ -23,13 +23,15 @@ function Huerto($form, $vegetables) {
     setDisabled();
     const $el = event.target;
     if (!$el.value && !$el.nextSibling) {
-      $el.parentNode.append(createElement('span', { style: 'color: red' })('This field is required'))
+      $el.parentNode.append(
+        createElement('span', { style: 'color: red' })('This field is required')
+      );
     }
 
     if ($el.value && $el.nextSibling) {
-      $el.nextSibling.remove()
+      $el.nextSibling.remove();
     }
-   }
+  }
 
   function onFormSubmit(event) {
     event.preventDefault();
@@ -55,7 +57,4 @@ function Huerto($form, $vegetables) {
   bindEvents();
 }
 
-Huerto(
-  document.getElementById('vegetableForm'),
-  document.getElementById('vegetables')
-);
+Huerto(document.getElementById('vegetableForm'), document.getElementById('vegetables'));
