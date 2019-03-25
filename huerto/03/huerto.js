@@ -47,6 +47,8 @@ const renderVegetableClassifications = $select => {
 const onFormSubmit = $list => event => {
   event.preventDefault(); // Prevent Form Submission
   $list.appendChild(createElement('li')(_vegetableOutputString(event.target)));
+
+  event.target.name.classList.remove('invalid');
 };
 
 /**
@@ -84,6 +86,8 @@ const initHuerto = ($form, $vegetables) => {
   $form.planted.addEventListener('change', onPlantedChecked($form.amount));
   $form.classification.addEventListener('change', onClassification($form.asia)('Tubers'));
   $form.classification.addEventListener('change', onClassification($form.america)('Fungi'));
+
+  $form.name.oninvalid = event => event.target.classList.add('invalid');
 
   renderVegetableClassifications($form.classification);
 };

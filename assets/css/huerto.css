@@ -44,6 +44,11 @@ textarea {
   border: 1px solid #bbb;
 }
 
+input.invalid,
+select.invalid {
+  border-color: red;
+}
+
 form > input,
 form > select,
 form > textarea {
