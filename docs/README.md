@@ -2,6 +2,28 @@
 
 This is what's happening in the Puerro Project (newest first):
 
+#Diffing needed? and Yoda conditions (26.03.2019)
+
+We created a VDOM implementation and drafted a first idea on how to do diffing. During our weekly meeting the question came up, if diffing is actually needed or the DOM interaction is more performant if we replace the whole DOM-tree on each change. To test that we will create demos with the two different implementations.
+
+We were introduced to a concept called yoda conditional which is less prone to developer errors than the standard approach. For instance the following snippet:
+
+```js
+if (foo == null) {
+  return;
+}
+```
+
+becomes:
+
+```js
+if (null == foo) {
+  return;
+}
+```
+
+This makes sure that unwanted assignements cannot happen (for instance `if (null = foo)`)
+
 # Module systems and persistence problems (19.03.2019)
 We have to figure out how use our module system more consistently, currently we have some inline exports and some at the end of the files. Furthermore we have to decide if we will continue to use a module bundler (rollup) or es6-modules and a Dev-Server during development.
 
