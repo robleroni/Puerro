@@ -1,3 +1,5 @@
+export { h, mount, createElement, diff, changed };
+
 /**
  * Creates a new HTMLElement
  * @param {string} tagName
@@ -107,5 +109,3 @@ const mount = ($root, view, initialState) => {
   $root.innerHTML = '';
   $root.appendChild(render(vDom));
 };
-
-export { h, mount, createElement, diff, changed };

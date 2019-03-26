@@ -1,4 +1,6 @@
-export const ENTER_KEYCODE = 13;
+export { ENTER_KEYCODE, Huerto }
+
+const ENTER_KEYCODE = 13;
 
 /**
  * Constructor function to create the Huerto UI
@@ -6,7 +8,7 @@ export const ENTER_KEYCODE = 13;
  * @param {HTMLInputElement} $vegetable - Input element to add new vegetables
  * @param {HTMLElement} $vegetables - Container for the vegetables
  */
-export function Huerto($vegetable, $vegetables) {
+function Huerto($vegetable, $vegetables) {
   const vegetables = [];
 
   function bindEvents() {

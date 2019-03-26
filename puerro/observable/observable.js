@@ -1,4 +1,9 @@
-export const Observable = value => {
+export {
+  Observable,
+  ObservableList
+}
+
+const Observable = value => {
   const listeners = [];
   return {
     onChange: callback => listeners.push(callback),
@@ -32,7 +37,7 @@ const EventObservable = obj => {
   };
 };
 
-export const ObservableList = list => {
+const ObservableList = list => {
   const addListeners = [];
   const delListeners = [];
   return {

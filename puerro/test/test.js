@@ -1,6 +1,6 @@
-'use strict';
-
 import { createElement } from '../util/dom';
+
+export { describe }
 
 function Assert() {
   const ok = [];
@@ -71,7 +71,7 @@ function test(name, callback) {
  * @param {String} name
  * @param {Function} callback
  */
-export function describe(name, callback) {
+function describe(name, callback) {
   reportGroup(name);
   return callback(test);
 }

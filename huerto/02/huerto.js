@@ -1,5 +1,12 @@
 import { createElement } from '../../puerro/util/dom';
 
+export {
+  renderVegetableClassifications,
+  onFormSubmit,
+  onPlantedChecked,
+  initHuerto
+}
+
 const vegetableClassifications = [
   'Bulbs',
   'Flowers',
@@ -25,7 +32,7 @@ const createVegetableOutputString = $form =>
  *
  * @param {HTMLSelectElement} $select
  */
-export const renderVegetableClassifications = $select => {
+const renderVegetableClassifications = $select => {
   vegetableClassifications
     .map(classification => createElement('option', { value: classification })(classification))
     .forEach($select.appendChild.bind($select));
@@ -36,7 +43,7 @@ export const renderVegetableClassifications = $select => {
  * @param {HTMLUListElement} $list
  * @returns {function(Event): void}
  */
-export const onFormSubmit = $list => event => {
+const onFormSubmit = $list => event => {
   event.preventDefault(); // Prevent Form Submission
   $list.appendChild(createElement('li')(createVegetableOutputString(event.target)));
 };
@@ -46,7 +53,7 @@ export const onFormSubmit = $list => event => {
  * @param {HTMLInputElement} $amount
  * @returns {function(Event): void}
  */
-export const onPlantedChecked = $amount => event => {
+const onPlantedChecked = $amount => event => {
   $amount.style.display = event.target.checked ? 'inline' : 'none';
 };
 
@@ -56,7 +63,7 @@ export const onPlantedChecked = $amount => event => {
  * @param {HTMLFormElement} $form - Input element to add new vegetables
  * @param {HTMLElement} $vegetables - Container for the vegetables
  */
-export const initHuerto = ($form, $vegetables) => {
+const initHuerto = ($form, $vegetables) => {
   $form.addEventListener('submit', onFormSubmit($vegetables));
   $form.planted.addEventListener('change', onPlantedChecked($form.amount));
 
