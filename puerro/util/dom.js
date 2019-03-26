@@ -60,7 +60,6 @@ const diff = ($parent, oldNode, newNode, index = 0) => {
     return;
   }
   if (changed(oldNode, newNode)) {
-    console.log(oldNode, newNode);
     $parent.replaceChild(render(newNode), $parent.childNodes[index]);
     return;
   }

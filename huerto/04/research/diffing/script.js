@@ -35,14 +35,16 @@ const tableRow = (state, edit) => row => {
  *
  * @returns {function(DemoState): import('../../../../puerro/util/vdom').VNode} *
  */
-const view = (state, setState) => {
+const view = type => (state, setState) => {
   const edit = row => evt => {
     if (!state.editing || state.editing.id !== row.id) {
+      console.time(type);
       setState({ editing: row });
+      console.timeEnd(type);
     }
   };
   return h('tbody', {}, state.data.map(tableRow(state, edit)));
 };
 
-mount(document.getElementById('nodiffing'), view, initialState, false);
-mount(document.getElementById('diffing'), view, initialState, true);
+mount(document.getElementById('nodiffing'), view('nodiffing'), initialState, false);
+mount(document.getElementById('diffing'), view('diffing'), initialState, true);
