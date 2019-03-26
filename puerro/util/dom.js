@@ -78,9 +78,12 @@ const diff = ($parent, oldNode, newNode, index = 0) => {
  * @param {object} initialState
  */
 const mount = ($root, view, initialState, useDiffing = true) => {
+  let state = initialState;
+  const getState = () => state;
+
   const setState = newState => {
     state = { ...state, ...newState };
-    const newVDom = view(state, setState);
+    const newVDom = view(getState, setState);
     if (useDiffing) {
       diff($root, vDom, newVDom);
     } else {
@@ -89,10 +92,9 @@ const mount = ($root, view, initialState, useDiffing = true) => {
     vDom = newVDom;
   };
 
-  let state = initialState;
-  let vDom = view(state, setState);
+  let vDom = view(getState, setState);
   if ($root.firstChild) {
-    $root.appendChild(render(vDom), $root.firstChild);
+    $root.replaceChild(render(vDom), $root.firstChild);
   } else {
     $root.appendChild(render(vDom));
   }

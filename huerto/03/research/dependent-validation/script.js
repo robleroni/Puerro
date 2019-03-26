@@ -16,25 +16,31 @@ const onChange = setState => event => {
   }
 };
 
-const view = (state, setState) => {
-  return h('div', {}, [
+const view = (getState, setState) => {
+  const v = h('div', {}, [
     h('input', {
       input: onChange(setState),
       name: 'from',
       type: 'date',
       required: true,
-      value: state.from.toISOString().substr(0, 10),
+      value: getState()
+        .from.toISOString()
+        .substr(0, 10),
     }),
     h('input', {
       input: onChange(setState),
       name: 'to',
       type: 'date',
       required: true,
-      value: state.to.toISOString().substr(0, 10),
+      value: getState()
+        .to.toISOString()
+        .substr(0, 10),
     }),
-    h('p', {}, `${state.from.toISOString()} - ${state.to.toISOString()}`),
+    h('p', {}, `${getState().from.toISOString()} - ${getState().to.toISOString()}`),
     h('button', {}, 'Submit'),
   ]);
+  console.log(v);
+  return v;
 };
 
 mount($form, view, initialState);
