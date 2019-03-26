@@ -34,7 +34,8 @@ const changed = (node1, node2) => {
     !!node2.attributes &&
     (Object.keys(node1.attributes).length !== Object.keys(node2.attributes).length ||
       Object.keys(node1.attributes).some(
-        a => !node2.attributes[a] || node1.attributes[a] !== node2.attributes[a]
+        a =>
+          !node2.attributes[a] || node1.attributes[a].toString() !== node2.attributes[a].toString()
       ));
   return nodeChanged || attributesChanged;
 };

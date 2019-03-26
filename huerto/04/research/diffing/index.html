@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Document</title>
+    <style>
+      .container {
+        max-height: 400px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Without diffing</h1>
+    <div class="container">
+      <table width="100%" border="1" id="nodiffing"></table>
+    </div>
+
+    <h1>With diffing</h1>
+    <div class="container">
+      <table width="100%" border="1" id="diffing"></table>
+    </div>
+    <script src="dist/script.bundle.js"></script>
+  </body>
+</html>

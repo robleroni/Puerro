@@ -31,6 +31,9 @@ const createElement = (tagName, attributes = {}) => content => {
  * @returns {HTMLElement}
  */
 const render = node => {
+  if (null == node) {
+    return document.createTextNode('');
+  }
   if (typeof node === 'string' || typeof node === 'number') {
     return document.createTextNode(node);
   }
@@ -57,6 +60,7 @@ const diff = ($parent, oldNode, newNode, index = 0) => {
     return;
   }
   if (changed(oldNode, newNode)) {
+    console.log(oldNode, newNode);
     $parent.replaceChild(render(newNode), $parent.childNodes[index]);
     return;
   }
@@ -88,5 +92,9 @@ const mount = ($root, view, initialState, useDiffing = true) => {
 
   let state = initialState;
   let vDom = view(state, setState);
-  $root.replaceChild(render(vDom), $root.firstChild);
+  if ($root.firstChild) {
+    $root.appendChild(render(vDom), $root.firstChild);
+  } else {
+    $root.appendChild(render(vDom));
+  }
 };

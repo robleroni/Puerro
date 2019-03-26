@@ -20,6 +20,8 @@
 
 ## Development Process
 
+The form now has quite a lot of fields and its a bit of a pain to programatically fill it with values. Maybe we are at a point where abstracting the DOM could be a good idea.
+
 ### ID Management
 
 ## Result
