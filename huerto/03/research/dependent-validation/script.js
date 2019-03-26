@@ -1,4 +1,5 @@
-import { h, mount } from '../../../../puerro/util/dom';
+import { h } from '../../../../puerro/util/vdom';
+import { mount } from '../../../../puerro/util/dom';
 
 const $form = document.querySelector('form');
 const initialState = {

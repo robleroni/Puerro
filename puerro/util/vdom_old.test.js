@@ -1,14 +1,14 @@
 import { describe } from '../test/test';
-import { createElement } from './dom';
+import { vNode, createNode } from './vdom_old';
 
-describe('dom util', test => {
+describe('vdom util', test => {
   test('createElement with plain text', assert => {
     // given
     const tagName = 'div';
     const content = 'test123';
 
     // when
-    const $el = createElement(tagName)(content);
+    const $el = createNode(vNode(tagName)()(content));
 
     // then
     assert.is($el.innerText, content);
@@ -18,13 +18,10 @@ describe('dom util', test => {
   test('createElement with child nodes', assert => {
     // given
     const tagName = 'ul';
-    const content = `
-      <li>test</li>
-      <li>123</li>
-    `;
-
+    const content = [vNode('li')()('test'), vNode('li')()('123')];
+    console.log(content);
     // when
-    const $el = createElement(tagName)(content);
+    const $el = createNode(vNode(tagName)()(content));
 
     //  then
     assert.is($el.childElementCount, 2);
@@ -37,7 +34,7 @@ describe('dom util', test => {
     const attributes = { style: 'color: green' };
 
     // when
-    const $el = createElement(tagName, attributes)(content);
+    const $el = createNode(vNode(tagName)(attributes)(content));
 
     // then
     assert.is($el.getAttribute('style'), 'color: green');

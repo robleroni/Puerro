@@ -1,4 +1,6 @@
-export { h, mount, createElement, diff, changed };
+import { changed } from './vdom';
+
+export { mount, createElement };
 
 /**
  * Creates a new HTMLElement
@@ -21,62 +23,10 @@ const createElement = (tagName, attributes = {}) => content => {
   return $element;
 };
 
-function changed(node1, node2) {
-  const nodeChanged =
-    typeof node1 !== typeof node2 ||
-    ((typeof node1 === 'string' || typeof node1 === 'number') && node1 !== node2) ||
-    node1.type !== node2.type;
-  const attributesChanged =
-    !!node1.attributes &&
-    !!node2.attributes &&
-    (Object.keys(node1.attributes).length !== Object.keys(node2.attributes).length ||
-      Object.keys(node1.attributes).some(a => !node2.attributes[a]) ||
-      Object.keys(node1.attributes).some(a => node1.attributes[a] !== node2.attributes[a]));
-  return nodeChanged || attributesChanged;
-}
-
-/**
- *
- * @param {HTMLElement} $parent
- * @param {object} oldNode
- * @param {object} newNode
- * @param {number} index
- */
-const diff = ($parent, oldNode, newNode, index = 0) => {
-  if (oldNode === null || oldNode === undefined) {
-    $parent.appendChild(render(newNode));
-  } else if (newNode === null || newNode === undefined) {
-    $parent.removeChild($parent.childNodes[index]);
-  } else if (changed(oldNode, newNode)) {
-    $parent.replaceChild(render(newNode), $parent.childNodes[index]);
-  } else if (newNode.tagName) {
-    newNode.children.forEach((newNode, i) => {
-      diff($parent.childNodes[index], oldNode.children[i], newNode, i);
-    });
-  }
-};
-
-/**
- * Creates a node object which can be rendered
- *
- * @param {string} tagName
- * @param {object} attributes
- * @param {any} node
- */
-const h = (tagName, attributes, node) => {
-  const children = node instanceof Array ? node : node != null ? [node] : [];
-
-  return {
-    tagName: tagName,
-    attributes: attributes || {},
-    children: children,
-  };
-};
-
 /**
  * renders a given node object
  *
- * @param {object} node
+ * @param {import('./vdom').VNode} node
  *
  * @returns {HTMLElement}
  */
@@ -90,22 +40,53 @@ const render = node => {
 };
 
 /**
+ * compares two VDOM nodes and applies the differences to the dom
+ *
+ * @param {HTMLElement} $parent
+ * @param {import('./vdom').VNode} oldNode
+ * @param {import('./vdom').VNode} newNode
+ * @param {number} index
+ */
+const diff = ($parent, oldNode, newNode, index = 0) => {
+  if (null == oldNode) {
+    $parent.appendChild(render(newNode));
+    return;
+  }
+  if (null == newNode) {
+    $parent.removeChild($parent.childNodes[index]);
+    return;
+  }
+  if (changed(oldNode, newNode)) {
+    $parent.replaceChild(render(newNode), $parent.childNodes[index]);
+    return;
+  }
+  if (newNode.tagName) {
+    newNode.children.forEach((newNode, i) => {
+      diff($parent.childNodes[index], oldNode.children[i], newNode, i);
+    });
+  }
+};
+
+/**
  * renders given stateful view into given container
  *
  * @param {HTMLElement} $root
- * @param {function(): object} view
+ * @param {function(): import('./vdom').VNode} view
  * @param {object} initialState
  */
-const mount = ($root, view, initialState) => {
+const mount = ($root, view, initialState, useDiffing = true) => {
   const setState = newState => {
     state = { ...state, ...newState };
     const newVDom = view(state, setState);
-    diff($root, vDom, newVDom);
+    if (useDiffing) {
+      diff($root, vDom, newVDom);
+    } else {
+      $root.replaceChild(render(newVDom), $root.firstChild);
+    }
     vDom = newVDom;
   };
 
   let state = initialState;
   let vDom = view(state, setState);
-  $root.innerHTML = '';
-  $root.appendChild(render(vDom));
+  $root.replaceChild(render(vDom), $root.firstChild);
 };

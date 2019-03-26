@@ -1,30 +1,40 @@
-export { vNode, createNode, render };
+export { h, changed };
+/**
+ * @typedef {{ tagName: string, attributes: object, children: any  }} VNode
+ */
 
-const vNode = tag => (attributes = {}) => (...nodes) => ({
-  tag,
+/**
+ * Creates a node object which can be rendered
+ *
+ * @param {string} tagName
+ * @param {object} attributes
+ * @param {VNode[] | VNode | any} node
+ *
+ * @returns {VNode}
+ */
+const h = (tagName, attributes = {}, ...nodes) => ({
+  tagName,
   attributes,
   children: [].concat(...nodes), // collapse nested arrays.
 });
 
-const createNode = vNode => {
-  if (typeof vNode === 'string' || typeof vNode === 'number') {
-    return document.createTextNode(vNode);
-  }
-
-  let $node = document.createElement(vNode.tag);
-  Object.keys(vNode.attributes).forEach(a => $node.setAttribute(a, vNode.attributes[a]));
-
-  vNode.children.forEach(c => $node.appendChild(createNode(c))); // append child nodes
-
-  return $node;
+/**
+ * compares two VDOM nodes and returns true if they are different
+ *
+ * @param {VNode} node1
+ * @param {VNode} node2
+ */
+const changed = (node1, node2) => {
+  const nodeChanged =
+    typeof node1 !== typeof node2 ||
+    ((typeof node1 === 'string' || typeof node1 === 'number') && node1 !== node2) ||
+    node1.type !== node2.type;
+  const attributesChanged =
+    !!node1.attributes &&
+    !!node2.attributes &&
+    (Object.keys(node1.attributes).length !== Object.keys(node2.attributes).length ||
+      Object.keys(node1.attributes).some(
+        a => !node2.attributes[a] || node1.attributes[a] !== node2.attributes[a]
+      ));
+  return nodeChanged || attributesChanged;
 };
-
-const render = $root => vNode => $root.appendChild(createNode(vNode));
-
-// Attempt to generate vElements.. but export doesn't work as expected
-const tags = ['input', 'form', 'button'];
-const vElements = tags.reduce((acc, tag) => {
-  acc[tag] = vNode(tag);
-  return acc;
-}, {});
-const input = vNode('input');
