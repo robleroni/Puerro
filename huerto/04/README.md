@@ -24,4 +24,17 @@ The form now has quite a lot of fields and its a bit of a pain to programaticall
 
 ### ID Management
 
+### Building Form with vDom
+
+#### With Diffing:
+
+Problems:
+- Problem with accessing outdated state if the state of different vnode changes
+- VNodes which are not changed, are stuck with a node instance of the state. This is a problem, if for example an event gets called and interacts with the old state.
+
+#### Without Diffing:
+
+Problems: 
+- 
+
 ## Result
