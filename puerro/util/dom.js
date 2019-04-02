@@ -13,13 +13,15 @@ const createElement = (tagName, attributes = {}) => content => {
   if (content) {
     $element.innerHTML = content;
   }
-  Object.keys(attributes).forEach(key => {
-    if (typeof attributes[key] === 'function') {
-      $element.addEventListener(key, attributes[key]);
-    } else {
-      $element.setAttribute(key, attributes[key]);
-    }
-  });
+  Object.keys(attributes)
+    .filter(key => null != attributes[key]) // don't render attributes with value null/undefined
+    .forEach(key => {
+      if (typeof attributes[key] === 'function') {
+        $element.addEventListener(key, attributes[key]);
+      } else {
+        $element.setAttribute(key, attributes[key]);
+      }
+    });
   return $element;
 };
 
