@@ -1,5 +1,5 @@
 import { h } from '../../../../puerro/util/vdom';
-import { mount } from '../../../../puerro/util/dom';
+import { mount, mountWithActions } from '../../../../puerro/util/dom';
 import { vegetableClassifications, origins } from '../../../../assets/js/constants';
 
 /**
@@ -10,7 +10,7 @@ import { vegetableClassifications, origins } from '../../../../assets/js/constan
 const initialState = {
   form: {
     name: '',
-    classification: '',
+    classification: 'Tubers',
     origin: '',
     amount: 1,
     comments: '',
@@ -32,8 +32,10 @@ const onClassification = $origin => value => event => {
   }
 };
 
-const originIsDisabled = (origin, formState, ) => {
-
+const actions = {
+  setName: name => state => { state.form.name = name },
+  setClassification: classification => state => {state.form.classification = classification},
+  setAmount: amount => state => { state.form.amount = amount },
 }
 
 /**
@@ -54,30 +56,28 @@ const createFormField = (label, element) => {
  *
  * @returns {function(DemoState): import('../../../../puerro/util/vdom').VNode} *
  */
-const view = (getState, setState) => {
+const view = (getState, act) => {
   const form = getState().form;
   return h('form', {}, [
-    createFormField('Name', h('input', { value: form.name, change: (event) => setState({form: {...getState().form, name: event.target.value}}) })),
-    createFormField('Classification', h('select', { value: form.classification },
+    createFormField('Name', h('input', { value: form.name, change: (event) => act(actions.setName(event.target.value)) })),
+    createFormField('Classification', h('select', { value: form.classification, change: (event) => act(actions.setClassification(event.target.value))  },
         vegetableClassifications.map(c =>
           h('option', { value: c, selected: c === form.classification ? true : undefined }, c)
         )
       )
     ),
-    createFormField('Origin', h('div', {}, 
+    createFormField('Origin', h('div', {},
       origins.map(o => [
         h('input', {
-          id: o.name, type: 'radio', name: 'origin', value: o.name, checked: o.name === form.origin ? true : undefined,
+          id: o.name, type: 'radio', name: 'origin', value: o.name, checked: !o.disabledOn.includes(form.classification) && o.name === form.origin ? true : undefined,
           disabled: o.disabledOn.includes(form.classification) ? true : undefined
-      }), 
+      }),
         h('label', {for: o.name}, o.name)
       ]).reduce((acc, val) => acc.concat(val), [])
     )),
-    createFormField('Amount', h('div', {}, 
+    createFormField('Amount', h('div', {},
       [
-        h('input', {type: 'checkbox', checked: form.amount > 0 ? true: undefined, change: (event) => setState({
-          form: {...form, amount: event.target.checked ? 1 : 0}
-        })}),
+        h('input', {type: 'checkbox', checked: form.amount > 0 ? true: undefined, change: (event) => act(actions.setAmount(event.target.checked ? 1 : 0))}),
         h('label', {}, 'Planted'),
         h('input', {type: 'number', min: 1, value: form.amount, style: `display: ${form.amount > 0 ? 'inline' : 'none'}`})
       ]
@@ -86,4 +86,4 @@ const view = (getState, setState) => {
   ]);
 };
 
-mount(document.querySelector('main'), view, initialState, false);
+mountWithActions(document.querySelector('main'), view, initialState);
