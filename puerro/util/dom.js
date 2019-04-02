@@ -1,6 +1,6 @@
 import { changed } from './vdom';
 
-export { mount, createElement };
+export { mount, createElement,mountWithActions };
 
 /**
  * Creates a new HTMLElement
@@ -101,3 +101,26 @@ const mount = ($root, view, initialState, useDiffing = true) => {
     $root.appendChild(render(vDom));
   }
 };
+
+const mountWithActions = ($root, view, initialState) => {
+  let state = initialState;
+  const getState = () => state;
+
+  const refresh =() => {
+    const newVDom = view(getState, act);
+    diff($root, vDom, newVDom);
+    vDom = newVDom;
+  }
+
+  const act = (action) => {
+    state = action(state, event) || state;
+    refresh();
+  }
+
+  let vDom = view(getState, act);
+  if ($root.firstChild) {
+    $root.replaceChild(render(vDom), $root.firstChild);
+  } else {
+    $root.appendChild(render(vDom));
+  }
+}
