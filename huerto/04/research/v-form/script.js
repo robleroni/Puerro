@@ -1,5 +1,5 @@
 import { h } from '../../../../puerro/util/vdom';
-import { mount, mountWithActions } from '../../../../puerro/util/dom';
+import { mountWithActions } from '../../../../puerro/util/dom';
 import { vegetableClassifications, origins } from '../../../../assets/js/constants';
 
 /**
@@ -15,21 +15,6 @@ const initialState = {
     amount: 1,
     comments: '',
   },
-};
-
-/**
- *
- * @param {HTMLInputElement} $origin
- */
-const onClassification = $origin => value => event => {
-  $origin.disabled = false;
-  $origin.labels.forEach(label => (label.style.opacity = '1'));
-
-  if (event.target.value === value) {
-    $origin.disabled = true;
-    $origin.checked = false;
-    $origin.labels.forEach(label => (label.style.opacity = '0.5'));
-  }
 };
 
 const actions = {
