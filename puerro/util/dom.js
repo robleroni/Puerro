@@ -1,6 +1,6 @@
 import { changed } from './vdom';
 
-export { mount, createElement,mountWithActions };
+export { mount, createElement, mountWithActions, render };
 
 /**
  * Creates a new HTMLElement
@@ -106,7 +106,7 @@ const mountWithActions = ($root, view, initialState) => {
   let state = initialState;
   const getState = () => state;
 
-  const refresh =() => {
+  const refresh = () => {
     const newVDom = view(getState, act);
     diff($root, vDom, newVDom);
     vDom = newVDom;
