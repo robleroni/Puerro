@@ -1,8 +1,8 @@
 # Season 04 - Changing Input
 
-| Implementation (Demo) | Test Results |
-| --------------------- | ------------ |
-| [03 - Validation]()   | [Tests 03]() |
+| Implementation (Demo)            | Test Results           |
+| -------------------------------- | ---------------------- |
+| [04 - Changing Input](demo.html) | [Tests 05](tests.html) |
 
 ## Conversation
 
@@ -14,9 +14,9 @@
 >
 > > **Customer**: I haven't thought about that! Yes of course! The best case would be that I can change all the fields. I just recently forgot to water my tomatoes because I haven't written it as a comment. I don't know if they will survive.. I might need to remove it soon. Could you add a delete functionality as well? As sad as it sounds.
 >
-> > **Developer**: Of course, this will complete the whole CRUD spectrum.
+> > **Developer**: Of course, this will complete the whole CRUD spectrum. I'll add a vegetable counter for you as well!
 >
-> > **Customer**: Yeah ok, you lost me.. but It sure sounds professional.
+> > **Customer**: Yeah ok, you lost me.. but it sure sounds professional. But I like the counter idea.
 
 ## Development Process
 
@@ -33,20 +33,22 @@ Problems:
 **1. VNodes which are not changed, are stuck with an old instance of the state.**
 
 For instance if we have a button and on each click the `state.count` gets increased:
+
 ```js
-const view = (state, setState) =>  
-  h('div', [ 
-    h('button', { click: () => setState({ count: state.count+1 }) }, 'Add'), 
-    h('span', {}, state.count)
+const view = (state, setState) =>
+  h('div', [
+    h('button', { click: () => setState({ count: state.count + 1 }) }, 'Add'),
+    h('span', {}, state.count),
   ]);
 ```
+
 Since the button itself stays the same on each click the current diffing algorithm will not rerender the button. This causes the instance of the `state` object in the `click` event handler to be stuck on the initial state.
 
-We decided to resolve this by always accessing the state through a getter function. This way the consumer of the state can be sure to get the latest instance. 
+We decided to resolve this by always accessing the state through a getter function. This way the consumer of the state can be sure to get the latest instance.
 
 #### Without Diffing:
 
-Problems: 
+Problems:
 **1. Rerendering while filling in a form**
 If the whole form get's rerenderd while the user is filling it out the focus gets not set correctly by default.
 This causes unexpected behavior if the user for instance tries to check a checkbox right after editing a text field:
