@@ -16,14 +16,14 @@ const onChange = setState => event => {
   }
 };
 
-const view = (getState, setState) => {
+const view = ({state, setState}) => {
   const v = h('div', {}, [
     h('input', {
       input: onChange(setState),
       name: 'from',
       type: 'date',
       required: true,
-      value: getState()
+      value: state
         .from.toISOString()
         .substr(0, 10),
     }),
@@ -32,11 +32,11 @@ const view = (getState, setState) => {
       name: 'to',
       type: 'date',
       required: true,
-      value: getState()
+      value: state
         .to.toISOString()
         .substr(0, 10),
     }),
-    h('p', {}, `${getState().from.toISOString()} - ${getState().to.toISOString()}`),
+    h('p', {}, `${state.from.toISOString()} - ${state.to.toISOString()}`),
     h('button', {}, 'Submit'),
   ]);
   console.log(v);

@@ -41,8 +41,8 @@ const createFormField = (label, element) => {
  *
  * @returns {function(DemoState): import('../../../../puerro/util/vdom').VNode} *
  */
-const view = (getState, act) => {
-  const form = getState().form;
+const view = ({ state, act }) => {
+  const form = state.form;
   return h('form', {}, [
     createFormField('Name', h('input', { value: form.name, change: (event) => act(actions.setName(event.target.value)) })),
     createFormField('Classification', h('select', { value: form.classification, change: (event) => act(actions.setClassification(event.target.value))  },

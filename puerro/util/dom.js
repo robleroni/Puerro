@@ -78,14 +78,14 @@ const diff = ($parent, oldNode, newNode, index = 0) => {
  * @param {HTMLElement} $root
  * @param {function(): import('./vdom').VNode} view
  * @param {object} initialState
+ * @param {boolean} useDiffing
  */
 const mount = ($root, view, initialState, useDiffing = true) => {
-  let state = initialState;
-  const getState = () => state;
+  let _state = initialState;
 
   const setState = newState => {
-    state = { ...state, ...newState };
-    const newVDom = view(getState, setState);
+    _state = { ..._state, ...newState };
+    const newVDom = view(viewParams);
     if (useDiffing) {
       diff($root, vDom, newVDom);
     } else {
@@ -94,7 +94,13 @@ const mount = ($root, view, initialState, useDiffing = true) => {
     vDom = newVDom;
   };
 
-  let vDom = view(getState, setState);
+  const viewParams = {
+    get state() {
+      return _state;
+    },
+    setState: setState,
+  };
+  let vDom = view(viewParams);
   if ($root.firstChild) {
     $root.replaceChild(render(vDom), $root.firstChild);
   } else {
@@ -102,25 +108,43 @@ const mount = ($root, view, initialState, useDiffing = true) => {
   }
 };
 
-const mountWithActions = ($root, view, initialState) => {
-  let state = initialState;
-  const getState = () => state;
+/**
+ * renders given stateful view into given container
+ *
+ * @param {HTMLElement} $root
+ * @param {function(): import('./vdom').VNode} view
+ * @param {object} initialState
+ * @param {boolean} useDiffing
+ */
+const mountWithActions = ($root, view, initialState, useDiffing = true) => {
+  let _state = initialState;
 
   const refresh = () => {
-    const newVDom = view(getState, act);
-    diff($root, vDom, newVDom);
+    const newVDom = view(viewParams);
+    
+    if (useDiffing) {
+      diff($root, vDom, newVDom);
+    } else {
+      $root.replaceChild(render(newVDom), $root.firstChild);
+    }
     vDom = newVDom;
-  }
+  };
 
-  const act = (action) => {
-    state = action(state, event) || state;
+  const act = action => {
+    _state = action(_state, event) || _state;
     refresh();
-  }
+  };
 
-  let vDom = view(getState, act);
+  const viewParams = {
+    get state() {
+      return _state;
+    },
+    act: act,
+  };
+  let vDom = view(viewParams);
   if ($root.firstChild) {
     $root.replaceChild(render(vDom), $root.firstChild);
   } else {
     $root.appendChild(render(vDom));
   }
-}
+};

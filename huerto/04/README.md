@@ -44,7 +44,12 @@ const view = (state, setState) =>
 
 Since the button itself stays the same on each click the current diffing algorithm will not rerender the button. This causes the instance of the `state` object in the `click` event handler to be stuck on the initial state.
 
-We decided to resolve this by always accessing the state through a getter function. This way the consumer of the state can be sure to get the latest instance.
+There are two ways  we looked at to eliminate this problem:
+
+1. Accessing the state through a getter function. This way the consumer of the state can be sure to get the latest instance.
+2. Only mutate the state through actions, which get called with the latest state.
+
+We decided to implement both strategies, because the action functions not only make sure the latest state is passed, but also, make the code more readable.
 
 #### Without Diffing:
 
