@@ -29,12 +29,27 @@ The form now has quite a lot of fields and its a bit of a pain to programaticall
 #### With Diffing:
 
 Problems:
-- Problem with accessing outdated state if the state of different vnode changes
-- VNodes which are not changed, are stuck with a node instance of the state. This is a problem, if for example an event gets called and interacts with the old state.
+
+**1. VNodes which are not changed, are stuck with an old instance of the state.**
+
+For instance if we have a button and on each click the `state.count` gets increased:
+```js
+const view = (state, setState) =>  
+  h('div', [ 
+    h('button', { click: () => setState({ count: state.count+1 }) }, 'Add'), 
+    h('span', {}, state.count)
+  ]);
+```
+Since the button itself stays the same on each click the current diffing algorithm will not rerender the button. This causes the instance of the `state` object in the `click` event handler to be stuck on the initial state.
+
+We decided to resolve this by always accessing the state through a getter function. This way the consumer of the state can be sure to get the latest instance. 
 
 #### Without Diffing:
 
 Problems: 
-- 
+**1. Rerendering while filling in a form**
+If the whole form get's rerenderd while the user is filling it out the focus gets not set correctly by default.
+This causes unexpected behavior if the user for instance tries to check a checkbox right after editing a text field:
+<<GIF showing the problem>>
 
 ## Result
