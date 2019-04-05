@@ -86,9 +86,9 @@ Let's start and try to implement it with and without a framework.
 #### Pure JavaScript (Vanilla)
 
 JavaScript can listen on events that happen to HTML elements and change the DOM (Document Object Model).
-There is not much more needed for this task.
+There is not much more needed for this task than an event listener on the input field.
 
-=> Checkout the [Implementation Example](../../research/01/event-listeners)
+=> Checkout the [Implementation Example](research/event-listeners)
 
 #### Angular, React, Vue
 

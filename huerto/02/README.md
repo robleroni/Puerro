@@ -8,9 +8,9 @@
 
 > > **Customer**: Wow! That was quick!
 >
-> > **Developer**: Sure thing, that's because I didn't had to use a framework for it.
+> > **Developer**: Sure thing, that's because I didn't have to use a framework for it.
 >
-> > **Customer**: A framewhat? Nevermind. Tell you what, three tomates have already grown on my tomato vine. Now I also want to know how many pieces of each vegetable I own. Could you let me add the amount as well?
+> > **Customer**: A framewhat? Nevermind. Tell you what, three tomatoes have already grown on my tomato vine. Now I also want to know how many pieces of each vegetable I own. Could you let me add the amount as well?
 >
 > > **Developer**: For sure! Anything else?
 >
@@ -22,28 +22,68 @@
 
 ## Development Process
 
-- Should I use a `<form>`?
-- What would be the best way to conditionally show the amount-field?
-- This is getting quite complicated, maybe I should draw out how the form inputs interact with each other.
-
-## Result
+In this iteration the main challenge is that we receive more input from the user.
+This leads to the consideration to group the received data together.
 
 ### Form
 
-Using a `form` tag has many advantages, some of them are the following:
+In HTML there is a `<form>` tag, which allows to group controls together for submitting the data to a server.
+This results in using a server-side script that handles the form data.
+As discussed in the last iteration, the goal is to use client-scripting with Ajax calls instead.
 
+Nevertheless, using a `<form>` tag has many advantages, some of them are the following:
+
+- Improved logical structure of the HTML
 - Ability to [reset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/reset) the whole form
 - Ability check the validity of all form elements if HTML5 validation is used
 - Ability to get all form [elements](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/elements) within the form without knowing the elements specifically
 - Increased accessibility for screen readers
-- Better usability on smartphones (chaing keyboard to support submit)
+- Better usability on smartphones (changing keyboard to support submit)
 
-All of these contributed to desicion to use `form` tags for our project.
+=> See some of the `<form>` tag advantages in action [here](research/form-tag)
+
+### Grouping with Object
+
+A consideration is also to group the input in a javascript object.
+But as we are currently just displaying the entered data it's easier to have a direct toString implementation.
+
+=> A possible implementation can be viewed [here](research/object-grouping)
+
+### Click vs Submit Event
+
+As before with the event listener on a single input field, we could add an event listener on the button and access the form inside of this event.
+With this approach, the form would still be submitted, and the page refreshed. Therefore, we need to prevent the form from submitting.
+
+This can be achieved like this:
+
+```js
+const $form = document.querySelector('form');
+$form.onsubmit = event => event.preventDefault(); // prevent form from submitting.
+```
+
+Furthermore, this submit event contains the target form as well and is therefore a better place to handle the form fields than on the button's click event.
+
+```js
+const $form = document.querySelector('form');
+$form.onsubmit = event => {
+  event.preventDefault(); // prevent form from submitting.
+  console.log(event.target.input.value); // handle form fields
+};
+```
+
+=> Checkout an example [here](research/form-submit)
 
 ### Conditionally show fields
 
-For now the fastest and easiest way is to listen to events of one field and with that information toggle the visibility of others.
+For now, the fastest and easiest way is to listen to events of one field and with that information toggle the visibility of others.
 
-### Diagram
+#### Diagram
 
+Diagram of how the form inputs interact with each other.
 ![diagram](assets/form-diagram.png)
+
+## Result
+
+If receiving multiple inputs from the user, the HTML `<form>` tag is the best option.
+For using it in a client-side scripting manner, the default submitting action needs to be disabled and handled separately by modifying the submit event.
+While the input data is just displayed and not processed further, an object abstraction is not yet needed.

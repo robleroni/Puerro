@@ -2,7 +2,7 @@
 
 | Implementation (Demo)            | Test Results           |
 | -------------------------------- | ---------------------- |
-| [04 - Changing Input](demo.html) | [Tests 05](tests.html) |
+| [04 - Changing Input](demo.html) | [Tests 04](tests.html) |
 
 ## Conversation
 

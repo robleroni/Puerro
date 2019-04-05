@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Form</title>
+    <title>02 - Research - Form Tag</title>
     <style>
       form {
         display: flex;
@@ -19,10 +19,9 @@
 
     <script>
       const $form = document.querySelector('form');
-      console.log($form);
       window.setInterval(() => {
-        $form.reset();
-        $form.input.value = 'Lorem';
+        $form.reset(); // allows reseting the elements of the form
+        $form.input.value = 'Lorem'; // easy access to form elements
       }, 1000);
     </script>
   </body>

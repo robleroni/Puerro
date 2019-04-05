@@ -1,4 +1,4 @@
-export { ENTER_KEYCODE, Huerto }
+export { ENTER_KEYCODE, Huerto };
 
 const ENTER_KEYCODE = 13;
 
@@ -22,9 +22,7 @@ function Huerto($vegetable, $vegetables) {
   }
 
   function renderVegetables() {
-    return ($vegetables.innerHTML = vegetables
-      .map(v => `<li>${v}</li>`)
-      .join(''));
+    return ($vegetables.innerHTML = vegetables.map(v => `<li>${v}</li>`).join(''));
   }
 
   bindEvents();

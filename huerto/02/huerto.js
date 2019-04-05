@@ -1,25 +1,10 @@
 import { createElement } from '../../puerro/util/dom';
+import { vegetableClassifications } from '../../assets/js/constants';
 
-export {
-  renderVegetableClassifications,
-  onFormSubmit,
-  onPlantedChecked,
-  initHuerto
-}
-
-const vegetableClassifications = [
-  'Bulbs',
-  'Flowers',
-  'Fruits',
-  'Fungi',
-  'Leaves',
-  'Roots',
-  'Seeds',
-  'Stems',
-  'Tubers',
-];
+export { renderVegetableClassifications, onFormSubmit, onPlantedChecked, initHuerto };
 
 /**
+ * Creates the vegetable output string
  *
  * @param {HTMLFormElement} $form
  */
@@ -29,6 +14,7 @@ const createVegetableOutputString = $form =>
   }, ${$form.comments.value}`;
 
 /**
+ * Renders the Vegetable Classifications
  *
  * @param {HTMLSelectElement} $select
  */
@@ -39,6 +25,8 @@ const renderVegetableClassifications = $select => {
 };
 
 /**
+ * Event handler for subbmiting the form.
+ * It appends the Vegetable Output String to the given list.
  *
  * @param {HTMLUListElement} $list
  * @returns {function(Event): void}
@@ -49,6 +37,8 @@ const onFormSubmit = $list => event => {
 };
 
 /**
+ * Event Handler for the amount input.
+ * It changes the display style based on the planted checkbox
  *
  * @param {HTMLInputElement} $amount
  * @returns {function(Event): void}

@@ -1,23 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Huerto - 01</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>01 - Huerto</title>
     <script src="dist/script.bundle.js"></script>
   </head>
   <body>
     <h1>Huerto - Your Vegetable Garden</h1>
     <label>Add vegetable</label>
+
     <input id="vegetable" />
     <ul id="vegetables"></ul>
 
     <script>
-      _.Huerto(
-        document.getElementById('vegetable'),
-        document.getElementById('vegetables')
-      );
+      _.Huerto(document.getElementById('vegetable'), document.getElementById('vegetables'));
     </script>
   </body>
 </html>

@@ -20,7 +20,7 @@ The showcase application should build up on well-known [UI-Patterns](http://ui-p
 
 | Folder             | Description                                       |
 | ------------------ | ------------------------------------------------- |
-| [docs/](docs/)     | Documentation like the logbook                    |
+| [docs/](docs/)     | Documentation like the logbook with decisions     |
 | [huerto/](huerto/) | Showcase project of the research process          |
 | [puerro/](puerro/) | Abstractions and utilities for the huerto project |
 | [test/](test/)     | All the test results combined in one place        |
@@ -34,18 +34,17 @@ Tested with:
 - npm version _6.4.1_ and _6.7.0_
 - node version _10.11.0_ and _11.10.1_
 
-### How to run
+### How to Run
 
 ```
 npm install     // to install the dev dependency 'rollup'
 npm start       // to bundle the scripts and watch for changes
 ```
 
-### How to test/verify
+### How to Test/Verify
 
-| Repository online                         | verify local code              |
-| ----------------------------------------- | ------------------------------ |
-| [All Tests](test/AllTests.html)           | `open test/AllTests.html`      |
-| [Puerro Tests](test/PuerroTests.html)     | `open test/PuerroTests.html`   |
-| [Huerto Tests](test/HuertoTests.html)     | `open test/HuertoTests.html`   |
-| [Research Tests](test/ResearchTests.html) | `open test/ResearchTests.html` |
+| Online/Live                                                                   | Locally                      |
+| ----------------------------------------------------------------------------- | ---------------------------- |
+| [All Tests](https://robin-fhnw.github.io/IP5-Puerro/test/AllTests.html)       | `open test/AllTests.html`    |
+| [Puerro Tests](https://robin-fhnw.github.io/IP5-Puerro/test/PuerroTests.html) | `open test/PuerroTests.html` |
+| [Huerto Tests](https://robin-fhnw.github.io/IP5-Puerro/test/HuertoTests.html) | `open test/HuertoTests.html` |

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>02 - Research - Conditional Elements</title>
+  </head>
+  <body>
+    <input type="checkbox" name="test" id="test" />
+    <div style="display: none" id="content">Conditionally shown</div>
+    <script>
+      const $test = document.getElementById('test');
+      const $content = document.getElementById('content');
+
+      $test.addEventListener('input', event => {
+        $content.style.display = $test.checked ? 'block' : 'none';
+      });
+    </script>
+  </body>
+</html>
