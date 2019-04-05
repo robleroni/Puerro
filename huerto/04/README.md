@@ -49,7 +49,7 @@ Without diffing the whole DOM tree is rendered on each change in the state. Sinc
 
 Here is an example of how rerendering without diffing works: (The orange node changed, both the red and orange nodes are rerendered)
 
-![no_diffing](Z:/Dev/Git/1_github/IP5-Puerro/assets/diagrams/no_diffing.png)
+![no_diffing](../../assets/diagrams/no_diffing.png)
 
 ##### Problems:
 
@@ -69,7 +69,7 @@ Under (research/diffing)[research/diffing] there is an example of a table with 1
 With diffing the idea is to find which VDOM-Nodes actually a changed and only rerender the tree from there.
 Here is an example of how the rendering with diffing works: (The orange node changed, both the red and orange nodes are rerendered)
 
-![no_diffing](..\..\assets\diagrams\diffing.png)
+![diffing](../../assets/diagrams/diffing.png)
 
 ##### Problems:
 
