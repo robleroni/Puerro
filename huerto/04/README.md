@@ -24,11 +24,54 @@ The form now has quite a lot of fields and its a bit of a pain to programaticall
 
 ### ID Management
 
-### Building Form with vDom
+### Building a Form with the vDom
+
+We abstracted the creation of HTML elements in a common way known as Virtual DOM.
+The idea is to create a tree of objects resembling the DOM and rendering this tree to the actual DOM at any given time.
+Since plain objects are easier to handle than `HTMLElement`'s this makes generating HTML out of JavaScript a better experience from a developers perspective.
+This approach also improves testability since the mocking of the DOM is no longer nessecary, beacause the `HTMLElement`'s are created dynamically and not as HTML markup. 
+
+We created a helper function called `h` to create a tree of VNodes which in turn can be rendered to the DOM:
+```javascript
+const vDom = h('div', { id: 'myDiv' }, [ h('span', {}, 'foo'), h('span', {}, 'bar') ]);
+```
+
+To render the VDOM the `render` function can be used. This function returns a `HTMLElement` which contains the whole tree defined by the VDOM:
+```javascript
+const $dom = render(vDom);
+```
+
+Ideally the VDOM gets rendered each time something changes which has to be represented on the website. That's why we created a small state management on top of the VDOM. This state management persists a state and rerenders the view if something within the state changes. There are two main ways in which this rerendering of the view can be done.
+
+#### Without Diffing:
+
+Without diffing the whole DOM tree is rendered on each change in the state. Since the implementation of the DOM is very performant the user is not restricted with this approach even if the state changes very often.
+
+Here is an example of how rerendering without diffing works: (The orange node changed, both the red and orange nodes are rerendered)
+
+![no_diffing](Z:/Dev/Git/1_github/IP5-Puerro/assets/diagrams/no_diffing.png)
+
+##### Problems:
+
+**1. Rerendering while filling in a form**
+If the whole form get's rerenderd while the user is filling it out the focus gets not set correctly by default.
+This causes unexpected behavior if the user for instance tries to check a checkbox right after editing a text field:
+<<GIF showing the problem>>
+
+**2. Huge DOM trees**
+This is a minor problem for most use cases, but still has to be taken into consideration. 
+Under (research/diffing)[research/diffing] there is an example of a table with 10000 rows which is rerendered slightly different on a row-click event. We have found, that with DOM trees as big as this, without diffing the trees the performance suffers quite a bit. (Depending on system and browser between factor 1.5-2 compared with diffing) 
+
+
 
 #### With Diffing:
 
-Problems:
+With diffing the idea is to find which VDOM-Nodes actually a changed and only rerender the tree from there.
+Here is an example of how the rendering with diffing works: (The orange node changed, both the red and orange nodes are rerendered)
+
+![no_diffing](..\..\assets\diagrams\diffing.png)
+
+##### Problems:
 
 **1. VNodes which are not changed, are stuck with an old instance of the state.**
 
@@ -50,13 +93,5 @@ There are two ways  we looked at to eliminate this problem:
 2. Only mutate the state through actions, which get called with the latest state.
 
 We decided to implement both strategies, because the action functions not only make sure the latest state is passed, but also, make the code more readable.
-
-#### Without Diffing:
-
-Problems:
-**1. Rerendering while filling in a form**
-If the whole form get's rerenderd while the user is filling it out the focus gets not set correctly by default.
-This causes unexpected behavior if the user for instance tries to check a checkbox right after editing a text field:
-<<GIF showing the problem>>
 
 ## Result
