@@ -908,7 +908,7 @@
      * @typedef {{ name: string, classification: string, origin: string, amount: number, comments: string  }} Vegetable
      */
     const vegetables = ObservableList([]);
-    const selectedIndex = Observable(-1);
+    const selectedIndex = Observable(-1); // Maybe use Nothing
 
     /**
      * Renders a removable vegetable entry with the given vegetable in the given container
@@ -1071,6 +1071,16 @@
         const $ul = document.createElement('ul');
         const vegetable = Vegetable();
         vegetable.setName('Tomato');
+
+        const $template = document.createElement('div');
+        $template.innerHTML = `
+    <template id="vegetable-entry">
+      <li>
+        <span></span>
+        <button>Delete</button>
+      </li>
+    </template>`;
+        document.body.appendChild($template);
 
         // when
         createVegetableEntry($ul, vegetable);

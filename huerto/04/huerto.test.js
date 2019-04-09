@@ -89,6 +89,16 @@ describe('05 Huerto', test => {
     const vegetable = Vegetable();
     vegetable.setName('Tomato');
 
+    const $template = document.createElement('div');
+    $template.innerHTML = `
+    <template id="vegetable-entry">
+      <li>
+        <span></span>
+        <button>Delete</button>
+      </li>
+    </template>`;
+    document.body.appendChild($template);
+
     // when
     createVegetableEntry($ul, vegetable);
 

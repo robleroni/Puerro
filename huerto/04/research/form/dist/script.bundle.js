@@ -16,8 +16,8 @@
    */
   const vNode = (tagName, attributes = {}, ...nodes) => ({
     tagName,
-    attributes,
-    children: [].concat(...nodes), // collapse nested arrays.
+    attributes: null == attributes ? {} : attributes,
+    children: null == nodes ? [] : [].concat(...nodes), // collapse nested arrays.
   });
 
   /**

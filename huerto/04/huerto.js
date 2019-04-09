@@ -18,7 +18,7 @@ export {
  * @typedef {{ name: string, classification: string, origin: string, amount: number, comments: string  }} Vegetable
  */
 const vegetables = ObservableList([]);
-const selectedIndex = Observable(-1);
+const selectedIndex = Observable(-1); // Maybe use Nothing
 
 /**
  * Renders a removable vegetable entry with the given vegetable in the given container
