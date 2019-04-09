@@ -2,7 +2,13 @@
 
 This is what's happening in the Puerro Project (newest first):
 
-#Diffing needed? and Yoda conditions (26.03.2019)
+# Clean MVC (09.03.2019)
+
+The term MVC (Model-View-Controller) has been misused in recent year, for different patterns. It would be interesting to go back to the core of what MVC is and try to implement it in different JavaScript use cases. 
+
+Although diffing is not necessarily benefitial to the performance of a web application, it is useful for other situations. For instance if a view is rerendered completely it loses its identity. Previously focused elements lose their focus because they are replaced with new element instances. ([see huerto 04](../huerto/04/README.md))
+
+# Diffing needed? and Yoda conditions (26.03.2019)
 
 We created a VDOM implementation and drafted a first idea on how to do diffing. During our weekly meeting the question came up, if diffing is actually needed or the DOM interaction is more performant if we replace the whole DOM-tree on each change. To test that we will create demos with the two different implementations.
 

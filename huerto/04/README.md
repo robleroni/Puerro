@@ -29,7 +29,7 @@ The form now has quite a lot of fields and its a bit of a pain to programaticall
 We abstracted the creation of HTML elements in a common way known as Virtual DOM.
 The idea is to create a tree of objects resembling the DOM and rendering this tree to the actual DOM at any given time.
 Since plain objects are easier to handle than `HTMLElement`'s this makes generating HTML out of JavaScript a better experience from a developers perspective.
-This approach also improves testability since the mocking of the DOM is no longer nessecary, beacause the `HTMLElement`'s are created dynamically and not as HTML markup. 
+This approach also improves testability since the mocking of the DOM is no longer nessecary, beacause the `HTMLElement`'s are created dynamically and not as HTML markup.
 
 We created a helper function called `h` to create a tree of VNodes which in turn can be rendered to the DOM:
 ```javascript
@@ -59,8 +59,8 @@ This causes unexpected behavior if the user for instance tries to check a checkb
 <<GIF showing the problem>>
 
 **2. Huge DOM trees**
-This is a minor problem for most use cases, but still has to be taken into consideration. 
-Under (research/diffing)[research/diffing] there is an example of a table with 10000 rows which is rerendered slightly different on a row-click event. We have found, that with DOM trees as big as this, without diffing the trees the performance suffers quite a bit. (Depending on system and browser between factor 1.5-2 compared with diffing) 
+This is a minor problem for most use cases, but still has to be taken into consideration.
+Under [research/diffing](research/diffing) there is an example of a table with 10000 rows which is rerendered slightly different on a row-click event. We have found, that with DOM trees as big as this, without diffing the trees the performance suffers quite a bit. (Depending on system and browser between factor 1.5-2 compared with diffing)
 
 
 
