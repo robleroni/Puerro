@@ -59,16 +59,20 @@ describe('observable', test => {
 
     assert.is(list.count(), 0);
     let addCount = 0;
-    let delCount = 0;
+    let removeCount = 0;
     list.onAdd(item => (addCount += item));
     list.add(1);
     assert.is(addCount, 1);
     assert.is(list.count(), 1);
     assert.is(raw.length, 1);
 
-    list.onDel(item => (delCount += item));
-    list.del(1);
-    assert.is(delCount, 1);
+    const index = list.indexOf(1);
+    assert.is(index, 0);
+    assert.is(list.get(index), 1);
+
+    list.onRemove(item => (removeCount += item));
+    list.remove(1);
+    assert.is(removeCount, 1);
     assert.is(list.count(), 0);
     assert.is(raw.length, 0);
   });
