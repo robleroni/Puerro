@@ -3,12 +3,16 @@ export { Observable, ObservableList };
 const Observable = value => {
   const listeners = [];
   return {
-    onChange: callback => listeners.push(callback),
+    onChange: callback => {
+      listeners.push(callback);
+      callback(value, value);
+    },
     getValue: () => value,
     setValue: newValue => {
       if (value === newValue) return;
-      listeners.forEach(notify => notify(newValue, value));
+      const oldValue = value;
       value = newValue;
+      listeners.forEach(notify => notify(newValue, oldValue));
     },
   };
 };
@@ -53,6 +57,7 @@ const ObservableList = list => {
     },
     count: () => list.length,
     countIf: pred => list.reduce((sum, item) => (pred(item) ? sum + 1 : sum), 0),
+    indexOf: item => list.indexOf(item)
   };
 };
 
