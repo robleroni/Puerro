@@ -1,5 +1,8 @@
 import { h } from '../../../../puerro/util/vdom';
 import { mount } from '../../../../puerro/util/dom';
+import htm from './htm';
+
+const html = htm.bind(h);
 
 const $form = document.querySelector('form');
 const initialState = {
@@ -16,31 +19,23 @@ const onChange = setState => event => {
   }
 };
 
-const view = ({state, setState}) => {
-  const v = h('div', {}, [
-    h('input', {
-      input: onChange(setState),
-      name: 'from',
-      type: 'date',
-      required: true,
-      value: state
-        .from.toISOString()
-        .substr(0, 10),
-    }),
-    h('input', {
-      input: onChange(setState),
-      name: 'to',
-      type: 'date',
-      required: true,
-      value: state
-        .to.toISOString()
-        .substr(0, 10),
-    }),
-    h('p', {}, `${state.from.toISOString()} - ${state.to.toISOString()}`),
-    h('button', {}, 'Submit'),
-  ]);
-  console.log(v);
-  return v;
-};
+const view = ({state, setState}) =>
+  html`
+    <div>
+      <input
+        input=${onChange(setState)}
+        name="from"
+        type="date"
+        value=${state.from.toISOString().substr(0, 10)}
+      required />
+      <input
+        input=${onChange(setState)}
+        name="to"
+        type="date"
+        value=${state.to.toISOString().substr(0, 10)}
+      required />
+      <div>${state.from.toISOString()} - ${state.to.toISOString()}</div>
+    </div>
+  `;
 
 mount($form, view, initialState);

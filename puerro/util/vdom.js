@@ -14,8 +14,8 @@ export { h, changed, toVNode };
  */
 const vNode = (tagName, attributes = {}, ...nodes) => ({
   tagName,
-  attributes,
-  children: [].concat(...nodes), // collapse nested arrays.
+  attributes: null == attributes ? {} : attributes,
+  children: null == nodes ? [] : [].concat(...nodes), // collapse nested arrays.
 });
 const h = vNode;
 
