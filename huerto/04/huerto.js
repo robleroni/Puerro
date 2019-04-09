@@ -1,6 +1,6 @@
 import { createElement } from '../../puerro/util/dom';
 import { vegetableClassifications } from '../../assets/js/constants';
-import { ObservableList } from '../../puerro/observable/observable';
+import { ObservableList, Observable } from '../../puerro/observable/observable';
 
 import { Vegetable } from './vegetable';
 
@@ -17,8 +17,8 @@ export {
 /**
  * @typedef {{ name: string, classification: string, origin: string, amount: number, comments: string  }} Vegetable
  */
-
 const vegetables = ObservableList([]);
+const selectedIndex = Observable(-1);
 
 /**
  * Renders a removable vegetable entry with the given vegetable in the given container
@@ -39,6 +39,9 @@ const createVegetableEntry = ($container, vegetable) => {
 
   $container.appendChild($li);
 
+  $li.addEventListener('click', () => {
+    selectedIndex.setValue(vegetables.indexOf(vegetable));
+  });
   vegetables.onRemove(_vegetable =>
     vegetable === _vegetable ? $container.removeChild($li) : undefined
   );
@@ -53,6 +56,19 @@ const renderVegetableClassifications = $select => {
     .map(classification => createElement('option', { value: classification })(classification))
     .forEach($select.appendChild.bind($select));
 };
+
+/**
+ *
+ * @param {*} vegetable
+ */
+const setFormValue = $form => vegetable => {
+  $form.name.value = vegetable.getName();
+  $form.classification.value = vegetable.getClassification();
+  $form.origin.value = vegetable.getOrigin();
+  $form.planted.checked = vegetable.getPlanted();
+  $form.amount.value = vegetable.getAmount();
+  $form.comments.value = vegetable.getComments();
+}
 
 /**
  *
@@ -73,6 +89,7 @@ const onFormSubmit = event => {
   vegetable.setComments($form.comments.value);
 
   vegetables.add(vegetable);
+  selectedIndex.setValue(vegetables.indexOf(vegetable));
 };
 
 /**
@@ -116,4 +133,15 @@ const initHuerto = ($form, $vegetables) => {
   renderVegetableClassifications($form.classification);
 
   vegetables.onAdd(vegetable => createVegetableEntry($vegetables, vegetable));
+  selectedIndex.onChange((newIndex, oldIndex) => {
+    const selectedClass = 'selected';
+    if (oldIndex >= 0) {
+      $vegetables.children[oldIndex].classList.remove(selectedClass);
+    }
+    if (newIndex >= 0) {
+      $vegetables.children[newIndex].classList.add(selectedClass);
+      setFormValue($form)(vegetables.get(newIndex));
+    }
+  });
+
 };
