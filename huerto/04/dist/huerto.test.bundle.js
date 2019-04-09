@@ -184,8 +184,8 @@
   /**
    * @typedef {{ name: string, classification: string, origin: string, amount: number, comments: string  }} Vegetable
    */
-
   const vegetables = ObservableList([]);
+  const selectedIndex = Observable(-1);
 
   /**
    * Renders a removable vegetable entry with the given vegetable in the given container
@@ -206,6 +206,9 @@
 
     $container.appendChild($li);
 
+    $li.addEventListener('click', () => {
+      selectedIndex.setValue(vegetables.indexOf(vegetable));
+    });
     vegetables.onRemove(_vegetable =>
       vegetable === _vegetable ? $container.removeChild($li) : undefined
     );
@@ -240,6 +243,7 @@
     vegetable.setComments($form.comments.value);
 
     vegetables.add(vegetable);
+    selectedIndex.setValue(vegetables.indexOf(vegetable));
   };
 
   /**
