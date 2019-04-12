@@ -6,6 +6,7 @@ import {
   onClassification,
   createVegetableEntry,
   vegetables,
+  onIndexChange,
 } from './huerto';
 import { createElement } from '../../puerro/util/dom';
 import { Vegetable } from './vegetable';

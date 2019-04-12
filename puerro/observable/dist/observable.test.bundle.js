@@ -115,12 +115,18 @@
     };
   };
 
+  /**
+   * 
+   * @param {any[]} list 
+   */
   const ObservableList = list => {
     const addListeners = [];
     const removeListeners = [];
+    const replaceListeners = [];
     return {
       onAdd: listener => addListeners.push(listener),
       onRemove: listener => removeListeners.push(listener),
+      onReplace: listener => replaceListeners.push(listener),
       add: item => {
         list.push(item);
         addListeners.forEach(listener => listener(item));
@@ -131,6 +137,13 @@
           list.splice(i, 1);
         } // essentially "remove(item)"
         removeListeners.forEach(listener => listener(item));
+      },
+      replace: (item, newItem) => {
+        const i = list.indexOf(item);
+        if (i >= 0) {
+          list[i] = newItem;
+        }
+        replaceListeners.forEach(listener => listener(item, newItem));
       },
       count: () => list.length,
       countIf: pred => list.reduce((sum, item) => (pred(item) ? sum + 1 : sum), 0),

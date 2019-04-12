@@ -850,12 +850,18 @@
       };
     };
 
+    /**
+     * 
+     * @param {any[]} list 
+     */
     const ObservableList = list => {
       const addListeners = [];
       const removeListeners = [];
+      const replaceListeners = [];
       return {
         onAdd: listener => addListeners.push(listener),
         onRemove: listener => removeListeners.push(listener),
+        onReplace: listener => replaceListeners.push(listener),
         add: item => {
           list.push(item);
           addListeners.forEach(listener => listener(item));
@@ -866,6 +872,13 @@
             list.splice(i, 1);
           } // essentially "remove(item)"
           removeListeners.forEach(listener => listener(item));
+        },
+        replace: (item, newItem) => {
+          const i = list.indexOf(item);
+          if (i >= 0) {
+            list[i] = newItem;
+          }
+          replaceListeners.forEach(listener => listener(item, newItem));
         },
         count: () => list.length,
         countIf: pred => list.reduce((sum, item) => (pred(item) ? sum + 1 : sum), 0),
@@ -917,24 +930,31 @@
      * @param {Vegetable} vegetable
      */
     const createVegetableEntry = ($container, vegetable) => {
-      const $template = document.querySelector('#vegetable-entry');
-      const $entry = document.importNode($template.content, true);
+      const generateLi = _vegetable => {
+        const $li = createElement('li', {})(_vegetable.toString());
 
-      const $li = $entry.querySelector('li');
-      const $span = $entry.querySelector('span');
-      const $delButton = $entry.querySelector('button');
+        $li.addEventListener('click', () => {
+          selectedIndex.setValue(vegetables.indexOf(_vegetable));
+        });
+      
+        return $li;
+      };
 
-      $span.textContent = vegetable.toString();
-      $delButton.onclick = _ => vegetables.remove(vegetable);
-
+      let $li = generateLi(vegetable);
       $container.appendChild($li);
 
-      $li.addEventListener('click', () => {
-        selectedIndex.setValue(vegetables.indexOf(vegetable));
-      });
       vegetables.onRemove(_vegetable =>
         vegetable === _vegetable ? $container.removeChild($li) : undefined
       );
+      vegetables.onReplace((oldVegetable, newVegetable) =>{
+        if (vegetable === oldVegetable) {
+          const $newLi = generateLi(newVegetable);
+          $container.replaceChild($newLi, $li);
+          $li = $newLi;
+          vegetable = newVegetable;
+          selectedIndex.setValue(selectedIndex.getValue());
+        }
+      });
     };
 
     /**
@@ -954,9 +974,8 @@
      */
     const onFormSubmit = event => {
       event.preventDefault(); // Prevent Form Submission
-      event.target.name.classList.remove('invalid');
-
       const $form = event.target;
+      $form.name.classList.remove('invalid');
       const vegetable = Vegetable();
       vegetable.setName($form.name.value);
       vegetable.setClassification($form.classification.value);
@@ -965,8 +984,15 @@
       vegetable.setAmount($form.amount.value);
       vegetable.setComments($form.comments.value);
 
-      vegetables.add(vegetable);
+
+      if (selectedIndex.getValue() >= 0) {
+        vegetables.replace(vegetables.get(selectedIndex.getValue()), vegetable);
+        selectedIndex.setValue(-1);
+      } else {
+        vegetables.add(vegetable);
+      }
       selectedIndex.setValue(vegetables.indexOf(vegetable));
+
     };
 
     /**

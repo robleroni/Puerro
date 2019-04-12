@@ -7,6 +7,7 @@ import { Vegetable } from './vegetable';
 export {
   initHuerto,
   renderVegetableClassifications,
+  onIndexChange,
   onFormSubmit,
   onPlantedChecked,
   onClassification,
@@ -27,24 +28,31 @@ const selectedIndex = Observable(-1); // Maybe use Nothing
  * @param {Vegetable} vegetable
  */
 const createVegetableEntry = ($container, vegetable) => {
-  const $template = document.querySelector('#vegetable-entry');
-  const $entry = document.importNode($template.content, true);
+  const generateLi = _vegetable => {
+    const $li = createElement('li', {})(_vegetable.toString());
 
-  const $li = $entry.querySelector('li');
-  const $span = $entry.querySelector('span');
-  const $delButton = $entry.querySelector('button');
+    $li.addEventListener('click', () => {
+      selectedIndex.setValue(vegetables.indexOf(_vegetable));
+    });
+  
+    return $li;
+  }
 
-  $span.textContent = vegetable.toString();
-  $delButton.onclick = _ => vegetables.remove(vegetable);
-
+  let $li = generateLi(vegetable);
   $container.appendChild($li);
 
-  $li.addEventListener('click', () => {
-    selectedIndex.setValue(vegetables.indexOf(vegetable));
-  });
   vegetables.onRemove(_vegetable =>
     vegetable === _vegetable ? $container.removeChild($li) : undefined
   );
+  vegetables.onReplace((oldVegetable, newVegetable) =>{
+    if (vegetable === oldVegetable) {
+      const $newLi = generateLi(newVegetable);
+      $container.replaceChild($newLi, $li);
+      $li = $newLi;
+      vegetable = newVegetable;
+      selectedIndex.setValue(selectedIndex.getValue());
+    }
+  });
 };
 
 /**
@@ -77,9 +85,8 @@ const setFormValue = $form => vegetable => {
  */
 const onFormSubmit = event => {
   event.preventDefault(); // Prevent Form Submission
-  event.target.name.classList.remove('invalid');
-
   const $form = event.target;
+  $form.name.classList.remove('invalid');
   const vegetable = Vegetable();
   vegetable.setName($form.name.value);
   vegetable.setClassification($form.classification.value);
@@ -88,8 +95,15 @@ const onFormSubmit = event => {
   vegetable.setAmount($form.amount.value);
   vegetable.setComments($form.comments.value);
 
-  vegetables.add(vegetable);
+
+  if (selectedIndex.getValue() >= 0) {
+    vegetables.replace(vegetables.get(selectedIndex.getValue()), vegetable);
+    selectedIndex.setValue(-1);
+  } else {
+    vegetables.add(vegetable);
+  }
   selectedIndex.setValue(vegetables.indexOf(vegetable));
+
 };
 
 /**
@@ -114,34 +128,57 @@ const onClassification = $origin => value => event => {
     $origin.checked = false;
     $origin.labels.forEach(label => (label.style.opacity = '0.5'));
   }
-};
+}
+
+const onDeleteClick = evt => {
+  const val = vegetables.get(selectedIndex.getValue());
+  vegetables.remove(val);
+}
+
+/**
+ * 
+ * @param {HTMLFormElement} $form 
+ * @param {HTMLUListElement} $vegetables 
+ * @param {HTMLButtonElement} $delete 
+ */
+const onIndexChange = ($form, $vegetables, $delete) => (newIndex, oldIndex) => {
+  const selectedClass = 'selected';
+  if (oldIndex >= 0) {
+    $vegetables.children[oldIndex].classList.remove(selectedClass);
+  }
+  if (newIndex >= 0) {
+    $vegetables.children[newIndex].classList.add(selectedClass);
+    setFormValue($form)(vegetables.get(newIndex));
+    $delete.removeAttribute('disabled');
+  }
+  if (newIndex === -1) {
+    $delete.setAttribute('disabled', true);
+  }
+}
 
 /**
  * Constructor function to create the Huerto UI
  *
  * @param {HTMLFormElement} $form - Input element to add new vegetables
  * @param {HTMLElement} $vegetables - Container for the vegetables
+ * @param {HTMLButtonElement} $delete - Delete button
+ * @param {HTMLButtonElement} $add - Delete button
  */
-const initHuerto = ($form, $vegetables) => {
+const initHuerto = ($form, $vegetables, $delete, $add) => {
   $form.addEventListener('submit', onFormSubmit);
   $form.planted.addEventListener('change', onPlantedChecked($form.amount));
   $form.classification.addEventListener('change', onClassification($form.asia)('Tubers'));
   $form.classification.addEventListener('change', onClassification($form.america)('Fungi'));
+  $delete.addEventListener('click', onDeleteClick);
+  $add.addEventListener('click', evt => {
+    $form.reset();
+    selectedIndex.setValue(-1);
+  });
 
   $form.name.oninvalid = event => event.target.classList.add('invalid');
 
   renderVegetableClassifications($form.classification);
 
   vegetables.onAdd(vegetable => createVegetableEntry($vegetables, vegetable));
-  selectedIndex.onChange((newIndex, oldIndex) => {
-    const selectedClass = 'selected';
-    if (oldIndex >= 0) {
-      $vegetables.children[oldIndex].classList.remove(selectedClass);
-    }
-    if (newIndex >= 0) {
-      $vegetables.children[newIndex].classList.add(selectedClass);
-      setFormValue($form)(vegetables.get(newIndex));
-    }
-  });
-
+  selectedIndex.onChange(onIndexChange($form, $vegetables, $delete));
 };
