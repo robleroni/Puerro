@@ -24,9 +24,20 @@ The form now has quite a lot of fields and its a bit of a pain to programaticall
 
 ### ID Management
 
+We are at a stage in the project where the application is essentially a CRUD (Create, Read, Update, Delete) system on a single "entity". In the frontend there are a few difficulties with handling the IDs of a CRUD. 
+
+#### Generation of a new ID
+
+The question here is when should a new ID be generated. There are a two main approaches to this problem:
+
+- On "Add": A new entry and with it a new ID is generated as soon as the user wants to create a new object, even before filling out the form to define the properties of the object.
+- On first "Save": The new entry and ID is created when it is first saved, before the first save the object is visible to the user only through the form.
+
+For our project we sticked to the easiest solution which in our opinion is the second option (on first "Save"). The main downside with this is that emediate synchronisation between the form and the "Master View" is not possible, since a new entry only really exists as soon as it's first saved. On the other hand this makes the whole solution simpler from a developers perspective since we don't have to worry about dirty state of an entry. Since everything going to the "persistence system" (in our case a in memory list) goes through the form and is not added directly we also prevent invalid entries in a clean and efficient way.
+
 ### Building a Form with the vDom
 
-We abstracted the creation of HTML elements in a common way known as Virtual DOM.
+We abstracted the creation of HTML elements in a common way known as Virtual DOM and used it in the research folder to recreate our form with it. 
 The idea is to create a tree of objects resembling the DOM and rendering this tree to the actual DOM at any given time.
 Since plain objects are easier to handle than `HTMLElement`'s this makes generating HTML out of JavaScript a better experience from a developers perspective.
 This approach also improves testability since the mocking of the DOM is no longer nessecary, beacause the `HTMLElement`'s are created dynamically and not as HTML markup.
@@ -87,11 +98,13 @@ const view = (state, setState) =>
 
 Since the button itself stays the same on each click the current diffing algorithm will not rerender the button. This causes the instance of the `state` object in the `click` event handler to be stuck on the initial state.
 
-There are two ways  we looked at to eliminate this problem:
+There are two ways we looked at to eliminate this problem:
 
 1. Accessing the state through a getter function. This way the consumer of the state can be sure to get the latest instance.
 2. Only mutate the state through actions, which get called with the latest state.
 
-We decided to implement both strategies, because the action functions not only make sure the latest state is passed, but also, make the code more readable.
+We decided to implement both strategies, because the action functions not only make sure the latest state is passed, but also, make the code more readable and mutations on the state centralised.
 
 ## Result
+
+The final result of this chapter is a fully functional CRUD system of our vegetable garden. We created the final crud without the vDom but with pure HTML and JS. We recognized, that although this is possible we would not recommend using this approach for bigger problems than a simple CRUD. The code is already quite incomprehensible. This is mainly due to DOM manipulations being made all over the code and not in a centralized manner. This also leads to decreased testability since a large protion of the functions manipulate the DOM directly, which makes it difficult to test any single function. 
