@@ -130,15 +130,14 @@
   const vegetables = ObservableList([]);
   const selectedId = Observable(0); // Maybe use Nothing
 
-  function * id() {
+  function* id() {
     let id = 0;
-    while(true) {
+    while (true) {
       id++;
       yield id;
     }
   }
   const genId = id();
-
 
   /**
    * Renders a removable vegetable entry with the given vegetable in the given container
@@ -170,11 +169,11 @@
         return selectedId.setValue(0);
       }
       if (index === vegetables.count()) {
-        return selectedId.setValue(vegetables.get(index-1).getId());
+        return selectedId.setValue(vegetables.get(index - 1).getId());
       }
       selectedId.setValue(vegetables.get(index).getId());
     });
-    vegetables.onReplace((oldVegetable, newVegetable) =>{
+    vegetables.onReplace((oldVegetable, newVegetable) => {
       if (vegetable.getId() === oldVegetable.getId()) {
         const $newLi = generateLi(newVegetable);
         $container.replaceChild($newLi, $li);

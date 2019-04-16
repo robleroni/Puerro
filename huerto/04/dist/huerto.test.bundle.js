@@ -204,15 +204,14 @@
   const vegetables = ObservableList([]);
   const selectedId = Observable(0); // Maybe use Nothing
 
-  function * id() {
+  function* id() {
     let id = 0;
-    while(true) {
+    while (true) {
       id++;
       yield id;
     }
   }
   const genId = id();
-
 
   /**
    * Renders a removable vegetable entry with the given vegetable in the given container
@@ -244,11 +243,11 @@
         return selectedId.setValue(0);
       }
       if (index === vegetables.count()) {
-        return selectedId.setValue(vegetables.get(index-1).getId());
+        return selectedId.setValue(vegetables.get(index - 1).getId());
       }
       selectedId.setValue(vegetables.get(index).getId());
     });
-    vegetables.onReplace((oldVegetable, newVegetable) =>{
+    vegetables.onReplace((oldVegetable, newVegetable) => {
       if (vegetable.getId() === oldVegetable.getId()) {
         const $newLi = generateLi(newVegetable);
         $container.replaceChild($newLi, $li);
@@ -321,7 +320,12 @@
     }
   };
 
-  describe('05 Huerto', test => {
+  const onDeleteClick = evt => {
+    const vegetable = vegetables.getAll().find(v => v.getId() === selectedId.getValue());
+    vegetables.remove(vegetable);
+  };
+
+  describe('04 Huerto', test => {
     test('renderVegetableClassifications', assert => {
       // given
       const $select = document.createElement('select');
@@ -400,23 +404,13 @@
       const vegetable = Vegetable();
       vegetable.setName('Tomato');
 
-      const $template = document.createElement('div');
-      $template.innerHTML = `
-    <template id="vegetable-entry">
-      <li>
-        <span></span>
-        <button>Delete</button>
-      </li>
-    </template>`;
-      document.body.appendChild($template);
-
       // when
       createVegetableEntry($ul, vegetable);
 
       // then
-      const $span = $ul.querySelector('span');
+      const $li = $ul.querySelector('li');
       assert.is($ul.children.length, 1);
-      assert.true($span.textContent.includes('Tomato'));
+      assert.true($li.textContent.includes('Tomato'));
     });
 
     test('remove Vegetable', assert => {
@@ -424,20 +418,19 @@
       const $ul = document.createElement('ul');
       const vegetable = Vegetable();
       vegetable.setName('Tomato');
+      vegetables.add(vegetable);
 
       // when
       createVegetableEntry($ul, vegetable);
 
       // then
-      const $span = $ul.querySelector('span');
+      const $li = $ul.querySelector('li');
       assert.is($ul.children.length, 1);
-      assert.true($span.textContent.includes('Tomato'));
-
-      // given
-      const $delButton = $ul.querySelector('button');
+      assert.true($li.textContent.includes('Tomato'));
 
       // when
-      $delButton.dispatchEvent(new KeyboardEvent('click'));
+      $li.click();
+      onDeleteClick();
 
       // then
       assert.is($ul.children.length, 0);
