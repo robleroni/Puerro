@@ -2,6 +2,20 @@
   'use strict';
 
   /**
+   * A Module that abstracts Virtual DOM interactions.
+   * It's purpose is to perform actions on DOM-like Objects
+   *
+   * @module vdom
+   */
+
+  /**
+   * A Module that abstracts DOM interactions.
+   * It's purpose is to perform actions on the DOM like creating and mounting elements
+   *
+   * @module dom
+   */
+
+  /**
    * Creates a new HTMLElement
    * @param {string} tagName
    *
@@ -35,6 +49,12 @@
     'Stems',
     'Tubers',
   ];
+
+  /**
+   * Observable Pattern Implementation
+   *
+   * @module observable
+   */
 
   const Observable = value => {
     const listeners = [];
@@ -130,15 +150,14 @@
   const vegetables = ObservableList([]);
   const selectedId = Observable(0); // Maybe use Nothing
 
-  function * id() {
+  function* id() {
     let id = 0;
-    while(true) {
+    while (true) {
       id++;
       yield id;
     }
   }
   const genId = id();
-
 
   /**
    * Renders a removable vegetable entry with the given vegetable in the given container
@@ -170,11 +189,11 @@
         return selectedId.setValue(0);
       }
       if (index === vegetables.count()) {
-        return selectedId.setValue(vegetables.get(index-1).getId());
+        return selectedId.setValue(vegetables.get(index - 1).getId());
       }
       selectedId.setValue(vegetables.get(index).getId());
     });
-    vegetables.onReplace((oldVegetable, newVegetable) =>{
+    vegetables.onReplace((oldVegetable, newVegetable) => {
       if (vegetable.getId() === oldVegetable.getId()) {
         const $newLi = generateLi(newVegetable);
         $container.replaceChild($newLi, $li);

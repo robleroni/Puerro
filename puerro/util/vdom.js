@@ -1,3 +1,10 @@
+/**
+ * A Module that abstracts Virtual DOM interactions.
+ * It's purpose is to perform actions on DOM-like Objects
+ *
+ * @module vdom
+ */
+
 export { h, changed, toVNode };
 /**
  * @typedef {{ tagName: string, attributes: object, children: any  }} VNode

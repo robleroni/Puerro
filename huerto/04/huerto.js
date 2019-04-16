@@ -13,6 +13,7 @@ export {
   onClassification,
   createVegetableEntry,
   vegetables,
+  onDeleteClick,
 };
 
 /**
@@ -21,15 +22,14 @@ export {
 const vegetables = ObservableList([]);
 const selectedId = Observable(0); // Maybe use Nothing
 
-function * id() {
+function* id() {
   let id = 0;
-  while(true) {
+  while (true) {
     id++;
     yield id;
   }
 }
 const genId = id();
-
 
 /**
  * Renders a removable vegetable entry with the given vegetable in the given container
@@ -46,7 +46,7 @@ const createVegetableEntry = ($container, vegetable) => {
     });
 
     return $li;
-  }
+  };
 
   let $li = generateLi(vegetable);
   $container.appendChild($li);
@@ -61,11 +61,11 @@ const createVegetableEntry = ($container, vegetable) => {
       return selectedId.setValue(0);
     }
     if (index === vegetables.count()) {
-      return selectedId.setValue(vegetables.get(index-1).getId());
+      return selectedId.setValue(vegetables.get(index - 1).getId());
     }
     selectedId.setValue(vegetables.get(index).getId());
   });
-  vegetables.onReplace((oldVegetable, newVegetable) =>{
+  vegetables.onReplace((oldVegetable, newVegetable) => {
     if (vegetable.getId() === oldVegetable.getId()) {
       const $newLi = generateLi(newVegetable);
       $container.replaceChild($newLi, $li);
@@ -97,7 +97,7 @@ const setFormValue = $form => vegetable => {
   $form.planted.checked = vegetable.getPlanted();
   $form.amount.value = vegetable.getAmount();
   $form.comments.value = vegetable.getComments();
-}
+};
 
 /**
  *
@@ -149,12 +149,12 @@ const onClassification = $origin => value => event => {
     $origin.checked = false;
     $origin.labels.forEach(label => (label.style.opacity = '0.5'));
   }
-}
+};
 
 const onDeleteClick = evt => {
   const vegetable = vegetables.getAll().find(v => v.getId() === selectedId.getValue());
   vegetables.remove(vegetable);
-}
+};
 
 /**
  *
@@ -176,7 +176,7 @@ const onIndexChange = ($form, $vegetables, $delete) => (newId, oldId) => {
     $form.reset();
     $delete.setAttribute('disabled', true);
   }
-}
+};
 
 /**
  * Constructor function to create the Huerto UI

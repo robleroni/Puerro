@@ -4,6 +4,20 @@
   (function () {
 
     /**
+     * A Module that abstracts Virtual DOM interactions.
+     * It's purpose is to perform actions on DOM-like Objects
+     *
+     * @module vdom
+     */
+
+    /**
+     * A Module that abstracts DOM interactions.
+     * It's purpose is to perform actions on the DOM like creating and mounting elements
+     *
+     * @module dom
+     */
+
+    /**
      * Creates a new HTMLElement
      * @param {string} tagName
      *
@@ -99,6 +113,12 @@
       reportGroup(name);
       return callback(test);
     }
+
+    /**
+     * Observable Pattern Implementation
+     *
+     * @module observable
+     */
 
     const Observable = value => {
       const listeners = [];
@@ -235,6 +255,20 @@
   }());
 
   (function () {
+
+    /**
+     * A Module that abstracts Virtual DOM interactions.
+     * It's purpose is to perform actions on DOM-like Objects
+     *
+     * @module vdom
+     */
+
+    /**
+     * A Module that abstracts DOM interactions.
+     * It's purpose is to perform actions on the DOM like creating and mounting elements
+     *
+     * @module dom
+     */
 
     /**
      * Creates a new HTMLElement
@@ -381,6 +415,13 @@
   (function () {
 
     /**
+     * A Module that abstracts Virtual DOM interactions.
+     * It's purpose is to perform actions on DOM-like Objects
+     *
+     * @module vdom
+     */
+
+    /**
      * compares two VDOM nodes and returns true if they are different
      *
      * @param {VNode} node1
@@ -403,6 +444,13 @@
           ));
       return nodeChanged || attributesChanged;
     };
+
+    /**
+     * A Module that abstracts DOM interactions.
+     * It's purpose is to perform actions on the DOM like creating and mounting elements
+     *
+     * @module dom
+     */
 
     /**
      * Creates a new HTMLElement
