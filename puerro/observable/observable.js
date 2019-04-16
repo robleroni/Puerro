@@ -72,7 +72,7 @@ const ObservableList = list => {
     countIf: pred => list.reduce((sum, item) => (pred(item) ? sum + 1 : sum), 0),
     indexOf: item => list.indexOf(item),
     get: index => list[index],
-    getAll: list,
+    getAll: () => list,
   };
 };
 
