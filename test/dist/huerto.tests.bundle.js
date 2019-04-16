@@ -851,8 +851,8 @@
     };
 
     /**
-     * 
-     * @param {any[]} list 
+     *
+     * @param {any[]} list
      */
     const ObservableList = list => {
       const addListeners = [];
@@ -883,11 +883,13 @@
         count: () => list.length,
         countIf: pred => list.reduce((sum, item) => (pred(item) ? sum + 1 : sum), 0),
         indexOf: item => list.indexOf(item),
-        get: index => list[index]
+        get: index => list[index],
+        getAll: () => list,
       };
     };
 
     const Vegetable = () => {
+      const _id             = Observable(0);
       const _name           = Observable('');
       const _classification = Observable('');
       const _origin         = Observable('');
@@ -896,12 +898,14 @@
       const _comments       = Observable('');
 
       return {
+        getId:              ()              => _id.getValue(),
         getName:            ()              => _name.getValue(),
         getClassification:  ()              => _classification.getValue(),
         getOrigin:          ()              => _origin.getValue(),
         getPlanted:         ()              => _plantend.getValue(),
         getAmount:          ()              => _amount.getValue(),
         getComments:        ()              => _comments.getValue(),
+        setId:              id              => _id.setValue(id),
         setName:            name            => _name.setValue(name),
         setClassification:  classification  => _classification.setValue(classification),
         setOrigin:          origin          => _origin.setValue(origin),
@@ -910,18 +914,28 @@
         setComments:        comments        => _comments.setValue(comments),
 
         toString: () => `
-        ${_name.getValue()} (${_classification.getValue()}) from ${_origin.getValue()}, 
-        ${_plantend.getValue() ? `planted (${_amount.getValue()})` : 'not planted'}, 
+        ${_name.getValue()} (${_classification.getValue()}) from ${_origin.getValue()},
+        ${_plantend.getValue() ? `planted (${_amount.getValue()})` : 'not planted'},
         ${_comments.getValue()}
       `,
       };
     };
 
     /**
-     * @typedef {{ name: string, classification: string, origin: string, amount: number, comments: string  }} Vegetable
+     * @typedef {{ id: number, name: string, classification: string, origin: string, amount: number, comments: string  }} Vegetable
      */
     const vegetables = ObservableList([]);
-    const selectedIndex = Observable(-1); // Maybe use Nothing
+    const selectedId = Observable(0); // Maybe use Nothing
+
+    function * id() {
+      let id = 0;
+      while(true) {
+        id++;
+        yield id;
+      }
+    }
+    const genId = id();
+
 
     /**
      * Renders a removable vegetable entry with the given vegetable in the given container
@@ -931,28 +945,39 @@
      */
     const createVegetableEntry = ($container, vegetable) => {
       const generateLi = _vegetable => {
-        const $li = createElement('li', {})(_vegetable.toString());
+        const $li = createElement('li', { 'data-id': _vegetable.getId() })(_vegetable.toString());
 
         $li.addEventListener('click', () => {
-          selectedIndex.setValue(vegetables.indexOf(_vegetable));
+          selectedId.setValue(_vegetable.getId());
         });
-      
+
         return $li;
       };
 
       let $li = generateLi(vegetable);
       $container.appendChild($li);
 
-      vegetables.onRemove(_vegetable =>
-        vegetable === _vegetable ? $container.removeChild($li) : undefined
-      );
+      vegetables.onRemove(_vegetable => {
+        if (vegetable.getId() !== _vegetable.getId()) {
+          return;
+        }
+        const index = [...$container.children].indexOf($li);
+        $container.removeChild($li);
+        if (vegetables.count() === 0) {
+          return selectedId.setValue(0);
+        }
+        if (index === vegetables.count()) {
+          return selectedId.setValue(vegetables.get(index-1).getId());
+        }
+        selectedId.setValue(vegetables.get(index).getId());
+      });
       vegetables.onReplace((oldVegetable, newVegetable) =>{
-        if (vegetable === oldVegetable) {
+        if (vegetable.getId() === oldVegetable.getId()) {
           const $newLi = generateLi(newVegetable);
           $container.replaceChild($newLi, $li);
           $li = $newLi;
           vegetable = newVegetable;
-          selectedIndex.setValue(selectedIndex.getValue());
+          selectedId.setValue(selectedId.getValue());
         }
       });
     };
@@ -977,6 +1002,7 @@
       const $form = event.target;
       $form.name.classList.remove('invalid');
       const vegetable = Vegetable();
+      vegetable.setId(genId.next().value);
       vegetable.setName($form.name.value);
       vegetable.setClassification($form.classification.value);
       vegetable.setOrigin($form.origin.value);
@@ -984,15 +1010,14 @@
       vegetable.setAmount($form.amount.value);
       vegetable.setComments($form.comments.value);
 
-
-      if (selectedIndex.getValue() >= 0) {
-        vegetables.replace(vegetables.get(selectedIndex.getValue()), vegetable);
-        selectedIndex.setValue(-1);
+      if (selectedId.getValue() > 0) {
+        const oldVegetable = vegetables.getAll().filter(v => v.getId() === selectedId.getValue());
+        vegetables.replace(vegetables.get(oldVegetable, vegetable));
+        selectedId.setValue(0);
       } else {
         vegetables.add(vegetable);
       }
-      selectedIndex.setValue(vegetables.indexOf(vegetable));
-
+      selectedId.setValue(vegetable.getId());
     };
 
     /**
