@@ -2,6 +2,12 @@
   'use strict';
 
   /**
+   * A Module that abstracts Virtual DOM interactions.
+   * It's purpose is to perform actions on DOM-like Objects
+   *
+   * @module vdom
+   */
+  /**
    * @typedef {{ tagName: string, attributes: object, children: any  }} VNode
    */
 
@@ -44,6 +50,13 @@
         ));
     return nodeChanged || attributesChanged;
   };
+
+  /**
+   * A Module that abstracts DOM interactions.
+   * It's purpose is to perform actions on the DOM like creating and mounting elements
+   *
+   * @module dom
+   */
 
   /**
    * Creates a new HTMLElement

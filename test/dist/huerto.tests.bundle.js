@@ -4,6 +4,20 @@
   (function () {
 
     /**
+     * A Module that abstracts Virtual DOM interactions.
+     * It's purpose is to perform actions on DOM-like Objects
+     *
+     * @module vdom
+     */
+
+    /**
+     * A Module that abstracts DOM interactions.
+     * It's purpose is to perform actions on the DOM like creating and mounting elements
+     *
+     * @module dom
+     */
+
+    /**
      * Creates a new HTMLElement
      * @param {string} tagName
      *
@@ -119,6 +133,20 @@
   }());
 
   (function () {
+
+    /**
+     * A Module that abstracts Virtual DOM interactions.
+     * It's purpose is to perform actions on DOM-like Objects
+     *
+     * @module vdom
+     */
+
+    /**
+     * A Module that abstracts DOM interactions.
+     * It's purpose is to perform actions on the DOM like creating and mounting elements
+     *
+     * @module dom
+     */
 
     /**
      * Creates a new HTMLElement
@@ -265,6 +293,20 @@
   }());
 
   (function () {
+
+    /**
+     * A Module that abstracts Virtual DOM interactions.
+     * It's purpose is to perform actions on DOM-like Objects
+     *
+     * @module vdom
+     */
+
+    /**
+     * A Module that abstracts DOM interactions.
+     * It's purpose is to perform actions on the DOM like creating and mounting elements
+     *
+     * @module dom
+     */
 
     /**
      * Creates a new HTMLElement
@@ -478,6 +520,20 @@
   }());
 
   (function () {
+
+    /**
+     * A Module that abstracts Virtual DOM interactions.
+     * It's purpose is to perform actions on DOM-like Objects
+     *
+     * @module vdom
+     */
+
+    /**
+     * A Module that abstracts DOM interactions.
+     * It's purpose is to perform actions on the DOM like creating and mounting elements
+     *
+     * @module dom
+     */
 
     /**
      * Creates a new HTMLElement
@@ -725,6 +781,20 @@
   (function () {
 
     /**
+     * A Module that abstracts Virtual DOM interactions.
+     * It's purpose is to perform actions on DOM-like Objects
+     *
+     * @module vdom
+     */
+
+    /**
+     * A Module that abstracts DOM interactions.
+     * It's purpose is to perform actions on the DOM like creating and mounting elements
+     *
+     * @module dom
+     */
+
+    /**
      * Creates a new HTMLElement
      * @param {string} tagName
      *
@@ -832,6 +902,12 @@
       'Stems',
       'Tubers',
     ];
+
+    /**
+     * Observable Pattern Implementation
+     *
+     * @module observable
+     */
 
     const Observable = value => {
       const listeners = [];

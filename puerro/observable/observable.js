@@ -1,3 +1,9 @@
+/**
+ * Observable Pattern Implementation
+ *
+ * @module observable
+ */
+
 export { Observable, ObservableList };
 
 const Observable = value => {

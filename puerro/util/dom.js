@@ -1,6 +1,13 @@
+/**
+ * A Module that abstracts DOM interactions.
+ * It's purpose is to perform actions on the DOM like creating and mounting elements
+ *
+ * @module dom
+ */
+
 import { changed } from './vdom';
 
-export { mount, createElement, mountWithActions, render };
+export { createElement, mount, mountWithActions, render };
 
 /**
  * Creates a new HTMLElement
@@ -121,7 +128,7 @@ const mountWithActions = ($root, view, initialState, useDiffing = true) => {
 
   const refresh = () => {
     const newVDom = view(viewParams);
-    
+
     if (useDiffing) {
       diff($root, vDom, newVDom);
     } else {
