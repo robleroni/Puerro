@@ -39,8 +39,8 @@ const EventObservable = obj => {
 };
 
 /**
- * 
- * @param {any[]} list 
+ *
+ * @param {any[]} list
  */
 const ObservableList = list => {
   const addListeners = [];
@@ -66,12 +66,13 @@ const ObservableList = list => {
       if (i >= 0) {
         list[i] = newItem;
       }
-      replaceListeners.forEach(listener => listener(item, newItem))
+      replaceListeners.forEach(listener => listener(item, newItem));
     },
     count: () => list.length,
     countIf: pred => list.reduce((sum, item) => (pred(item) ? sum + 1 : sum), 0),
     indexOf: item => list.indexOf(item),
-    get: index => list[index]
+    get: index => list[index],
+    getAll: list,
   };
 };
 
