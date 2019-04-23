@@ -6,19 +6,19 @@
 
 export { Observable, ObservableList };
 
-const Observable = value => {
+const Observable = item => {
   const listeners = [];
   return {
     onChange: callback => {
       listeners.push(callback);
-      callback(value, value);
+      callback(item, item);
     },
-    getValue: () => value,
-    setValue: newValue => {
-      if (value === newValue) return;
-      const oldValue = value;
-      value = newValue;
-      listeners.forEach(notify => notify(newValue, oldValue));
+    get: () => item,
+    set: newItem => {
+      if (item === newItem) return;
+      const oldItem = item;
+      item = newItem;
+      listeners.forEach(notify => notify(newItem, oldItem));
     },
   };
 };
@@ -72,7 +72,7 @@ const ObservableList = list => {
       if (i >= 0) {
         list[i] = newItem;
       }
-      replaceListeners.forEach(listener => listener(item, newItem));
+      replaceListeners.forEach(listener => listener(newItem, item));
     },
     count: () => list.length,
     countIf: pred => list.reduce((sum, item) => (pred(item) ? sum + 1 : sum), 0),

@@ -6,20 +6,20 @@ describe('observable', test => {
     const obs = Observable('');
 
     //  initial state
-    assert.is(obs.getValue(), '');
+    assert.is(obs.get(), '');
 
     //  subscribers get notified
     let found;
     obs.onChange(val => (found = val));
-    obs.setValue('firstValue');
+    obs.set('firstValue');
     assert.is(found, 'firstValue');
 
     //  value is updated
-    assert.is(obs.getValue(), 'firstValue');
+    assert.is(obs.get(), 'firstValue');
 
     //  it still works when the receiver symbols changes
     const newRef = obs;
-    newRef.setValue('secondValue');
+    newRef.set('secondValue');
     // listener updates correctly
     assert.is(found, 'secondValue');
 
@@ -27,17 +27,17 @@ describe('observable', test => {
     const secondAttribute = Observable('');
 
     //  initial state
-    assert.is(secondAttribute.getValue(), '');
+    assert.is(secondAttribute.get(), '');
 
     //  subscribers get notified
     let secondFound;
     secondAttribute.onChange(val => (secondFound = val));
-    secondAttribute.setValue('thirdValue');
+    secondAttribute.set('thirdValue');
     assert.is(found, 'secondValue');
     assert.is(secondFound, 'thirdValue');
 
     //  value is updated
-    assert.is(secondAttribute.getValue(), 'thirdValue');
+    assert.is(secondAttribute.get(), 'thirdValue');
 
     // subsribers get notified with access on old value
     let newFound, oldFound;
@@ -45,12 +45,12 @@ describe('observable', test => {
       newFound = newVal;
       oldFound = oldVal;
     });
-    secondAttribute.setValue('fourthValue');
+    secondAttribute.set('fourthValue');
     assert.is(newFound, 'fourthValue');
     assert.is(oldFound, 'thirdValue');
 
     //  value is updated
-    assert.is(secondAttribute.getValue(), 'fourthValue');
+    assert.is(secondAttribute.get(), 'fourthValue');
   });
 
   test('list', assert => {

@@ -56,19 +56,19 @@
    * @module observable
    */
 
-  const Observable = value => {
+  const Observable = item => {
     const listeners = [];
     return {
       onChange: callback => {
         listeners.push(callback);
-        callback(value, value);
+        callback(item, item);
       },
-      getValue: () => value,
-      setValue: newValue => {
-        if (value === newValue) return;
-        const oldValue = value;
-        value = newValue;
-        listeners.forEach(notify => notify(newValue, oldValue));
+      get: () => item,
+      set: newItem => {
+        if (item === newItem) return;
+        const oldItem = item;
+        item = newItem;
+        listeners.forEach(notify => notify(newItem, oldItem));
       },
     };
   };
@@ -101,7 +101,7 @@
         if (i >= 0) {
           list[i] = newItem;
         }
-        replaceListeners.forEach(listener => listener(item, newItem));
+        replaceListeners.forEach(listener => listener(newItem, item));
       },
       count: () => list.length,
       countIf: pred => list.reduce((sum, item) => (pred(item) ? sum + 1 : sum), 0),
@@ -112,34 +112,34 @@
   };
 
   const Vegetable = () => {
-    const _id             = Observable(0);
-    const _name           = Observable('');
+    const _id = Observable(0);
+    const _name = Observable('');
     const _classification = Observable('');
-    const _origin         = Observable('');
-    const _plantend       = Observable(false);
-    const _amount         = Observable(0);
-    const _comments       = Observable('');
+    const _origin = Observable('');
+    const _plantend = Observable(false);
+    const _amount = Observable(0);
+    const _comments = Observable('');
 
     return {
-      getId:              ()              => _id.getValue(),
-      getName:            ()              => _name.getValue(),
-      getClassification:  ()              => _classification.getValue(),
-      getOrigin:          ()              => _origin.getValue(),
-      getPlanted:         ()              => _plantend.getValue(),
-      getAmount:          ()              => _amount.getValue(),
-      getComments:        ()              => _comments.getValue(),
-      setId:              id              => _id.setValue(id),
-      setName:            name            => _name.setValue(name),
-      setClassification:  classification  => _classification.setValue(classification),
-      setOrigin:          origin          => _origin.setValue(origin),
-      setPlanted:         plantend        => _plantend.setValue(plantend),
-      setAmount:          amount          => _amount.setValue(amount),
-      setComments:        comments        => _comments.setValue(comments),
+      getId: () => _id.get(),
+      getName: () => _name.get(),
+      getClassification: () => _classification.get(),
+      getOrigin: () => _origin.get(),
+      getPlanted: () => _plantend.get(),
+      getAmount: () => _amount.get(),
+      getComments: () => _comments.get(),
+      setId: id => _id.set(id),
+      setName: name => _name.set(name),
+      setClassification: classification => _classification.set(classification),
+      setOrigin: origin => _origin.set(origin),
+      setPlanted: plantend => _plantend.set(plantend),
+      setAmount: amount => _amount.set(amount),
+      setComments: comments => _comments.set(comments),
 
       toString: () => `
-        ${_name.getValue()} (${_classification.getValue()}) from ${_origin.getValue()},
-        ${_plantend.getValue() ? `planted (${_amount.getValue()})` : 'not planted'},
-        ${_comments.getValue()}
+        ${_name.get()} (${_classification.get()}) from ${_origin.get()},
+        ${_plantend.get() ? `planted (${_amount.get()})` : 'not planted'},
+        ${_comments.get()}
       `,
     };
   };
@@ -170,7 +170,7 @@
       const $li = createElement('li', { 'data-id': _vegetable.getId() })(_vegetable.toString());
 
       $li.addEventListener('click', () => {
-        selectedId.setValue(_vegetable.getId());
+        selectedId.set(_vegetable.getId());
       });
 
       return $li;
@@ -186,20 +186,20 @@
       const index = [...$container.children].indexOf($li);
       $container.removeChild($li);
       if (vegetables.count() === 0) {
-        return selectedId.setValue(0);
+        return selectedId.set(0);
       }
       if (index === vegetables.count()) {
-        return selectedId.setValue(vegetables.get(index - 1).getId());
+        return selectedId.set(vegetables.get(index - 1).getId());
       }
-      selectedId.setValue(vegetables.get(index).getId());
+      selectedId.set(vegetables.get(index).getId());
     });
-    vegetables.onReplace((oldVegetable, newVegetable) => {
+    vegetables.onReplace((newVegetable, oldVegetable) => {
       if (vegetable.getId() === oldVegetable.getId()) {
         const $newLi = generateLi(newVegetable);
         $container.replaceChild($newLi, $li);
         $li = $newLi;
         vegetable = newVegetable;
-        selectedId.setValue(selectedId.getValue());
+        selectedId.set(selectedId.get());
       }
     });
   };
@@ -245,14 +245,14 @@
     vegetable.setAmount($form.amount.value);
     vegetable.setComments($form.comments.value);
 
-    if (selectedId.getValue() > 0) {
-      const oldVegetable = vegetables.getAll().filter(v => v.getId() === selectedId.getValue());
+    if (selectedId.get() > 0) {
+      const oldVegetable = vegetables.getAll().filter(v => v.getId() === selectedId.get());
       vegetables.replace(vegetables.get(oldVegetable, vegetable));
-      selectedId.setValue(0);
+      selectedId.set(0);
     } else {
       vegetables.add(vegetable);
     }
-    selectedId.setValue(vegetable.getId());
+    selectedId.set(vegetable.getId());
   };
 
   /**
@@ -280,7 +280,7 @@
   };
 
   const onDeleteClick = evt => {
-    const vegetable = vegetables.getAll().find(v => v.getId() === selectedId.getValue());
+    const vegetable = vegetables.getAll().find(v => v.getId() === selectedId.get());
     vegetables.remove(vegetable);
   };
 
@@ -321,7 +321,7 @@
     $form.classification.addEventListener('change', onClassification($form.america)('Fungi'));
     $delete.addEventListener('click', onDeleteClick);
     $add.addEventListener('click', evt => {
-      selectedId.setValue(0);
+      selectedId.set(0);
     });
 
     $form.name.oninvalid = event => event.target.classList.add('invalid');

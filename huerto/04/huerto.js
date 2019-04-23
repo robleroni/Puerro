@@ -42,7 +42,7 @@ const createVegetableEntry = ($container, vegetable) => {
     const $li = createElement('li', { 'data-id': _vegetable.getId() })(_vegetable.toString());
 
     $li.addEventListener('click', () => {
-      selectedId.setValue(_vegetable.getId());
+      selectedId.set(_vegetable.getId());
     });
 
     return $li;
@@ -58,20 +58,20 @@ const createVegetableEntry = ($container, vegetable) => {
     const index = [...$container.children].indexOf($li);
     $container.removeChild($li);
     if (vegetables.count() === 0) {
-      return selectedId.setValue(0);
+      return selectedId.set(0);
     }
     if (index === vegetables.count()) {
-      return selectedId.setValue(vegetables.get(index - 1).getId());
+      return selectedId.set(vegetables.get(index - 1).getId());
     }
-    selectedId.setValue(vegetables.get(index).getId());
+    selectedId.set(vegetables.get(index).getId());
   });
-  vegetables.onReplace((oldVegetable, newVegetable) => {
+  vegetables.onReplace((newVegetable, oldVegetable) => {
     if (vegetable.getId() === oldVegetable.getId()) {
       const $newLi = generateLi(newVegetable);
       $container.replaceChild($newLi, $li);
       $li = $newLi;
       vegetable = newVegetable;
-      selectedId.setValue(selectedId.getValue());
+      selectedId.set(selectedId.get());
     }
   });
 };
@@ -117,14 +117,14 @@ const onFormSubmit = event => {
   vegetable.setAmount($form.amount.value);
   vegetable.setComments($form.comments.value);
 
-  if (selectedId.getValue() > 0) {
-    const oldVegetable = vegetables.getAll().filter(v => v.getId() === selectedId.getValue());
+  if (selectedId.get() > 0) {
+    const oldVegetable = vegetables.getAll().filter(v => v.getId() === selectedId.get());
     vegetables.replace(vegetables.get(oldVegetable, vegetable));
-    selectedId.setValue(0);
+    selectedId.set(0);
   } else {
     vegetables.add(vegetable);
   }
-  selectedId.setValue(vegetable.getId());
+  selectedId.set(vegetable.getId());
 };
 
 /**
@@ -152,7 +152,7 @@ const onClassification = $origin => value => event => {
 };
 
 const onDeleteClick = evt => {
-  const vegetable = vegetables.getAll().find(v => v.getId() === selectedId.getValue());
+  const vegetable = vegetables.getAll().find(v => v.getId() === selectedId.get());
   vegetables.remove(vegetable);
 };
 
@@ -193,7 +193,7 @@ const initHuerto = ($form, $vegetables, $delete, $add) => {
   $form.classification.addEventListener('change', onClassification($form.america)('Fungi'));
   $delete.addEventListener('click', onDeleteClick);
   $add.addEventListener('click', evt => {
-    selectedId.setValue(0);
+    selectedId.set(0);
   });
 
   $form.name.oninvalid = event => event.target.classList.add('invalid');

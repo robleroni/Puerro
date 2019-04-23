@@ -139,7 +139,7 @@
         if (i >= 0) {
           list[i] = newItem;
         }
-        replaceListeners.forEach(listener => listener(item, newItem));
+        replaceListeners.forEach(listener => listener(newItem, item));
       },
       count: () => list.length,
       countIf: pred => list.reduce((sum, item) => (pred(item) ? sum + 1 : sum), 0),
@@ -183,7 +183,7 @@
   };
 
   const vegetables = ObservableList([]);
-  const selectedId = Observable(0);
+  const selectedVegetable = Observable(null);
 
   const initHuerto = ($input, $output) => {
     const $form = $input.querySelector('form');
@@ -192,101 +192,117 @@
     const $addButton = $output.querySelector('#add');
     const $trs = $output.querySelectorAll('tr:not(:first-child)');
 
-    vegetableClassifications
-      .map(classification => createElement('option', { value: classification })(classification))
-      .forEach($form.classification.appendChild.bind($form.classification));
-
-    $trs.forEach($tr => $tr.addEventListener('click', onVegetableClick));
+    vegetableClassifications.forEach(c => $form.classification.append(render(h('option', {}, c))));
 
     $form.addEventListener('submit', onFormSubmit);
+    $trs.forEach($tr => $tr.addEventListener('click', onVegetableRowClick));
 
-    selectedId.onChange(onSelectedVegetableChange($table));
-    vegetables.onAdd(onVegetableAdd($table));
-    vegetables.onReplace(onVegetableUpdate($table));
-    vegetables.onRemove(onVegetableDelete($table));
+    selectedVegetable.onChange(selectTr($table));
+    selectedVegetable.onChange(fillForm($form));
+
+    vegetables.onAdd(addVegetable($table));
+    vegetables.onAdd(_ => enableForm($form));
+
+    vegetables.onReplace(updateVegetable($table));
+
+    vegetables.onRemove(deleteVegetable($table));
+    vegetables.onRemove(_ => (vegetables.getAll().length ? enableForm($form) : disableForm($form)));
 
     $addButton.addEventListener('click', _ => vegetables.add(Vegetable()));
-    $delButton.addEventListener('click', onDeleteClick);
+    $delButton.addEventListener('click', _ => vegetables.remove(selectedVegetable.get()));
+
+    disableForm($form);
   };
 
-  const $trEntry = vegetable => {
-    const tr = h('tr', { 'data-id': vegetable.getId(), class: 'selected', click: onVegetableClick }, [
+  const addVegetable = $table => vegetable => {
+    $table.appendChild(render(trEntry(vegetable)));
+    selectedVegetable.set(vegetable);
+  };
+
+  const updateVegetable = $table => vegetable => {
+    const $trs = $table.querySelectorAll('tr:not(:first-child)');
+    const $tr = [...$trs].find($tr => $tr.getAttribute('data-id') == vegetable.getId());
+    $table.replaceChild(render(trEntry(vegetable)), $tr);
+    selectedVegetable.set(vegetable);
+  };
+
+  const deleteVegetable = $table => vegetable => {
+    if (null == vegetable) return;
+
+    const $trs = $table.querySelectorAll('tr:not(:first-child)');
+    const $tr = [...$trs].find($tr => $tr.getAttribute('data-id') == vegetable.getId());
+
+    if ($tr.previousSibling) {
+      selectedVegetable.set(
+        vegetables.getAll().find(v => v.getId() == $tr.previousSibling.getAttribute('data-id'))
+      );
+    }
+
+    if ($tr.nextSibling) {
+      selectedVegetable.set(
+        vegetables.getAll().find(v => v.getId() == $tr.nextSibling.getAttribute('data-id'))
+      );
+    }
+
+    $table.removeChild($tr);
+  };
+
+  const onFormSubmit = event => {
+    event.preventDefault(); // Prevent Form Submission
+
+    if (null == selectedVegetable.get()) return;
+
+    const $form = event.target;
+    const vegetable = Object.assign({}, selectedVegetable.get()); // copy
+
+    vegetable.setName($form.name.value);
+    vegetable.setClassification($form.classification.value);
+    vegetable.setOrigin($form.origin.value);
+    vegetable.setPlanted($form.planted.checked);
+    vegetable.setAmount($form.amount.value);
+    vegetable.setComments($form.comments.value);
+
+    vegetables.replace(selectedVegetable.get(), vegetable);
+  };
+
+  const onVegetableRowClick = event => {
+    const $table = event.target.parentElement;
+    const vegetable = vegetables.getAll().find(v => v.getId() == $table.getAttribute('data-id'));
+    selectedVegetable.set(vegetable);
+  };
+
+  const trEntry = vegetable => {
+    return h('tr', { 'data-id': vegetable.getId(), click: onVegetableRowClick }, [
       h('td', {}, vegetable.getName()),
       h('td', {}, vegetable.getClassification()),
       h('td', {}, vegetable.getOrigin()),
       h('td', {}, vegetable.getAmount()),
       h('td', {}, vegetable.getComments()),
     ]);
-
-    return render(tr);
   };
 
-  const onVegetableAdd = $table => vegetable => {
-    $table.appendChild($trEntry(vegetable));
-    selectedId.set(vegetable.getId());
+  const disableForm = $form => {
+    $form.style.opacity = 0.3;
+    [...$form.elements].forEach($element => ($element.disabled = true));
   };
 
-  const onVegetableUpdate = $table => vegetable => {
+  const enableForm = $form => {
+    $form.style.opacity = 1;
+    [...$form.elements].forEach($element => ($element.disabled = false));
+  };
+
+  const selectTr = $table => vegetable => {
     const $trs = $table.querySelectorAll('tr:not(:first-child)');
-
-    if (vegetable.getId() < 1) return;
-
-    const $oldTr = [...$trs].find($tr => $tr.getAttribute('data-id') == vegetable.getId());
-    $table.replaceChild($trEntry(vegetable), $oldTr);
-    selectedId.set(vegetable.getId());
-  };
-
-  const onVegetableDelete = $table => vegetable => {
-    const $trs = $table.querySelectorAll('tr:not(:first-child)');
-
-    if (vegetable.getId() < 1) return;
-
-    const $oldTr = [...$trs].find($tr => $tr.getAttribute('data-id') == vegetable.getId());
-    $table.removeChild($oldTr);
-  };
-
-  const onVegetableClick = event => {
-    selectedId.set(event.target.parentElement.getAttribute('data-id'));
-  };
-
-  const onDeleteClick = evt => {
-    if (vegetables.getAll().length < 1) return;
-    const vegetable = vegetables.getAll().find(v => v.getId() == selectedId.get());
-
-    console.log(vegetables.indexOf(vegetable));
-
-    if (
-      vegetables.indexOf(vegetable) === 0 &&
-      vegetables.indexOf(vegetable) === vegetables.getAll().length - 1
-    ) {
-      selectedId.set(0);
-      vegetables.remove(vegetable);
-      return;
-    }
-
-    if (vegetables.indexOf(vegetable) === vegetables.getAll().length - 1) {
-      selectedId.set(vegetables.get(vegetables.indexOf(vegetable) - 1).getId());
-      vegetables.remove(vegetable);
-      return;
-    }
-
-    selectedId.set(vegetables.get(vegetables.indexOf(vegetable) + 1).getId());
-    vegetables.remove(vegetable);
-  };
-
-  const onSelectedVegetableChange = $table => vegetableId => {
-    const $trs = $table.querySelectorAll('tr:not(:first-child)');
-
     [...$trs].forEach($tr => $tr.classList.remove('selected'));
 
-    if (vegetableId < 1) return;
+    if (null == vegetable) return; // no selection if null
 
-    [...$trs]
-      .filter($tr => $tr.getAttribute('data-id') == vegetableId)
-      .forEach($tr => $tr.classList.add('selected'));
+    const $selectedTr = [...$trs].find($tr => $tr.getAttribute('data-id') == vegetable.getId());
+    $selectedTr.classList.add('selected');
+  };
 
-    const $form = document.querySelector('form');
-    const vegetable = vegetables.getAll().find(v => v.getId() == vegetableId);
+  const fillForm = $form => vegetable => {
+    if (null == vegetable) return; // no filling if null
 
     $form.name.value = vegetable.getName();
     $form.classification.value = vegetable.getClassification();
@@ -294,23 +310,6 @@
     $form.planted.checked = vegetable.getPlanted();
     $form.amount.value = vegetable.getAmount();
     $form.comments.value = vegetable.getComments();
-  };
-
-  const onFormSubmit = event => {
-    event.preventDefault(); // Prevent Form Submission
-
-    const $form = event.target;
-    const vegetable = vegetables.getAll().find(v => v.getId() == selectedId.get());
-    const newVegetable = Object.assign({}, vegetable);
-
-    newVegetable.setName($form.name.value);
-    newVegetable.setClassification($form.classification.value);
-    newVegetable.setOrigin($form.origin.value);
-    newVegetable.setPlanted($form.planted.checked);
-    newVegetable.setAmount($form.amount.value);
-    newVegetable.setComments($form.comments.value);
-
-    vegetables.replace(vegetable, newVegetable);
   };
 
   initHuerto(document.querySelector('#vegetable-input'), document.querySelector('#vegetable-output'));

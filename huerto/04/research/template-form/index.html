@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Form</title>
+    <link rel="stylesheet" href="../../../../assets/css/huerto.css" />
+  </head>
+
+  <body>
+    <main></main>
+
+    <template id="form-template">
+      <form>
+        <h3>Add vegetable</h3>
+        <label for="name">Vegi</label>
+        <input type="text" id="name" name="name" required />
+
+        <label for="classification">Classification</label>
+        <select id="classification" name="classification"></select>
+
+        <label>Origin</label>
+        <div class="origin">
+          <input type="radio" id="europe" name="origin" value="Europe" required />
+          <label for="europe">Europe</label>
+          <input type="radio" id="asia" name="origin" value="Asia" required />
+          <label for="asia">Asia</label>
+          <input type="radio" id="america" name="origin" value="America" required />
+          <label for="america">America</label>
+        </div>
+
+        <label>Amount</label>
+        <div>
+          <input type="checkbox" id="planted" name="planted" checked />
+          <label for="planted">Planted</label>
+          <input type="number" id="amount" name="amount" value="1" min="1" />
+        </div>
+
+        <label for="comments">Comments</label>
+        <textarea id="comments" name="comments"></textarea>
+
+        <button>Add</button>
+      </form>
+    </template>
+
+    <script src="dist/script.bundle.js"></script>
+  </body>
+</html>
