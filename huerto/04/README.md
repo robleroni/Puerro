@@ -14,9 +14,9 @@
 >
 > > **Customer**: I haven't thought about that! Yes of course! The best case would be that I can change all the fields. I just recently forgot to water my tomatoes because I haven't written it as a comment. I don't know if they will survive.. I might need to remove it soon. Could you add a delete functionality as well? As sad as it sounds.
 >
-> > **Developer**: Of course, this will complete the whole CRUD spectrum. I'll add a vegetable counter for you as well!
+> > **Developer**: Of course, this will complete the whole CRUD spectrum.
 >
-> > **Customer**: Yeah ok, you lost me.. but it sure sounds professional. But I like the counter idea.
+> > **Customer**: Yeah ok, you lost me.. but it sure sounds professional.
 
 ## Development Process
 
