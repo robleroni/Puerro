@@ -30,8 +30,14 @@ const initHuerto = ($input, $output) => {
   vegetables.onReplace(onVegetableUpdate($table));
   vegetables.onRemove(onVegetableDelete($table));
 
-  $addButton.addEventListener('click', _ => vegetables.add(Vegetable()));
+  $addButton.addEventListener('click', _ => {
+    vegetables.add(Vegetable());
+    enableForm($form);
+  });
+
   $delButton.addEventListener('click', onDeleteClick);
+
+  disableForm($form);
 };
 
 const $trEntry = vegetable => {
@@ -44,6 +50,16 @@ const $trEntry = vegetable => {
   ]);
 
   return render(tr);
+};
+
+const disableForm = $form => {
+  $form.style.opacity = 0.3;
+  [...$form.elements].forEach($element => ($element.disabled = true));
+};
+
+const enableForm = $form => {
+  $form.style.opacity = 1;
+  [...$form.elements].forEach($element => ($element.disabled = false));
 };
 
 const onVegetableAdd = $table => vegetable => {
@@ -74,11 +90,9 @@ const onVegetableClick = event => {
   selectedId.set(event.target.parentElement.getAttribute('data-id'));
 };
 
-const onDeleteClick = evt => {
+const onDeleteClick = event => {
   if (vegetables.getAll().length < 1) return;
   const vegetable = vegetables.getAll().find(v => v.getId() == selectedId.get());
-
-  console.log(vegetables.indexOf(vegetable));
 
   if (
     vegetables.indexOf(vegetable) === 0 &&
@@ -86,6 +100,7 @@ const onDeleteClick = evt => {
   ) {
     selectedId.set(0);
     vegetables.remove(vegetable);
+    disableForm(event.target.parentElement);
     return;
   }
 
