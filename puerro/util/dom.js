@@ -7,7 +7,7 @@
 
 import { changed } from './vdom';
 
-export { createElement, mount, mountWithActions, render };
+export { createElement, render, mount, mountWithActions };
 
 /**
  * Creates a new HTMLElement
@@ -52,6 +52,66 @@ const render = node => {
 };
 
 /**
+ * renders given stateful view into given container
+ *
+ * @param {HTMLElement} $root
+ * @param {function(): import('./vdom').VNode} view
+ * @param {object} state
+ * @param {boolean} diffing
+ */
+const mount = ($root, view, state, diffing = true) => {
+  let vDom = view({ state, setState });
+  $root.prepend(render(vDom));
+
+  function setState(newState) {
+    state = { ...state, ...newState };
+    refresh();
+  }
+
+  function refresh() {
+    const newVDom = view({ state, setState });
+
+    if (diffing) {
+      diff($root, newVDom, vDom);
+    } else {
+      $root.replaceChild(render(newVDom), $root.firstChild);
+    }
+
+    vDom = newVDom;
+  }
+};
+
+/**
+ * renders given stateful view into given container
+ *
+ * @param {HTMLElement} $root
+ * @param {function(): import('./vdom').VNode} view
+ * @param {object} state
+ * @param {boolean} diffing
+ */
+const mountWithActions = ($root, view, state, diffing = true) => {
+  let vDom = view({ state, act });
+  $root.prepend(render(vDom));
+
+  function act(action) {
+    state = action(state) || state;
+    refresh();
+  }
+
+  function refresh() {
+    const newVDom = view({ state, act });
+
+    if (diffing) {
+      diff($root, newVDom, vDom);
+    } else {
+      $root.replaceChild(render(newVDom), $root.firstChild);
+    }
+
+    vDom = newVDom;
+  }
+};
+
+/**
  * compares two VDOM nodes and applies the differences to the dom
  *
  * @param {HTMLElement} $parent
@@ -59,7 +119,7 @@ const render = node => {
  * @param {import('./vdom').VNode} newNode
  * @param {number} index
  */
-const diff = ($parent, oldNode, newNode, index = 0) => {
+const diff = ($parent, newNode, oldNode, index = 0) => {
   if (null == oldNode) {
     $parent.appendChild(render(newNode));
     return;
@@ -74,84 +134,7 @@ const diff = ($parent, oldNode, newNode, index = 0) => {
   }
   if (newNode.tagName) {
     newNode.children.forEach((newNode, i) => {
-      diff($parent.childNodes[index], oldNode.children[i], newNode, i);
+      diff($parent.childNodes[index], newNode, oldNode.children[i], i);
     });
-  }
-};
-
-/**
- * renders given stateful view into given container
- *
- * @param {HTMLElement} $root
- * @param {function(): import('./vdom').VNode} view
- * @param {object} initialState
- * @param {boolean} useDiffing
- */
-const mount = ($root, view, initialState, useDiffing = true) => {
-  let _state = initialState;
-
-  const setState = newState => {
-    _state = { ..._state, ...newState };
-    const newVDom = view(viewParams);
-    if (useDiffing) {
-      diff($root, vDom, newVDom);
-    } else {
-      $root.replaceChild(render(newVDom), $root.firstChild);
-    }
-    vDom = newVDom;
-  };
-
-  const viewParams = {
-    get state() {
-      return _state;
-    },
-    setState: setState,
-  };
-  let vDom = view(viewParams);
-  if ($root.firstChild) {
-    $root.replaceChild(render(vDom), $root.firstChild);
-  } else {
-    $root.appendChild(render(vDom));
-  }
-};
-
-/**
- * renders given stateful view into given container
- *
- * @param {HTMLElement} $root
- * @param {function(): import('./vdom').VNode} view
- * @param {object} initialState
- * @param {boolean} useDiffing
- */
-const mountWithActions = ($root, view, initialState, useDiffing = true) => {
-  let _state = initialState;
-
-  const refresh = () => {
-    const newVDom = view(viewParams);
-
-    if (useDiffing) {
-      diff($root, vDom, newVDom);
-    } else {
-      $root.replaceChild(render(newVDom), $root.firstChild);
-    }
-    vDom = newVDom;
-  };
-
-  const act = action => {
-    _state = action(_state, event) || _state;
-    refresh();
-  };
-
-  const viewParams = {
-    get state() {
-      return _state;
-    },
-    act: act,
-  };
-  let vDom = view(viewParams);
-  if ($root.firstChild) {
-    $root.replaceChild(render(vDom), $root.firstChild);
-  } else {
-    $root.appendChild(render(vDom));
   }
 };
