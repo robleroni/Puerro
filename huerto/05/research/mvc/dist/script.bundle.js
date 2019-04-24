@@ -28,75 +28,6 @@
   const h = vNode;
 
   /**
-   * compares two VDOM nodes and returns true if they are different
-   *
-   * @param {VNode} node1
-   * @param {VNode} node2
-   */
-  const changed = (node1, node2) => {
-    const nodeChanged =
-      typeof node1 !== typeof node2 ||
-      ((typeof node1 === 'string' || typeof node1 === 'number') && node1 !== node2) ||
-      node1.type !== node2.type;
-    const attributesChanged =
-      !!node1.attributes &&
-      !!node2.attributes &&
-      (Object.keys(node1.attributes).length !== Object.keys(node2.attributes).length ||
-        Object.keys(node1.attributes).some(
-          a =>
-            node1.attributes[a] !== node2.attributes[a] &&
-            (null == node1.attributes[a] ? '' : node1.attributes[a]).toString() !==
-              (null == node2.attributes[a] ? '' : node2.attributes[a]).toString()
-        ));
-    return nodeChanged || attributesChanged;
-  };
-
-  const controller = ({ state, setState }) => ({
-    getCount1: () => state.count1,
-    getCount2: () => state.count2,
-    addCount1: count => setState(state => ({ ...state, count1: state.count1 + count })),
-    addCount2: count => setState(state => ({ ...state, count2: state.count2 + count }))
-    
-  });
-
-  /**
-   * 
-   * @param {number} count 
-   * @param {string} text 
-   * @param {function(): void} onCountChange 
-   */
-  const view = (count, text, onCountChange) =>
-    h('div', {},
-      h('h2', {}, text),
-      h('button', { click: _ => onCountChange(-1) }, '-'),
-      h('span', {}, count),
-      h('button', { click: _ => onCountChange(1) }, '+')
-    );
-
-  /**
-   * 
-   * @param {Object} obj 
-   * @param {import('../models').State} obj.state 
-   */
-  const view$1 = (controller) => 
-    h('div', {}, h('h3', {}, 'count1 + count2'), h('div', {}, controller.getCount1() + controller.getCount2()));
-
-  /**
-   * 
-   * @param {Object} obj 
-   * @param {import('../models').State} obj.state 
-   */
-  const view$2 = (controller) => 
-    h('div', {}, h('h3', {}, 'count1 * count2'), h('div', {}, controller.getCount1() * controller.getCount2()));
-
-  /**
-   * A Module that abstracts DOM interactions.
-   * It's purpose is to perform actions on the DOM like creating and mounting elements
-   *
-   * @module dom
-   */
-
-  /**
    * Creates a new HTML Element.
    * If the attribute is a function it will add it as an EventListener.
    * Otherwise as an attribute.
@@ -202,6 +133,68 @@
       });
     }
   };
+
+  /**
+   * compares two VDOM nodes and returns true if they are different
+   *
+   * @param {VNode} node1
+   * @param {VNode} node2
+   */
+  const changed = (node1, node2) => {
+    const nodeChanged =
+      typeof node1 !== typeof node2 ||
+      ((typeof node1 === 'string' || typeof node1 === 'number') && node1 !== node2) ||
+      node1.type !== node2.type;
+    const attributesChanged =
+      !!node1.attributes &&
+      !!node2.attributes &&
+      (Object.keys(node1.attributes).length !== Object.keys(node2.attributes).length ||
+        Object.keys(node1.attributes).some(
+          a =>
+            node1.attributes[a] !== node2.attributes[a] &&
+            (null == node1.attributes[a] ? '' : node1.attributes[a]).toString() !==
+              (null == node2.attributes[a] ? '' : node2.attributes[a]).toString()
+        ));
+    return nodeChanged || attributesChanged;
+  };
+
+  const controller = ({ state, setState }) => ({
+    getCount1: () => state.count1,
+    getCount2: () => state.count2,
+    addCount1: count => setState(state => ({ ...state, count1: state.count1 + count })),
+    addCount2: count => setState(state => ({ ...state, count2: state.count2 + count }))
+    
+  });
+
+  /**
+   * 
+   * @param {number} count 
+   * @param {string} text 
+   * @param {function(): void} onCountChange 
+   */
+  const view = (count, text, onCountChange) =>
+    h('div', {},
+      h('h2', {}, text),
+      h('button', { click: _ => onCountChange(-1) }, '-'),
+      h('span', {}, count),
+      h('button', { click: _ => onCountChange(1) }, '+')
+    );
+
+  /**
+   * 
+   * @param {Object} obj 
+   * @param {import('../models').State} obj.state 
+   */
+  const view$1 = (controller) => 
+    h('div', {}, h('h3', {}, 'count1 + count2'), h('div', {}, controller.getCount1() + controller.getCount2()));
+
+  /**
+   * 
+   * @param {Object} obj 
+   * @param {import('../models').State} obj.state 
+   */
+  const view$2 = (controller) => 
+    h('div', {}, h('h3', {}, 'count1 * count2'), h('div', {}, controller.getCount1() * controller.getCount2()));
 
   /**
    * @typedef {{ count1: number, count2: number }} State

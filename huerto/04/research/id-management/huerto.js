@@ -1,9 +1,8 @@
-import { render } from '../../../../puerro/util/dom';
-import { vegetableClassifications } from '../../../../assets/js/constants';
+import { h, render } from '../../../../puerro/vdom/vdom';
 import { ObservableList, Observable } from '../../../../puerro/observable/observable';
 
+import { vegetableClassifications } from '../../../../assets/js/constants';
 import { Vegetable } from './vegetable';
-import { h } from '../../../../puerro/util/vdom';
 
 export { initHuerto };
 

@@ -1,10 +1,9 @@
-import { h } from '../../../../puerro/util/vdom';
+import { h, mount } from '../../../../puerro/vdom/vdom';
 
 import { controller } from './controllers/index';
 import { counterComponent } from './components/counter';
 import { addView } from './views/add';
 import { multiplyView } from './views/multiply';
-import { mount } from '../../../../puerro/util/dom';
 import { initialState } from './models/index';
 
 

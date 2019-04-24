@@ -9,7 +9,7 @@ import {
   onIndexChange,
   onDeleteClick,
 } from './huerto';
-import { createDomElement } from '../../puerro/util/dom';
+import { createDomElement } from '../../puerro/vdom/vdom';
 import { Vegetable } from './vegetable';
 
 describe('04 Huerto', test => {

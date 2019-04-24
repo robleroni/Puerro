@@ -1,4 +1,4 @@
-import { createDomElement } from '../../../../puerro/util/dom';
+import { createDomElement } from '../../../../puerro/vdom/vdom';
 
 /**
  *

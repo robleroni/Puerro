@@ -1,5 +1,4 @@
-import { render, createDomElement } from '../../puerro/util/dom';
-import { h } from '../../puerro/util/vdom';
+import { h, render, createDomElement } from '../../puerro/vdom/vdom';
 import { vegetableClassifications } from '../../assets/js/constants';
 import { ObservableList, Observable } from '../../puerro/observable/observable';
 

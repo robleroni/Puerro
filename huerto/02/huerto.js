@@ -1,5 +1,4 @@
-import { createDomElement, render } from '../../puerro/util/dom';
-import { h } from '../../puerro/util/vdom';
+import { createDomElement, render, h } from '../../puerro/vdom/vdom';
 import { vegetableClassifications } from '../../assets/js/constants';
 
 export { renderVegetableClassifications, onFormSubmit, onPlantedChecked, initHuerto };

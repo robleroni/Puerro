@@ -9,13 +9,6 @@
    */
 
   /**
-   * A Module that abstracts DOM interactions.
-   * It's purpose is to perform actions on the DOM like creating and mounting elements
-   *
-   * @module dom
-   */
-
-  /**
    * Creates a new HTML Element.
    * If the attribute is a function it will add it as an EventListener.
    * Otherwise as an attribute.

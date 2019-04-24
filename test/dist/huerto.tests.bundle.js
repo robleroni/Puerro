@@ -11,13 +11,6 @@
      */
 
     /**
-     * A Module that abstracts DOM interactions.
-     * It's purpose is to perform actions on the DOM like creating and mounting elements
-     *
-     * @module dom
-     */
-
-    /**
      * Creates a new HTML Element.
      * If the attribute is a function it will add it as an EventListener.
      * Otherwise as an attribute.
@@ -142,13 +135,6 @@
      * It's purpose is to perform actions on DOM-like Objects
      *
      * @module vdom
-     */
-
-    /**
-     * A Module that abstracts DOM interactions.
-     * It's purpose is to perform actions on the DOM like creating and mounting elements
-     *
-     * @module dom
      */
 
     /**
@@ -325,13 +311,6 @@
       children: null == nodes ? [] : [].concat(...nodes), // collapse nested arrays.
     });
     const h = vNode;
-
-    /**
-     * A Module that abstracts DOM interactions.
-     * It's purpose is to perform actions on the DOM like creating and mounting elements
-     *
-     * @module dom
-     */
 
     /**
      * Creates a new HTML Element.
@@ -591,13 +570,6 @@
       children: null == nodes ? [] : [].concat(...nodes), // collapse nested arrays.
     });
     const h = vNode;
-
-    /**
-     * A Module that abstracts DOM interactions.
-     * It's purpose is to perform actions on the DOM like creating and mounting elements
-     *
-     * @module dom
-     */
 
     /**
      * Creates a new HTML Element.
@@ -888,13 +860,6 @@
       children: null == nodes ? [] : [].concat(...nodes), // collapse nested arrays.
     });
     const h = vNode;
-
-    /**
-     * A Module that abstracts DOM interactions.
-     * It's purpose is to perform actions on the DOM like creating and mounting elements
-     *
-     * @module dom
-     */
 
     /**
      * Creates a new HTML Element.

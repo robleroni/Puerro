@@ -1,4 +1,4 @@
-import { h } from '../../../../../puerro/util/vdom';
+import { h } from '../../../../../puerro/vdom/vdom';
 
 export {
   view as addView

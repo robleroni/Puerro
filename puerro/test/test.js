@@ -1,4 +1,4 @@
-import { createDomElement } from '../util/dom';
+import { createDomElement } from '../vdom/vdom';
 
 export { describe }
 

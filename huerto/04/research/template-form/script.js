@@ -1,5 +1,4 @@
-import { toVNode, h } from '../../../../puerro/util/vdom';
-import { render, mount } from '../../../../puerro/util/dom';
+import { toH, h, render, mount } from '../../../../puerro/vdom/vdom';
 import { vegetableClassifications } from '../../../../assets/js/constants';
 
 /**
@@ -33,7 +32,7 @@ const init = () => {
 
   renderVegetableClassifications($form.classification);
 
-  const form = toVNode($form);
+  const form = toH($form);
 
   mount($main, huertoForm(form), initialState);
 };

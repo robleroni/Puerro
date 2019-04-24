@@ -1,5 +1,4 @@
-import { createDomElement, render } from '../../puerro/util/dom';
-import { h } from '../../puerro/util/vdom';
+import { h, createDomElement, render } from '../../puerro/vdom/vdom';
 
 export {
   renderVegetableClassifications,
