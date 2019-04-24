@@ -16,16 +16,19 @@
    */
 
   /**
-   * Creates a new HTMLElement
-   * @param {string} tagName
+   * Creates a new HTML Element.
+   * If the attribute is a function it will add it as an EventListener.
+   * Otherwise as an attribute.
+   *
+   * @param {string} tagName name of the tag
+   * @param {object} attributes attributes or listeners to set in element
+   * @param {*} innerHTML content of the tag
    *
    * @returns {function(content): HTMLElement}
    */
-  const createElement = (tagName, attributes = {}) => content => {
+  const createDomElement = (tagName, attributes = {}, innerHTML = '') => {
     const $element = document.createElement(tagName);
-    if (content) {
-      $element.innerHTML = content;
-    }
+    $element.innerHTML = innerHTML;
     Object.keys(attributes)
       .filter(key => null != attributes[key]) // don't render attributes with value null/undefined
       .forEach(key => {
@@ -63,7 +66,7 @@
     function renderVegetables() {
       vegetables
         .map(v => `${v.amount}x ${v.name}`)
-        .map(createElement('li'))
+        .map(createDomElement('li'))
         .forEach(v => $vegetables.appendChild(v));
     }
 

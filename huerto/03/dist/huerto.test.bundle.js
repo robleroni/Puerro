@@ -7,6 +7,25 @@
    *
    * @module vdom
    */
+  /**
+   * @typedef {{ tagName: string, attributes: object, children: any  }} VNode
+   */
+
+  /**
+   * Creates a node object which can be rendered
+   *
+   * @param {string} tagName
+   * @param {object} attributes
+   * @param {VNode[] | VNode | any} node
+   *
+   * @returns {VNode}
+   */
+  const vNode = (tagName, attributes = {}, ...nodes) => ({
+    tagName,
+    attributes: null == attributes ? {} : attributes,
+    children: null == nodes ? [] : [].concat(...nodes), // collapse nested arrays.
+  });
+  const h = vNode;
 
   /**
    * A Module that abstracts DOM interactions.
@@ -16,16 +35,19 @@
    */
 
   /**
-   * Creates a new HTMLElement
-   * @param {string} tagName
+   * Creates a new HTML Element.
+   * If the attribute is a function it will add it as an EventListener.
+   * Otherwise as an attribute.
+   *
+   * @param {string} tagName name of the tag
+   * @param {object} attributes attributes or listeners to set in element
+   * @param {*} innerHTML content of the tag
    *
    * @returns {function(content): HTMLElement}
    */
-  const createElement = (tagName, attributes = {}) => content => {
+  const createDomElement = (tagName, attributes = {}, innerHTML = '') => {
     const $element = document.createElement(tagName);
-    if (content) {
-      $element.innerHTML = content;
-    }
+    $element.innerHTML = innerHTML;
     Object.keys(attributes)
       .filter(key => null != attributes[key]) // don't render attributes with value null/undefined
       .forEach(key => {
@@ -35,6 +57,25 @@
           $element.setAttribute(key, attributes[key]);
         }
       });
+    return $element;
+  };
+
+  /**
+   * renders a given node object
+   *
+   * @param {import('./vdom').VNode} node
+   *
+   * @returns {HTMLElement}
+   */
+  const render = node => {
+    if (null == node) {
+      return document.createTextNode('');
+    }
+    if (typeof node === 'string' || typeof node === 'number') {
+      return document.createTextNode(node);
+    }
+    const $element = createDomElement(node.tagName, node.attributes);
+    node.children.forEach(c => $element.appendChild(render(c)));
     return $element;
   };
 
@@ -69,7 +110,7 @@
     color: ${ok.every(elem => elem) ? 'green' : 'red'};
     padding-left: 20px;
   `;
-    const $report = createElement('div', { style })(`
+    const $report = createDomElement('div', { style },`
     ${ok.filter(elem => elem).length}/${ok.length} Tests in ${origin} ok.
   `);
     document.body.appendChild($report);
@@ -85,7 +126,7 @@
     font-weight: bold;
     margin-top: 10px;
   `;
-    const $reportGroup = createElement('div', { style })(`Test ${name}`);
+    const $reportGroup = createDomElement('div', { style }, `Test ${name}`);
     document.body.appendChild($reportGroup);
   }
 
@@ -138,9 +179,7 @@
    * @param {HTMLSelectElement} $select
    */
   const renderVegetableClassifications = $select => {
-    vegetableClassifications
-      .map(classification => createElement('option', { value: classification })(classification))
-      .forEach($select.appendChild.bind($select));
+    vegetableClassifications.forEach(c => $select.append(render(h('option', {}, c))));
   };
 
   /**
@@ -150,8 +189,7 @@
    */
   const onFormSubmit = $list => event => {
     event.preventDefault(); // Prevent Form Submission
-    $list.appendChild(createElement('li')(_vegetableOutputString(event.target)));
-
+    $list.appendChild(createDomElement('li', {}, _vegetableOutputString(event.target)));
     event.target.name.classList.remove('invalid');
   };
 
@@ -194,7 +232,7 @@
     test('onFormSubmit', assert => {
       // given
       const form = {
-        name: createElement('input', { value: 'tomato' })(),
+        name: createDomElement('input', { value: 'tomato' }),
         classification: { value: 'fruit' },
         origin: { value: 'Europe' },
         planted: { checked: true },

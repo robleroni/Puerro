@@ -1,4 +1,4 @@
-import { createElement } from '../util/dom';
+import { createDomElement } from '../util/dom';
 
 export { describe }
 
@@ -33,7 +33,7 @@ function report(origin, ok) {
     color: ${ok.every(elem => elem) ? 'green' : 'red'};
     padding-left: 20px;
   `;
-  const $report = createElement('div', { style })(`
+  const $report = createDomElement('div', { style },`
     ${ok.filter(elem => elem).length}/${ok.length} Tests in ${origin} ok.
   `);
   document.body.appendChild($report);
@@ -49,7 +49,7 @@ function reportGroup(name) {
     font-weight: bold;
     margin-top: 10px;
   `;
-  const $reportGroup = createElement('div', { style })(`Test ${name}`);
+  const $reportGroup = createDomElement('div', { style }, `Test ${name}`);
   document.body.appendChild($reportGroup);
 }
 

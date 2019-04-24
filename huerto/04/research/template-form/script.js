@@ -1,5 +1,5 @@
-import { toVNode } from '../../../../puerro/util/vdom';
-import { render, createElement, mount } from '../../../../puerro/util/dom';
+import { toVNode, h } from '../../../../puerro/util/vdom';
+import { render, mount } from '../../../../puerro/util/dom';
 import { vegetableClassifications } from '../../../../assets/js/constants';
 
 /**
@@ -7,9 +7,7 @@ import { vegetableClassifications } from '../../../../assets/js/constants';
  * @param {HTMLSelectElement} $select
  */
 const renderVegetableClassifications = $select => {
-  vegetableClassifications
-    .map(classification => createElement('option', { value: classification })(classification))
-    .forEach($select.appendChild.bind($select));
+  vegetableClassifications.forEach(c => $select.append(render(h('option', {}, c))));
 };
 
 const initialState = {

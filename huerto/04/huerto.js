@@ -1,4 +1,5 @@
-import { createElement } from '../../puerro/util/dom';
+import { render, createDomElement } from '../../puerro/util/dom';
+import { h } from '../../puerro/util/vdom';
 import { vegetableClassifications } from '../../assets/js/constants';
 import { ObservableList, Observable } from '../../puerro/observable/observable';
 
@@ -39,7 +40,7 @@ const genId = id();
  */
 const createVegetableEntry = ($container, vegetable) => {
   const generateLi = _vegetable => {
-    const $li = createElement('li', { 'data-id': _vegetable.getId() })(_vegetable.toString());
+    const $li = createDomElement('li', { 'data-id': _vegetable.getId() }, _vegetable.toString());
 
     $li.addEventListener('click', () => {
       selectedId.set(_vegetable.getId());
@@ -81,9 +82,7 @@ const createVegetableEntry = ($container, vegetable) => {
  * @param {HTMLSelectElement} $select
  */
 const renderVegetableClassifications = $select => {
-  vegetableClassifications
-    .map(classification => createElement('option', { value: classification })(classification))
-    .forEach($select.appendChild.bind($select));
+  vegetableClassifications.forEach(c => $select.append(render(h('option', {}, c))));
 };
 
 /**

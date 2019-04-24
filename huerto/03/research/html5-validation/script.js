@@ -1,4 +1,4 @@
-import { createElement } from '../../../../puerro/util/dom';
+import { createDomElement } from '../../../../puerro/util/dom';
 
 function Huerto($form, $vegetables) {
   const vegetables = [];
@@ -25,7 +25,7 @@ function Huerto($form, $vegetables) {
   function renderVegetables() {
     vegetables
       .map(v => `${v.amount}x ${v.name}`)
-      .map(createElement('li'))
+      .map(createDomElement('li'))
       .forEach(v => $vegetables.appendChild(v));
   }
 

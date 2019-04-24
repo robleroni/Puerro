@@ -25,6 +25,7 @@
     attributes: null == attributes ? {} : attributes,
     children: null == nodes ? [] : [].concat(...nodes), // collapse nested arrays.
   });
+  const h = vNode;
 
   /**
    * Converts a DOM Node to a Virtual Node
@@ -81,16 +82,19 @@
    */
 
   /**
-   * Creates a new HTMLElement
-   * @param {string} tagName
+   * Creates a new HTML Element.
+   * If the attribute is a function it will add it as an EventListener.
+   * Otherwise as an attribute.
+   *
+   * @param {string} tagName name of the tag
+   * @param {object} attributes attributes or listeners to set in element
+   * @param {*} innerHTML content of the tag
    *
    * @returns {function(content): HTMLElement}
    */
-  const createElement = (tagName, attributes = {}) => content => {
+  const createDomElement = (tagName, attributes = {}, innerHTML = '') => {
     const $element = document.createElement(tagName);
-    if (content) {
-      $element.innerHTML = content;
-    }
+    $element.innerHTML = innerHTML;
     Object.keys(attributes)
       .filter(key => null != attributes[key]) // don't render attributes with value null/undefined
       .forEach(key => {
@@ -117,7 +121,7 @@
     if (typeof node === 'string' || typeof node === 'number') {
       return document.createTextNode(node);
     }
-    const $element = createElement(node.tagName, node.attributes)('');
+    const $element = createDomElement(node.tagName, node.attributes);
     node.children.forEach(c => $element.appendChild(render(c)));
     return $element;
   };
@@ -201,9 +205,7 @@
    * @param {HTMLSelectElement} $select
    */
   const renderVegetableClassifications = $select => {
-    vegetableClassifications
-      .map(classification => createElement('option', { value: classification })(classification))
-      .forEach($select.appendChild.bind($select));
+    vegetableClassifications.forEach(c => $select.append(render(h('option', {}, c))));
   };
 
   const initialState = {

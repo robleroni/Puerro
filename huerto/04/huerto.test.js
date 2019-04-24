@@ -9,7 +9,7 @@ import {
   onIndexChange,
   onDeleteClick,
 } from './huerto';
-import { createElement } from '../../puerro/util/dom';
+import { createDomElement } from '../../puerro/util/dom';
 import { Vegetable } from './vegetable';
 
 describe('04 Huerto', test => {
@@ -27,7 +27,7 @@ describe('04 Huerto', test => {
   test('onFormSubmit', assert => {
     // given
     const form = {
-      name: createElement('input', { value: 'tomato' })(),
+      name: createDomElement('input', { value: 'tomato' }),
       classification: { value: 'fruit' },
       origin: { value: 'Europe' },
       planted: { checked: true },

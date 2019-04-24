@@ -1,4 +1,5 @@
-import { createElement } from '../../puerro/util/dom';
+import { createDomElement, render } from '../../puerro/util/dom';
+import { h } from '../../puerro/util/vdom';
 
 export {
   renderVegetableClassifications,
@@ -34,9 +35,7 @@ const _vegetableOutputString = $form =>
  * @param {HTMLSelectElement} $select
  */
 const renderVegetableClassifications = $select => {
-  vegetableClassifications
-    .map(classification => createElement('option', { value: classification })(classification))
-    .forEach($select.appendChild.bind($select));
+  vegetableClassifications.forEach(c => $select.append(render(h('option', {}, c))));
 };
 
 /**
@@ -46,8 +45,7 @@ const renderVegetableClassifications = $select => {
  */
 const onFormSubmit = $list => event => {
   event.preventDefault(); // Prevent Form Submission
-  $list.appendChild(createElement('li')(_vegetableOutputString(event.target)));
-
+  $list.appendChild(createDomElement('li', {}, _vegetableOutputString(event.target)));
   event.target.name.classList.remove('invalid');
 };
 

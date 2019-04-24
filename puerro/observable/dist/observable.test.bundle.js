@@ -16,16 +16,19 @@
    */
 
   /**
-   * Creates a new HTMLElement
-   * @param {string} tagName
+   * Creates a new HTML Element.
+   * If the attribute is a function it will add it as an EventListener.
+   * Otherwise as an attribute.
+   *
+   * @param {string} tagName name of the tag
+   * @param {object} attributes attributes or listeners to set in element
+   * @param {*} innerHTML content of the tag
    *
    * @returns {function(content): HTMLElement}
    */
-  const createElement = (tagName, attributes = {}) => content => {
+  const createDomElement = (tagName, attributes = {}, innerHTML = '') => {
     const $element = document.createElement(tagName);
-    if (content) {
-      $element.innerHTML = content;
-    }
+    $element.innerHTML = innerHTML;
     Object.keys(attributes)
       .filter(key => null != attributes[key]) // don't render attributes with value null/undefined
       .forEach(key => {
@@ -69,7 +72,7 @@
     color: ${ok.every(elem => elem) ? 'green' : 'red'};
     padding-left: 20px;
   `;
-    const $report = createElement('div', { style })(`
+    const $report = createDomElement('div', { style },`
     ${ok.filter(elem => elem).length}/${ok.length} Tests in ${origin} ok.
   `);
     document.body.appendChild($report);
@@ -85,7 +88,7 @@
     font-weight: bold;
     margin-top: 10px;
   `;
-    const $reportGroup = createElement('div', { style })(`Test ${name}`);
+    const $reportGroup = createDomElement('div', { style }, `Test ${name}`);
     document.body.appendChild($reportGroup);
   }
 

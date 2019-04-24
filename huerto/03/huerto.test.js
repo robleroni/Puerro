@@ -1,11 +1,11 @@
 import { describe } from '../../puerro/test/test';
+import { createDomElement } from '../../puerro/util/dom';
 import {
   renderVegetableClassifications,
   onFormSubmit,
   onPlantedChecked,
   onClassification,
 } from './huerto';
-import { createElement } from '../../puerro/util/dom';
 
 describe('03 Huerto', test => {
   test('renderVegetableClassifications', assert => {
@@ -22,7 +22,7 @@ describe('03 Huerto', test => {
   test('onFormSubmit', assert => {
     // given
     const form = {
-      name: createElement('input', { value: 'tomato' })(),
+      name: createDomElement('input', { value: 'tomato' }),
       classification: { value: 'fruit' },
       origin: { value: 'Europe' },
       planted: { checked: true },

@@ -1,4 +1,4 @@
-import { createElement } from '../../../../puerro/util/dom';
+import { createDomElement } from '../../../../puerro/util/dom';
 
 /**
  *
@@ -24,7 +24,7 @@ function Huerto($form, $vegetables) {
     const $el = event.target;
     if (!$el.value && !$el.nextSibling) {
       $el.parentNode.append(
-        createElement('span', { style: 'color: red' })('This field is required')
+        createDomElement('span', { style: 'color: red' }, 'This field is required')
       );
     }
 
@@ -44,7 +44,7 @@ function Huerto($form, $vegetables) {
   function renderVegetables() {
     vegetables
       .map(v => `${v.amount}x ${v.name}`)
-      .map(createElement('li'))
+      .map(createDomElement('li'))
       .forEach(v => $vegetables.appendChild(v));
   }
 
