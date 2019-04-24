@@ -123,7 +123,7 @@
   };
 
   /**
-   * renders given stateful view into given container
+   * Renders given stateful view into given container
    *
    * @param {HTMLElement} $root
    * @param {function(): import('./vdom').VNode} view
@@ -135,7 +135,11 @@
     $root.prepend(render(vDom));
 
     function setState(newState) {
-      state = { ...state, ...newState };
+      if (typeof newState === 'function') {
+        state = newState(state) || state;
+      } else {
+        state = { ...state, ...newState };
+      }
       refresh();
     }
 
@@ -153,7 +157,7 @@
   };
 
   /**
-   * compares two VDOM nodes and applies the differences to the dom
+   * Compares two VDOM nodes and applies the differences to the dom
    *
    * @param {HTMLElement} $parent
    * @param {import('./vdom').VNode} oldNode

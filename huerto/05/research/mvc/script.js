@@ -4,7 +4,7 @@ import { controller } from './controllers/index';
 import { counterComponent } from './components/counter';
 import { addView } from './views/add';
 import { multiplyView } from './views/multiply';
-import { mountWithActions } from '../../../../puerro/util/dom';
+import { mount } from '../../../../puerro/util/dom';
 import { initialState } from './models/index';
 
 
@@ -20,4 +20,4 @@ const mainView = (controller) =>
     )
   );
 
-mountWithActions(document.body, ({ state, act }) => mainView(controller({ state, act })), initialState);
+mount(document.body, ({ state, setState }) => mainView(controller({ state, setState })), initialState);

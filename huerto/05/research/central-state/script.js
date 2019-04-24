@@ -1,5 +1,5 @@
 import { h } from '../../../../puerro/util/vdom';
-import { mountWithActions } from '../../../../puerro/util/dom';
+import { mount } from '../../../../puerro/util/dom';
 
 
 const initialState = {
@@ -10,24 +10,24 @@ const actions = {
   addTodo: todo => state => ({ ...state, todos: [...state.todos, todo] })
 }
 
-const counter = ({state, act}) => 
+const counter = ({ state, setState }) => 
   h('span', {}, `Count of todos: ${state.todos.length}`);
 
-const form = ({state, act}) => 
-  h('form', { submit: e => { e.preventDefault(); act(actions.addTodo(e.target.todo.value)); } }, 
+const form = ({ state, setState }) => 
+  h('form', { submit: e => { e.preventDefault(); setState(actions.addTodo(e.target.todo.value)); } }, 
     h('input', { name: 'todo', required: true }),
     h('button', { type: 'submit'}, 'submit')
   );
 
-const list = ({state, act}) => 
+const list = ({ state, setState }) => 
   h('ul', {}, state.todos.map(t => h('li', {}, t)));
 
-const view = ({state, act}) => {
+const view = ({ state, setState }) => {
   return h('main', {}, 
-    form({state, act}),
-    list({state, act}),
-    counter({state, act}),
+    form({ state, setState }),
+    list({ state, setState }),
+    counter({ state, setState }),
   );
 }
 
-mountWithActions(document.body, view, initialState);
+mount(document.body, view, initialState);

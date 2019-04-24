@@ -101,24 +101,28 @@
   };
 
   /**
-   * renders given stateful view into given container
+   * Renders given stateful view into given container
    *
    * @param {HTMLElement} $root
    * @param {function(): import('./vdom').VNode} view
    * @param {object} state
    * @param {boolean} diffing
    */
-  const mountWithActions = ($root, view, state, diffing = true) => {
-    let vDom = view({ state, act });
+  const mount = ($root, view, state, diffing = true) => {
+    let vDom = view({ state, setState });
     $root.prepend(render(vDom));
 
-    function act(action) {
-      state = action(state) || state;
+    function setState(newState) {
+      if (typeof newState === 'function') {
+        state = newState(state) || state;
+      } else {
+        state = { ...state, ...newState };
+      }
       refresh();
     }
 
     function refresh() {
-      const newVDom = view({ state, act });
+      const newVDom = view({ state, setState });
 
       if (diffing) {
         diff($root, newVDom, vDom);
@@ -131,7 +135,7 @@
   };
 
   /**
-   * compares two VDOM nodes and applies the differences to the dom
+   * Compares two VDOM nodes and applies the differences to the dom
    *
    * @param {HTMLElement} $parent
    * @param {import('./vdom').VNode} oldNode
@@ -166,26 +170,26 @@
     addTodo: todo => state => ({ ...state, todos: [...state.todos, todo] })
   };
 
-  const counter = ({state, act}) => 
+  const counter = ({ state, setState }) => 
     h('span', {}, `Count of todos: ${state.todos.length}`);
 
-  const form = ({state, act}) => 
-    h('form', { submit: e => { e.preventDefault(); act(actions.addTodo(e.target.todo.value)); } }, 
+  const form = ({ state, setState }) => 
+    h('form', { submit: e => { e.preventDefault(); setState(actions.addTodo(e.target.todo.value)); } }, 
       h('input', { name: 'todo', required: true }),
       h('button', { type: 'submit'}, 'submit')
     );
 
-  const list = ({state, act}) => 
+  const list = ({ state, setState }) => 
     h('ul', {}, state.todos.map(t => h('li', {}, t)));
 
-  const view = ({state, act}) => {
+  const view = ({ state, setState }) => {
     return h('main', {}, 
-      form({state, act}),
-      list({state, act}),
-      counter({state, act}),
+      form({ state, setState }),
+      list({ state, setState }),
+      counter({ state, setState }),
     );
   };
 
-  mountWithActions(document.body, view, initialState);
+  mount(document.body, view, initialState);
 
 }());

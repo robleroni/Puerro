@@ -51,11 +51,11 @@
     return nodeChanged || attributesChanged;
   };
 
-  const controller = ({ state, act }) => ({
+  const controller = ({ state, setState }) => ({
     getCount1: () => state.count1,
     getCount2: () => state.count2,
-    addCount1: count => act(state => ({ ...state, count1: state.count1 + count })),
-    addCount2: count => act(state => ({ ...state, count2: state.count2 + count }))
+    addCount1: count => setState(state => ({ ...state, count1: state.count1 + count })),
+    addCount2: count => setState(state => ({ ...state, count2: state.count2 + count }))
     
   });
 
@@ -139,24 +139,28 @@
   };
 
   /**
-   * renders given stateful view into given container
+   * Renders given stateful view into given container
    *
    * @param {HTMLElement} $root
    * @param {function(): import('./vdom').VNode} view
    * @param {object} state
    * @param {boolean} diffing
    */
-  const mountWithActions = ($root, view, state, diffing = true) => {
-    let vDom = view({ state, act });
+  const mount = ($root, view, state, diffing = true) => {
+    let vDom = view({ state, setState });
     $root.prepend(render(vDom));
 
-    function act(action) {
-      state = action(state) || state;
+    function setState(newState) {
+      if (typeof newState === 'function') {
+        state = newState(state) || state;
+      } else {
+        state = { ...state, ...newState };
+      }
       refresh();
     }
 
     function refresh() {
-      const newVDom = view({ state, act });
+      const newVDom = view({ state, setState });
 
       if (diffing) {
         diff($root, newVDom, vDom);
@@ -169,7 +173,7 @@
   };
 
   /**
-   * compares two VDOM nodes and applies the differences to the dom
+   * Compares two VDOM nodes and applies the differences to the dom
    *
    * @param {HTMLElement} $parent
    * @param {import('./vdom').VNode} oldNode
@@ -217,6 +221,6 @@
       )
     );
 
-  mountWithActions(document.body, ({ state, act }) => mainView(controller({ state, act })), initialState);
+  mount(document.body, ({ state, setState }) => mainView(controller({ state, setState })), initialState);
 
 }());

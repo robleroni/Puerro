@@ -7,7 +7,7 @@
 
 import { changed } from './vdom';
 
-export { createElement, render, mount, mountWithActions };
+export { createElement, render, mount };
 
 /**
  * Creates a new HTMLElement
@@ -52,7 +52,7 @@ const render = node => {
 };
 
 /**
- * renders given stateful view into given container
+ * Renders given stateful view into given container
  *
  * @param {HTMLElement} $root
  * @param {function(): import('./vdom').VNode} view
@@ -64,7 +64,11 @@ const mount = ($root, view, state, diffing = true) => {
   $root.prepend(render(vDom));
 
   function setState(newState) {
-    state = { ...state, ...newState };
+    if (typeof newState === 'function') {
+      state = newState(state) || state;
+    } else {
+      state = { ...state, ...newState };
+    }
     refresh();
   }
 
@@ -82,37 +86,7 @@ const mount = ($root, view, state, diffing = true) => {
 };
 
 /**
- * renders given stateful view into given container
- *
- * @param {HTMLElement} $root
- * @param {function(): import('./vdom').VNode} view
- * @param {object} state
- * @param {boolean} diffing
- */
-const mountWithActions = ($root, view, state, diffing = true) => {
-  let vDom = view({ state, act });
-  $root.prepend(render(vDom));
-
-  function act(action) {
-    state = action(state) || state;
-    refresh();
-  }
-
-  function refresh() {
-    const newVDom = view({ state, act });
-
-    if (diffing) {
-      diff($root, newVDom, vDom);
-    } else {
-      $root.replaceChild(render(newVDom), $root.firstChild);
-    }
-
-    vDom = newVDom;
-  }
-};
-
-/**
- * compares two VDOM nodes and applies the differences to the dom
+ * Compares two VDOM nodes and applies the differences to the dom
  *
  * @param {HTMLElement} $parent
  * @param {import('./vdom').VNode} oldNode
