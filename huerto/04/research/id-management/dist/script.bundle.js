@@ -7,6 +7,7 @@
    *
    * @module vdom
    */
+
   /**
    * @typedef {{ tagName: string, attributes: object, children: any  }} VNode
    */
@@ -16,7 +17,7 @@
    *
    * @param {string} tagName
    * @param {object} attributes
-   * @param {VNode[] | VNode | any} node
+   * @param {VNode[] | VNode | any} nodes
    *
    * @returns {VNode}
    */
@@ -153,10 +154,10 @@
 
   const Vegetable = () => {
     const _id = Observable(id.next().value);
-    const _name = Observable('');
+    const _name = Observable('Vegi');
     const _classification = Observable('');
-    const _origin = Observable('');
-    const _plantend = Observable(false);
+    const _origin = Observable('Europe');
+    const _plantend = Observable(true);
     const _amount = Observable(1);
     const _comments = Observable('');
 
@@ -207,7 +208,9 @@
     $addButton.addEventListener('click', _ => vegetables.add(Vegetable()));
     $delButton.addEventListener('click', _ => vegetables.remove(selectedVegetable.get()));
 
-    disableForm($form);
+    $form.planted.addEventListener('change', onPlantedChecked($form.amount));
+    $form.classification.addEventListener('change', onClassification($form.asia)('Tubers'));
+    $form.classification.addEventListener('change', onClassification($form.america)('Fungi'));
   };
 
   const addVegetable = $table => vegetable => {
@@ -272,7 +275,7 @@
       h('td', {}, vegetable.getName()),
       h('td', {}, vegetable.getClassification()),
       h('td', {}, vegetable.getOrigin()),
-      h('td', {}, vegetable.getAmount()),
+      h('td', { style: `opacity: ${vegetable.getPlanted() ? 1 : 0.3}` }, vegetable.getAmount()),
       h('td', {}, vegetable.getComments()),
     ]);
   };
@@ -306,6 +309,21 @@
     $form.planted.checked = vegetable.getPlanted();
     $form.amount.value = vegetable.getAmount();
     $form.comments.value = vegetable.getComments();
+  };
+
+  const onPlantedChecked = $amount => event => {
+    $amount.style.display = event.target.checked ? 'inline' : 'none';
+  };
+
+  const onClassification = $origin => value => event => {
+    $origin.disabled = false;
+    $origin.labels.forEach(label => (label.style.opacity = '1'));
+
+    if (event.target.value === value) {
+      $origin.disabled = true;
+      $origin.checked = false;
+      $origin.labels.forEach(label => (label.style.opacity = '0.5'));
+    }
   };
 
   initHuerto(document.querySelector('#vegetable-input'), document.querySelector('#vegetable-output'));

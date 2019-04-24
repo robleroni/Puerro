@@ -10,10 +10,10 @@ function* idGenerator() {
 
 const Vegetable = () => {
   const _id = Observable(id.next().value);
-  const _name = Observable('');
+  const _name = Observable('Vegi');
   const _classification = Observable('');
-  const _origin = Observable('');
-  const _plantend = Observable(false);
+  const _origin = Observable('Europe');
+  const _plantend = Observable(true);
   const _amount = Observable(1);
   const _comments = Observable('');
 

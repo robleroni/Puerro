@@ -7,6 +7,7 @@
    *
    * @module vdom
    */
+
   /**
    * @typedef {{ tagName: string, attributes: object, children: any  }} VNode
    */
@@ -16,7 +17,7 @@
    *
    * @param {string} tagName
    * @param {object} attributes
-   * @param {VNode[] | VNode | any} node
+   * @param {VNode[] | VNode | any} nodes
    *
    * @returns {VNode}
    */

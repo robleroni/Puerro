@@ -35,7 +35,9 @@ const initHuerto = ($input, $output) => {
   $addButton.addEventListener('click', _ => vegetables.add(Vegetable()));
   $delButton.addEventListener('click', _ => vegetables.remove(selectedVegetable.get()));
 
-  disableForm($form);
+  $form.planted.addEventListener('change', onPlantedChecked($form.amount));
+  $form.classification.addEventListener('change', onClassification($form.asia)('Tubers'));
+  $form.classification.addEventListener('change', onClassification($form.america)('Fungi'));
 };
 
 const addVegetable = $table => vegetable => {
@@ -100,7 +102,7 @@ const trEntry = vegetable => {
     h('td', {}, vegetable.getName()),
     h('td', {}, vegetable.getClassification()),
     h('td', {}, vegetable.getOrigin()),
-    h('td', {}, vegetable.getAmount()),
+    h('td', { style: `opacity: ${vegetable.getPlanted() ? 1 : 0.3}` }, vegetable.getAmount()),
     h('td', {}, vegetable.getComments()),
   ]);
 };
@@ -134,4 +136,19 @@ const fillForm = $form => vegetable => {
   $form.planted.checked = vegetable.getPlanted();
   $form.amount.value = vegetable.getAmount();
   $form.comments.value = vegetable.getComments();
+};
+
+const onPlantedChecked = $amount => event => {
+  $amount.style.display = event.target.checked ? 'inline' : 'none';
+};
+
+const onClassification = $origin => value => event => {
+  $origin.disabled = false;
+  $origin.labels.forEach(label => (label.style.opacity = '1'));
+
+  if (event.target.value === value) {
+    $origin.disabled = true;
+    $origin.checked = false;
+    $origin.labels.forEach(label => (label.style.opacity = '0.5'));
+  }
 };
