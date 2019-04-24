@@ -105,7 +105,14 @@ const render = node => {
  * @param {boolean} diffing
  */
 const mount = ($root, view, state, diffing = true) => {
-  let vDom = view({ state, setState });
+  const params = {
+    get state() {
+      return state;
+    },
+    setState,
+  };
+
+  let vDom = view(params);
   $root.prepend(render(vDom));
 
   function setState(newState) {
@@ -118,7 +125,7 @@ const mount = ($root, view, state, diffing = true) => {
   }
 
   function refresh() {
-    const newVDom = view({ state, setState });
+    const newVDom = view(params);
 
     if (diffing) {
       diff($root, newVDom, vDom);
