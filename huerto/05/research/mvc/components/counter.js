@@ -13,7 +13,7 @@ export {
 const view = (count, text, onCountChange) =>
   h('div', {},
     h('h2', {}, text),
-    h('button', { click: e => onCountChange(-1) }, '-'),
+    h('button', { click: _ => onCountChange(-1) }, '-'),
     h('span', {}, count),
-    h('button', { click: e => onCountChange(1) }, '+')
+    h('button', { click: _ => onCountChange(1) }, '+')
   );

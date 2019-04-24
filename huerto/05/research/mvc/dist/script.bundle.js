@@ -67,9 +67,9 @@
   const view = (count, text, onCountChange) =>
     h('div', {},
       h('h2', {}, text),
-      h('button', { click: e => onCountChange(-1) }, '-'),
+      h('button', { click: _ => onCountChange(-1) }, '-'),
       h('span', {}, count),
-      h('button', { click: e => onCountChange(1) }, '+')
+      h('button', { click: _ => onCountChange(1) }, '+')
     );
 
   /**
@@ -78,7 +78,7 @@
    * @param {import('../models').State} obj.state 
    */
   const view$1 = (controller) => 
-    h('div', {}, h('h3', {}, 'count1 * count2'), h('div', {}, controller.getCount1() + controller.getCount2()));
+    h('div', {}, h('h3', {}, 'count1 + count2'), h('div', {}, controller.getCount1() + controller.getCount2()));
 
   /**
    * 
@@ -219,7 +219,7 @@
     h('main', {}, 
       h('div',{}, 
         view(controller.getCount1(), 'count1', c => controller.addCount1(c)),
-        view(controller.getCount2(), 'count1', c => controller.addCount2(c)),
+        view(controller.getCount2(), 'count2', c => controller.addCount2(c)),
       ),
       h('div',{}, 
         view$1(controller),

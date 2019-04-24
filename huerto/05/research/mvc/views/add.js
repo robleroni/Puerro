@@ -10,4 +10,4 @@ export {
  * @param {import('../models').State} obj.state 
  */
 const view = (controller) => 
-  h('div', {}, h('h3', {}, 'count1 * count2'), h('div', {}, controller.getCount1() + controller.getCount2()))
+  h('div', {}, h('h3', {}, 'count1 + count2'), h('div', {}, controller.getCount1() + controller.getCount2()))
