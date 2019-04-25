@@ -5,7 +5,7 @@
  * @module vdom
  */
 
-export { h, toH, createDomElement, render, mount, diff, changed };
+export { h, toH, createDomElement, render, mount, diff, changed, mountMVC };
 
 /**
  * @typedef {{ tagName: string, attributes: object, children: any  }} VNode
@@ -126,6 +126,23 @@ const mount = ($root, view, state, diffing = true) => {
 
   function refresh() {
     const newVDom = view(params);
+
+    if (diffing) {
+      diff($root, newVDom, vDom);
+    } else {
+      $root.replaceChild(render(newVDom), $root.firstChild);
+    }
+
+    vDom = newVDom;
+  }
+};
+
+const mountMVC = ($root, model, view, controller, diffing = true) => {
+  let vDom = view(controller(model, refresh));
+  $root.prepend(render(vDom));
+
+  function refresh(model) {
+    const newVDom = view(controller(model, refresh));
 
     if (diffing) {
       diff($root, newVDom, vDom);
