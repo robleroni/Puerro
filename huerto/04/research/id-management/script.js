@@ -1,2 +1,7 @@
 import { initHuerto } from './huerto';
-initHuerto(document.querySelector('#vegetable-input'), document.querySelector('#vegetable-output'));
+initHuerto(
+  document.querySelector('form'),
+  document.getElementById('vegetables'),
+  document.getElementById('delete'),
+  document.getElementById('add'),
+);

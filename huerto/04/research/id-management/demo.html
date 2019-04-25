@@ -1,72 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Huerto</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Huerto - 04</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script defer src="dist/script.bundle.js"></script>
+    <link rel="stylesheet" href="../../../../assets/css/huerto.css" />
     <style>
-      * {
-        margin: 2px;
+      #vegetables li {
+        padding: 10px;
+        border-bottom: 1px solid black;
       }
-
-      main {
-        display: flex;
-      }
-
-      section {
-        flex: 1;
-        padding: 1rem;
-      }
-
-      #vegetable-input {
-        border-right: 1px solid;
-      }
-
-      #vegetable-input::backdrop {
-        background-color: rgba(0, 0, 0, 0.5);
-      }
-
-      form {
-        display: flex;
-        flex-direction: column;
-        opacity: 0.3;
-      }
-
-      table {
-        width: 100%;
-        table-layout: fixed;
-        border-collapse: collapse;
-      }
-
-      th,
-      td {
-        border: 1px solid;
-        word-wrap: break-word;
-      }
-
-      tr:hover:not(:first-child) {
-        background-color: #ffa;
-      }
-
-      .selected {
-        background-color: lightgrey;
+      #vegetables .selected {
+        color: red;
       }
     </style>
   </head>
   <body>
-    <h1>Huerto - Your Vegetable Garden</h1>
-    <main>
-      <section id="vegetable-input">
-        <h2>Modify Vegetable</h2>
+    <div class="container">
+      <h1>Huerto - Your Vegetable Garden</h1>
+      <button id="add">+</button>
+      <main>
         <form>
-          <label for="name">Vegetable Name</label>
-          <input type="text" id="name" name="name" value="Vegi" required />
+          <h3>Add vegetable</h3>
+          <label for="name">Vegi</label>
+          <input type="text" id="name" name="name" required />
 
           <label for="classification">Classification</label>
           <select id="classification" name="classification"></select>
 
           <label>Origin</label>
           <div class="origin">
-            <input type="radio" id="europe" name="origin" value="Europe" checked required />
+            <input type="radio" id="europe" name="origin" value="Europe" required />
             <label for="europe">Europe</label>
             <input type="radio" id="asia" name="origin" value="Asia" required />
             <label for="asia">Asia</label>
@@ -84,27 +50,21 @@
           <label for="comments">Comments</label>
           <textarea id="comments" name="comments"></textarea>
 
-          <div>
-            <button id="save">Save</button>
-            <button id="clear" type="reset">Clear</button>
-            <button id="delete" name="delete" type="button">Delete</button>
-          </div>
+          <button id="save" type="submit">Save</button>
+          <button id="delete" type="button" disabled>Delete</button>
         </form>
-      </section>
+        <div class="output">
+          <h3>My vegetables</h3>
+          <ul id="vegetables"></ul>
+        </div>
+      </main>
+    </div>
 
-      <section id="vegetable-output">
-        <h2>My Vegetables</h2>
-        <button id="add">+</button>
-        <table id="vegetables">
-          <tr>
-            <th>Vegetable Name</th>
-            <th>Classification</th>
-            <th>Origin</th>
-            <th>Amount</th>
-            <th>Comments</th>
-          </tr>
-        </table>
-      </section>
-    </main>
+    <template id="vegetable-entry">
+      <li>
+        <span></span>
+        <button>Delete</button>
+      </li>
+    </template>
   </body>
 </html>

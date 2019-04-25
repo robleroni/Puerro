@@ -73,6 +73,18 @@
     return $element;
   };
 
+  const vegetableClassifications = [
+    'Bulbs',
+    'Flowers',
+    'Fruits',
+    'Fungi',
+    'Leaves',
+    'Roots',
+    'Seeds',
+    'Stems',
+    'Tubers',
+  ];
+
   /**
    * Observable Pattern Implementation
    *
@@ -134,31 +146,20 @@
     };
   };
 
-  const vegetableClassifications = [
-    'Bulbs',
-    'Flowers',
-    'Fruits',
-    'Fungi',
-    'Leaves',
-    'Roots',
-    'Seeds',
-    'Stems',
-    'Tubers',
-  ];
+  /**
+   * @typedef {{ id: number, name: string, classification: string, origin: string, amount: number, comments: string  }} Vegetable
+   */
 
-  const id = idGenerator();
-  function* idGenerator() {
-    let id = 0;
-    while (true) yield ++id;
-  }
-
+  /**
+   * Creates a vegetable
+   */
   const Vegetable = () => {
-    const _id = Observable(id.next().value);
-    const _name = Observable('Vegi');
+    const _id = Observable(0);
+    const _name = Observable('');
     const _classification = Observable('');
-    const _origin = Observable('Europe');
-    const _plantend = Observable(true);
-    const _amount = Observable(1);
+    const _origin = Observable('');
+    const _plantend = Observable(false);
+    const _amount = Observable(0);
     const _comments = Observable('');
 
     return {
@@ -176,133 +177,88 @@
       setPlanted: plantend => _plantend.set(plantend),
       setAmount: amount => _amount.set(amount),
       setComments: comments => _comments.set(comments),
+
+      toString: () => `
+        ${_name.get()} (${_classification.get()}) from ${_origin.get()},
+        ${_plantend.get() ? `planted (${_amount.get()})` : 'not planted'},
+        ${_comments.get()}
+      `,
     };
   };
 
+  /**
+   * @typedef {{ id: number, name: string, classification: string, origin: string, amount: number, comments: string  }} Vegetable
+   */
   const vegetables = ObservableList([]);
-  const selectedVegetable = Observable(null);
+  const selectedId = Observable(0); // Maybe use Nothing
 
-  const initHuerto = ($input, $output) => {
-    const $form = $input.querySelector('form');
-    const $delButton = $form.delete;
-    const $table = $output.querySelector('table');
-    const $addButton = $output.querySelector('#add');
-    const $trs = $output.querySelectorAll('tr:not(:first-child)');
-
-    vegetableClassifications.forEach(c => $form.classification.append(render(h('option', {}, c))));
-
-    $form.addEventListener('submit', onFormSubmit);
-    $trs.forEach($tr => $tr.addEventListener('click', onVegetableRowClick));
-
-    selectedVegetable.onChange(selectTr($table));
-    selectedVegetable.onChange(fillForm($form));
-
-    vegetables.onAdd(addVegetable($table));
-    vegetables.onAdd(_ => enableForm($form));
-
-    vegetables.onReplace(updateVegetable($table));
-
-    vegetables.onRemove(deleteVegetable($table));
-    vegetables.onRemove(_ => (vegetables.getAll().length ? enableForm($form) : disableForm($form)));
-
-    $addButton.addEventListener('click', _ => vegetables.add(Vegetable()));
-    $delButton.addEventListener('click', _ => vegetables.remove(selectedVegetable.get()));
-
-    $form.planted.addEventListener('change', onPlantedChecked($form.amount));
-    $form.classification.addEventListener('change', onClassification($form.asia)('Tubers'));
-    $form.classification.addEventListener('change', onClassification($form.america)('Fungi'));
-  };
-
-  const addVegetable = $table => vegetable => {
-    $table.appendChild(render(trEntry(vegetable)));
-    selectedVegetable.set(vegetable);
-  };
-
-  const updateVegetable = $table => vegetable => {
-    const $trs = $table.querySelectorAll('tr:not(:first-child)');
-    const $tr = [...$trs].find($tr => $tr.getAttribute('data-id') == vegetable.getId());
-    $table.replaceChild(render(trEntry(vegetable)), $tr);
-    selectedVegetable.set(vegetable);
-  };
-
-  const deleteVegetable = $table => vegetable => {
-    if (null == vegetable) return;
-
-    const $trs = $table.querySelectorAll('tr:not(:first-child)');
-    const $tr = [...$trs].find($tr => $tr.getAttribute('data-id') == vegetable.getId());
-
-    if ($tr.previousSibling) {
-      selectedVegetable.set(
-        vegetables.getAll().find(v => v.getId() == $tr.previousSibling.getAttribute('data-id'))
-      );
+  function* id() {
+    let id = 0;
+    while (true) {
+      id++;
+      yield id;
     }
+  }
+  const genId = id();
 
-    if ($tr.nextSibling) {
-      selectedVegetable.set(
-        vegetables.getAll().find(v => v.getId() == $tr.nextSibling.getAttribute('data-id'))
-      );
-    }
+  /**
+   * Renders a removable vegetable entry with the given vegetable in the given container
+   *
+   * @param {HTMLElement} $container
+   * @param {Vegetable} vegetable
+   */
+  const createVegetableEntry = ($container, vegetable) => {
+    const generateLi = _vegetable => {
+      const $li = createDomElement('li', { 'data-id': _vegetable.getId() }, _vegetable.toString());
 
-    $table.removeChild($tr);
+      $li.addEventListener('click', () => {
+        selectedId.set(_vegetable.getId());
+      });
+
+      return $li;
+    };
+
+    let $li = generateLi(vegetable);
+    $container.appendChild($li);
+
+    vegetables.onRemove(_vegetable => {
+      if (vegetable.getId() !== _vegetable.getId()) {
+        return;
+      }
+      const index = [...$container.children].indexOf($li);
+      $container.removeChild($li);
+      if (vegetables.count() === 0) {
+        return selectedId.set(0);
+      }
+      if (index === vegetables.count()) {
+        return selectedId.set(vegetables.get(index - 1).getId());
+      }
+      selectedId.set(vegetables.get(index).getId());
+    });
+    vegetables.onReplace((newVegetable, oldVegetable) => {
+      if (vegetable.getId() === oldVegetable.getId()) {
+        const $newLi = generateLi(newVegetable);
+        $container.replaceChild($newLi, $li);
+        $li = $newLi;
+        vegetable = newVegetable;
+        selectedId.set(selectedId.get());
+      }
+    });
   };
 
-  const onFormSubmit = event => {
-    event.preventDefault(); // Prevent Form Submission
-
-    if (null == selectedVegetable.get()) return;
-
-    const $form = event.target;
-    const vegetable = Object.assign({}, selectedVegetable.get()); // copy
-
-    vegetable.setName($form.name.value);
-    vegetable.setClassification($form.classification.value);
-    vegetable.setOrigin($form.origin.value);
-    vegetable.setPlanted($form.planted.checked);
-    vegetable.setAmount($form.amount.value);
-    vegetable.setComments($form.comments.value);
-
-    vegetables.replace(selectedVegetable.get(), vegetable);
+  /**
+   *
+   * @param {HTMLSelectElement} $select
+   */
+  const renderVegetableClassifications = $select => {
+    vegetableClassifications.forEach(c => $select.append(render(h('option', {}, c))));
   };
 
-  const onVegetableRowClick = event => {
-    const $table = event.target.parentElement;
-    const vegetable = vegetables.getAll().find(v => v.getId() == $table.getAttribute('data-id'));
-    selectedVegetable.set(vegetable);
-  };
-
-  const trEntry = vegetable => {
-    return h('tr', { 'data-id': vegetable.getId(), click: onVegetableRowClick }, [
-      h('td', {}, vegetable.getName()),
-      h('td', {}, vegetable.getClassification()),
-      h('td', {}, vegetable.getOrigin()),
-      h('td', { style: `opacity: ${vegetable.getPlanted() ? 1 : 0.3}` }, vegetable.getAmount()),
-      h('td', {}, vegetable.getComments()),
-    ]);
-  };
-
-  const disableForm = $form => {
-    $form.style.opacity = 0.3;
-    [...$form.elements].forEach($element => ($element.disabled = true));
-  };
-
-  const enableForm = $form => {
-    $form.style.opacity = 1;
-    [...$form.elements].forEach($element => ($element.disabled = false));
-  };
-
-  const selectTr = $table => vegetable => {
-    const $trs = $table.querySelectorAll('tr:not(:first-child)');
-    [...$trs].forEach($tr => $tr.classList.remove('selected'));
-
-    if (null == vegetable) return; // no selection if null
-
-    const $selectedTr = [...$trs].find($tr => $tr.getAttribute('data-id') == vegetable.getId());
-    $selectedTr.classList.add('selected');
-  };
-
-  const fillForm = $form => vegetable => {
-    if (null == vegetable) return; // no filling if null
-
+  /**
+   *
+   * @param {*} vegetable
+   */
+  const setFormValue = $form => vegetable => {
     $form.name.value = vegetable.getName();
     $form.classification.value = vegetable.getClassification();
     $form.origin.value = vegetable.getOrigin();
@@ -311,10 +267,47 @@
     $form.comments.value = vegetable.getComments();
   };
 
+  /**
+   *
+   * @param {HTMLUListElement} $list
+   * @returns {function(Event): void}
+   */
+  const onFormSubmit = event => {
+    event.preventDefault(); // Prevent Form Submission
+    const $form = event.target;
+    $form.name.classList.remove('invalid');
+    const vegetable = Vegetable();
+    vegetable.setId(genId.next().value);
+    vegetable.setName($form.name.value);
+    vegetable.setClassification($form.classification.value);
+    vegetable.setOrigin($form.origin.value);
+    vegetable.setPlanted($form.planted.checked);
+    vegetable.setAmount($form.amount.value);
+    vegetable.setComments($form.comments.value);
+
+    if (selectedId.get() > 0) {
+      const oldVegetable = vegetables.getAll().filter(v => v.getId() === selectedId.get());
+      vegetables.replace(vegetables.get(oldVegetable, vegetable));
+      selectedId.set(0);
+    } else {
+      vegetables.add(vegetable);
+    }
+    selectedId.set(vegetable.getId());
+  };
+
+  /**
+   *
+   * @param {HTMLInputElement} $amount
+   * @returns {function(Event): void}
+   */
   const onPlantedChecked = $amount => event => {
     $amount.style.display = event.target.checked ? 'inline' : 'none';
   };
 
+  /**
+   *
+   * @param {HTMLInputElement} $origin
+   */
   const onClassification = $origin => value => event => {
     $origin.disabled = false;
     $origin.labels.forEach(label => (label.style.opacity = '1'));
@@ -326,6 +319,64 @@
     }
   };
 
-  initHuerto(document.querySelector('#vegetable-input'), document.querySelector('#vegetable-output'));
+  const onDeleteClick = evt => {
+    const vegetable = vegetables.getAll().find(v => v.getId() === selectedId.get());
+    vegetables.remove(vegetable);
+  };
+
+  /**
+   *
+   * @param {HTMLFormElement} $form
+   * @param {HTMLUListElement} $vegetables
+   * @param {HTMLButtonElement} $delete
+   */
+  const onIndexChange = ($form, $vegetables, $delete) => (newId, oldId) => {
+    const selectedClass = 'selected';
+    if (oldId > 0 && vegetables.getAll().some(v => v.getId() === oldId)) {
+      $vegetables.querySelector(`li[data-id="${oldId}"]`).classList.remove(selectedClass);
+    }
+    if (newId > 0) {
+      $vegetables.querySelector(`li[data-id="${newId}"]`).classList.add(selectedClass);
+      setFormValue($form)(vegetables.getAll().find(v => v.getId() === newId));
+      $delete.removeAttribute('disabled');
+    }
+    if (newId === 0) {
+      $form.reset();
+      $delete.setAttribute('disabled', true);
+    }
+  };
+
+  /**
+   * Constructor function to create the Huerto UI
+   *
+   * @param {HTMLFormElement} $form - Input element to add new vegetables
+   * @param {HTMLElement} $vegetables - Container for the vegetables
+   * @param {HTMLButtonElement} $delete - Delete button
+   * @param {HTMLButtonElement} $add - Delete button
+   */
+  const initHuerto = ($form, $vegetables, $delete, $add) => {
+    $form.addEventListener('submit', onFormSubmit);
+    $form.planted.addEventListener('change', onPlantedChecked($form.amount));
+    $form.classification.addEventListener('change', onClassification($form.asia)('Tubers'));
+    $form.classification.addEventListener('change', onClassification($form.america)('Fungi'));
+    $delete.addEventListener('click', onDeleteClick);
+    $add.addEventListener('click', evt => {
+      selectedId.set(0);
+    });
+
+    $form.name.oninvalid = event => event.target.classList.add('invalid');
+
+    renderVegetableClassifications($form.classification);
+
+    vegetables.onAdd(vegetable => createVegetableEntry($vegetables, vegetable));
+    selectedId.onChange(onIndexChange($form, $vegetables, $delete));
+  };
+
+  initHuerto(
+    document.querySelector('form'),
+    document.getElementById('vegetables'),
+    document.getElementById('delete'),
+    document.getElementById('add'),
+  );
 
 }());

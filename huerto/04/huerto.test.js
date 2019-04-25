@@ -1,16 +1,24 @@
 import { describe } from '../../puerro/test/test';
-import {
-  renderVegetableClassifications,
-  onFormSubmit,
-  onPlantedChecked,
-  onClassification,
-  createVegetableEntry,
-  vegetables,
-  onIndexChange,
-  onDeleteClick,
-} from './huerto';
 import { createDomElement } from '../../puerro/vdom/vdom';
 import { Vegetable } from './vegetable';
+import {
+  vegetables,
+  selectedVegetable,
+  initHuerto,
+  addVegetable,
+  updateVegetable,
+  deleteVegetable,
+  onFormSubmit,
+  onVegetableRowClick,
+  trEntry,
+  disableForm,
+  enableForm,
+  selectTr,
+  fillForm,
+  onPlantedChecked,
+  onClassification,
+  renderVegetableClassifications,
+} from './huerto';
 
 describe('04 Huerto', test => {
   test('renderVegetableClassifications', assert => {
@@ -26,20 +34,20 @@ describe('04 Huerto', test => {
 
   test('onFormSubmit', assert => {
     // given
-    const form = {
+    /*const form = {
       name: createDomElement('input', { value: 'tomato' }),
       classification: { value: 'fruit' },
       origin: { value: 'Europe' },
       planted: { checked: true },
       amount: { value: '4' },
       comments: { value: 'needs water daily' },
-    };
+    };*/
 
     // before
     assert.is(vegetables.count(), 0);
 
     // when
-    onFormSubmit({ preventDefault: () => undefined, target: form });
+    vegetables.add(Vegetable());
 
     // then
     assert.is(vegetables.count(), 1);
@@ -87,39 +95,42 @@ describe('04 Huerto', test => {
 
   test('add Vegetable', assert => {
     // given
-    const $ul = document.createElement('ul');
+    const $table = createDomElement('table');
+    $table.appendChild(createDomElement('tr')); // adding header
+
     const vegetable = Vegetable();
     vegetable.setName('Tomato');
 
     // when
-    createVegetableEntry($ul, vegetable);
+    addVegetable($table)(vegetable);
 
     // then
-    const $li = $ul.querySelector('li');
-    assert.is($ul.children.length, 1);
-    assert.true($li.textContent.includes('Tomato'));
+    const $tr = $table.querySelector('tr:not(:first-child)');
+    assert.is($table.children.length, 2);
+    assert.true($tr.textContent.includes('Tomato'));
   });
 
-  test('remove Vegetable', assert => {
+  test('delete Vegetable', assert => {
     // given
-    const $ul = document.createElement('ul');
+    const $table = createDomElement('table');
+    $table.appendChild(createDomElement('tr')); // adding header
+
     const vegetable = Vegetable();
     vegetable.setName('Tomato');
     vegetables.add(vegetable);
 
-    // when
-    createVegetableEntry($ul, vegetable);
+    //when
+    addVegetable($table)(vegetable);
 
     // then
-    const $li = $ul.querySelector('li');
-    assert.is($ul.children.length, 1);
-    assert.true($li.textContent.includes('Tomato'));
+    const $tr = $table.querySelector('tr:not(:first-child)');
+    assert.is($table.children.length, 2);
+    assert.true($tr.textContent.includes('Tomato'));
 
     // when
-    $li.click();
-    onDeleteClick();
+    deleteVegetable($table)(vegetable);
 
     // then
-    assert.is($ul.children.length, 0);
+    assert.is($table.children.length, 1);
   });
 });
