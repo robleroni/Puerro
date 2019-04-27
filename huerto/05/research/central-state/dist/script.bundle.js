@@ -9,26 +9,6 @@
    */
 
   /**
-   * @typedef {{ tagName: string, attributes: object, children: any  }} VNode
-   */
-
-  /**
-   * Creates a node object which can be rendered
-   *
-   * @param {string} tagName
-   * @param {object} attributes
-   * @param {VNode[] | VNode | any} nodes
-   *
-   * @returns {VNode}
-   */
-  const vNode = (tagName, attributes = {}, ...nodes) => ({
-    tagName,
-    attributes: null == attributes ? {} : attributes,
-    children: null == nodes ? [] : [].concat(...nodes), // collapse nested arrays.
-  });
-  const h = vNode;
-
-  /**
    * Creates a new HTML Element.
    * If the attribute is a function it will add it as an EventListener.
    * Otherwise as an attribute.
@@ -71,47 +51,6 @@
     const $element = createDomElement(node.tagName, node.attributes);
     node.children.forEach(c => $element.appendChild(render(c)));
     return $element;
-  };
-
-  /**
-   * Renders given stateful view into given container
-   *
-   * @param {HTMLElement} $root
-   * @param {function(): import('./vdom').VNode} view
-   * @param {object} state
-   * @param {boolean} diffing
-   */
-  const mount = ($root, view, state, diffing = true) => {
-    const params = {
-      get state() {
-        return state;
-      },
-      setState,
-    };
-
-    let vDom = view(params);
-    $root.prepend(render(vDom));
-
-    function setState(newState) {
-      if (typeof newState === 'function') {
-        state = newState(state) || state;
-      } else {
-        state = { ...state, ...newState };
-      }
-      refresh();
-    }
-
-    function refresh() {
-      const newVDom = view(params);
-
-      if (diffing) {
-        diff($root, newVDom, vDom);
-      } else {
-        $root.replaceChild(render(newVDom), $root.firstChild);
-      }
-
-      vDom = newVDom;
-    }
   };
 
   /**
@@ -166,6 +105,60 @@
     return nodeChanged || attributesChanged;
   };
 
+  const h = params => (tagName, attributes = {}, ...nodes) => {
+    if (typeof tagName === 'function') {
+      return tagName(params)(h(params));
+    }
+    return {
+      tagName,
+      attributes: null == attributes ? {} : attributes,
+      children: null == nodes ? [] : [].concat(...nodes), // collapse nested arrays.
+    }
+  };
+
+
+  /**
+   * Renders given stateful view into given container
+   *
+   * @param {HTMLElement} $root
+   * @param {function(): import('./vdom').VNode} view
+   * @param {object} state
+   * @param {boolean} diffing
+   */
+  const mount = ($root, view, initialState, diffing = true) => {
+    let _state = initialState;
+    const params = {
+      get state() {
+        return _state;
+      },
+      setState,
+    };
+
+    let vDom = view(params)(h(params));
+    $root.prepend(render(vDom));
+
+    function setState(newState) {
+      if (typeof newState === 'function') {
+        _state = newState(_state) || _state;
+      } else {
+        _state = { ..._state, ...newState };
+      }
+      refresh();
+    }
+
+    function refresh() {
+      const newVDom = view(params)(h(params));
+
+      if (diffing) {
+        diff($root, newVDom, vDom);
+      } else {
+        $root.replaceChild(render(newVDom), $root.firstChild);
+      }
+
+      vDom = newVDom;
+    }
+  };
+
   const initialState = {
     todos: []
   };
@@ -174,23 +167,23 @@
     addTodo: todo => state => ({ ...state, todos: [...state.todos, todo] })
   };
 
-  const counter = ({ state, setState }) => 
+  const counter = ({ state, setState })=> h => 
     h('span', {}, `Count of todos: ${state.todos.length}`);
 
-  const form = ({ state, setState }) => 
+  const form = ({ state, setState }) => h => 
     h('form', { submit: e => { e.preventDefault(); setState(actions.addTodo(e.target.todo.value)); } }, 
       h('input', { name: 'todo', required: true }),
       h('button', { type: 'submit'}, 'submit')
     );
 
-  const list = ({ state, setState }) => 
+  const list = ({ state, setState }) => h => 
     h('ul', {}, state.todos.map(t => h('li', {}, t)));
 
-  const view = ({ state, setState }) => {
+  const view = ({ state, setState }) => h => {
     return h('main', {}, 
-      form({ state, setState }),
-      list({ state, setState }),
-      counter({ state, setState }),
+      h(form),
+      h(list),
+      h(counter),
     );
   };
 
