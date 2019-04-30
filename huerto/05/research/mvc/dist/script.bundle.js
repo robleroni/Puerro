@@ -142,6 +142,7 @@
 
     refresh(state) {
       this.model = { ...this.model, ...state };
+      console.log(state, this.model);
       let newVDom = this.view(this);
       if (this.diffing) {
         diff(this.$root, newVDom, this.vDom);
@@ -194,8 +195,7 @@
 
   /**
    *
-   * @param {Object} obj
-   * @param {import('../models').State} obj.state
+   * @param {Object} controller
    */
   const view$1 = (controller) =>
     h('div', {},
@@ -205,8 +205,7 @@
 
   /**
    *
-   * @param {Object} obj
-   * @param {import('../models').State} obj.state
+   * @param {Object} controller
    */
   const view$2 = (controller) =>
     h('div', {},

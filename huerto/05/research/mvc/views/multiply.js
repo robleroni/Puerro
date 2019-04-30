@@ -6,8 +6,7 @@ export {
 
 /**
  *
- * @param {Object} obj
- * @param {import('../models').State} obj.state
+ * @param {Object} controller
  */
 const view = (controller) =>
   h('div', {},
