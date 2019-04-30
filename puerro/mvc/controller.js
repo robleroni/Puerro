@@ -21,7 +21,6 @@ class Controller {
 
   refresh(state) {
     this.model = { ...this.model, ...state }
-    console.log(state, this.model)
     let newVDom = this.view(this)
     if (this.diffing) {
       diff(this.$root, newVDom, this.vDom);

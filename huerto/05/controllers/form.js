@@ -9,8 +9,13 @@ class FormController extends Controller {
     super($root, model, view, diffing);
     this.saveListeners = [];
   }
+
   addSaveListener(listener) {
     this.saveListeners.push(listener);
+  }
+
+  setVegetable(vegetable) {
+    this.refresh({ ...vegetable });
   }
 
   setName(name) {

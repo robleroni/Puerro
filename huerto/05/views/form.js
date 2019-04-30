@@ -10,9 +10,12 @@ const formField = (label, element) => {
 
 const view = controller =>
   h('form', { submit: evt => {evt.preventDefault(); controller.save();} },
-    formField('name', h('input', {
-        value: controller.model.name,
-        change: evt => controller.setName(evt.target.value)
-      })
-    ),
+    h('fieldset', { disabled: controller.model.id <= 0 ? true : undefined },
+      formField('name', h('input', {
+          value: controller.model.name,
+          change: evt => controller.setName(evt.target.value)
+        })
+      ),
+      h('button', { type: 'submit' }, 'submit')
+    )
   )

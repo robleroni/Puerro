@@ -1,5 +1,5 @@
 export {
-  formModel
+  getInitialFormState
 }
 
 
@@ -11,3 +11,4 @@ const formModel = {
   amount: 1,
   comments: '',
 }
+const getInitialFormState = () => ({ ...formModel })

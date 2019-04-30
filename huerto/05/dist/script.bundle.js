@@ -142,7 +142,6 @@
 
     refresh(state) {
       this.model = { ...this.model, ...state };
-      console.log(state, this.model);
       let newVDom = this.view(this);
       if (this.diffing) {
         diff(this.$root, newVDom, this.vDom);
@@ -157,8 +156,13 @@
       super($root, model, view, diffing);
       this.saveListeners = [];
     }
+
     addSaveListener(listener) {
       this.saveListeners.push(listener);
+    }
+
+    setVegetable(vegetable) {
+      this.refresh({ ...vegetable });
     }
 
     setName(name) {
@@ -182,30 +186,6 @@
     }
   }
 
-  class ListController extends Controller {
-    constructor($root, model, view, diffing = true) {
-      super($root, model, view, diffing);
-      this.id = 0;
-    }
-
-    nextId() {
-      return ++this.id;
-    }
-
-    updateVegetable(vegetable) {
-      const old = this.model.vegetables.find(v => v.id === vegetable.id);
-      if (null == old) {
-        this.refresh({
-          vegetables: [...this.model.vegetables, { id: this.nextId(), ...vegetable }]
-        });
-      } else {
-        this.refresh({
-          vegetable: this.model.vegetables.map(v => v.id === vegetable.id ? vegetable : v)
-        });
-      }
-    }
-  }
-
   const formModel = {
     id: 0,
     name: '',
@@ -214,10 +194,53 @@
     amount: 1,
     comments: '',
   };
+  const getInitialFormState = () => ({ ...formModel });
+
+  class ListController extends Controller {
+    constructor($root, model, view, diffing = true) {
+      super($root, model, view, diffing);
+      this.id = 0;
+      this.selectionChangeListeners = [];
+    }
+
+    addSelectionChangeListener(listener) {
+      this.selectionChangeListeners.push(listener);
+    }
+
+    nextId() {
+      return ++this.id;
+    }
+
+    addVegetable(vegetable = getInitialFormState()) {
+      const v = { ...vegetable, id: this.nextId() };
+      this.refresh({
+        vegetables: [...this.model.vegetables, v],
+      });
+      this.selectVegetable(v);
+    }
+
+    selectVegetable(vegetable) {
+      this.refresh({ selected: vegetable });
+      this.selectionChangeListeners.forEach(listener => listener(vegetable));
+    }
+
+    updateVegetable(vegetable) {
+      const old = this.model.vegetables.find(v => v.id === vegetable.id);
+      if (null == old) {
+        this.addVegetable();
+      } else {
+        this.refresh({
+          vegetables: this.model.vegetables.map(v => v.id === vegetable.id ? vegetable : v)
+        });
+      }
+    }
+  }
 
   const listModel = {
+    selected: {},
     vegetables: []
   };
+  const getInitialListState = () => ({ ...listModel });
 
   const formField = (label, element) => {
     return h('div', {}, [h('label', {}, label), element]);
@@ -225,24 +248,49 @@
 
   const view = controller =>
     h('form', { submit: evt => {evt.preventDefault(); controller.save();} },
-      formField('name', h('input', {
-          value: controller.model.name,
-          change: evt => controller.setName(evt.target.value)
-        })
-      ),
+      h('fieldset', { disabled: controller.model.id <= 0 ? true : undefined },
+        formField('name', h('input', {
+            value: controller.model.name,
+            change: evt => controller.setName(evt.target.value)
+          })
+        ),
+        h('button', { type: 'submit' }, 'submit')
+      )
     );
 
   const view$1 = controller =>
-    h('ul', {},
-      controller.model.vegetables.map(v => h('li', {}, v.name))
+    h('div', {},
+      h('button', { click: evt => controller.addVegetable() }, '+'),
+      h('table', {},
+        h('thead', {},
+          h('tr', {},
+            h('td', {}, 'Name'),
+            h('td', {}, 'Classification'),
+            h('td', {}, 'Origin'),
+            h('td', {}, 'Amount'),
+          )
+        ),
+        h('tbody', {}, controller.model.vegetables.map(v =>
+          h('tr', {
+            style: 'color:' + (v.id === controller.model.selected.id ? 'red' : 'black'),
+            click: evt => controller.selectVegetable(v)
+          },
+            h('td', {}, v.name),
+            h('td', {}, v.classification),
+            h('td', {}, v.origin),
+            h('td', {}, v.amount),
+          ))
+        )
+      )
     );
 
   const $formRoot = document.getElementById('vegetable-input');
   const $listRoot = document.getElementById('vegetable-output');
 
-  const formController = new FormController($formRoot, formModel, view);
-  const listController = new ListController($listRoot, listModel, view$1);
+  const formController = new FormController($formRoot, getInitialFormState(), view);
+  const listController = new ListController($listRoot, getInitialListState(), view$1, false);
 
   formController.addSaveListener(vegetable => listController.updateVegetable(vegetable));
+  listController.addSelectionChangeListener(vegetable => formController.setVegetable(vegetable));
 
 }());
