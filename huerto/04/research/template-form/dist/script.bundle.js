@@ -118,7 +118,7 @@
 
     function setState(newState) {
       if (typeof newState === 'function') {
-        state = newState(state) || state;
+        state = { ...state, ...newState(state) };
       } else {
         state = { ...state, ...newState };
       }

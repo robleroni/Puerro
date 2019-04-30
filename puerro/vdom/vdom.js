@@ -117,7 +117,7 @@ const mount = ($root, view, state, diffing = true) => {
 
   function setState(newState) {
     if (typeof newState === 'function') {
-      state = { ...state, newState(state) };
+      state = { ...state, ...newState(state) };
     } else {
       state = { ...state, ...newState };
     }
