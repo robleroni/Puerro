@@ -1,22 +1,5 @@
-import { h, mount } from '../../../../puerro/vdom/vdom';
-
-import { controller } from './controllers/index';
-import { counterComponent } from './components/counter';
-import { addView } from './views/add';
-import { multiplyView } from './views/multiply';
+import { ResearchController } from './controllers/index';
 import { initialState } from './models/index';
+import { mainView } from './views/main';
 
-
-const mainView = (controller) => 
-  h('main', {}, 
-    h('div',{}, 
-      counterComponent(controller.getCount1(), 'count1', c => controller.addCount1(c)),
-      counterComponent(controller.getCount2(), 'count2', c => controller.addCount2(c)),
-    ),
-    h('div',{}, 
-      addView(controller),
-      multiplyView(controller),
-    )
-  );
-
-mount(document.body, ({ state, setState }) => mainView(controller({ state, setState })), initialState);
+new ResearchController(document.body, initialState, mainView);

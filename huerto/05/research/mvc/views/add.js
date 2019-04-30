@@ -5,9 +5,12 @@ export {
 }
 
 /**
- * 
- * @param {Object} obj 
- * @param {import('../models').State} obj.state 
+ *
+ * @param {Object} obj
+ * @param {import('../models').State} obj.state
  */
-const view = (controller) => 
-  h('div', {}, h('h3', {}, 'count1 + count2'), h('div', {}, controller.getCount1() + controller.getCount2()))
+const view = (controller) =>
+  h('div', {},
+    h('h3', {}, 'count1 + count2'),
+    h('div', {}, controller.model.count1 + controller.model.count2)
+  )

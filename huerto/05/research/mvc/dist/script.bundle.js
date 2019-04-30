@@ -74,47 +74,6 @@
   };
 
   /**
-   * Renders given stateful view into given container
-   *
-   * @param {HTMLElement} $root
-   * @param {function(): import('./vdom').VNode} view
-   * @param {object} state
-   * @param {boolean} diffing
-   */
-  const mount = ($root, view, state, diffing = true) => {
-    const params = {
-      get state() {
-        return state;
-      },
-      setState,
-    };
-
-    let vDom = view(params);
-    $root.prepend(render(vDom));
-
-    function setState(newState) {
-      if (typeof newState === 'function') {
-        state = newState(state) || state;
-      } else {
-        state = { ...state, ...newState };
-      }
-      refresh();
-    }
-
-    function refresh() {
-      const newVDom = view(params);
-
-      if (diffing) {
-        diff($root, newVDom, vDom);
-      } else {
-        $root.replaceChild(render(newVDom), $root.firstChild);
-      }
-
-      vDom = newVDom;
-    }
-  };
-
-  /**
    * Compares two VDOM nodes and applies the differences to the dom
    *
    * @param {HTMLElement} $parent
@@ -166,12 +125,49 @@
     return nodeChanged || attributesChanged;
   };
 
-  const controller = ({ state, setState }) => ({
-    getCount1: () => state.count1,
-    getCount2: () => state.count2,
-    addCount1: count => setState(state => ({ ...state, count1: state.count1 + count })),
-    addCount2: count => setState(state => ({ ...state, count2: state.count2 + count })),
-  });
+  class Controller {
+    constructor($root, model, view, diffing = true) {
+      this.$root = $root;
+      this.model = model;
+      this.view = view;
+      this.diffing = diffing;
+      this.vDom = null;
+      this.init();
+    }
+
+    init() {
+      this.vDom = this.view(this);
+      this.$root.prepend(render(this.vDom));
+    }
+
+    refresh(state) {
+      this.model = { ...this.model, ...state };
+      let newVDom = this.view(this);
+      if (this.diffing) {
+        diff(this.$root, newVDom, this.vDom);
+      } else {
+        this.$root.replaceChild(render(newVDom), this.$root.firstChild);
+      }
+    }
+  }
+
+  class ResearchController extends Controller {
+    addCount1(count) {
+      this.refresh({ count1: this.model.count1 + count });
+    }
+    addCount2(count) {
+      this.refresh({ count2: this.model.count2 + count });
+    }
+  }
+
+  /**
+   * @typedef {{ count1: number, count2: number }} State
+  */
+
+  const initialState = {
+    count1: 0,
+    count2: 0
+  };
 
   /**
    * 
@@ -188,42 +184,39 @@
     );
 
   /**
-   * 
-   * @param {Object} obj 
-   * @param {import('../models').State} obj.state 
+   *
+   * @param {Object} obj
+   * @param {import('../models').State} obj.state
    */
-  const view$1 = (controller) => 
-    h('div', {}, h('h3', {}, 'count1 + count2'), h('div', {}, controller.getCount1() + controller.getCount2()));
+  const view$1 = (controller) =>
+    h('div', {},
+      h('h3', {}, 'count1 + count2'),
+      h('div', {}, controller.model.count1 + controller.model.count2)
+    );
 
   /**
-   * 
-   * @param {Object} obj 
-   * @param {import('../models').State} obj.state 
+   *
+   * @param {Object} obj
+   * @param {import('../models').State} obj.state
    */
-  const view$2 = (controller) => 
-    h('div', {}, h('h3', {}, 'count1 * count2'), h('div', {}, controller.getCount1() * controller.getCount2()));
+  const view$2 = (controller) =>
+    h('div', {},
+      h('h3', {}, 'count1 * count2'),
+      h('div', {}, controller.model.count1 * controller.model.count2)
+    );
 
-  /**
-   * @typedef {{ count1: number, count2: number }} State
-  */
-
-  const initialState = {
-    count1: 0,
-    count2: 0
-  };
-
-  const mainView = (controller) => 
-    h('main', {}, 
-      h('div',{}, 
-        view(controller.getCount1(), 'count1', c => controller.addCount1(c)),
-        view(controller.getCount2(), 'count2', c => controller.addCount2(c)),
+  const view$3 = (controller) =>
+    h('main', {},
+      h('div',{},
+        view(controller.model.count1, 'count1', c => controller.addCount1(c)),
+        view(controller.model.count2, 'count2', c => controller.addCount2(c)),
       ),
-      h('div',{}, 
+      h('div',{},
         view$1(controller),
         view$2(controller),
       )
     );
 
-  mount(document.body, ({ state, setState }) => mainView(controller({ state, setState })), initialState);
+  new ResearchController(document.body, initialState, view$3);
 
 }());

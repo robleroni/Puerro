@@ -1,8 +1,12 @@
-export { controller };
+import { Controller } from '../../../../../puerro/mvc/controller';
 
-const controller = ({ state, setState }) => ({
-  getCount1: () => state.count1,
-  getCount2: () => state.count2,
-  addCount1: count => setState(state => ({ ...state, count1: state.count1 + count })),
-  addCount2: count => setState(state => ({ ...state, count2: state.count2 + count })),
-});
+export { ResearchController };
+
+class ResearchController extends Controller {
+  addCount1(count) {
+    this.refresh({ count1: this.model.count1 + count });
+  }
+  addCount2(count) {
+    this.refresh({ count2: this.model.count2 + count });
+  }
+}
