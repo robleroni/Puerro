@@ -9,26 +9,6 @@
    */
 
   /**
-   * @typedef {{ tagName: string, attributes: object, children: any  }} VNode
-   */
-
-  /**
-   * Creates a node object which can be rendered
-   *
-   * @param {string} tagName
-   * @param {object} attributes
-   * @param {VNode[] | VNode | any} nodes
-   *
-   * @returns {VNode}
-   */
-  const vNode = (tagName, attributes = {}, ...nodes) => ({
-    tagName,
-    attributes: null == attributes ? {} : attributes,
-    children: null == nodes ? [] : [].concat(...nodes), // collapse nested arrays.
-  });
-  const h = vNode;
-
-  /**
    * Creates a new HTML Element.
    * If the attribute is a function it will add it as an EventListener.
    * Otherwise as an attribute.
@@ -54,25 +34,6 @@
     return $element;
   };
 
-  /**
-   * renders a given node object
-   *
-   * @param {import('./vdom').VNode} node
-   *
-   * @returns {HTMLElement}
-   */
-  const render = node => {
-    if (null == node) {
-      return document.createTextNode('');
-    }
-    if (typeof node === 'string' || typeof node === 'number') {
-      return document.createTextNode(node);
-    }
-    const $element = createDomElement(node.tagName, node.attributes);
-    node.children.forEach(c => $element.appendChild(render(c)));
-    return $element;
-  };
-
   const vegetableClassifications = [
     'Bulbs',
     'Flowers',
@@ -86,22 +47,16 @@
   ];
 
   /**
-   * Creates the vegetable output string
+   * Constructor function to create the Huerto UI
    *
-   * @param {HTMLFormElement} $form
+   * @param {HTMLFormElement} $form   - Input element to add new vegetables
+   * @param {HTMLElement} $vegetables - Container for the vegetables
    */
-  const createVegetableOutputString = $form =>
-    `${$form.name.value} (${$form.classification.value}) from ${$form.origin.value}, ${
-    $form.planted.checked ? `planted (${$form.amount.value})` : 'not planted'
-  }, ${$form.comments.value}`;
+  const initHuerto = ($form, $vegetables) => {
+    $form.addEventListener('submit', onFormSubmit($vegetables));
+    $form.planted.addEventListener('change', onPlantedChecked($form.amount));
 
-  /**
-   * Renders the Vegetable Classifications
-   *
-   * @param {HTMLSelectElement} $select
-   */
-  const renderVegetableClassifications = $select => {
-    vegetableClassifications.forEach(c => $select.append(render(h('option', {}, c))));
+    renderVegetableClassifications($form.classification);
   };
 
   /**
@@ -128,18 +83,27 @@
   };
 
   /**
-   * Constructor function to create the Huerto UI
+   * Renders the Vegetable Classifications
    *
-   * @param {HTMLFormElement} $form - Input element to add new vegetables
-   * @param {HTMLElement} $vegetables - Container for the vegetables
+   * @param {HTMLSelectElement} $select
    */
-  const initHuerto = ($form, $vegetables) => {
-    $form.addEventListener('submit', onFormSubmit($vegetables));
-    $form.planted.addEventListener('change', onPlantedChecked($form.amount));
-
-    renderVegetableClassifications($form.classification);
+  const renderVegetableClassifications = $select => {
+    vegetableClassifications.forEach(c => $select.append(createDomElement('option', {}, c)));
   };
 
-  initHuerto(document.querySelector('form'), document.getElementById('vegetables'));
+  /**
+   * Creates the vegetable output string
+   *
+   * @param {HTMLFormElement} $form
+   */
+  const createVegetableOutputString = $form =>
+    `${$form.name.value} (${$form.classification.value}) from ${$form.origin.value}, ${
+    $form.planted.checked ? `planted (${$form.amount.value})` : 'not planted'
+  }, ${$form.comments.value}`;
+
+  initHuerto(
+    document.querySelector('form'), 
+    document.getElementById('vegetables')
+  );
 
 }());

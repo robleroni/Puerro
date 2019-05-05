@@ -1,25 +1,19 @@
-import { createDomElement, render, h } from '../../puerro/vdom/vdom';
+import { createDomElement } from '../../puerro/vdom/vdom';
 import { vegetableClassifications } from '../../assets/js/constants';
 
-export { renderVegetableClassifications, onFormSubmit, onPlantedChecked, initHuerto };
+export { initHuerto, onFormSubmit, onPlantedChecked, renderVegetableClassifications };
 
 /**
- * Creates the vegetable output string
+ * Constructor function to create the Huerto UI
  *
- * @param {HTMLFormElement} $form
+ * @param {HTMLFormElement} $form   - Input element to add new vegetables
+ * @param {HTMLElement} $vegetables - Container for the vegetables
  */
-const createVegetableOutputString = $form =>
-  `${$form.name.value} (${$form.classification.value}) from ${$form.origin.value}, ${
-    $form.planted.checked ? `planted (${$form.amount.value})` : 'not planted'
-  }, ${$form.comments.value}`;
+const initHuerto = ($form, $vegetables) => {
+  $form.addEventListener('submit', onFormSubmit($vegetables));
+  $form.planted.addEventListener('change', onPlantedChecked($form.amount));
 
-/**
- * Renders the Vegetable Classifications
- *
- * @param {HTMLSelectElement} $select
- */
-const renderVegetableClassifications = $select => {
-  vegetableClassifications.forEach(c => $select.append(render(h('option', {}, c))));
+  renderVegetableClassifications($form.classification);
 };
 
 /**
@@ -46,14 +40,20 @@ const onPlantedChecked = $amount => event => {
 };
 
 /**
- * Constructor function to create the Huerto UI
+ * Renders the Vegetable Classifications
  *
- * @param {HTMLFormElement} $form - Input element to add new vegetables
- * @param {HTMLElement} $vegetables - Container for the vegetables
+ * @param {HTMLSelectElement} $select
  */
-const initHuerto = ($form, $vegetables) => {
-  $form.addEventListener('submit', onFormSubmit($vegetables));
-  $form.planted.addEventListener('change', onPlantedChecked($form.amount));
-
-  renderVegetableClassifications($form.classification);
+const renderVegetableClassifications = $select => {
+  vegetableClassifications.forEach(c => $select.append(createDomElement('option', {}, c)));
 };
+
+/**
+ * Creates the vegetable output string
+ *
+ * @param {HTMLFormElement} $form
+ */
+const createVegetableOutputString = $form =>
+  `${$form.name.value} (${$form.classification.value}) from ${$form.origin.value}, ${
+    $form.planted.checked ? `planted (${$form.amount.value})` : 'not planted'
+  }, ${$form.comments.value}`;

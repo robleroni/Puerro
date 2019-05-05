@@ -8,7 +8,7 @@
 
 > > **Customer**: Wow! That was quick!
 >
-> > **Developer**: Sure thing, that's because I didn't have to use a framework for it.
+> > **Developer**: Sure thing, that's because I didn't had to use a framework for it.
 >
 > > **Customer**: A framewhat? Nevermind. Tell you what, three tomatoes have already grown on my tomato vine. Now I also want to know how many pieces of each vegetable I own. Could you let me add the amount as well?
 >
@@ -25,7 +25,7 @@
 In this iteration the main challenge is that we receive more input from the user.
 This leads to the consideration to group the received data together.
 
-### Form
+### [Form](research/form-tag)
 
 In HTML there is a `<form>` tag, which allows to group controls together for submitting the data to a server.
 This results in using a server-side script that handles the form data.
@@ -40,16 +40,12 @@ Nevertheless, using a `<form>` tag has many advantages, some of them are the fol
 - Increased accessibility for screen readers
 - Better usability on smartphones (changing keyboard to support submit)
 
-=> See some of the `<form>` tag advantages in action [here](research/form-tag)
-
-### Grouping with Object
+### [Grouping with Object](research/object-grouping)
 
 A consideration is also to group the input in a javascript object.
 But as we are currently just displaying the entered data it's easier to have a direct toString implementation.
 
-=> A possible implementation can be viewed [here](research/object-grouping)
-
-### Click vs Submit Event
+### [Click vs Form Submit Event](research/form-submit)
 
 As before with the event listener on a single input field, we could add an event listener on the button and access the form inside of this event.
 With this approach, the form would still be submitted, and the page refreshed. Therefore, we need to prevent the form from submitting.
@@ -71,9 +67,7 @@ $form.onsubmit = event => {
 };
 ```
 
-=> Checkout an example [here](research/form-submit)
-
-### Conditionally show fields
+### [Conditionally show fields](research/conditional-elements)
 
 For now, the fastest and easiest way is to listen to events of one field and with that information toggle the visibility of others.
 

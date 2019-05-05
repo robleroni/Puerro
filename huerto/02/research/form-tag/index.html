@@ -5,7 +5,6 @@
     <style>
       form {
         display: flex;
-        flex-direction: row;
       }
     </style>
   </head>
@@ -20,7 +19,7 @@
     <script>
       const $form = document.querySelector('form');
       window.setInterval(() => {
-        $form.reset(); // allows reseting the elements of the form
+        $form.reset();               // allows reseting the elements of the form
         $form.input.value = 'Lorem'; // easy access to form elements
       }, 1000);
     </script>

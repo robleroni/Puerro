@@ -753,12 +753,12 @@
         Huerto($vegetableInput, $vegetables);
 
         // when
-        $vegetableInput.value = 'puerro';
+        $vegetableInput.value = 'leek';
         $vegetableInput.dispatchEvent(new KeyboardEvent('keydown', { keyCode: ENTER_KEYCODE }));
 
         // then
         assert.is($vegetables.children.length, 1);
-        assert.is($vegetables.innerHTML, '<li>puerro</li>');
+        assert.is($vegetables.innerHTML, '<li>leek</li>');
         assert.is($vegetableInput.value, '');
 
         // when
@@ -767,7 +767,7 @@
 
         // then
         assert.is($vegetables.children.length, 2);
-        assert.is($vegetables.innerHTML, '<li>puerro</li><li>tomato</li>');
+        assert.is($vegetables.innerHTML, '<li>leek</li><li>tomato</li>');
         assert.is($vegetableInput.value, '');
       });
     });
@@ -782,26 +782,6 @@
      *
      * @module vdom
      */
-
-    /**
-     * @typedef {{ tagName: string, attributes: object, children: any  }} VNode
-     */
-
-    /**
-     * Creates a node object which can be rendered
-     *
-     * @param {string} tagName
-     * @param {object} attributes
-     * @param {VNode[] | VNode | any} nodes
-     *
-     * @returns {VNode}
-     */
-    const vNode = (tagName, attributes = {}, ...nodes) => ({
-      tagName,
-      attributes: null == attributes ? {} : attributes,
-      children: null == nodes ? [] : [].concat(...nodes), // collapse nested arrays.
-    });
-    const h = vNode;
 
     /**
      * Creates a new HTML Element.
@@ -826,25 +806,6 @@
             $element.setAttribute(key, attributes[key]);
           }
         });
-      return $element;
-    };
-
-    /**
-     * renders a given node object
-     *
-     * @param {import('./vdom').VNode} node
-     *
-     * @returns {HTMLElement}
-     */
-    const render = node => {
-      if (null == node) {
-        return document.createTextNode('');
-      }
-      if (typeof node === 'string' || typeof node === 'number') {
-        return document.createTextNode(node);
-      }
-      const $element = createDomElement(node.tagName, node.attributes);
-      node.children.forEach(c => $element.appendChild(render(c)));
       return $element;
     };
 
@@ -935,25 +896,6 @@
     ];
 
     /**
-     * Creates the vegetable output string
-     *
-     * @param {HTMLFormElement} $form
-     */
-    const createVegetableOutputString = $form =>
-      `${$form.name.value} (${$form.classification.value}) from ${$form.origin.value}, ${
-    $form.planted.checked ? `planted (${$form.amount.value})` : 'not planted'
-  }, ${$form.comments.value}`;
-
-    /**
-     * Renders the Vegetable Classifications
-     *
-     * @param {HTMLSelectElement} $select
-     */
-    const renderVegetableClassifications = $select => {
-      vegetableClassifications.forEach(c => $select.append(render(h('option', {}, c))));
-    };
-
-    /**
      * Event handler for subbmiting the form.
      * It appends the Vegetable Output String to the given list.
      *
@@ -976,27 +918,36 @@
       $amount.style.display = event.target.checked ? 'inline' : 'none';
     };
 
+    /**
+     * Renders the Vegetable Classifications
+     *
+     * @param {HTMLSelectElement} $select
+     */
+    const renderVegetableClassifications = $select => {
+      vegetableClassifications.forEach(c => $select.append(createDomElement('option', {}, c)));
+    };
+
+    /**
+     * Creates the vegetable output string
+     *
+     * @param {HTMLFormElement} $form
+     */
+    const createVegetableOutputString = $form =>
+      `${$form.name.value} (${$form.classification.value}) from ${$form.origin.value}, ${
+    $form.planted.checked ? `planted (${$form.amount.value})` : 'not planted'
+  }, ${$form.comments.value}`;
+
     describe('02 - Huerto', test => {
-      test('renderVegetableClassifications', assert => {
-        // given
-        const $select = document.createElement('select');
 
-        // when
-        renderVegetableClassifications($select);
-
-        // then
-        assert.is($select.children.length, 9);
-      });
-
-      test('onFormSubmit', assert => {
+      test('adding vegetable', assert => {
         // given
         const form = {
-          name: { value: 'tomato' },
-          classification: { value: 'fruit' },
-          origin: { value: 'Europe' },
-          planted: { checked: true },
-          amount: { value: '4' },
-          comments: { value: 'needs water daily' },
+          name:           { value:   'leek' },
+          classification: { value:   'fruit' },
+          origin:         { value:   'Europe' },
+          planted:        { checked: true },
+          amount:         { value:   '4' },
+          comments:       { value:   'needs water daily' },
         };
 
         const $list = document.createElement('ul');
@@ -1008,6 +959,17 @@
         assert.is($list.children.length, 1);
         assert.is(
           $list.children[0].textContent,
+          'leek (fruit) from Europe, planted (4), needs water daily'
+        );
+
+        // when
+        form.name.value = 'tomato';
+        onFormSubmit($list)({ preventDefault: () => undefined, target: form });
+
+        // then
+        assert.is($list.children.length, 2);
+        assert.is(
+          $list.children[1].textContent,
           'tomato (fruit) from Europe, planted (4), needs water daily'
         );
       });
@@ -1015,7 +977,7 @@
       test('onPlantedChecked', assert => {
         // given
         const $checkbox = document.createElement('input');
-        const $amount = document.createElement('input');
+        const $amount   = document.createElement('input');
 
         // when
         onPlantedChecked($amount)({ target: $checkbox });
@@ -1029,6 +991,17 @@
 
         // then
         assert.is($amount.style.display, 'inline');
+      });
+
+      test('renderVegetableClassifications', assert => {
+        // given
+        const $select = document.createElement('select');
+
+        // when
+        renderVegetableClassifications($select);
+
+        // then
+        assert.is($select.children.length, 9);
       });
     });
 

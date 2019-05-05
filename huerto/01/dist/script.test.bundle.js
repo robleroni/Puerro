@@ -135,12 +135,12 @@
       Huerto($vegetableInput, $vegetables);
 
       // when
-      $vegetableInput.value = 'puerro';
+      $vegetableInput.value = 'leek';
       $vegetableInput.dispatchEvent(new KeyboardEvent('keydown', { keyCode: ENTER_KEYCODE }));
 
       // then
       assert.is($vegetables.children.length, 1);
-      assert.is($vegetables.innerHTML, '<li>puerro</li>');
+      assert.is($vegetables.innerHTML, '<li>leek</li>');
       assert.is($vegetableInput.value, '');
 
       // when
@@ -149,7 +149,7 @@
 
       // then
       assert.is($vegetables.children.length, 2);
-      assert.is($vegetables.innerHTML, '<li>puerro</li><li>tomato</li>');
+      assert.is($vegetables.innerHTML, '<li>leek</li><li>tomato</li>');
       assert.is($vegetableInput.value, '');
     });
   });
