@@ -14,10 +14,10 @@
     const ENTER_KEYCODE = 13;
 
     const $vegetableInput = document.getElementById('vegetable');
-    const $vegetables = document.getElementById('vegetables');
+    const $vegetables     = document.getElementById('vegetables');
 
-    $vegetableInput.addEventListener('keydown', e => {
-      if (e.keyCode === ENTER_KEYCODE) {
+    $vegetableInput.addEventListener('keydown', event => {
+      if (event.keyCode === ENTER_KEYCODE) {
         const $vegetable = document.createElement('li');
         $vegetable.textContent = $vegetableInput.value;
         $vegetables.appendChild($vegetable);

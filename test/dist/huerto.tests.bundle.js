@@ -115,14 +115,14 @@
     describe('01 - Research - Testability', test => {
       test('adding numbers', assert => {
         // given
-        const a = 2;
+        const a = 1;
         const b = 2;
 
         // when
         const result = sum(a, b);
 
         // then
-        assert.is(result, 4);
+        assert.is(result, 3);
       });
     });
 
@@ -242,43 +242,44 @@
     /**
      * Constructor function to create the Huerto UI
      *
-     * @param {HTMLInputElement} $vegetable - Input element to add new vegetables
+     * @param {HTMLInputElement} $vegetableInput - Input element to add new vegetables
      * @param {HTMLElement} $vegetables - Container for the vegetables
      */
-    function Huerto($vegetable, $vegetables) {
-      const vegetables = [];
-
-      function bindEvents() {
-        $vegetable.addEventListener('keydown', e => {
-          if (e.keyCode === ENTER_KEYCODE) {
-            vegetables.push($vegetable.value);
-            $vegetable.value = '';
-            renderVegetables();
-          }
-        });
-      }
-
-      function renderVegetables() {
-        return ($vegetables.innerHTML = vegetables.map(v => `<li>${v}</li>`).join(''));
-      }
-
-      bindEvents();
+    function Huerto($vegetableInput, $vegetables) {
+      $vegetableInput.addEventListener('keydown', event => {
+        if (event.keyCode === ENTER_KEYCODE) {
+          const $vegetable = document.createElement('li');
+          $vegetable.textContent = $vegetableInput.value;
+          $vegetables.appendChild($vegetable);
+          $vegetableInput.value = '';
+        }
+      });
     }
 
     describe('01 - Huerto', test => {
-      test('renderVegetables', assert => {
+      test('add Vegetable', assert => {
         // given
-        const $vegetable = document.createElement('input'),
-          $vegetables = document.createElement('ul');
-        Huerto($vegetable, $vegetables);
+        const $vegetableInput = document.createElement('input');
+        const $vegetables     = document.createElement('ul');
+        Huerto($vegetableInput, $vegetables);
 
         // when
-        $vegetable.value = 'tomato';
-        $vegetable.dispatchEvent(new KeyboardEvent('keydown', { keyCode: ENTER_KEYCODE }));
+        $vegetableInput.value = 'puerro';
+        $vegetableInput.dispatchEvent(new KeyboardEvent('keydown', { keyCode: ENTER_KEYCODE }));
 
         // then
-        assert.is($vegetables.innerHTML, '<li>tomato</li>');
-        assert.is($vegetable.value, '');
+        assert.is($vegetables.children.length, 1);
+        assert.is($vegetables.innerHTML, '<li>puerro</li>');
+        assert.is($vegetableInput.value, '');
+
+        // when
+        $vegetableInput.value = 'tomato';
+        $vegetableInput.dispatchEvent(new KeyboardEvent('keydown', { keyCode: ENTER_KEYCODE }));
+
+        // then
+        assert.is($vegetables.children.length, 2);
+        assert.is($vegetables.innerHTML, '<li>puerro</li><li>tomato</li>');
+        assert.is($vegetableInput.value, '');
       });
     });
 

@@ -18,10 +18,6 @@
 >
 > > **Developer**: I am currently experimenting a bit with the creation of web applications anyway. I could probably use your idea for that. I'll create a simple solution and come back to you.
 
-## User Stories
-
-- As a user I want to add a vegetable to a list.
-
 ## Development Process
 
 ### Coding for the Web
@@ -83,12 +79,10 @@ Since this is already an interaction with the website it requires JavaScript to 
 
 Let's start and try to implement it with and without a framework.
 
-#### Pure JavaScript (Vanilla)
+#### [Event Listeners with Pure JavaScript (Vanilla)](research/event-listeners)
 
 JavaScript can listen on events that happen to HTML elements and change the DOM (Document Object Model).
 There is not much more needed for this task than an event listener on the input field.
-
-=> Checkout the [Implementation Example](research/event-listeners)
 
 #### Angular, React, Vue
 
@@ -109,7 +103,7 @@ Building this first example with one of these frameworks would require a much bi
 
 Because of that and the other downsides from above, we will avoid a framework for the time being and won't create examples for them.
 
-### Testability
+### [Testability](research/testability)
 
 Since the code for the web behaves differently for each browser and version, it is especially important to write test cases.
 At the same time, the technologies are changing constantly in the web community.
@@ -145,8 +139,6 @@ Most of our tests will run in the browser and are using the DOM.
 With this testing utility, we are using the executional context of the tests simultaneously for the final report.
 
 This also brings the advantage of being able to run the tests with a desired browser and check if it still works.
-
-A usage example => [here](../../research/01/testability/tests.html)
 
 ## Result
 

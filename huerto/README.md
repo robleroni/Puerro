@@ -15,5 +15,3 @@ The Project itself is about a customer who want's to manage his vegetable garden
 | [Season 03](03) | [03 - Validation](03/demo.html)              | [Tests 03](03/tests.html) |
 | [Season 04](04) | [04 - Changing Input](04/demo.html)          | [Tests 04](04/tests.html) |
 | [Season 05](05) | [05 - Different Views](05/demo.html)         | [Tests 05](05/tests.html) |
-| [Season 06]()   | [06 - Storing Data]()                        | [Tests 06]()              |
-| [...]()         | [...]()                                      | [...]()                   |
