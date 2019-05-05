@@ -10,7 +10,7 @@ export { initHuerto, onFormSubmit, onPlantedChecked, renderVegetableClassificati
  * @param {HTMLElement} $vegetables - Container for the vegetables
  */
 const initHuerto = ($form, $vegetables) => {
-  $form.addEventListener('submit', onFormSubmit($vegetables));
+  $form        .addEventListener('submit', onFormSubmit($vegetables));
   $form.planted.addEventListener('change', onPlantedChecked($form.amount));
 
   renderVegetableClassifications($form.classification);

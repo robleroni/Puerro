@@ -397,6 +397,9 @@
     vegetableClassifications.forEach(c => $select.append(render(h('option', {}, c))));
   };
 
-  initHuerto(document.querySelector('#vegetable-input'), document.querySelector('#vegetable-output'));
+  initHuerto(
+    document.querySelector('#vegetable-input'), 
+    document.querySelector('#vegetable-output')
+  );
 
 }());

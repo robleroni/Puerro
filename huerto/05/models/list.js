@@ -1,9 +1,7 @@
-export {
-  getInitialListState
-}
+export { getInitialListState };
 
 const listModel = {
   selected: {},
-  vegetables: []
-}
+  vegetables: [],
+};
 const getInitialListState = () => ({ ...listModel });

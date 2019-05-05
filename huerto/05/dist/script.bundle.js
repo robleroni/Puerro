@@ -166,19 +166,19 @@
     }
 
     setName(name) {
-      this.refresh({name});
+      this.refresh({ name });
     }
     setClassification(classification) {
-      this.refresh({classification});
+      this.refresh({ classification });
     }
     setOrigin(origin) {
-      this.refresh({origin});
+      this.refresh({ origin });
     }
     setAmount(amount) {
-      this.refresh({amount});
+      this.refresh({ amount });
     }
     setComment(comment) {
-      this.refresh({comment});
+      this.refresh({ comment });
     }
 
     save() {
@@ -238,7 +238,7 @@
 
   const listModel = {
     selected: {},
-    vegetables: []
+    vegetables: [],
   };
   const getInitialListState = () => ({ ...listModel });
 

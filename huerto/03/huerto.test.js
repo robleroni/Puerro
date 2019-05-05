@@ -8,26 +8,16 @@ import {
 } from './huerto';
 
 describe('03 Huerto', test => {
-  test('renderVegetableClassifications', assert => {
-    // given
-    const $select = document.createElement('select');
 
-    // when
-    renderVegetableClassifications($select);
-
-    // then
-    assert.is($select.children.length, 9);
-  });
-
-  test('onFormSubmit', assert => {
+  test('adding vegetable', assert => {
     // given
     const form = {
-      name: createDomElement('input', { value: 'tomato' }),
-      classification: { value: 'fruit' },
-      origin: { value: 'Europe' },
-      planted: { checked: true },
-      amount: { value: '4' },
-      comments: { value: 'needs water daily' },
+      name:           createDomElement('input', { value:   'leek' }), // creating DOM Element for validation purposes
+      classification: { value:   'fruit' },
+      origin:         { value:   'Europe' },
+      planted:        { checked: true },
+      amount:         { value:   '4' },
+      comments:       { value:   'needs water daily' },
     };
 
     const $list = document.createElement('ul');
@@ -39,6 +29,17 @@ describe('03 Huerto', test => {
     assert.is($list.children.length, 1);
     assert.is(
       $list.children[0].textContent,
+      'leek (fruit) from Europe, planted (4), needs water daily'
+    );
+
+    // when
+    form.name.value = 'tomato'
+    onFormSubmit($list)({ preventDefault: () => undefined, target: form });
+
+    // then
+    assert.is($list.children.length, 2);
+    assert.is(
+      $list.children[1].textContent,
       'tomato (fruit) from Europe, planted (4), needs water daily'
     );
   });
@@ -46,7 +47,7 @@ describe('03 Huerto', test => {
   test('onPlantedChecked', assert => {
     // given
     const $checkbox = document.createElement('input');
-    const $amount = document.createElement('input');
+    const $amount   = document.createElement('input');
 
     // when
     onPlantedChecked($amount)({ target: $checkbox });
@@ -81,5 +82,16 @@ describe('03 Huerto', test => {
 
     // then
     assert.is($origin.disabled, false);
+  });
+
+  test('renderVegetableClassifications', assert => {
+    // given
+    const $select = document.createElement('select');
+
+    // when
+    renderVegetableClassifications($select);
+
+    // then
+    assert.is($select.children.length, 9);
   });
 });

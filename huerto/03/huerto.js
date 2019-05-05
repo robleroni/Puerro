@@ -1,54 +1,48 @@
-import { h, createDomElement, render } from '../../puerro/vdom/vdom';
+import { createDomElement } from '../../puerro/vdom/vdom';
+import { vegetableClassifications } from '../../assets/js/constants';
 
 export {
-  renderVegetableClassifications,
+  initHuerto,
   onFormSubmit,
   onPlantedChecked,
-  initHuerto,
   onClassification,
-};
-
-const vegetableClassifications = [
-  'Bulbs',
-  'Flowers',
-  'Fruits',
-  'Fungi',
-  'Leaves',
-  'Roots',
-  'Seeds',
-  'Stems',
-  'Tubers',
-];
-
-/**
- *
- * @param {HTMLFormElement} $form
- */
-const _vegetableOutputString = $form =>
-  `${$form.name.value} (${$form.classification.value}) from ${$form.origin.value}, ${
-    $form.planted.checked ? `planted (${$form.amount.value})` : 'not planted'
-  }, ${$form.comments.value}`;
-
-/**
- *
- * @param {HTMLSelectElement} $select
- */
-const renderVegetableClassifications = $select => {
-  vegetableClassifications.forEach(c => $select.append(render(h('option', {}, c))));
+  renderVegetableClassifications,
 };
 
 /**
+ * Constructor function to create the Huerto UI
+ *
+ * @param {HTMLFormElement} $form   - Input element to add new vegetables
+ * @param {HTMLElement} $vegetables - Container for the vegetables
+ */
+const initHuerto = ($form, $vegetables) => {
+  $form               .addEventListener('submit', onFormSubmit($vegetables));
+  $form.planted       .addEventListener('change', onPlantedChecked($form.amount));
+  $form.classification.addEventListener('change', onClassification($form.asia)('Tubers'));
+  $form.classification.addEventListener('change', onClassification($form.america)('Fungi'));
+
+  $form.name.oninvalid = event => event.target.classList.add('invalid');
+
+  renderVegetableClassifications($form.classification);
+
+};
+
+/**
+ * Event handler for subbmiting the form.
+ * It appends the Vegetable Output String to the given list.
  *
  * @param {HTMLUListElement} $list
  * @returns {function(Event): void}
  */
 const onFormSubmit = $list => event => {
   event.preventDefault(); // Prevent Form Submission
-  $list.appendChild(createDomElement('li', {}, _vegetableOutputString(event.target)));
+  $list.appendChild(createDomElement('li', {}, vegetableOutputString(event.target)));
   event.target.name.classList.remove('invalid');
 };
 
 /**
+ * Event Handler for the amount input.
+ * It changes the display style based on the planted checkbox
  *
  * @param {HTMLInputElement} $amount
  * @returns {function(Event): void}
@@ -58,7 +52,8 @@ const onPlantedChecked = $amount => event => {
 };
 
 /**
- *
+ * Event Handler for the classification dependent validation
+ * 
  * @param {HTMLInputElement} $origin
  */
 const onClassification = $origin => value => event => {
@@ -73,18 +68,21 @@ const onClassification = $origin => value => event => {
 };
 
 /**
- * Constructor function to create the Huerto UI
+ * Renders the Vegetable Classifications
  *
- * @param {HTMLFormElement} $form - Input element to add new vegetables
- * @param {HTMLElement} $vegetables - Container for the vegetables
+ * @param {HTMLSelectElement} $select
  */
-const initHuerto = ($form, $vegetables) => {
-  $form.addEventListener('submit', onFormSubmit($vegetables));
-  $form.planted.addEventListener('change', onPlantedChecked($form.amount));
-  $form.classification.addEventListener('change', onClassification($form.asia)('Tubers'));
-  $form.classification.addEventListener('change', onClassification($form.america)('Fungi'));
-
-  $form.name.oninvalid = event => event.target.classList.add('invalid');
-
-  renderVegetableClassifications($form.classification);
+const renderVegetableClassifications = $select => {
+  vegetableClassifications.forEach(c => $select.append(createDomElement('option', {}, c)));
 };
+
+
+/**
+ * Creates the vegetable output string
+ *
+ * @param {HTMLFormElement} $form
+ */
+const vegetableOutputString = $form =>
+  `${$form.name.value} (${$form.classification.value}) from ${$form.origin.value}, ${
+    $form.planted.checked ? `planted (${$form.amount.value})` : 'not planted'
+  }, ${$form.comments.value}`;

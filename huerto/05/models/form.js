@@ -1,7 +1,4 @@
-export {
-  getInitialFormState
-}
-
+export { getInitialFormState };
 
 const formModel = {
   id: 0,
@@ -10,5 +7,5 @@ const formModel = {
   origin: '',
   amount: 1,
   comments: '',
-}
-const getInitialFormState = () => ({ ...formModel })
+};
+const getInitialFormState = () => ({ ...formModel });

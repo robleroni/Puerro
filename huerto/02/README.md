@@ -10,7 +10,7 @@
 >
 > > **Developer**: Sure thing, that's because I didn't had to use a framework for it.
 >
-> > **Customer**: A framewhat? Nevermind. Tell you what, three tomatoes have already grown on my tomato vine. Now I also want to know how many pieces of each vegetable I own. Could you let me add the amount as well?
+> > **Customer**: A framewhat? Never-mind. Tell you what, three tomatoes have already grown on my tomato vine. Now I also want to know how many pieces of each vegetable I own. Could you let me add the amount as well?
 >
 > > **Developer**: For sure! Anything else?
 >
@@ -45,7 +45,7 @@ Nevertheless, using a `<form>` tag has many advantages, some of them are the fol
 A consideration is also to group the input in a javascript object.
 But as we are currently just displaying the entered data it's easier to have a direct toString implementation.
 
-### [Click vs Form Submit Event](research/form-submit)
+### [Click vs  Submit Event](research/form-submit)
 
 As before with the event listener on a single input field, we could add an event listener on the button and access the form inside of this event.
 With this approach, the form would still be submitted, and the page refreshed. Therefore, we need to prevent the form from submitting.
