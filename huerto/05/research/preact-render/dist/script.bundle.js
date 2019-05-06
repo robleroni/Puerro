@@ -179,12 +179,16 @@
     refresh(state) {
       this.model = { ...this.model, ...state };
       const newVDom = this.view(this);
+      this.repaint(newVDom);
+      this.vDom = newVDom;
+    }
+
+    repaint(newVDom) {
       if (this.diffing) {
         diff(this.$root, newVDom, this.vDom);
       } else {
         this.$root.replaceChild(render(newVDom), this.$root.firstChild);
       }
-      this.vDom = newVDom;
     }
   }
 
@@ -884,16 +888,13 @@
   function render$1(vnode, parent, merge) {
     return diff$1(merge, vnode, {}, false, parent, false);
   }
+  //# sourceMappingURL=preact.mjs.map
 
   class ViewController extends Controller {
-    init() {
-      this.refresh();
-    }
+    init() {}
 
-    refresh(state) {
-      this.model = { ...this.model, ...state };
-      this.vDom = this.view(this);
-      render$1(this.vDom, this.$root, this.$root.firstChild);
+    repaint(newVdom) {
+      render$1(newVdom, this.$root, this.$root.firstChild);
     }
 
     setName(name) {

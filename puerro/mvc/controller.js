@@ -37,11 +37,15 @@ class Controller {
   refresh(state) {
     this.model = { ...this.model, ...state };
     const newVDom = this.view(this);
+    this.repaint(newVDom);
+    this.vDom = newVDom;
+  }
+
+  repaint(newVDom) {
     if (this.diffing) {
       diff(this.$root, newVDom, this.vDom);
     } else {
       this.$root.replaceChild(render(newVDom), this.$root.firstChild);
     }
-    this.vDom = newVDom;
   }
 }
