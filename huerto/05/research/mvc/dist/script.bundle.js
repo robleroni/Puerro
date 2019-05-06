@@ -131,6 +131,23 @@
    * @module observable
    */
 
+  const Observable = item => {
+    const listeners = [];
+    return {
+      onChange: callback => {
+        listeners.push(callback);
+        callback(item, item);
+      },
+      get: () => item,
+      set: newItem => {
+        if (item === newItem) return;
+        const oldItem = item;
+        item = newItem;
+        listeners.forEach(notify => notify(newItem, oldItem));
+      },
+    };
+  };
+
   const EventManager = () => {
     const events = {};
     return {
@@ -148,6 +165,8 @@
     };
   };
 
+  const globalState = Observable({});
+
   class Controller {
     constructor($root, model, view, diffing = true) {
       this.$root = $root;
@@ -157,6 +176,19 @@
       this.vDom = null;
       this.eventManager = EventManager();
       this.init();
+      globalState.onChange(s => this.refresh(this.model));
+    }
+
+    static setGlobalState(newGlobalState) {
+      globalState.set({ ...globalState.get(), ...newGlobalState });
+    }
+
+    get globalState() {
+      return globalState.get();
+    }
+
+    setGlobalState(newGlobalState) {
+      Controller.setGlobalState(newGlobalState);
     }
 
     init() {

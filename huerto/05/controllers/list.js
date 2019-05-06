@@ -15,12 +15,12 @@ class ListController extends Controller {
     return ++this.id;
   }
 
-  addVegetable(vegetable = formModel) {
-    const v = { ...vegetable, id: this.nextId() };
-    this.refresh({
-      vegetables: [...this.model.vegetables, v],
+  addVegetable() {
+    const vegetable = { ...formModel, id: this.nextId() };
+    this.setGlobalState({
+      vegetables: [...this.globalState.vegetables, vegetable],
     });
-    this.selectVegetable(v);
+    this.selectVegetable(vegetable);
   }
 
   selectVegetable(vegetable) {
@@ -28,14 +28,4 @@ class ListController extends Controller {
     this.eventManager.publish('selectionChanged', vegetable)
   }
 
-  updateVegetable(vegetable) {
-    const old = this.model.vegetables.find(v => v.id === vegetable.id);
-    if (null == old) {
-      this.addVegetable();
-    } else {
-      this.refresh({
-        vegetables: this.model.vegetables.map(v => v.id === vegetable.id ? vegetable : v)
-      })
-    }
-  }
 }

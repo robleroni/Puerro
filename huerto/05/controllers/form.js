@@ -8,26 +8,13 @@ class FormController extends Controller {
   }
 
   setVegetable(vegetable) {
-    this.refresh({ ...vegetable });
-  }
-
-  setName(name) {
-    this.refresh({ name });
-  }
-  setClassification(classification) {
-    this.refresh({ classification });
-  }
-  setOrigin(origin) {
-    this.refresh({ origin });
-  }
-  setAmount(amount) {
-    this.refresh({ amount });
-  }
-  setComment(comment) {
-    this.refresh({ comment });
+    this.refresh({ ...this.model, ...vegetable });
   }
 
   save() {
-    this.eventManager.publish('save', this.model)
+    this.setGlobalState({
+      vegetables: this.globalState.vegetables.map(v => v.id === this.model.id ? this.model : v)
+    })
   }
+
 }

@@ -16,7 +16,7 @@ const view = controller =>
           h('th', {}, 'Amount'),
         )
       ),
-      h('tbody', {}, controller.model.vegetables.map(v =>
+      h('tbody', {}, controller.globalState.vegetables.map(v =>
         h('tr', {
           style: 'color:' + (v.id === controller.model.selected.id ? 'red' : 'black'),
           click: evt => controller.selectVegetable(v)

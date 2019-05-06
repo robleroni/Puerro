@@ -13,7 +13,7 @@ const view = controller =>
     h('fieldset', { disabled: controller.model.id <= 0 ? true : undefined },
       formField('name', h('input', {
           value: controller.model.name,
-          change: evt => controller.setName(evt.target.value)
+          change: evt => controller.setVegetable({name: evt.target.value})
         })
       ),
       h('button', { type: 'submit' }, 'submit')

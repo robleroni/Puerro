@@ -1,7 +1,9 @@
 import { render, diff } from '../vdom/vdom';
-import { EventManager } from '../observable/observable';
+import { EventManager, Observable } from '../observable/observable';
 
 export { Controller };
+
+const globalState = Observable({});
 
 class Controller {
   constructor($root, model, view, diffing = true) {
@@ -12,6 +14,19 @@ class Controller {
     this.vDom = null;
     this.eventManager = EventManager();
     this.init();
+    globalState.onChange(s => this.refresh(this.model));
+  }
+
+  static setGlobalState(newGlobalState) {
+    globalState.set({ ...globalState.get(), ...newGlobalState });
+  }
+
+  get globalState() {
+    return globalState.get();
+  }
+
+  setGlobalState(newGlobalState) {
+    Controller.setGlobalState(newGlobalState);
   }
 
   init() {
