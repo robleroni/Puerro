@@ -2,6 +2,7 @@
 // by scanning the directory structure recursively for test files
 
 const fs = require('fs');
+const resolve = require('rollup-plugin-node-resolve');
 
 const configs = [];
 
@@ -25,6 +26,11 @@ const createConfig = (dir, filename) => ({
     name: configOutputName,
     format: configOutputFormat,
   },
+  plugins: [
+    resolve({
+      mainFields: ['module', 'main'], // Default: ['module', 'main']
+    }),
+  ],
 });
 
 const fillConfigs = dir => {

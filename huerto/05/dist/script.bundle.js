@@ -209,9 +209,6 @@
   }
 
   class FormController extends Controller {
-    constructor($root, model, view, diffing = true) {
-      super($root, model, view, diffing);
-    }
 
     setVegetable(vegetable) {
       this.refresh({ ...this.model, ...vegetable });
@@ -330,6 +327,6 @@
   const listController = new ListController($listRoot, listModel, view$1, false);
   const overviewController = new OverviewController($overviewRoot, {}, view$2, false);
 
-  listController.eventManager.subscribe('selectionChanged', vegetable =>formController.setVegetable(vegetable));
+  listController.eventManager.subscribe('selectionChanged', vegetable => formController.setVegetable(vegetable));
 
 }());

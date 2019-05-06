@@ -23,4 +23,4 @@ const formController = new FormController($formRoot, formModel, formView);
 const listController = new ListController($listRoot, listModel, listView, false);
 const overviewController = new OverviewController($overviewRoot, {}, overviewView, false);
 
-listController.eventManager.subscribe('selectionChanged', vegetable =>formController.setVegetable(vegetable));
+listController.eventManager.subscribe('selectionChanged', vegetable => formController.setVegetable(vegetable));

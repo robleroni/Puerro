@@ -18,6 +18,10 @@
   },
   "homepage": "https://github.com/robin-fhnw/IP5-Puerro#readme",
   "devDependencies": {
-    "rollup": "1.4.1"
+    "rollup": "1.4.1",
+    "rollup-plugin-node-resolve": "^4.2.3"
+  },
+  "dependencies": {
+    "preact": "^8.4.2"
   }
 }
