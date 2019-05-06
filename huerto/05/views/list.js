@@ -10,10 +10,10 @@ const view = controller =>
     h('table', {},
       h('thead', {},
         h('tr', {},
-          h('td', {}, 'Name'),
-          h('td', {}, 'Classification'),
-          h('td', {}, 'Origin'),
-          h('td', {}, 'Amount'),
+          h('th', {}, 'Name'),
+          h('th', {}, 'Classification'),
+          h('th', {}, 'Origin'),
+          h('th', {}, 'Amount'),
         )
       ),
       h('tbody', {}, controller.model.vegetables.map(v =>

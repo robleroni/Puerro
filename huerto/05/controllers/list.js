@@ -1,5 +1,5 @@
 import { Controller } from '../../../puerro/mvc/controller.js';
-import { getInitialFormState } from '../models/form.js';
+import { formModel } from '../models/form.js';
 
 export {
   ListController
@@ -9,18 +9,13 @@ class ListController extends Controller {
   constructor($root, model, view, diffing = true) {
     super($root, model, view, diffing);
     this.id = 0;
-    this.selectionChangeListeners = [];
-  }
-
-  addSelectionChangeListener(listener) {
-    this.selectionChangeListeners.push(listener);
   }
 
   nextId() {
     return ++this.id;
   }
 
-  addVegetable(vegetable = getInitialFormState()) {
+  addVegetable(vegetable = formModel) {
     const v = { ...vegetable, id: this.nextId() };
     this.refresh({
       vegetables: [...this.model.vegetables, v],
@@ -30,7 +25,7 @@ class ListController extends Controller {
 
   selectVegetable(vegetable) {
     this.refresh({ selected: vegetable });
-    this.selectionChangeListeners.forEach(listener => listener(vegetable));
+    this.eventManager.publish('selectionChanged', vegetable)
   }
 
   updateVegetable(vegetable) {

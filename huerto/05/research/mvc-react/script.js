@@ -19,4 +19,4 @@ const mainView = (controller) =>
     )
   );
 
-mount(document.body, ({ state, setState }) => mainView(controller({ state, setState })), initialState);
+mount(document.body, params => mainView(controller(params)), initialState);

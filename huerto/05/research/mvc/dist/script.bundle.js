@@ -125,13 +125,37 @@
     return nodeChanged || attributesChanged;
   };
 
+  /**
+   * Observable Pattern Implementation
+   *
+   * @module observable
+   */
+
+  const EventManager = () => {
+    const events = {};
+    return {
+      publish: (name, data) => {
+        const handlers = events[name] || [];
+        handlers.forEach(handler => handler(data));
+      },
+      subscribe: (name, handler) => {
+        events[name] = events[name] || [];
+        events[name].push(handler);
+      },
+      unsubscribe: (name, hanlder) => {
+        events[name] = (events[name] || []).filter(h => h !== hanlder);
+      },
+    };
+  };
+
   class Controller {
     constructor($root, model, view, diffing = true) {
       this.$root = $root;
-      this.model = model;
+      this.model = { ...model };
       this.view = view;
       this.diffing = diffing;
       this.vDom = null;
+      this.eventManager = EventManager();
       this.init();
     }
 
@@ -142,12 +166,13 @@
 
     refresh(state) {
       this.model = { ...this.model, ...state };
-      let newVDom = this.view(this);
+      const newVDom = this.view(this);
       if (this.diffing) {
         diff(this.$root, newVDom, this.vDom);
       } else {
         this.$root.replaceChild(render(newVDom), this.$root.firstChild);
       }
+      this.vDom = newVDom;
     }
   }
 

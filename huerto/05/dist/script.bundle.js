@@ -125,13 +125,37 @@
     return nodeChanged || attributesChanged;
   };
 
+  /**
+   * Observable Pattern Implementation
+   *
+   * @module observable
+   */
+
+  const EventManager = () => {
+    const events = {};
+    return {
+      publish: (name, data) => {
+        const handlers = events[name] || [];
+        handlers.forEach(handler => handler(data));
+      },
+      subscribe: (name, handler) => {
+        events[name] = events[name] || [];
+        events[name].push(handler);
+      },
+      unsubscribe: (name, hanlder) => {
+        events[name] = (events[name] || []).filter(h => h !== hanlder);
+      },
+    };
+  };
+
   class Controller {
     constructor($root, model, view, diffing = true) {
       this.$root = $root;
-      this.model = model;
+      this.model = { ...model };
       this.view = view;
       this.diffing = diffing;
       this.vDom = null;
+      this.eventManager = EventManager();
       this.init();
     }
 
@@ -142,23 +166,19 @@
 
     refresh(state) {
       this.model = { ...this.model, ...state };
-      let newVDom = this.view(this);
+      const newVDom = this.view(this);
       if (this.diffing) {
         diff(this.$root, newVDom, this.vDom);
       } else {
         this.$root.replaceChild(render(newVDom), this.$root.firstChild);
       }
+      this.vDom = newVDom;
     }
   }
 
   class FormController extends Controller {
     constructor($root, model, view, diffing = true) {
       super($root, model, view, diffing);
-      this.saveListeners = [];
-    }
-
-    addSaveListener(listener) {
-      this.saveListeners.push(listener);
     }
 
     setVegetable(vegetable) {
@@ -182,36 +202,30 @@
     }
 
     save() {
-      this.saveListeners.forEach(listener => listener(this.model));
+      this.eventManager.publish('save', this.model);
     }
   }
 
   const formModel = {
-    id: 0,
-    name: '',
+    id:             0,
+    name:           '',
     classification: 'Tubers',
-    origin: '',
-    amount: 1,
-    comments: '',
+    origin:         '',
+    amount:         1,
+    comments:       '',
   };
-  const getInitialFormState = () => ({ ...formModel });
 
   class ListController extends Controller {
     constructor($root, model, view, diffing = true) {
       super($root, model, view, diffing);
       this.id = 0;
-      this.selectionChangeListeners = [];
-    }
-
-    addSelectionChangeListener(listener) {
-      this.selectionChangeListeners.push(listener);
     }
 
     nextId() {
       return ++this.id;
     }
 
-    addVegetable(vegetable = getInitialFormState()) {
+    addVegetable(vegetable = formModel) {
       const v = { ...vegetable, id: this.nextId() };
       this.refresh({
         vegetables: [...this.model.vegetables, v],
@@ -221,7 +235,7 @@
 
     selectVegetable(vegetable) {
       this.refresh({ selected: vegetable });
-      this.selectionChangeListeners.forEach(listener => listener(vegetable));
+      this.eventManager.publish('selectionChanged', vegetable);
     }
 
     updateVegetable(vegetable) {
@@ -240,7 +254,6 @@
     selected: {},
     vegetables: [],
   };
-  const getInitialListState = () => ({ ...listModel });
 
   const formField = (label, element) => {
     return h('div', {}, [h('label', {}, label), element]);
@@ -264,10 +277,10 @@
       h('table', {},
         h('thead', {},
           h('tr', {},
-            h('td', {}, 'Name'),
-            h('td', {}, 'Classification'),
-            h('td', {}, 'Origin'),
-            h('td', {}, 'Amount'),
+            h('th', {}, 'Name'),
+            h('th', {}, 'Classification'),
+            h('th', {}, 'Origin'),
+            h('th', {}, 'Amount'),
           )
         ),
         h('tbody', {}, controller.model.vegetables.map(v =>
@@ -287,10 +300,10 @@
   const $formRoot = document.getElementById('vegetable-input');
   const $listRoot = document.getElementById('vegetable-output');
 
-  const formController = new FormController($formRoot, getInitialFormState(), view);
-  const listController = new ListController($listRoot, getInitialListState(), view$1, false);
+  const formController = new FormController($formRoot, formModel, view);
+  const listController = new ListController($listRoot, listModel, view$1, false);
 
-  formController.addSaveListener(vegetable => listController.updateVegetable(vegetable));
-  listController.addSelectionChangeListener(vegetable => formController.setVegetable(vegetable));
+  formController.eventManager.subscribe('save', vegetable => listController.updateVegetable(vegetable));
+  listController.eventManager.subscribe('selectionChanged', vegetable => formController.setVegetable(vegetable));
 
 }());

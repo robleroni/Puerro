@@ -36,3 +36,5 @@ MVC is a pattern which focuses very much on separation of concerns. A MVC applic
 In our implementation of the MVC pattern we also
 
 ## Result
+
+- descrutering - getter

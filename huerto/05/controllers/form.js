@@ -5,11 +5,6 @@ export { FormController };
 class FormController extends Controller {
   constructor($root, model, view, diffing = true) {
     super($root, model, view, diffing);
-    this.saveListeners = [];
-  }
-
-  addSaveListener(listener) {
-    this.saveListeners.push(listener);
   }
 
   setVegetable(vegetable) {
@@ -33,6 +28,6 @@ class FormController extends Controller {
   }
 
   save() {
-    this.saveListeners.forEach(listener => listener(this.model));
+    this.eventManager.publish('save', this.model)
   }
 }

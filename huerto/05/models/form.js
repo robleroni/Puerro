@@ -1,11 +1,10 @@
-export { getInitialFormState };
+export { formModel };
 
 const formModel = {
-  id: 0,
-  name: '',
+  id:             0,
+  name:           '',
   classification: 'Tubers',
-  origin: '',
-  amount: 1,
-  comments: '',
+  origin:         '',
+  amount:         1,
+  comments:       '',
 };
-const getInitialFormState = () => ({ ...formModel });

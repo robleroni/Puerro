@@ -1,7 +1,6 @@
-export { getInitialListState };
+export { listModel };
 
 const listModel = {
   selected: {},
   vegetables: [],
 };
-const getInitialListState = () => ({ ...listModel });
