@@ -4,7 +4,7 @@
  * @module observable
  */
 
-export { Observable, EventManager, ObservableList };
+export { Observable, EventManager, ObservableList, ObservableObject };
 
 const Observable = item => {
   const listeners = [];
@@ -20,6 +20,30 @@ const Observable = item => {
       item = newItem;
       listeners.forEach(notify => notify(newItem, oldItem));
     },
+  };
+};
+
+const ObservableObject = object => {
+  const listeners = [];
+  const events = {};
+  return {
+    get: () => object,
+    set: data => {
+      object = {...object, ...data};
+      Object.keys(data).forEach(key => {
+        const handlers = events[key] || [];
+        handlers.forEach(handler => handler(data[key]));
+      })
+      listeners.forEach(listener => listener(data));
+    },
+    onChange: callback => {
+      listeners.push(callback);
+      callback(object, object);
+    },
+    subscribe: (key, handler) => {
+      events[key] = events[key] || [];
+      events[key].push(handler);
+    }
   };
 };
 

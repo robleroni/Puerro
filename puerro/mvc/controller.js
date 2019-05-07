@@ -1,41 +1,40 @@
 import { render, diff } from '../vdom/vdom';
-import { EventManager, Observable } from '../observable/observable';
+import { ObservableObject } from '../observable/observable';
 
 export { Controller };
 
-const globalState = Observable({});
+const store = ObservableObject({});
 
 class Controller {
-  constructor($root, model, view, diffing = true) {
+  constructor($root, state, view, diffing = true) {
     this.$root = $root;
-    this.model = { ...model };
+    this.state = ObservableObject({...state});
     this.view = view;
     this.diffing = diffing;
     this.vDom = null;
-    this.eventManager = EventManager();
     this.init();
-    globalState.onChange(s => this.refresh(this.model));
   }
 
-  static setGlobalState(newGlobalState) {
-    globalState.set({ ...globalState.get(), ...newGlobalState });
+  get model() {
+    return { ...store.get(), ...this.state.get() };
   }
 
-  get globalState() {
-    return globalState.get();
+  get store() {
+    return store;
   }
 
-  setGlobalState(newGlobalState) {
-    Controller.setGlobalState(newGlobalState);
+  static get store() {
+    return store;
   }
 
   init() {
     this.vDom = this.view(this);
     this.$root.prepend(render(this.vDom));
+    this.store.onChange(s => this.refresh());
+    this.state.onChange(s => this.refresh());
   }
 
-  refresh(state) {
-    this.model = { ...this.model, ...state };
+  refresh() {
     const newVDom = this.view(this);
     this.repaint(newVDom);
     this.vDom = newVDom;

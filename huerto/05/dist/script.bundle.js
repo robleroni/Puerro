@@ -131,73 +131,62 @@
    * @module observable
    */
 
-  const Observable = item => {
+  const ObservableObject = object => {
     const listeners = [];
-    return {
-      onChange: callback => {
-        listeners.push(callback);
-        callback(item, item);
-      },
-      get: () => item,
-      set: newItem => {
-        if (item === newItem) return;
-        const oldItem = item;
-        item = newItem;
-        listeners.forEach(notify => notify(newItem, oldItem));
-      },
-    };
-  };
-
-  const EventManager = () => {
     const events = {};
     return {
-      publish: (name, data) => {
-        const handlers = events[name] || [];
-        handlers.forEach(handler => handler(data));
+      get: () => object,
+      set: data => {
+        object = {...object, ...data};
+        Object.keys(data).forEach(key => {
+          const handlers = events[key] || [];
+          handlers.forEach(handler => handler(data[key]));
+        });
+        listeners.forEach(listener => listener(data));
       },
-      subscribe: (name, handler) => {
-        events[name] = events[name] || [];
-        events[name].push(handler);
+      onChange: callback => {
+        listeners.push(callback);
+        callback(object, object);
       },
-      unsubscribe: (name, hanlder) => {
-        events[name] = (events[name] || []).filter(h => h !== hanlder);
-      },
+      subscribe: (key, handler) => {
+        events[key] = events[key] || [];
+        events[key].push(handler);
+      }
     };
   };
 
-  const globalState = Observable({});
+  const store = ObservableObject({});
 
   class Controller {
-    constructor($root, model, view, diffing = true) {
+    constructor($root, state, view, diffing = true) {
       this.$root = $root;
-      this.model = { ...model };
+      this.state = ObservableObject({...state});
       this.view = view;
       this.diffing = diffing;
       this.vDom = null;
-      this.eventManager = EventManager();
       this.init();
-      globalState.onChange(s => this.refresh(this.model));
     }
 
-    static setGlobalState(newGlobalState) {
-      globalState.set({ ...globalState.get(), ...newGlobalState });
+    get model() {
+      return { ...store.get(), ...this.state.get() };
     }
 
-    get globalState() {
-      return globalState.get();
+    get store() {
+      return store;
     }
 
-    setGlobalState(newGlobalState) {
-      Controller.setGlobalState(newGlobalState);
+    static get store() {
+      return store;
     }
 
     init() {
       this.vDom = this.view(this);
       this.$root.prepend(render(this.vDom));
+      this.store.onChange(s => this.refresh());
+      this.state.onChange(s => this.refresh());
     }
 
-    refresh(state) {
-      this.model = { ...this.model, ...state };
+    refresh() {
       const newVDom = this.view(this);
       this.repaint(newVDom);
       this.vDom = newVDom;
@@ -214,13 +203,14 @@
 
   class FormController extends Controller {
 
+
     setVegetable(vegetable) {
-      this.refresh({ ...this.model, ...vegetable });
+      this.state.set(vegetable);
     }
 
     save() {
-      this.setGlobalState({
-        vegetables: this.globalState.vegetables.map(v => v.id === this.model.id ? this.model : v)
+      this.store.set({
+        vegetables: this.model.vegetables.map(v => v.id === this.model.id ? this.model : v)
       });
     }
 
@@ -247,15 +237,14 @@
 
     addVegetable() {
       const vegetable = { ...formModel, id: this.nextId() };
-      this.setGlobalState({
-        vegetables: [...this.globalState.vegetables, vegetable],
+      this.store.set({
+        vegetables: [...this.model.vegetables, vegetable],
       });
       this.selectVegetable(vegetable);
     }
 
     selectVegetable(vegetable) {
-      this.refresh({ selected: vegetable });
-      this.eventManager.publish('selectionChanged', vegetable);
+      this.state.set({ selected: vegetable });
     }
 
   }
@@ -266,7 +255,7 @@
     }
 
     getPlantedCounts() {
-      return this.globalState.vegetables.filter(v => v.planted).length
+      return this.model.vegetables.filter(v => v.planted).length
     }
   }
 
@@ -302,7 +291,7 @@
             h('th', {}, 'Amount'),
           )
         ),
-        h('tbody', {}, controller.globalState.vegetables.map(v =>
+        h('tbody', {}, controller.model.vegetables.map(v =>
           h('tr', {
             style: 'color:' + (v.id === controller.model.selected.id ? 'red' : 'black'),
             click: evt => controller.selectVegetable(v)
@@ -317,9 +306,9 @@
     );
 
   const view$2 = controller =>
-    h('label', {}, controller.getPlantedCounts() + '/' + controller.globalState.vegetables.length);
+    h('label', {}, controller.getPlantedCounts() + '/' + controller.model.vegetables.length);
 
-  Controller.setGlobalState({
+  Controller.store.set({
       vegetables: [],
   });
 
@@ -331,6 +320,6 @@
   const listController = new ListController($listRoot, listModel, view$1, false);
   const overviewController = new OverviewController($overviewRoot, {}, view$2, false);
 
-  listController.eventManager.subscribe('selectionChanged', vegetable => formController.setVegetable(vegetable));
+  listController.state.subscribe('selected', vegetable => formController.setVegetable(vegetable));
 
 }());

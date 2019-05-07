@@ -4,13 +4,14 @@ export { FormController };
 
 class FormController extends Controller {
 
+
   setVegetable(vegetable) {
-    this.refresh({ ...this.model, ...vegetable });
+    this.state.set(vegetable)
   }
 
   save() {
-    this.setGlobalState({
-      vegetables: this.globalState.vegetables.map(v => v.id === this.model.id ? this.model : v)
+    this.store.set({
+      vegetables: this.model.vegetables.map(v => v.id === this.model.id ? this.model : v)
     })
   }
 

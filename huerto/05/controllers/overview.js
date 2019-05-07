@@ -8,6 +8,6 @@ class OverviewController extends Controller {
   }
 
   getPlantedCounts() {
-    return this.globalState.vegetables.filter(v => v.planted).length
+    return this.model.vegetables.filter(v => v.planted).length
   }
 }

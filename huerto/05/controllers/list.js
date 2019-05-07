@@ -17,15 +17,14 @@ class ListController extends Controller {
 
   addVegetable() {
     const vegetable = { ...formModel, id: this.nextId() };
-    this.setGlobalState({
-      vegetables: [...this.globalState.vegetables, vegetable],
+    this.store.set({
+      vegetables: [...this.model.vegetables, vegetable],
     });
     this.selectVegetable(vegetable);
   }
 
   selectVegetable(vegetable) {
-    this.refresh({ selected: vegetable });
-    this.eventManager.publish('selectionChanged', vegetable)
+    this.state.set({ selected: vegetable })
   }
 
 }

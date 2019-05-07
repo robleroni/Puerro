@@ -11,7 +11,7 @@ import { listView } from './views/list.js';
 import { overviewView } from './views/overview.js';
 
 
-Controller.setGlobalState({
+Controller.store.set({
     vegetables: [],
 });
 
@@ -23,4 +23,4 @@ const formController = new FormController($formRoot, formModel, formView);
 const listController = new ListController($listRoot, listModel, listView, false);
 const overviewController = new OverviewController($overviewRoot, {}, overviewView, false);
 
-listController.eventManager.subscribe('selectionChanged', vegetable => formController.setVegetable(vegetable));
+listController.state.subscribe('selected', vegetable => formController.setVegetable(vegetable));

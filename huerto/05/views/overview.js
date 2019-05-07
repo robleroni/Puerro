@@ -5,4 +5,4 @@ export {
 }
 
 const view = controller =>
-  h('label', {}, controller.getPlantedCounts() + '/' + controller.globalState.vegetables.length)
+  h('label', {}, controller.getPlantedCounts() + '/' + controller.model.vegetables.length)

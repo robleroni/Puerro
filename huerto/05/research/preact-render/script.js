@@ -1,15 +1,15 @@
 import { Controller } from '../../../../puerro/mvc/controller';
 import { h, render } from 'preact';
 
+
 class ViewController extends Controller {
-  init() {}
 
   repaint(newVdom) {
     render(newVdom, this.$root, this.$root.firstChild);
   }
 
   setName(name) {
-    this.refresh({ name });
+    this.state.set({name});
   }
 }
 
