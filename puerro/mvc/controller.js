@@ -15,18 +15,6 @@ class Controller {
     this.init();
   }
 
-  get model() {
-    return { ...store.get(), ...this.state.get() };
-  }
-
-  get store() {
-    return store;
-  }
-
-  static get store() {
-    return store;
-  }
-
   init() {
     this.vDom = this.view(this);
     this.$root.prepend(render(this.vDom));
@@ -47,4 +35,11 @@ class Controller {
       this.$root.replaceChild(render(newVDom), this.$root.firstChild);
     }
   }
+
+  get model() {
+    return { ...store.get(), ...this.state.get() };
+  }
+
+         get store() { return store; }
+  static get store() { return store; }
 }
