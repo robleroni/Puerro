@@ -1,4 +1,4 @@
-import { h } from '../../../puerro/vdom/vdom.js';
+import { h } from 'preact';
 
 export {
   view as overviewView

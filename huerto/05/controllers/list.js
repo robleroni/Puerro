@@ -1,11 +1,11 @@
-import { Controller } from '../../../puerro/mvc/controller.js';
+import { PreactController } from '../../../puerro/mvc/controller.js';
 import { formModel } from '../models/form.js';
 
 export {
   ListController
 }
 
-class ListController extends Controller {
+class ListController extends PreactController {
   constructor($root, model, view, diffing = true) {
     super($root, model, view, diffing);
     this.id = 0;

@@ -1,4 +1,4 @@
-import { h } from '../../../puerro/vdom/vdom.js';
+import { h } from 'preact';
 
 export {
   view as listView
@@ -6,10 +6,11 @@ export {
 
 const view = controller =>
   h('div', {},
-    h('button', { click: evt => controller.addVegetable() }, '+'),
+    h('button', { onClick: evt => controller.addVegetable() }, '+'),
     h('table', {},
       h('thead', {},
         h('tr', {},
+          h('th', {}, 'Id'),
           h('th', {}, 'Name'),
           h('th', {}, 'Classification'),
           h('th', {}, 'Origin'),
@@ -19,8 +20,9 @@ const view = controller =>
       h('tbody', {}, controller.model.vegetables.map(v =>
         h('tr', {
           style: 'color:' + (v.id === controller.model.selected.id ? 'red' : 'black'),
-          click: evt => controller.selectVegetable(v)
+          onClick: evt => controller.selectVegetable(v)
         },
+          h('td', {}, v.id),
           h('td', {}, v.name),
           h('td', {}, v.classification),
           h('td', {}, v.origin),

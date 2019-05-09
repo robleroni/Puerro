@@ -1,4 +1,5 @@
-import { h } from '../../../puerro/vdom/vdom.js';
+import { h } from 'preact';
+import { vegetableClassifications } from '../../../assets/js/constants.js';
 
 export {
   view as formView
@@ -8,28 +9,35 @@ const originField = (origin, controller) => [
   h('input', { 
     type:    'radio', 
     name:    'origin', 
+    id:      'radio-origin-' + origin,
     checked: controller.model.origin == origin ? true : undefined,
     value:   origin,
-    change:  evt => controller.setVegetable({ origin: evt.target.value })
+    onChange:  evt => controller.setVegetable({ origin: evt.target.value })
   }),
-  h('label', {}, origin)
+  h('label', { for: 'radio-origin-' + origin }, origin)
 ]
 
 const view = controller =>
-  h('form', { submit: evt => { evt.preventDefault(); controller.save(); } },
-    h('fieldset', { /*disabled: controller.model.id <= 0 ? true : undefined*/ },
+  h('form', { onSubmit: evt => { evt.preventDefault(); controller.save(); } },
+    h('fieldset', { disabled: controller.model.id <= 0 ? true : undefined },
       
       h('label', {}, 'Vegetable'),
       h('input', { 
-        value: controller.model.name, 
-        change: evt => controller.setVegetable({ name: evt.target.value })
+        value:  controller.model.name, 
+        onChange: evt => controller.setVegetable({ name: evt.target.value })
       }),
 
       h('label', {}, 'Classification'),
       h('select', { 
-        value: controller.model.classification, 
-        change: evt => controller.setVegetable({ classification: evt.target.value })
-      }),
+        value:  controller.model.classification,
+        onChange: evt => controller.setVegetable({ classification: evt.target.value })
+      },vegetableClassifications.map(v => 
+          h('option', { 
+            value:    v, 
+            selected: controller.model.classification === v ? true : undefined
+          }, v)
+        )
+      ),
 
       h('div', {}, 
         originField('Europe',  controller),
@@ -39,24 +47,28 @@ const view = controller =>
 
       h('label', {}, 'Amount'),
       h('div', {},
-        h('input', { type: 'checkbox'}),
         h('label', {}, 'Planted'),
         h('input', { 
-          type: 'number',
-          value: controller.model.amount,
-          change: evt => controller.setVegetable({ amount: evt.target.value}),
-        })
+          type:    'checkbox', 
+          checked: controller.model.planted ? true : undefined, 
+          onChange:  evt => controller.setVegetable({ planted: evt.target.checked }) 
+        }),
+        controller.model.planted ? h('input', { 
+          type:   'number',
+          value:  controller.model.amount,
+          onChange: evt => controller.setVegetable({ amount: evt.target.value}),
+        }) : null
       ),
 
       h('label', {}, 'Comments'),
       h('textarea', {
-        change: evt => controller.setVegetable({ comments: evt.target.value}),
+        onChange: evt => controller.setVegetable({ comments: evt.target.value}),
       }, controller.model.comments),
 
       h('div', {}, 
         h('button', {}, 'Save'),
-        h('button', { type: 'reset' }, 'Clear'),
-        h('button', {}, 'Delete'),
+        h('button', { type: 'reset', onClick: evt => controller.reset(evt) }, 'Clear'),
+        h('button', { onClick: evt => controller.delete() }, 'Delete'),
       ),
 
     ),

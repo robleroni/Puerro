@@ -5,6 +5,7 @@ const formModel = {
   name:           '',
   classification: 'Tubers',
   origin:         '',
+  planted:        false,
   amount:         1,
   comments:       '',
 };

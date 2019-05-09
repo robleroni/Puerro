@@ -1,8 +1,8 @@
-import { Controller } from '../../../puerro/mvc/controller.js';
+import { PreactController } from '../../../puerro/mvc/controller.js';
 
 export { OverviewController };
 
-class OverviewController extends Controller {
+class OverviewController extends PreactController {
   constructor($root, model, view, diffing = true) {
     super($root, model, view, diffing);
   }
