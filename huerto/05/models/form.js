@@ -3,7 +3,7 @@ export { formModel };
 const formModel = {
   id:             0,
   name:           '',
-  classification: 'Tubers',
+  classification: 'Bulps',
   origin:         '',
   planted:        false,
   amount:         1,

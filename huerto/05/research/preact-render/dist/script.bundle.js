@@ -105,82 +105,6 @@
     return nodeChanged || attributesChanged;
   };
 
-  /**
-   * Observable Pattern Implementation
-   *
-   * @module observable
-   */
-
-  const ObservableObject = object => {
-    const listeners = [];
-    const events = {};
-    return {
-      get: () => object,
-      set: data => {
-        object = {...object, ...data};
-        Object.keys(data).forEach(key => {
-          const handlers = events[key] || [];
-          handlers.forEach(handler => handler(data[key]));
-        });
-        listeners.forEach(listener => listener(data));
-      },
-      onChange: callback => {
-        listeners.push(callback);
-        callback(object, object);
-      },
-      subscribe: (key, handler) => {
-        events[key] = events[key] || [];
-        events[key].push(handler);
-      }
-    };
-  };
-
-  const store = ObservableObject({});
-
-  class Controller {
-    constructor($root, state, view, diffing = true) {
-      this.$root = $root;
-      this.state = ObservableObject({...state});
-      this.view = view;
-      this.diffing = diffing;
-      this.vDom = null;
-      this.init();
-    }
-
-    get model() {
-      return { ...store.get(), ...this.state.get() };
-    }
-
-    get store() {
-      return store;
-    }
-
-    static get store() {
-      return store;
-    }
-
-    init() {
-      this.vDom = this.view(this);
-      this.$root.prepend(render(this.vDom));
-      this.store.onChange(s => this.refresh());
-      this.state.onChange(s => this.refresh());
-    }
-
-    refresh() {
-      const newVDom = this.view(this);
-      this.repaint(newVDom);
-      this.vDom = newVDom;
-    }
-
-    repaint(newVDom) {
-      if (this.diffing) {
-        diff(this.$root, newVDom, this.vDom);
-      } else {
-        this.$root.replaceChild(render(newVDom), this.$root.firstChild);
-      }
-    }
-  }
-
   var VNode = function VNode() {};
 
   var options = {};
@@ -877,7 +801,87 @@
   function render$1(vnode, parent, merge) {
     return diff$1(merge, vnode, {}, false, parent, false);
   }
-  //# sourceMappingURL=preact.mjs.map
+
+  /**
+   * Observable Pattern Implementation
+   *
+   * @module observable
+   */
+
+  const ObservableObject = object => {
+    const listeners   = [];
+    const subscribers = {};
+
+    const notify = newObject => {
+      if (object == newObject) return;
+      const oldObject = object;
+      object = newObject;
+
+      Object.keys(newObject).forEach(key => {
+        const newValue = newObject[key];
+        const oldValue = oldObject[key];
+        if (oldValue === newValue) return;
+        (subscribers[key] || []).forEach(subscriber => subscriber(newValue, oldValue));
+      });
+      listeners.forEach(listener => listener(newObject, oldObject));
+    };
+
+    return {
+      get:       ()              => object,
+      set:       newObject       => notify({ ...object, ...newObject }),
+      push:      (key, value)    => notify({ ...object, ...{ [key]: value } }),
+      remove:    key             => notify({ ...object, ...{ [key]: undefined } }),
+      replace:   newObject       => notify(newObject),
+      onChange:  callback        => { listeners.push(callback); callback(object, object); },
+      subscribe: (key, callback) => {
+        subscribers[key] = subscribers[key] || [];
+        subscribers[key].push(callback);
+        callback(object[key], object[key]);
+      },
+      // unsubscribe, removeOnChange
+    };
+  };
+
+  const store = ObservableObject({});
+
+  class Controller {
+    constructor($root, state, view, diffing = true) {
+      this.$root = $root;
+      this.state = ObservableObject({...state});
+      this.view = view;
+      this.diffing = diffing;
+      this.vDom = null;
+      this.init();
+    }
+
+    init() {
+      this.vDom = this.view(this);
+      this.$root.prepend(render(this.vDom));
+      this.store.onChange(s => this.refresh());
+      this.state.onChange(s => this.refresh());
+    }
+
+    refresh() {
+      const newVDom = this.view(this);
+      this.repaint(newVDom);
+      this.vDom = newVDom;
+    }
+
+    repaint(newVDom) {
+      if (this.diffing) {
+        diff(this.$root, newVDom, this.vDom);
+      } else {
+        this.$root.replaceChild(render(newVDom), this.$root.firstChild);
+      }
+    }
+
+    get model() {
+      return { ...store.get(), ...this.state.get() };
+    }
+
+           get store() { return store; }
+    static get store() { return store; }
+  }
 
   class ViewController extends Controller {
 

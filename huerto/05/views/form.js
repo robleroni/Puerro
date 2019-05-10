@@ -23,6 +23,7 @@ const view = controller =>
       
       h('label', {}, 'Vegetable'),
       h('input', { 
+        name: 'name',
         value:  controller.model.name, 
         onChange: evt => controller.setVegetable({ name: evt.target.value })
       }),
@@ -31,11 +32,11 @@ const view = controller =>
       h('select', { 
         value:  controller.model.classification,
         onChange: evt => controller.setVegetable({ classification: evt.target.value })
-      },vegetableClassifications.map(v => 
+      }, vegetableClassifications.map(classification => 
           h('option', { 
-            value:    v, 
-            selected: controller.model.classification === v ? true : undefined
-          }, v)
+            value:    classification, 
+            selected: controller.model.classification === classification ? true : undefined
+          }, classification)
         )
       ),
 

@@ -82,16 +82,16 @@
   const Observable = item => {
     const listeners = [];
     return {
-      onChange: callback => {
-        listeners.push(callback);
-        callback(item, item);
-      },
       get: () => item,
       set: newItem => {
         if (item === newItem) return;
         const oldItem = item;
         item = newItem;
         listeners.forEach(notify => notify(newItem, oldItem));
+      },
+      onChange: callback => {
+        listeners.push(callback);
+        callback(item, item);
       },
     };
   };
@@ -101,12 +101,12 @@
    * @param {any[]} list
    */
   const ObservableList = list => {
-    const addListeners = [];
-    const removeListeners = [];
+    const addListeners     = [];
+    const removeListeners  = [];
     const replaceListeners = [];
     return {
-      onAdd: listener => addListeners.push(listener),
-      onRemove: listener => removeListeners.push(listener),
+      onAdd:     listener => addListeners    .push(listener),
+      onRemove:  listener => removeListeners .push(listener),
       onReplace: listener => replaceListeners.push(listener),
       add: item => {
         list.push(item);
@@ -126,11 +126,11 @@
         }
         replaceListeners.forEach(listener => listener(newItem, item));
       },
-      count: () => list.length,
-      countIf: pred => list.reduce((sum, item) => (pred(item) ? sum + 1 : sum), 0),
-      indexOf: item => list.indexOf(item),
-      get: index => list[index],
-      getAll: () => list,
+      count:   ()    => list.length,
+      countIf: pred  => list.reduce((sum, item) => (pred(item) ? sum + 1 : sum), 0),
+      indexOf: item  => list.indexOf(item),
+      get:     index => list[index],
+      getAll:  ()    => list,
     };
   };
 

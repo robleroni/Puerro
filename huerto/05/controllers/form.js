@@ -1,30 +1,26 @@
 import { PreactController } from '../../../puerro/mvc/controller.js';
 import { formModel } from '../models/form.js';
+import { render } from 'preact';
 
 export { FormController };
 
 class FormController extends PreactController {
 
-
   setVegetable(vegetable) {
-    this.state.set(vegetable)
+    this.state.set(vegetable);
   }
 
   reset() {
-    evt.preventDefault();
     this.setVegetable({ ...formModel, id: this.model.id });
   }
 
   save() {
-    this.store.set({
-      vegetables: this.store.get().vegetables.map(v => v.id === this.model.id ? this.model : v)
-    })
+    const updatedVegetables = this.store.get().vegetables.map(v => (v.id === this.model.id ? this.model : v))
+    this.store.push('vegetables', updatedVegetables);
   }
 
   delete() {
-    this.store.set({
-      vegetables: this.store.get().vegetables.filter(v => v.id !== this.model.id)
-    });
+    this.store.push('vegetables', this.store.get().vegetables.filter(v => v.id !== this.model.id));
     this.setVegetable({ ...formModel });
   }
 }

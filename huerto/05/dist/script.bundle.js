@@ -810,26 +810,36 @@
    */
 
   const ObservableObject = object => {
-    const listeners = [];
-    const events = {};
+    const listeners   = [];
+    const subscribers = {};
+
+    const notify = newObject => {
+      if (object == newObject) return;
+      const oldObject = object;
+      object = newObject;
+
+      Object.keys(newObject).forEach(key => {
+        const newValue = newObject[key];
+        const oldValue = oldObject[key];
+        if (oldValue === newValue) return;
+        (subscribers[key] || []).forEach(subscriber => subscriber(newValue, oldValue));
+      });
+      listeners.forEach(listener => listener(newObject, oldObject));
+    };
+
     return {
-      get: () => object,
-      set: data => {
-        object = {...object, ...data};
-        Object.keys(data).forEach(key => {
-          const handlers = events[key] || [];
-          handlers.forEach(handler => handler(data[key]));
-        });
-        listeners.forEach(listener => listener(data));
+      get:       ()              => object,
+      set:       newObject       => notify({ ...object, ...newObject }),
+      push:      (key, value)    => notify({ ...object, ...{ [key]: value } }),
+      remove:    key             => notify({ ...object, ...{ [key]: undefined } }),
+      replace:   newObject       => notify(newObject),
+      onChange:  callback        => { listeners.push(callback); callback(object, object); },
+      subscribe: (key, callback) => {
+        subscribers[key] = subscribers[key] || [];
+        subscribers[key].push(callback);
+        callback(object[key], object[key]);
       },
-      onChange: callback => {
-        listeners.push(callback);
-        callback(object, object);
-      },
-      subscribe: (key, handler) => {
-        events[key] = events[key] || [];
-        events[key].push(handler);
-      }
+      // unsubscribe, removeOnChange
     };
   };
 
@@ -883,7 +893,7 @@
   const formModel = {
     id:             0,
     name:           '',
-    classification: 'Tubers',
+    classification: 'Bulps',
     origin:         '',
     planted:        false,
     amount:         1,
@@ -892,26 +902,21 @@
 
   class FormController extends PreactController {
 
-
     setVegetable(vegetable) {
       this.state.set(vegetable);
     }
 
     reset() {
-      evt.preventDefault();
       this.setVegetable({ ...formModel, id: this.model.id });
     }
 
     save() {
-      this.store.set({
-        vegetables: this.store.get().vegetables.map(v => v.id === this.model.id ? this.model : v)
-      });
+      const updatedVegetables = this.store.get().vegetables.map(v => (v.id === this.model.id ? this.model : v));
+      this.store.push('vegetables', updatedVegetables);
     }
 
     delete() {
-      this.store.set({
-        vegetables: this.store.get().vegetables.filter(v => v.id !== this.model.id)
-      });
+      this.store.push('vegetables', this.store.get().vegetables.filter(v => v.id !== this.model.id));
       this.setVegetable({ ...formModel });
     }
   }
@@ -941,12 +946,9 @@
   }
 
   class OverviewController extends PreactController {
-    constructor($root, model, view, diffing = true) {
-      super($root, model, view, diffing);
-    }
 
     getPlantedCounts() {
-      return this.model.vegetables.filter(v => v.planted).length
+      return this.store.get().vegetables.filter(v => v.planted).length
     }
   }
 
@@ -984,6 +986,7 @@
         
         h('label', {}, 'Vegetable'),
         h('input', { 
+          name: 'name',
           value:  controller.model.name, 
           onChange: evt => controller.setVegetable({ name: evt.target.value })
         }),
@@ -992,11 +995,11 @@
         h('select', { 
           value:  controller.model.classification,
           onChange: evt => controller.setVegetable({ classification: evt.target.value })
-        },vegetableClassifications.map(v => 
+        }, vegetableClassifications.map(classification => 
             h('option', { 
-              value:    v, 
-              selected: controller.model.classification === v ? true : undefined
-            }, v)
+              value:    classification, 
+              selected: controller.model.classification === classification ? true : undefined
+            }, classification)
           )
         ),
 
