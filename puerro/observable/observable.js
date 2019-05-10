@@ -42,15 +42,12 @@ const ObservableObject = object => {
   };
 
   return {
-    get: ()            => object,
-    set: newObject     => notify({ ...object, ...newObject }),
-    push: (key, value) => notify({ ...object, ...{ [key]: value } }),
-    remove: key        => notify({ ...object, ...{ [key]: undefined } }),
-    replace: newObject => notify(newObject),
-    onChange: callback => {
-      listeners.push(callback);
-      callback(object, object);
-    },
+    get:       ()              => object,
+    set:       newObject       => notify({ ...object, ...newObject }),
+    push:      (key, value)    => notify({ ...object, ...{ [key]: value } }),
+    remove:    key             => notify({ ...object, ...{ [key]: undefined } }),
+    replace:   newObject       => notify(newObject),
+    onChange:  callback        => { listeners.push(callback); callback(object, object); },
     subscribe: (key, callback) => {
       subscribers[key] = subscribers[key] || [];
       subscribers[key].push(callback);
@@ -65,12 +62,12 @@ const ObservableObject = object => {
  * @param {any[]} list
  */
 const ObservableList = list => {
-  const addListeners = [];
-  const removeListeners = [];
+  const addListeners     = [];
+  const removeListeners  = [];
   const replaceListeners = [];
   return {
-    onAdd: listener => addListeners.push(listener),
-    onRemove: listener => removeListeners.push(listener),
+    onAdd:     listener => addListeners    .push(listener),
+    onRemove:  listener => removeListeners .push(listener),
     onReplace: listener => replaceListeners.push(listener),
     add: item => {
       list.push(item);
@@ -90,11 +87,11 @@ const ObservableList = list => {
       }
       replaceListeners.forEach(listener => listener(newItem, item));
     },
-    count: () => list.length,
-    countIf: pred => list.reduce((sum, item) => (pred(item) ? sum + 1 : sum), 0),
-    indexOf: item => list.indexOf(item),
-    get: index => list[index],
-    getAll: () => list,
+    count:   ()    => list.length,
+    countIf: pred  => list.reduce((sum, item) => (pred(item) ? sum + 1 : sum), 0),
+    indexOf: item  => list.indexOf(item),
+    get:     index => list[index],
+    getAll:  ()    => list,
   };
 };
 
