@@ -108,3 +108,5 @@ We decided to implement both strategies, because the action functions not only m
 ## Result
 
 The final result of this chapter is a fully functional CRUD system of our vegetable garden. We created the final crud without the vDom but with pure HTML and JS. We recognized, that although this is possible we would not recommend using this approach for bigger problems than a simple CRUD. The code is already quite incomprehensible. This is mainly due to DOM manipulations being made all over the code and not in a centralized manner. This also leads to decreased testability since a large protion of the functions manipulate the DOM directly, which makes it difficult to test any single function. 
+
+Beacause of the points mentioned before, in our estimation, one should not go further than a simple CRUD with directly manipulating the DOM.

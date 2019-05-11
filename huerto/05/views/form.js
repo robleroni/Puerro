@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { vegetableClassifications } from '../../../assets/js/constants.js';
+import { vegetableClassifications, origins } from '../../../assets/js/constants.js';
 
 export {
   view as formView
@@ -9,22 +9,24 @@ const originField = (origin, controller) => [
   h('input', { 
     type:    'radio', 
     name:    'origin', 
-    id:      'radio-origin-' + origin,
-    checked: controller.model.origin == origin ? true : undefined,
-    value:   origin,
+    id:      'radio-origin-' + origin.name,
+    checked: controller.model.origin == origin.name ? true : undefined,
+    value:   origin.name,
+    required: true,
+    disabled: origin.disabledOn.includes(controller.model.classification) ? true : undefined,
     onChange:  evt => controller.setVegetable({ origin: evt.target.value })
   }),
-  h('label', { for: 'radio-origin-' + origin }, origin)
+  h('label', { for: 'radio-origin-' + origin.name }, origin.name)
 ]
 
-const view = controller =>
-  h('form', { onSubmit: evt => { evt.preventDefault(); controller.save(); } },
+const view = controller => h('form', { onSubmit: evt => { evt.preventDefault(); controller.save(); } },
     h('fieldset', { disabled: controller.model.id <= 0 ? true : undefined },
       
       h('label', {}, 'Vegetable'),
       h('input', { 
         name: 'name',
         value:  controller.model.name, 
+        required: true,
         onChange: evt => controller.setVegetable({ name: evt.target.value })
       }),
 
@@ -41,9 +43,7 @@ const view = controller =>
       ),
 
       h('div', {}, 
-        originField('Europe',  controller),
-        originField('Asia',    controller),
-        originField('America', controller),
+        origins.map(o => originField(o, controller))
       ),
 
       h('label', {}, 'Amount'),

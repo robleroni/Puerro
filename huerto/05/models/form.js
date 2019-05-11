@@ -3,9 +3,9 @@ export { formModel };
 const formModel = {
   id:             0,
   name:           '',
-  classification: 'Bulps',
+  classification: 'Bulbs',
   origin:         '',
   planted:        false,
-  amount:         1,
+  amount:         0,
   comments:       '',
 };

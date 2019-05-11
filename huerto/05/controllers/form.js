@@ -1,6 +1,5 @@
 import { PreactController } from '../../../puerro/mvc/controller.js';
 import { formModel } from '../models/form.js';
-import { render } from 'preact';
 
 export { FormController };
 
