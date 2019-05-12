@@ -35,15 +35,15 @@ A website is **static** when its content is fixed. It only uses HTML/CSS and the
 
 A website is **dynamic** when its content can change. This can be achieved with server-side (backend) or client-side (frontend) scripting. When the content changes from being just informational to being more interactive, we say that it is a **web application**.
 
-With **Server-Side Scripting**, the script runs on the server, modifies the web page and sends the result back to the client. There are multiple programming languages available to work with it, like _PHP_, _Ruby_, etc.
+With **Server-Side Scripting**, the script runs on the server, modifies the web page and sends the result back to the client. There are several programming languages available to work with it, like _PHP_, _Ruby_, etc.
 
-With **Client-Side Scripting** the script runs in the browser of the user. This is being achieved with the delivered **JavaScript**. It runs after the content is received.
+With **Client-Side Scripting** the script runs in the browser of the user. This is being achieved with the delivered **JavaScript**.
 
 Both scripting approaches have their advantages and disadvantages.
 
 One disadvantage of the server-side scripting is, that with every request the browser needs to reload the whole page. This is very time consuming and doesn't provide a great user experience.
 
-Amongst other things, that is why the modern way to develop web applications is with client-side scripting.
+Amongst other reasons, this is why the modern way to develop web applications is with client-side scripting.
 
 Client-side scripting allows for **Ajax** calls. With these the browser can asynchronously load only the data needed and dynamically change the web page with JavaScript. This provides a much better user experience as the page doesn't need to reload completely.
 
@@ -83,6 +83,8 @@ Let's start and try to implement it with and without a framework.
 
 JavaScript can listen on events that happen to HTML elements and change the DOM (Document Object Model).
 There is not much more needed for this task than an event listener on the input field.
+
+![Flow Charts](assets/diagrams/flowchart.png)
 
 #### Angular, React, Vue
 

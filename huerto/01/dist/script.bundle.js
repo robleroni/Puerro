@@ -1,28 +1,28 @@
-var _ = (function (exports) {
+(function () {
   'use strict';
 
   const ENTER_KEYCODE = 13;
 
   /**
-   * Constructor function to create the Huerto UI
+   * Registers the event for adding a vegetable
    *
    * @param {HTMLInputElement} $vegetableInput - Input element to add new vegetables
-   * @param {HTMLElement} $vegetables - Container for the vegetables
+   * @param {HTMLElement} $vegetablesOutput    - Container for the vegetables
    */
-  function Huerto($vegetableInput, $vegetables) {
+  function registerAddingVegetableEvent($vegetableInput, $vegetablesOutput) {
     $vegetableInput.addEventListener('keydown', event => {
       if (event.keyCode === ENTER_KEYCODE) {
         const $vegetable = document.createElement('li');
         $vegetable.textContent = $vegetableInput.value;
-        $vegetables.appendChild($vegetable);
+        $vegetablesOutput.appendChild($vegetable);
         $vegetableInput.value = '';
       }
     });
   }
 
-  exports.ENTER_KEYCODE = ENTER_KEYCODE;
-  exports.Huerto = Huerto;
+  registerAddingVegetableEvent(
+    document.getElementById('vegetable'),
+    document.getElementById('vegetables')
+  );
 
-  return exports;
-
-}({}));
+}());

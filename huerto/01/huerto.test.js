@@ -1,12 +1,12 @@
 import { describe } from '../../puerro/test/test';
-import { Huerto, ENTER_KEYCODE } from './script';
+import { ENTER_KEYCODE, registerAddingVegetableEvent } from './huerto';
 
 describe('01 - Huerto', test => {
   test('add Vegetable', assert => {
     // given
     const $vegetableInput = document.createElement('input');
     const $vegetables     = document.createElement('ul');
-    Huerto($vegetableInput, $vegetables);
+    registerAddingVegetableEvent($vegetableInput, $vegetables);
 
     // when
     $vegetableInput.value = 'leek';

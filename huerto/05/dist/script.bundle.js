@@ -801,7 +801,6 @@
   function render$1(vnode, parent, merge) {
     return diff$1(merge, vnode, {}, false, parent, false);
   }
-  //# sourceMappingURL=preact.mjs.map
 
   /**
    * Observable Pattern Implementation
@@ -911,6 +910,8 @@
     }
 
     save() {
+      const $form = this.$root.querySelector('form');
+      console.log($form.name.value);
       const updatedVegetables = this.store.get().vegetables.map(v => (v.id === this.model.id ? this.model : v));
       this.store.push('vegetables', updatedVegetables);
     }
