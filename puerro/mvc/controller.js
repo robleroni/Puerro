@@ -20,7 +20,7 @@ class Controller {
     this.vDom = this.view(this);
     this.$root.prepend(render(this.vDom));
     this.store.onChange(s => this.refresh());
-    this.state.onChange(s => this.refresh());
+    this.state.onChange(s => this.refresh())
   }
 
   refresh() {
@@ -46,6 +46,11 @@ class Controller {
 }
 
 class PreactController extends Controller {
+  init() {
+    this.store.onChange(s => this.refresh());
+    this.state.onChange(s => this.refresh());
+  }
+
   repaint(newVdom) {
     preactRender(newVdom, this.$root, this.$root.firstChild);
   }

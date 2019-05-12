@@ -765,6 +765,7 @@
   	},
   	render: function render() {}
   });
+  //# sourceMappingURL=preact.mjs.map
 
   /**
    * Observable Pattern Implementation
