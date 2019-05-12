@@ -801,6 +801,7 @@
   function render$1(vnode, parent, merge) {
     return diff$1(merge, vnode, {}, false, parent, false);
   }
+  //# sourceMappingURL=preact.mjs.map
 
   /**
    * Observable Pattern Implementation
@@ -884,6 +885,11 @@
   }
 
   class PreactController extends Controller {
+    init() {
+      this.store.onChange(s => this.refresh());
+      this.state.onChange(s => this.refresh());
+    }
+
     repaint(newVdom) {
       render$1(newVdom, this.$root, this.$root.firstChild);
     }
@@ -892,10 +898,10 @@
   const formModel = {
     id:             0,
     name:           '',
-    classification: 'Bulps',
+    classification: 'Bulbs',
     origin:         '',
     planted:        false,
-    amount:         1,
+    amount:         0,
     comments:       '',
   };
 
@@ -911,8 +917,7 @@
 
     save() {
       const $form = this.$root.querySelector('form');
-      console.log($form.name.value);
-      const updatedVegetables = this.store.get().vegetables.map(v => (v.id === this.model.id ? this.model : v));
+      const updatedVegetables = this.store.get().vegetables.map(v => (v.id === this.model.id ? this.state.get() : v));
       this.store.push('vegetables', updatedVegetables);
     }
 
@@ -969,26 +974,34 @@
     'Tubers',
   ];
 
+  const origins = [
+    {name: 'Europe',  disabledOn: []},
+    {name: 'Asia',    disabledOn: ['Tubers']},
+    {name: 'America',  disabledOn: ['Fungi']}
+  ];
+
   const originField = (origin, controller) => [
     h('input', { 
       type:    'radio', 
       name:    'origin', 
-      id:      'radio-origin-' + origin,
-      checked: controller.model.origin == origin ? true : undefined,
-      value:   origin,
+      id:      'radio-origin-' + origin.name,
+      checked: controller.model.origin == origin.name ? true : undefined,
+      value:   origin.name,
+      required: true,
+      disabled: origin.disabledOn.includes(controller.model.classification) ? true : undefined,
       onChange:  evt => controller.setVegetable({ origin: evt.target.value })
     }),
-    h('label', { for: 'radio-origin-' + origin }, origin)
+    h('label', { for: 'radio-origin-' + origin.name }, origin.name)
   ];
 
-  const view = controller =>
-    h('form', { onSubmit: evt => { evt.preventDefault(); controller.save(); } },
+  const view = controller => h('form', { onSubmit: evt => { evt.preventDefault(); controller.save(); } },
       h('fieldset', { disabled: controller.model.id <= 0 ? true : undefined },
         
         h('label', {}, 'Vegetable'),
         h('input', { 
           name: 'name',
           value:  controller.model.name, 
+          required: true,
           onChange: evt => controller.setVegetable({ name: evt.target.value })
         }),
 
@@ -1005,9 +1018,7 @@
         ),
 
         h('div', {}, 
-          originField('Europe',  controller),
-          originField('Asia',    controller),
-          originField('America', controller),
+          origins.map(o => originField(o, controller))
         ),
 
         h('label', {}, 'Amount'),

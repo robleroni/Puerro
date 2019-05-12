@@ -14,7 +14,7 @@ class FormController extends PreactController {
   }
 
   save() {
-    const updatedVegetables = this.store.get().vegetables.map(v => (v.id === this.model.id ? this.model : v))
+    const updatedVegetables = this.store.get().vegetables.map(v => (v.id === this.model.id ? this.state.get() : v))
     this.store.push('vegetables', updatedVegetables);
   }
 
