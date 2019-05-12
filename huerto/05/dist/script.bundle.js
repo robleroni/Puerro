@@ -848,11 +848,12 @@
   class Controller {
     constructor($root, state, view, diffing = true) {
       this.$root = $root;
-      this.state = ObservableObject({...state});
+      this.state = ObservableObject({ ...state });
       this.view = view;
       this.diffing = diffing;
       this.vDom = null;
       this.init();
+      this.onInit();
     }
 
     init() {
@@ -861,6 +862,8 @@
       this.store.onChange(s => this.refresh());
       this.state.onChange(s => this.refresh());
     }
+
+    onInit() {}
 
     refresh() {
       const newVDom = this.view(this);
@@ -880,8 +883,12 @@
       return { ...store.get(), ...this.state.get() };
     }
 
-           get store() { return store; }
-    static get store() { return store; }
+    get store() {
+      return store;
+    }
+    static get store() {
+      return store;
+    }
   }
 
   class PreactController extends Controller {
@@ -923,14 +930,33 @@
 
     delete() {
       this.store.push('vegetables', this.store.get().vegetables.filter(v => v.id !== this.model.id));
-      this.setVegetable({ ...formModel });
     }
   }
 
   class ListController extends PreactController {
-    constructor($root, model, view, diffing = true) {
-      super($root, model, view, diffing);
+
+    onInit() {
       this.id = 0;
+      Controller.store.subscribe('vegetables', (vegetables, oldVegetables) => {
+        const selectedId = this.state.get().selected.id;
+        const index      = oldVegetables.indexOf(oldVegetables.find(v => v.id === selectedId));
+        
+        let vegetable = vegetables[index];
+        if(vegetable) {
+          this.selectVegetable(vegetable);
+          return
+        }
+        
+        vegetable = vegetables[index-1];
+        if(vegetable) {
+          this.selectVegetable(vegetable);
+          return
+        }
+        
+        this.selectVegetable(formModel);
+        
+        //TODO: Consider ObservableList for vegetables in store?
+      });
     }
 
     nextId() {

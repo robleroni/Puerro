@@ -1,4 +1,4 @@
-import { PreactController } from '../../../puerro/mvc/controller.js';
+import { PreactController, Controller } from '../../../puerro/mvc/controller.js';
 import { formModel } from '../models/form.js';
 
 export {
@@ -6,9 +6,29 @@ export {
 }
 
 class ListController extends PreactController {
-  constructor($root, model, view, diffing = true) {
-    super($root, model, view, diffing);
+
+  onInit() {
     this.id = 0;
+    Controller.store.subscribe('vegetables', (vegetables, oldVegetables) => {
+      const selectedId = this.state.get().selected.id;
+      const index      = oldVegetables.indexOf(oldVegetables.find(v => v.id === selectedId))
+      
+      let vegetable = vegetables[index];
+      if(vegetable) {
+        this.selectVegetable(vegetable)
+        return
+      }
+      
+      vegetable = vegetables[index-1];
+      if(vegetable) {
+        this.selectVegetable(vegetable)
+        return
+      }
+      
+      this.selectVegetable(formModel)
+      
+      //TODO: Consider ObservableList for vegetables in store?
+    })
   }
 
   nextId() {

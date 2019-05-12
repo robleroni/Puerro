@@ -922,11 +922,12 @@
   class Controller {
     constructor($root, state, view, diffing = true) {
       this.$root = $root;
-      this.state = ObservableObject({...state});
+      this.state = ObservableObject({ ...state });
       this.view = view;
       this.diffing = diffing;
       this.vDom = null;
       this.init();
+      this.onInit();
     }
 
     init() {
@@ -935,6 +936,8 @@
       this.store.onChange(s => this.refresh());
       this.state.onChange(s => this.refresh());
     }
+
+    onInit() {}
 
     refresh() {
       const newVDom = this.view(this);
@@ -954,8 +957,12 @@
       return { ...store.get(), ...this.state.get() };
     }
 
-           get store() { return store; }
-    static get store() { return store; }
+    get store() {
+      return store;
+    }
+    static get store() {
+      return store;
+    }
   }
 
   class PreactController extends Controller {
@@ -997,7 +1004,6 @@
 
     delete() {
       this.store.push('vegetables', this.store.get().vegetables.filter(v => v.id !== this.model.id));
-      this.setVegetable({ ...formModel });
     }
   }
 

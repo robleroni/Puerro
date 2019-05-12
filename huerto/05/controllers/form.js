@@ -20,6 +20,5 @@ class FormController extends PreactController {
 
   delete() {
     this.store.push('vegetables', this.store.get().vegetables.filter(v => v.id !== this.model.id));
-    this.setVegetable({ ...formModel });
   }
 }

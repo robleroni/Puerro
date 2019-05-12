@@ -9,19 +9,22 @@ const store = ObservableObject({});
 class Controller {
   constructor($root, state, view, diffing = true) {
     this.$root = $root;
-    this.state = ObservableObject({...state});
+    this.state = ObservableObject({ ...state });
     this.view = view;
     this.diffing = diffing;
     this.vDom = null;
     this.init();
+    this.onInit();
   }
 
   init() {
     this.vDom = this.view(this);
     this.$root.prepend(render(this.vDom));
     this.store.onChange(s => this.refresh());
-    this.state.onChange(s => this.refresh())
+    this.state.onChange(s => this.refresh());
   }
+
+  onInit() {}
 
   refresh() {
     const newVDom = this.view(this);
