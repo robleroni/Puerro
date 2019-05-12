@@ -2624,7 +2624,6 @@
     function render$1(vnode, parent, merge) {
       return diff$1(merge, vnode, {}, false, parent, false);
     }
-    
 
     /**
      * Observable Pattern Implementation
@@ -2706,12 +2705,8 @@
         return { ...store.get(), ...this.state.get() };
       }
 
-      get store() {
-        return store;
-      }
-      static get store() {
-        return store;
-      }
+             get store() { return store; }
+      static get store() { return store; }
     }
 
     class PreactController extends Controller {

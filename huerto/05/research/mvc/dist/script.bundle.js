@@ -765,7 +765,6 @@
   	},
   	render: function render() {}
   });
-  //# sourceMappingURL=preact.mjs.map
 
   /**
    * Observable Pattern Implementation
@@ -847,12 +846,8 @@
       return { ...store.get(), ...this.state.get() };
     }
 
-    get store() {
-      return store;
-    }
-    static get store() {
-      return store;
-    }
+           get store() { return store; }
+    static get store() { return store; }
   }
 
   class ResearchController extends Controller {
