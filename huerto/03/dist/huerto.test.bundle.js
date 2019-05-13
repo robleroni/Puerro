@@ -181,7 +181,7 @@
     $form.planted.checked ? `planted (${$form.amount.value})` : 'not planted'
   }, ${$form.comments.value}`;
 
-  describe('03 Huerto', test => {
+  describe('03 - Huerto', test => {
 
     test('adding vegetable', assert => {
       // given
@@ -266,7 +266,7 @@
       renderVegetableClassifications($select);
 
       // then
-      assert.is($select.children.length, 9);
+      assert.is($select.children.length, 10);
     });
   });
 
