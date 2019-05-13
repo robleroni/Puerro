@@ -1,4 +1,4 @@
-import { registerAddingVegetableEvent } from "./huerto";
+import { registerAddingVegetableEvent } from './huerto';
 
 registerAddingVegetableEvent(
   document.getElementById('vegetable'),

@@ -2627,7 +2627,6 @@
     function render$1(vnode, parent, merge) {
       return diff$1(merge, vnode, {}, false, parent, false);
     }
-    //# sourceMappingURL=preact.mjs.map
 
     /**
      * Observable Pattern Implementation
