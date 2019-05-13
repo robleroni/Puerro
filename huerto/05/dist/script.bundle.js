@@ -801,6 +801,7 @@
   function render$1(vnode, parent, merge) {
     return diff$1(merge, vnode, {}, false, parent, false);
   }
+  //# sourceMappingURL=preact.mjs.map
 
   /**
    * Observable Pattern Implementation
@@ -900,7 +901,7 @@
   const formModel = {
     id:             0,
     name:           '',
-    classification: 'Bulbs',
+    classification: '',
     origin:         '',
     planted:        false,
     amount:         0,
@@ -918,7 +919,6 @@
     }
 
     save() {
-      const $form = this.$root.querySelector('form');
       const updatedVegetables = this.store.get().vegetables.map(v => (v.id === this.model.id ? this.state.get() : v));
       this.store.push('vegetables', updatedVegetables);
     }
@@ -935,21 +935,9 @@
       Controller.store.subscribe('vegetables', (vegetables, oldVegetables) => {
         const selectedId = this.state.get().selected.id;
         const index      = oldVegetables.indexOf(oldVegetables.find(v => v.id === selectedId));
-        
-        let vegetable = vegetables[index];
-        if(vegetable) {
-          this.selectVegetable(vegetable);
-          return
-        }
-        
-        vegetable = vegetables[index-1];
-        if(vegetable) {
-          this.selectVegetable(vegetable);
-          return
-        }
-        
-        this.selectVegetable(formModel);
-        
+
+        let vegetable = vegetables[index] || vegetables[index-1] || formModel;
+        this.selectVegetable(vegetable);
         //TODO: Consider ObservableList for vegetables in store?
       });
     }
@@ -1002,57 +990,62 @@
   ];
 
   const originField = (origin, controller) => [
-    h('input', { 
-      type:    'radio', 
-      name:    'origin', 
-      id:      'radio-origin-' + origin.name,
-      checked: controller.model.origin == origin.name ? true : undefined,
-      value:   origin.name,
+    h('input', {
+      value:    origin.name,
+      id:       'radio-origin-' + origin.name,
+      name:     'origin',
+      type:     'radio',
       required: true,
       disabled: origin.disabledOn.includes(controller.model.classification) ? true : undefined,
-      onChange:  evt => controller.setVegetable({ origin: evt.target.value })
+      checked:  controller.model.origin == origin.name
+                  && !origin.disabledOn.includes(controller.model.classification) ? true : undefined,
+      onChange: evt => controller.setVegetable({ origin: evt.target.value })
     }),
     h('label', { for: 'radio-origin-' + origin.name }, origin.name)
   ];
 
   const view = controller => h('form', { onSubmit: evt => { evt.preventDefault(); controller.save(); } },
       h('fieldset', { disabled: controller.model.id <= 0 ? true : undefined },
-        
+
         h('label', {}, 'Vegetable'),
-        h('input', { 
-          name: 'name',
-          value:  controller.model.name, 
+        h('input', {
+          value:    controller.model.name,
+          name:     'name',
           required: true,
           onChange: evt => controller.setVegetable({ name: evt.target.value })
         }),
 
         h('label', {}, 'Classification'),
-        h('select', { 
-          value:  controller.model.classification,
+        h('select', {
+          value:    controller.model.classification,
+          name:     'classification',
+          required: true,
           onChange: evt => controller.setVegetable({ classification: evt.target.value })
-        }, vegetableClassifications.map(classification => 
-            h('option', { 
-              value:    classification, 
+        }, vegetableClassifications.map(classification =>
+            h('option', {
+              value:    classification,
               selected: controller.model.classification === classification ? true : undefined
             }, classification)
           )
         ),
 
-        h('div', {}, 
+        h('div', {},
           origins.map(o => originField(o, controller))
         ),
 
         h('label', {}, 'Amount'),
         h('div', {},
           h('label', {}, 'Planted'),
-          h('input', { 
-            type:    'checkbox', 
-            checked: controller.model.planted ? true : undefined, 
-            onChange:  evt => controller.setVegetable({ planted: evt.target.checked }) 
+          h('input', {
+            name:     'planted',
+            type:     'checkbox',
+            checked:  controller.model.planted ? true : undefined,
+            onChange: evt => controller.setVegetable({ planted: evt.target.checked })
           }),
-          controller.model.planted ? h('input', { 
-            type:   'number',
-            value:  controller.model.amount,
+          controller.model.planted ? h('input', {
+            value:    controller.model.amount,
+            name:     'amount',
+            type:     'number',
             onChange: evt => controller.setVegetable({ amount: evt.target.value}),
           }) : null
         ),
@@ -1062,10 +1055,10 @@
           onChange: evt => controller.setVegetable({ comments: evt.target.value}),
         }, controller.model.comments),
 
-        h('div', {}, 
+        h('div', {},
           h('button', {}, 'Save'),
           h('button', { type: 'reset', onClick: evt => controller.reset(evt) }, 'Clear'),
-          h('button', { onClick: evt => controller.delete() }, 'Delete'),
+          h('button', { type: 'button', onClick: evt => controller.delete() }, 'Delete'),
         ),
 
       ),
