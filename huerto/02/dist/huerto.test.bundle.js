@@ -109,6 +109,7 @@
   }
 
   const vegetableClassifications = [
+    '',
     'Bulbs',
     'Flowers',
     'Fruits',

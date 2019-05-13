@@ -1,6 +1,7 @@
 export { vegetableClassifications, origins };
 
 const vegetableClassifications = [
+  '',
   'Bulbs',
   'Flowers',
   'Fruits',
