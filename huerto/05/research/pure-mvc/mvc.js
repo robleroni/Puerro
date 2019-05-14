@@ -1,4 +1,4 @@
-import { Observable } from '../../../../puerro/observable/observable';
+import { Observable } from '../../../../src/observable/observable';
 
 export {
   Controller,
