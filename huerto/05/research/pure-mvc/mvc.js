@@ -3,22 +3,38 @@ import { Observable } from '../../../../puerro/observable/observable';
 export {
   Controller,
   FormView,
-  OutputView
+  OutputView,
+  ErrorView
 }
 
 const Model = () => {
   const nameAttr = Observable('');
+  const errorAttr = Observable('');
   return {
-    nameAttr
+    nameAttr,
+    errorAttr,
   }
 }
 
 const Controller = () => {
   const model = Model();
+
+  function setName(name) {
+    if(!name && !model.errorAttr.get()) {
+      model.errorAttr.set('Name is required!');
+    }
+    if (name && model.errorAttr.get()) {
+      model.errorAttr.set('');
+    }
+    model.nameAttr.set(name);
+  }
+
   return {
     onNameChange: model.nameAttr.onChange,
+    onErrorChange: model.errorAttr.onChange,
     getName: model.nameAttr.get,
-    setName: model.nameAttr.set
+    getError: model.errorAttr.get,
+    setName,
   }
 }
 
@@ -44,4 +60,24 @@ const OutputView = (controller, $output) => {
 
   // Data-Binding
   controller.onNameChange(render);
+}
+
+/**
+ *
+ * @param {*} controller
+ * @param {HTMLElement} $error
+ */
+const ErrorView = (controller, $error) => {
+  // Render
+  const render = () => {
+    $error.innerText = controller.getError();
+    if (controller.getError() && $error.classList.contains('hidden')) {
+      $error.classList.remove('hidden');
+    }
+    if (!controller.getError() && !$error.classList.contains('hidden')) {
+      $error.classList.add('hidden');
+    }
+  }
+
+  controller.onErrorChange(render);
 }
