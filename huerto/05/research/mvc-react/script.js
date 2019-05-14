@@ -1,4 +1,4 @@
-import { h, mount } from '../../../../puerro/vdom/vdom';
+import { h, mount } from '../../../../src/vdom/vdom';
 
 import { controller } from './controllers/index';
 import { counterComponent } from './components/counter';

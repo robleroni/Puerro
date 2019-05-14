@@ -1,4 +1,4 @@
-import { describe } from '../../puerro/test/test';
+import { describe } from '../../src/test/test';
 import { ENTER_KEYCODE, registerAddingVegetableEvent } from './huerto';
 
 describe('01 - Huerto', test => {

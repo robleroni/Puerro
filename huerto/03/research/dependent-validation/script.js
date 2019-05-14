@@ -1,4 +1,4 @@
-import { h, mount } from '../../../../puerro/vdom/vdom';
+import { h, mount } from '../../../../src/vdom/vdom';
 import htm from './htm';
 
 const html = htm.bind(h);

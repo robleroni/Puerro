@@ -1,4 +1,4 @@
-import { h } from '../../../../../puerro/vdom/vdom';
+import { h } from '../../../../../src/vdom/vdom';
 
 export {
   view as multiplyView

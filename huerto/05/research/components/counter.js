@@ -1,5 +1,5 @@
-import { h } from "../../../../puerro/vdom/vdom";
-import { Controller } from "../../../../puerro/mvc/controller";
+import { h } from "../../../../src/vdom/vdom";
+import { Controller } from "../../../../src/mvc/controller";
 
 export { model, CounterController, View}
 

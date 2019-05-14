@@ -1,9 +1,9 @@
-import { describe } from '../../../puerro/test/test';
-import { createDomElement } from '../../../puerro/vdom/vdom';
+import { describe } from '../../../src/test/test';
+import { createDomElement } from '../../../src/vdom/vdom';
 import { FormController } from '../controllers/form';
 import { formModel } from '../models/form';
 import { formView } from '../views/form';
-import { Controller } from '../../../puerro/mvc/controller';
+import { Controller } from '../../../src/mvc/controller';
 
 describe('05 - Huerto - FormController', test => {
   // before

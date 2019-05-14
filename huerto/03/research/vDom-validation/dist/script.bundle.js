@@ -2,8 +2,8 @@
 	'use strict';
 
 	/*
-	import { h } from '../../../../puerro/vdom/vdom';
-	import { mount } from '../../../../puerro/vdom/vdom';
+	import { h } from '../../../../src/vdom/vdom';
+	import { mount } from '../../../../src/vdom/vdom';
 
 	const $body = document.querySelector('body');
 

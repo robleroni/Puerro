@@ -1,4 +1,4 @@
-import { h } from '../../../../../puerro/vdom/vdom';
+import { h } from '../../../../../src/vdom/vdom';
 import { counterComponent } from '../components/counter';
 import { addView } from './add';
 import { multiplyView } from './multiply';

@@ -1,4 +1,4 @@
-import { Controller } from '../../puerro/mvc/controller.js';
+import { Controller } from '../../src/mvc/controller.js';
 import { FormController } from './controllers/form.js';
 import { ListController } from './controllers/list.js';
 import { OverviewController } from './controllers/overview.js';

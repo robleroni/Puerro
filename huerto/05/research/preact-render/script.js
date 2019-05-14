@@ -1,4 +1,4 @@
-import { Controller } from '../../../../puerro/mvc/controller';
+import { Controller } from '../../../../src/mvc/controller';
 import { h, render } from 'preact';
 
 

@@ -1,4 +1,4 @@
-import { describe } from '../../puerro/test/test';
+import { describe } from '../../src/test/test';
 import { onFormSubmit, onPlantedChecked, renderVegetableClassifications } from './huerto';
 
 describe('02 - Huerto', test => {

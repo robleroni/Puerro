@@ -1,10 +1,15 @@
 # Huerto
 
-## About
+Showcase project to have a structured research approach.
+It simulates an interactions between a developer and a customer.
 
-This is a showcase project, showing how an interaction between a developer and a customer could go. It shows the internal decision making on the side of the developer and explores the different approaches one could take for such a project.
+- **Customer**:  wants an easy to use and modern web application
+- **Developer**: wants to develop the application as simple as possible
 
-The Project itself is about a customer who want's to manage his vegetable garden and has new ideas for each iteration (season) of the project. The goal of the customer as well as the developer is to keep the project as simple as possible.
+Therefore, the developer needs to research and evaluate different approaches to build the application
+as simple as possible while still meeting customer requirements.
+
+Huerto is about managing a vegetable garden. In each iteration (season), the customer has new requriements.
 
 ## Seasons
 

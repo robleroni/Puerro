@@ -1,4 +1,4 @@
-import { h, mount } from '../../../../puerro/vdom/vdom';
+import { h, mount } from '../../../../src/vdom/vdom';
 import { vegetableClassifications, origins } from '../../../../assets/js/constants';
 
 /**
@@ -45,7 +45,7 @@ const actions = {
  * Creates a Form Field
  *
  * @param {string} label
- * @param {import('../../../../puerro/vdom/vdom').VNode} element
+ * @param {import('../../../../src/vdom/vdom').VNode} element
  */
 const formField = (label, element) => {
   return h('div', {}, [h('label', {}, label), element]);
@@ -131,7 +131,7 @@ const vegetableTable = ({ state, setState }) => {
  * @param {FormState} obj.state 
  * @param {functtion(): void} obj.setState 
  *
- * @returns {import('../../../../puerro/vdom/vdom').VNode}
+ * @returns {import('../../../../src/vdom/vdom').VNode}
  */
 const view = ({ state, setState }) => {
   return h('main', {}, [

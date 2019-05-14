@@ -1,4 +1,4 @@
-import { render, diff } from '../../../../puerro/vdom/vdom';
+import { render, diff } from '../../../../src/vdom/vdom';
 
 export {
   mount

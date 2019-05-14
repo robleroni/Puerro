@@ -134,7 +134,7 @@ We decided to use the bundler _rollupjs_ to allow us to develop locally without 
 
 For the actual testing, there are again many different tools available to support the process.
 These are powerful but also complicated.
-That is why we decided to write our own [testing utility](../../puerro/test/test.js).
+That is why we decided to write our own [testing utility](../../src/test/test.js).
 
 Basically, we just need a way to compare two values for equality, report the result and give some detailed information in case of failure.
 Most of our tests will run in the browser and are using the DOM.

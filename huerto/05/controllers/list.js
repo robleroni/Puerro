@@ -1,4 +1,4 @@
-import { PreactController, Controller } from '../../../puerro/mvc/controller.js';
+import { PreactController, Controller } from '../../../src/mvc/controller.js';
 import { formModel } from '../models/form.js';
 
 export {

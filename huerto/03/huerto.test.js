@@ -1,5 +1,5 @@
-import { describe } from '../../puerro/test/test';
-import { createDomElement } from '../../puerro/vdom/vdom';
+import { describe } from '../../src/test/test';
+import { createDomElement } from '../../src/vdom/vdom';
 import {
   renderVegetableClassifications,
   onFormSubmit,

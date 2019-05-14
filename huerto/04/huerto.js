@@ -1,5 +1,5 @@
-import { h, render } from '../../puerro/vdom/vdom';
-import { ObservableList, Observable } from '../../puerro/observable/observable';
+import { h, render } from '../../src/vdom/vdom';
+import { ObservableList, Observable } from '../../src/observable/observable';
 
 import { vegetableClassifications } from '../../assets/js/constants';
 import { Vegetable } from './vegetable';

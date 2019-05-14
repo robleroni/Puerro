@@ -1,4 +1,4 @@
-import { mountMVC } from '../../../../puerro/vdom/vdom';
+import { mountMVC } from '../../../../src/vdom/vdom';
 import { model } from './model';
 import { view } from './view';
 import { controller } from './controller';

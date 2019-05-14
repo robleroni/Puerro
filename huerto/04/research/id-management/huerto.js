@@ -1,6 +1,6 @@
-import { h, render, createDomElement } from '../../../../puerro/vdom/vdom';
+import { h, render, createDomElement } from '../../../../src/vdom/vdom';
 import { vegetableClassifications } from '../../../../assets/js/constants';
-import { ObservableList, Observable } from '../../../../puerro/observable/observable';
+import { ObservableList, Observable } from '../../../../src/observable/observable';
 
 import { Vegetable } from './vegetable';
 

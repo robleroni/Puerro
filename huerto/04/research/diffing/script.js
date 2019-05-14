@@ -1,4 +1,4 @@
-import { h, mount} from '../../../../puerro/vdom/vdom';
+import { h, mount} from '../../../../src/vdom/vdom';
 
 /**
  * @typedef {{ id: number, foo: string, baz: number  }} DemoType
@@ -17,7 +17,7 @@ const initialState = {
  * @param {DemoState} state
  * @param {function(DemoType): void} edit
  *
- * @returns {function(DemoType): import('../../../../puerro/vdom/vdom').VNode}
+ * @returns {function(DemoType): import('../../../../src/vdom/vdom').VNode}
  */
 const tableRow = (state, edit) => row => {
   const editing = state.editing && state.editing.id === row.id;
@@ -32,7 +32,7 @@ const tableRow = (state, edit) => row => {
  * @param {DemoState} state
  * @param {function(DemoState): void} setState
  *
- * @returns {function(DemoState): import('../../../../puerro/vdom/vdom').VNode} *
+ * @returns {function(DemoState): import('../../../../src/vdom/vdom').VNode} *
  */
 const view = type => ({state, setState}) => {
   const edit = row => evt => {

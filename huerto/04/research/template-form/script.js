@@ -1,4 +1,4 @@
-import { toH, h, render, mount } from '../../../../puerro/vdom/vdom';
+import { toH, h, render, mount } from '../../../../src/vdom/vdom';
 import { vegetableClassifications } from '../../../../assets/js/constants';
 
 /**
