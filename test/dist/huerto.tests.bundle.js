@@ -513,7 +513,7 @@
         renderVegetableClassifications($select);
 
         // then
-        assert.is($select.children.length, 9);
+        assert.is($select.children.length, 10);
       });
     });
 
@@ -701,7 +701,7 @@
     $form.planted.checked ? `planted (${$form.amount.value})` : 'not planted'
   }, ${$form.comments.value}`;
 
-    describe('03 Huerto', test => {
+    describe('03 - Huerto', test => {
 
       test('adding vegetable', assert => {
         // given
@@ -786,7 +786,7 @@
         renderVegetableClassifications($select);
 
         // then
-        assert.is($select.children.length, 9);
+        assert.is($select.children.length, 10);
       });
     });
 
@@ -1145,7 +1145,7 @@
       vegetableClassifications.forEach(c => $select.append(render(h('option', {}, c))));
     };
 
-    describe('04 Huerto', test => {
+    describe('04 - Huerto', test => {
       test('renderVegetableClassifications', assert => {
         // given
         const $select = document.createElement('select');
@@ -1154,7 +1154,7 @@
         renderVegetableClassifications($select);
 
         // then
-        assert.is($select.children.length, 9);
+        assert.is($select.children.length, 10);
       });
 
       test('onFormSubmit', assert => {
@@ -2138,6 +2138,7 @@
     function render$1(vnode, parent, merge) {
       return diff$1(merge, vnode, {}, false, parent, false);
     }
+    
 
     /**
      * Observable Pattern Implementation
@@ -2358,7 +2359,7 @@
         ),
       );
 
-    describe('05 Huerto - FormController', test => {
+    describe('05 - Huerto - FormController', test => {
       // before
       Controller.store.set({ vegetables: [{ id: 1 }] });
       const $root = createDomElement('div');
@@ -2376,8 +2377,7 @@
       };
 
       test('Rendering Form', assert => {
-        assert.is($root.querySelectorAll('option').length, 9);
-        assert.is($root.querySelector('select').value, 'Bulbs');
+        assert.is($root.querySelectorAll('option').length, 10);
       });
 
       test('Initial State', assert => {
@@ -2432,7 +2432,7 @@
         assert.is(Controller.store.get().vegetables.length, 0);
         assert.is(
           Object.entries(controller.state.get()).toString(),
-          Object.entries(formModel).toString()
+          Object.entries({ ...formModel, ...{ id: 1 } }).toString()
         );
         assert.is($root.querySelector('textArea').value, '');
       });

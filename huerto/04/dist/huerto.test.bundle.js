@@ -352,7 +352,7 @@
     vegetableClassifications.forEach(c => $select.append(render(h('option', {}, c))));
   };
 
-  describe('04 Huerto', test => {
+  describe('04 - Huerto', test => {
     test('renderVegetableClassifications', assert => {
       // given
       const $select = document.createElement('select');
@@ -361,7 +361,7 @@
       renderVegetableClassifications($select);
 
       // then
-      assert.is($select.children.length, 9);
+      assert.is($select.children.length, 10);
     });
 
     test('onFormSubmit', assert => {

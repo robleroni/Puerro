@@ -20,7 +20,7 @@ import {
   renderVegetableClassifications,
 } from './huerto';
 
-describe('04 Huerto', test => {
+describe('04 - Huerto', test => {
   test('renderVegetableClassifications', assert => {
     // given
     const $select = document.createElement('select');
@@ -29,7 +29,7 @@ describe('04 Huerto', test => {
     renderVegetableClassifications($select);
 
     // then
-    assert.is($select.children.length, 9);
+    assert.is($select.children.length, 10);
   });
 
   test('onFormSubmit', assert => {

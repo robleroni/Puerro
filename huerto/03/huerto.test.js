@@ -7,7 +7,7 @@ import {
   onClassification,
 } from './huerto';
 
-describe('03 Huerto', test => {
+describe('03 - Huerto', test => {
 
   test('adding vegetable', assert => {
     // given
@@ -92,6 +92,6 @@ describe('03 Huerto', test => {
     renderVegetableClassifications($select);
 
     // then
-    assert.is($select.children.length, 9);
+    assert.is($select.children.length, 10);
   });
 });

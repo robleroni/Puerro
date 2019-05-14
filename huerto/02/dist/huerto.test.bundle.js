@@ -227,7 +227,7 @@
       renderVegetableClassifications($select);
 
       // then
-      assert.is($select.children.length, 9);
+      assert.is($select.children.length, 10);
     });
   });
 
