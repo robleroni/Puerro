@@ -21,3 +21,14 @@ With this project, we want to acquire knowledge about how to build modern fronte
 
 
 ## Scope
+
+To make our examples and research work in real-life scenarios there would be a need for backend systems to store data and handle business logic. The scope of this project however is limited to client-side scripting. This restriction is put in place to ensure, the project does not scratch the surface of different parts of web development, but to dive deep into the specific world of frontend development. 
+
+To explore how JavaScript and HTML work and interact with each other in depth, styling, specifically CSS is also considered out of scope.
+
+Build tooling and browser compatibility is a big part in todays frontend world. Again to keep the focus and not get distracted by tooling, this project is respecting the following standards and the browsers which support those:
+
+- HTML5
+- CSS3
+- ES6 (JavaScript version)
+
