@@ -17,7 +17,7 @@
    * @param {object} attributes attributes or listeners to set in element
    * @param {*} innerHTML content of the tag
    *
-   * @returns {function(content): HTMLElement}
+   * @returns {HTMLElement}
    */
   const createDomElement = (tagName, attributes = {}, innerHTML = '') => {
     const $element = document.createElement(tagName);
