@@ -6,4 +6,7 @@
   - [Purpose](01-Introduction#Purpose)
   - Methodology
   - Scope
-- Chapter 1...
+- DOM
+- Components
+- MVC
+- Conclusion

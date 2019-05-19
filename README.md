@@ -1,37 +1,34 @@
 # Puerro Project
 
 Knowledge acquisition about how to build modern frontend web applications as simple as possible by researching different approaches.
+It can be used as a knowladge base ([Toolbox](docs)) or in combination with the provided [abstractions](#Abstractions).
 
 ## Folder Structure
 
-| Folder                 | Description                                       |
-| ---------------------- | ------------------------------------------------- |
-| [src/](src/)           | Abstractions and utilities for the huerto project |
-| [examples/](examples/) | Examples for the abstractions                     |
-| [huerto/](huerto/)     | Showcase project of the research process          |
-| [test/](test/)         | All the test results combined in one place        |
-| [docs/](docs/)         | Documentation & Toolbox                           |
+| Folder                 | Description                   |
+| ---------------------- | ----------------------------- |
+| [docs/](docs/)         | Documentation / Toolbox       |
+| [src/](src/)           | Abstractions / Utilities      |
+| [examples/](examples/) | Examples for the Abstractions |
+| [huerto/](huerto/)     | Research / Showcase Project   |
+| [test/](test/)         | Test Results                  |
 
-## Build instructions
+# Abstractions
 
-### Requirements
+For more information checkout our [examples](examples) and [test results](https://robin-fhnw.github.io/IP5-Puerro/test/AllTests.html).
 
-Tested with:
+## How to Run
 
-- npm version _6.4.1_ and _6.7.0_
-- node version _10.11.0_ and _11.10.1_
-
-### How to Run
-
-```
+```js
 npm install     // to install the dev dependency 'rollup'
 npm start       // to bundle the scripts and watch for changes
+                // Tested with: npm (_6.4.1_, _6.7.0_) & node (_10.11.0_, _11.10.1_)
 ```
 
-### How to Test/Verify
+## Observable
 
-| Online/Live                                                                   | Locally                      |
-| ----------------------------------------------------------------------------- | ---------------------------- |
-| [All Tests](https://robin-fhnw.github.io/IP5-Puerro/test/AllTests.html)       | `open test/AllTests.html`    |
-| [Puerro Tests](https://robin-fhnw.github.io/IP5-Puerro/test/PuerroTests.html) | `open test/PuerroTests.html` |
-| [Huerto Tests](https://robin-fhnw.github.io/IP5-Puerro/test/HuertoTests.html) | `open test/HuertoTests.html` |
+## V-Dom
+
+## MVC Controller
+
+## Testing
