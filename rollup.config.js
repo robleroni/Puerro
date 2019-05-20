@@ -75,7 +75,7 @@ configs.push({
   input:  `src/index.js`,
   output: {
     file: 'dist/puerro.js',
-    format: configOutputFormat,
+    format: 'cjs',
     name: 'puerro'
   }
 })

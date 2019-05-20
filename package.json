@@ -1,8 +1,8 @@
 {
   "name": "puerro",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Keeping the Web as Lean as a Leek",
-  "main": "src/index.js",
+  "main": "dist/puerro.js",
   "scripts": {
     "start": "rollup -c -w",
     "build": "rollup -c",
@@ -20,9 +20,7 @@
   "homepage": "https://github.com/robin-fhnw/IP5-Puerro#readme",
   "devDependencies": {
     "rollup": "1.4.1",
-    "rollup-plugin-node-resolve": "^4.2.3"
-  },
-  "dependencies": {
+    "rollup-plugin-node-resolve": "^4.2.3",
     "preact": "^8.4.2"
   }
 }
