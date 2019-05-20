@@ -6,7 +6,7 @@ const resolve = require('rollup-plugin-node-resolve');
 
 const configs = [];
 
-const projects            = ['src', 'huerto'];
+const projects            = ['src', 'huerto', 'examples'];
 const testFiles           = ['src.tests.js', 'huerto.tests.js'];
 const allTestsFile        = 'all.tests.js';
 const testFolder          = 'test';
