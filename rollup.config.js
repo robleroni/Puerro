@@ -72,12 +72,21 @@ fs.writeFileSync(`${testFolder}/${allTestsFile}`, testImports);
 configs.push(createConfig(testFolder, allTestsFile));
 
 configs.push({
-  input:  `src/index.js`,
+  input:  'src/index.js',
+  output: {
+    file: 'dist/puerro.module.js',
+    format: 'esm',
+    name: 'puerro'
+  }
+});
+
+configs.push({
+  input:  'src/index.js',
   output: {
     file: 'dist/puerro.js',
     format: 'cjs',
     name: 'puerro'
   }
-})
+});
 
 export default configs;
