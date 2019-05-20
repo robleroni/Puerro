@@ -32,7 +32,7 @@ npm install puerro
 ### Example
 
 ```js
-import { Observable, render, h } from 'puerro'
+import { Observable, render, h } from 'puerro';
 
 const observable = Observable();
 
