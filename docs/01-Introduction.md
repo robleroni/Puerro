@@ -2,6 +2,8 @@
 
 Welcome to the Puerro Project
 
+# On Web Development
+
 ## Purpose
 
 Nowadays, most web UI's depend on front-end frameworks/libraries (like Angular, Vue or React). These technologies are powerful, but they also lock programmers in by making it difficult to have a presentation layer independent of the rendering technology.
