@@ -10,4 +10,4 @@ export {
   mount,
   h,
   Controller
-}
+};

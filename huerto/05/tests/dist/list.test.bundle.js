@@ -221,7 +221,7 @@
 
   const store = ObservableObject({});
 
-  class Controller$1 {
+  class Controller {
     constructor($root, state, view, diffing = true) {
       this.$root = $root;
       this.state = ObservableObject({ ...state });
@@ -960,7 +960,7 @@
     return diff$1(merge, vnode, {}, false, parent, false);
   }
 
-  class PreactController extends Controller$1 {
+  class PreactController extends Controller {
     init() {
       this.store.onChange(s => this.refresh());
       this.state.onChange(s => this.refresh());
@@ -985,7 +985,7 @@
 
     onInit() {
       this.id = 0;
-      Controller.store.subscribe('vegetables', (vegetables, oldVegetables) => {
+      this.store.subscribe('vegetables', (vegetables, oldVegetables) => {
         const selectedId = this.state.get().selected.id;
         const index      = oldVegetables.indexOf(oldVegetables.find(v => v.id === selectedId));
 
@@ -1047,7 +1047,7 @@
 
   describe('05 - Huerto - ListController', test => {
     // before
-    Controller$1.store.set({ vegetables: [{ id: 1 }] });
+    Controller.store.set({ vegetables: [{ id: 1 }] });
     const $root = createDomElement('div');
     const controller = new ListController($root, listModel, view);
 
@@ -1058,8 +1058,8 @@
     });
 
     test('Initial State', assert => {
-      assert.is(Controller$1.store.get().vegetables.length, 1);
-      assert.is(Object.keys(Controller$1.store.get().vegetables[0]).length, 1);
+      assert.is(Controller.store.get().vegetables.length, 1);
+      assert.is(Object.keys(Controller.store.get().vegetables[0]).length, 1);
       assert.is(
         Object.entries(controller.state.get()).toString(),
         Object.entries(listModel).toString()
@@ -1071,16 +1071,16 @@
       controller.addVegetable();
 
       // then
-      assert.is(Controller$1.store.get().vegetables.length, 2);
+      assert.is(Controller.store.get().vegetables.length, 2);
       assert.is(controller.state.get().selected.id, 1);
     });
 
     test('selectVegetable', assert => {
       // when
-      controller.selectVegetable(Controller$1.store.get().vegetables[0]);
+      controller.selectVegetable(Controller.store.get().vegetables[0]);
 
       // then
-      assert.is(Controller$1.store.get().vegetables[0], controller.state.get().selected);
+      assert.is(Controller.store.get().vegetables[0], controller.state.get().selected);
     });
   });
 

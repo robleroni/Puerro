@@ -1,11 +1,13 @@
 {
   "name": "puerro",
-  "version": "0.0.3",
+  "version": "0.0.9",
   "description": "Keeping the Web as Lean as a Leek",
   "main": "dist/puerro.js",
+  "module": "dist/puerro.module.js",
   "scripts": {
     "start": "rollup -c -w",
     "build": "rollup -c",
+    "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
