@@ -9,7 +9,7 @@ class ListController extends PreactController {
 
   onInit() {
     this.id = 0;
-    Controller.store.subscribe('vegetables', (vegetables, oldVegetables) => {
+    this.store.subscribe('vegetables', (vegetables, oldVegetables) => {
       const selectedId = this.state.get().selected.id;
       const index      = oldVegetables.indexOf(oldVegetables.find(v => v.id === selectedId))
 

@@ -147,7 +147,7 @@
 
   const store = ObservableObject({});
 
-  class Controller$1 {
+  class Controller {
     constructor($root, state, view, diffing = true) {
       this.$root = $root;
       this.state = ObservableObject({ ...state });
@@ -886,7 +886,7 @@
     return diff$1(merge, vnode, {}, false, parent, false);
   }
 
-  class PreactController extends Controller$1 {
+  class PreactController extends Controller {
     init() {
       this.store.onChange(s => this.refresh());
       this.state.onChange(s => this.refresh());
@@ -931,7 +931,7 @@
 
     onInit() {
       this.id = 0;
-      Controller.store.subscribe('vegetables', (vegetables, oldVegetables) => {
+      this.store.subscribe('vegetables', (vegetables, oldVegetables) => {
         const selectedId = this.state.get().selected.id;
         const index      = oldVegetables.indexOf(oldVegetables.find(v => v.id === selectedId));
 
@@ -1095,7 +1095,7 @@
   const view$2 = controller =>
     h('label', {}, controller.getPlantedCounts() + '/' + controller.model.vegetables.length);
 
-  Controller$1.store.set({
+  Controller.store.set({
       vegetables: [],
   });
 
