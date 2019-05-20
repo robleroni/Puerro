@@ -1,8 +1,7 @@
 import { render, diff } from '../vdom/vdom';
-import { render as preactRender } from 'preact';
 import { ObservableObject } from '../observable/observable';
 
-export { Controller, PreactController };
+export { Controller };
 
 const store = ObservableObject({});
 
@@ -46,15 +45,4 @@ class Controller {
 
          get store() { return store; }
   static get store() { return store; }
-}
-
-class PreactController extends Controller {
-  init() {
-    this.store.onChange(s => this.refresh());
-    this.state.onChange(s => this.refresh());
-  }
-
-  repaint(newVdom) {
-    preactRender(newVdom, this.$root, this.$root.firstChild);
-  }
 }

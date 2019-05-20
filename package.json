@@ -2,6 +2,7 @@
   "name": "puerro",
   "version": "0.0.1",
   "description": "Keeping the Web as Lean as a Leek",
+  "main": "src/index.js",
   "scripts": {
     "start": "rollup -c -w",
     "build": "rollup -c",

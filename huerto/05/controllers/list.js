@@ -1,4 +1,4 @@
-import { PreactController, Controller } from '../../../src/mvc/controller.js';
+import { PreactController } from '../../../src/mvc/preact.controller.js';
 import { formModel } from '../models/form.js';
 
 export {

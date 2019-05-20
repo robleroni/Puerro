@@ -1,4 +1,4 @@
-import { PreactController } from '../../../src/mvc/controller.js';
+import { PreactController } from '../../../src/mvc/preact.controller.js';
 
 export { OverviewController };
 

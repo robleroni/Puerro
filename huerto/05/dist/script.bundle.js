@@ -17,7 +17,7 @@
    * @param {object} attributes attributes or listeners to set in element
    * @param {*} innerHTML content of the tag
    *
-   * @returns {HTMLElement}
+   * @returns {function(content): HTMLElement}
    */
   const createDomElement = (tagName, attributes = {}, innerHTML = '') => {
     const $element = document.createElement(tagName);
@@ -104,6 +104,90 @@
         ));
     return nodeChanged || attributesChanged;
   };
+
+  /**
+   * Observable Pattern Implementation
+   *
+   * @module observable
+   */
+
+  const ObservableObject = object => {
+    const listeners   = [];
+    const subscribers = {};
+
+    const notify = newObject => {
+      if (object == newObject) return;
+      const oldObject = object;
+      object = newObject;
+
+      Object.keys(newObject).forEach(key => {
+        const newValue = newObject[key];
+        const oldValue = oldObject[key];
+        if (oldValue === newValue) return;
+        (subscribers[key] || []).forEach(subscriber => subscriber(newValue, oldValue));
+      });
+      listeners.forEach(listener => listener(newObject, oldObject));
+    };
+
+    return {
+      get:       ()              => object,
+      set:       newObject       => notify({ ...object, ...newObject }),
+      push:      (key, value)    => notify({ ...object, ...{ [key]: value } }),
+      remove:    key             => notify({ ...object, ...{ [key]: undefined } }),
+      replace:   newObject       => notify(newObject),
+      onChange:  callback        => { listeners.push(callback); callback(object, object); },
+      subscribe: (key, callback) => {
+        subscribers[key] = subscribers[key] || [];
+        subscribers[key].push(callback);
+        callback(object[key], object[key]);
+      },
+      // unsubscribe, removeOnChange
+    };
+  };
+
+  const store = ObservableObject({});
+
+  class Controller$1 {
+    constructor($root, state, view, diffing = true) {
+      this.$root = $root;
+      this.state = ObservableObject({ ...state });
+      this.view = view;
+      this.diffing = diffing;
+      this.vDom = null;
+      this.init();
+      this.onInit();
+    }
+
+    init() {
+      this.vDom = this.view(this);
+      this.$root.prepend(render(this.vDom));
+      this.store.onChange(s => this.refresh());
+      this.state.onChange(s => this.refresh());
+    }
+
+    onInit() {}
+
+    refresh() {
+      const newVDom = this.view(this);
+      this.repaint(newVDom);
+      this.vDom = newVDom;
+    }
+
+    repaint(newVDom) {
+      if (this.diffing) {
+        diff(this.$root, newVDom, this.vDom);
+      } else {
+        this.$root.replaceChild(render(newVDom), this.$root.firstChild);
+      }
+    }
+
+    get model() {
+      return { ...store.get(), ...this.state.get() };
+    }
+
+           get store() { return store; }
+    static get store() { return store; }
+  }
 
   var VNode = function VNode() {};
 
@@ -802,91 +886,7 @@
     return diff$1(merge, vnode, {}, false, parent, false);
   }
 
-  /**
-   * Observable Pattern Implementation
-   *
-   * @module observable
-   */
-
-  const ObservableObject = object => {
-    const listeners   = [];
-    const subscribers = {};
-
-    const notify = newObject => {
-      if (object == newObject) return;
-      const oldObject = object;
-      object = newObject;
-
-      Object.keys(newObject).forEach(key => {
-        const newValue = newObject[key];
-        const oldValue = oldObject[key];
-        if (oldValue === newValue) return;
-        (subscribers[key] || []).forEach(subscriber => subscriber(newValue, oldValue));
-      });
-      listeners.forEach(listener => listener(newObject, oldObject));
-    };
-
-    return {
-      get:       ()              => object,
-      set:       newObject       => notify({ ...object, ...newObject }),
-      push:      (key, value)    => notify({ ...object, ...{ [key]: value } }),
-      remove:    key             => notify({ ...object, ...{ [key]: undefined } }),
-      replace:   newObject       => notify(newObject),
-      onChange:  callback        => { listeners.push(callback); callback(object, object); },
-      subscribe: (key, callback) => {
-        subscribers[key] = subscribers[key] || [];
-        subscribers[key].push(callback);
-        callback(object[key], object[key]);
-      },
-      // unsubscribe, removeOnChange
-    };
-  };
-
-  const store = ObservableObject({});
-
-  class Controller {
-    constructor($root, state, view, diffing = true) {
-      this.$root = $root;
-      this.state = ObservableObject({ ...state });
-      this.view = view;
-      this.diffing = diffing;
-      this.vDom = null;
-      this.init();
-      this.onInit();
-    }
-
-    init() {
-      this.vDom = this.view(this);
-      this.$root.prepend(render(this.vDom));
-      this.store.onChange(s => this.refresh());
-      this.state.onChange(s => this.refresh());
-    }
-
-    onInit() {}
-
-    refresh() {
-      const newVDom = this.view(this);
-      this.repaint(newVDom);
-      this.vDom = newVDom;
-    }
-
-    repaint(newVDom) {
-      if (this.diffing) {
-        diff(this.$root, newVDom, this.vDom);
-      } else {
-        this.$root.replaceChild(render(newVDom), this.$root.firstChild);
-      }
-    }
-
-    get model() {
-      return { ...store.get(), ...this.state.get() };
-    }
-
-           get store() { return store; }
-    static get store() { return store; }
-  }
-
-  class PreactController extends Controller {
+  class PreactController extends Controller$1 {
     init() {
       this.store.onChange(s => this.refresh());
       this.state.onChange(s => this.refresh());
@@ -1095,7 +1095,7 @@
   const view$2 = controller =>
     h('label', {}, controller.getPlantedCounts() + '/' + controller.model.vegetables.length);
 
-  Controller.store.set({
+  Controller$1.store.set({
       vegetables: [],
   });
 

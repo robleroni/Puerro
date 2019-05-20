@@ -71,4 +71,13 @@ testImports += testFiles.map(file => `import './${file}';\n`).join('');
 fs.writeFileSync(`${testFolder}/${allTestsFile}`, testImports);
 configs.push(createConfig(testFolder, allTestsFile));
 
+configs.push({
+  input:  `src/index.js`,
+  output: {
+    file: 'dist/puerro.js',
+    format: configOutputFormat,
+    name: 'puerro'
+  }
+})
+
 export default configs;
