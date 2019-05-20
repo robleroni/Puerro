@@ -4,7 +4,10 @@
 <p align='center'>
  <img src='https://img.shields.io/badge/License-MIT-blue.svg'>
 
+<img src='https://david-dm.org/robin-fhnw/IP5-Puerro.svg'>
+
  <img src='https://travis-ci.org/robin-fhnw/IP5-Puerro.svg?branch=master'>
+ 
 </p>
 
 # Puerro Project
