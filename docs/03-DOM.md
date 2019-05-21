@@ -71,7 +71,57 @@ There are three different ways to access the content of a DOM element.
 
 ## Creating Elements
 
+The `element.innerHTML` method allows to build up a nested structure using the HTML markup language relatively easy.
 
+```js
+document.body.innerHTML = `
+  <input type="number" />
+  <button type="button" onclick="console.log('Clicked')">Do it!</button>
+`;
+```
+
+This gets slightly more challenging for appending or modifying nodes to an already existing DOM as all its child elements are being re-parsed and recreated completely. This means that saved references to nodes are no long pointing to the supposed elements.
+
+Re-parsing the whole structure of the element is also bad for the performance.
+
+```js
+document.body.innerHTML =  '<h1>Tomato</h1>';
+const $h1 = document.querySelector('h1');
+document.body.innerHTML += '<p>Lean as a Leek</p>'; // Whole body element is being reparsed
+$h1.textContent = 'Puerro';					      // Reference does not point to the DOM instance
+```
+
+There is a solution for this called [`element.insertAdjacentHTML`](https://developer.mozilla.org/de/docs/Web/API/Element/insertAdjacentHTML) which does not re-parse all it's child elements.
+
+```js
+document.body.innerHTML =  '<h1>Tomato</h1>';
+const $h1 = document.querySelector('h1');
+document.body.insertAdjacentHTML('beforeend', '<p>Lean as a Leek</p>'); // No complete reparsing
+$h1.textContent = 'Puerro';										    // Reference still works
+```
+
+This combination between `innerHTML` and references is not very readable. Plus when dealing with registering event listeners as well, it can get complicated. Another possibility to create Elements is with the `createElement` method.
+
+```js
+const $input = document.createElement('input');
+$input.setAttribute('type', 'number');
+$input.setAttribute('value', 1);
+
+const $button = document.createElement('button');
+$button.setAttribute('type', 'button');
+$button.textContent = 'Do it!';
+$button.addEventListener('click', _ => console.log($input.value));
+
+document.body.append($input, $button);
+```
+
+Puerro provides an abstraction to make it more convenient to create elements. [Check it out!](../src/#Creating DOM Elements) 
+
+```js
+const $input = createDomElement('input', { type: 'number', value: 1 });
+const $button = createDomElement('button', { type: 'button', click: _ => console.log($input.value) }, 'Do it!');
+document.body.append($input, $button);
+```
 
 ## Event-Driven Actions
 
@@ -126,7 +176,7 @@ Another advantage is the ability to choose between event bubbling and capturing.
 
 ### Bubbling and Capturing
 
-When nodes are encapsulated, a user interaction can trigger multiple events.
+When nodes are nested, a user interaction can trigger multiple events.
 Two different models exist to handle this:
 
 - **Bubbling** (default): The event propagates from the clicked item up to all its parents, starting from the nearest one.
