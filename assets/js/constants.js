@@ -14,8 +14,7 @@ const vegetableClassifications = [
 ];
 
 const origins = [
-  {name: 'Europe',  disabledOn: []},
-  {name: 'Asia',    disabledOn: ['Tubers']},
-  {name: 'America',  disabledOn: ['Fungi']}
+  { name: 'Europe',  disabledOn: [] },
+  { name: 'Asia',    disabledOn: ['Tubers'] },
+  { name: 'America', disabledOn: ['Fungi'] },
 ];
-

@@ -4,7 +4,7 @@ All the abstractions used will be here.
 
 ## Creating DOM Elements
 ```js
-const $button = createDOMElement('button', { type: 'button', click: _ => console.log('Clicked')}, 'Do it!')
+const $button = createDOMElement('button', { type: 'button', click: _ => console.log('Clicked')}, 'Go')
 ```
 
 ## Observables

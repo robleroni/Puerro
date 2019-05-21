@@ -9,6 +9,8 @@
   - Methodology
 - Environment
 - DOM
+  - [Manipulating the DOM](03-DOM#manipulating-the-dom)
+  - [Event-Driven Actions](03-DOM#event-driven-actions)
 - Virtual DOM
 - Components
 - MVC

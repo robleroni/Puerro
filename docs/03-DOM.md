@@ -69,7 +69,7 @@ There are three different ways to access the content of a DOM element.
 2. **`element.innerText`**: similar to `textContent`but uses CSS knowledge and only returns visible content. This has the disadvantages that reading a value with `innerText`triggers a reflow to ensure up-to-date computed styles. This can be computationally expensive and should be avoided when possible.
 3. **`element.innerHTML`**: represents the HTML source of the element. It should only be used when the intention is to work with HTML markup. Misusing it for text is not optimal for performance and it is vulnerable to XSS attacks.
 
-## Creating Elements
+### Creating Elements
 
 The `element.innerHTML` method allows to build up a nested structure using the HTML markup language relatively easy.
 
@@ -264,22 +264,18 @@ In order to use the `<form>` tag without it being submitted, an event handler ha
 > A `<form>` can also be submitted by pressing _enter_ or via JavaScript. Therefore using a `<button type="button">` with a click event handler won't be enough.
 > Plus receiving the target form in the event is a huge benefit.
 
-## Creating Elements
+## Building Testable Units
 
+## Use Cases
 
+prototyping, small projects with informative sites with small interactivity, sideshow, no data in client,
 
-The DOM (Document Object Model) is the interface be
+## Restrictions
 
-- what is dom -> browser API -> for reactivity
-- how to intereact with dom
-- event listeners
-- inner html
+restrictions: difficult to scale,
 
--
+## Summary
 
-* when to use:
-  - prototyping, small projects with informative sites with small interactivity, slideshow, no data in client,
 * advantages/disadvantages
 * advantages: 0 dependencies
 * disadvantage: very specific, redundant code, bad readability, complex to describe
-* restrictions: difficult to scale,
