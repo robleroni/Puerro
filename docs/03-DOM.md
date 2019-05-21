@@ -115,7 +115,7 @@ $button.addEventListener('click', _ => console.log($input.value));
 document.body.append($input, $button);
 ```
 
-Puerro provides an abstraction to make it more convenient to create elements. [Check it out!](../src/#Creating_DOM_Elements) 
+Puerro provides an abstraction to make it more convenient to create elements. [Check it out!](../src/#creating-dom-elements) 
 
 ```js
 const $input = createDomElement('input', { type: 'number', value: 1 });
