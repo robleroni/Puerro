@@ -100,7 +100,7 @@ document.body.insertAdjacentHTML('beforeend', '<p>Lean as a Leek</p>'); // No co
 $h1.textContent = 'Puerro';				                // Reference still works
 ```
 
-This combination between `innerHTML` and references is not very readable. Plus when dealing with registering event listeners as well, it can get complicated. Another possibility to create Elements is with the `createElement` method.
+This combination between `innerHTML` and references is not very readable. Plus when dealing with registering event listeners as well, it can get complicated. If a reference to a created element should exist at a later time, it is advisable to use the `document.createElement` method.
 
 ```js
 const $input = document.createElement('input');
@@ -266,16 +266,135 @@ In order to use the `<form>` tag without it being submitted, an event handler ha
 
 ## Building Testable Units
 
+When event handler functions receive events, they can in turn manipulate the DOM.
+
+![Event-Flow](assets/img/events.png) 
+
+For an hanlder function to manipulate the DOM, references to the elements to be manipulate are needed.
+
+```js
+const handleEvent = event => {
+  const $element = document.querySelector('div');
+  // manipulate $element
+};
+
+$element.addEventListener('click', handleEvent);
+```
+
+>Because of eta reductions, parameter can be shortened when using curried functions.
+>`x => foo(x) ` can be shortened to `foo`
+
+This gets problematic when the intentention is to test this unit, since the DOM might not be available.
+Furthermore, this approach can quickly become difficult to mantain. 
+
+A better approach is to receive the nodes which are being manipulated as a parameter.
+The element which fires the event does not have to be passed as an argument because it is available trough `event.target`.
+
+When new elements are being created, it is a good practice to return them for a more convenient testing.
+
+```js
+import { createDomElement } from 'puerro';
+
+export { appendInput, changeLabel };
+
+const appendInput = ($input, $output) => _ => {
+  const $element = createDomElement('p', {}, $input.value);
+  $output.append($element);
+  return $element; // return for testing purposes
+};
+
+const changeLabel = $button => event => {
+  $button.textContent = event.target.value;
+};
+```
+
+To use the handler functions, they simply have to be registered with the needed references as arguments.
+
+```js
+import { changeLabel, appendInput } from './example';
+
+const $input  = document.querySelector('input');
+const $button = document.querySelector('button');
+const $output = document.querySelector('output');
+
+$button.addEventListener('click', appendInput($input, $output));
+$input .addEventListener('input', changeLabel($button));
+
+```
+
+To use the handler functions for testing, the used elements need to be created 
+
+```js
+import { describe, createDomElement } from 'puerro';
+import { appendInput, changeLabel } from './example';
+
+describe('Testable Units', test => {
+  test('appendInput', assert => {
+    // given
+    const $input  = createDomElement('input', { value: 'Puerro' });
+    const $output = createDomElement('div');
+
+    // when
+    const $element = appendInput($input, $output)(); // event object not needed
+
+    // then
+    assert.is($output.children.length, 1);
+    assert.is($element.tagName, 'P');
+    assert.is($element.textContent, 'Puerro');
+  });
+
+  test('changeLabel', assert => {
+    // given
+    const $input  = createDomElement('input',  { value: 'Puerro' });
+    const $button = createDomElement('button', { type: 'button' });
+
+    // when
+    changeLabel($button)({ target: $input }); // mocking event object
+
+    // then
+    assert.is($button.textContent, 'Puerro');
+  });
+});
+```
+
+The above example can be found in the [Puerro Examples](../examples/testable-units).
+
 ## Use Cases
 
-prototyping, small projects with informative sites with small interactivity, sideshow, no data in client,
+This style of programming with direct DOM manipulations within the event handler functions is easy and intuitive.
+It can be used for various tasks:
 
-## Restrictions
+- Dynamic informational websites.
+- Reactive content without side effects.
+- Experimenting/Prototyping.
+- Simple Web application without many changing parts.
 
-restrictions: difficult to scale,
+Basically for everything, which does not need to handle a lot of internal state or many changing elements.
+
+### Advantages
+
+- Zero dependencies.
+- Little code.
+- Easy to understand.
+- Fast.
+
+##  Difficulties / Restrictions
+
+This approach is getting harder to maintain when either frontent state is being introduced or there are many changing elements. This is especially true when the application starts growing.
+
+When an event triggers a lot of changes, 
+
+- event listeners can lunch nukes, sideeffects, not pure
+
+### Disadvantages
+
+- Difficult to scale
+- Redundant code
+- Direct and distributed DOM manipulation.
+- Very specific
+- Complex to describe
+- Hard to maintin big projects
+- Bad readability
+- very specific
 
 ## Summary
-
-* advantages/disadvantages
-* advantages: 0 dependencies
-* disadvantage: very specific, redundant code, bad readability, complex to describe
