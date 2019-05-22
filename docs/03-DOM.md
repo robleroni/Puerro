@@ -264,7 +264,7 @@ In order to use the `<form>` tag without it being submitted, an event handler ha
 > A `<form>` can also be submitted by pressing _enter_ or via JavaScript. Therefore using a `<button type="button">` with a click event handler won't be enough.
 > Plus receiving the target form in the event is a huge benefit.
 
-## Building Testable Units
+## Testable Units
 
 When event handler functions receive events, they can in turn manipulate the DOM.
 
@@ -322,7 +322,7 @@ $input .addEventListener('input', changeLabel($button));
 
 ```
 
-To use the handler functions for testing, the used elements need to be created 
+To use the handler functions for testing, the needed elements need to be created.
 
 ```js
 import { describe, createDomElement } from 'puerro';
@@ -368,8 +368,7 @@ It can be used for various tasks:
 - Reactive content without side effects.
 - Experimenting/Prototyping.
 - Simple Web application without many changing parts.
-
-Basically for everything, which does not need to handle a lot of internal state or many changing elements.
+- Server-Side rendered web applications. 
 
 ### Advantages
 
@@ -382,19 +381,16 @@ Basically for everything, which does not need to handle a lot of internal state 
 
 This approach is getting harder to maintain when either frontent state is being introduced or there are many changing elements. This is especially true when the application starts growing.
 
-When an event triggers a lot of changes, 
+When an event triggers a lot of changes, a reference to each dependent element needs to be managed.
+Furthermore, when updates depend on data stored in the DOM, the decapsulation between view and model is not given.
 
-- event listeners can lunch nukes, sideeffects, not pure
+For large application there probably will be redundant code and all DOM related accesses are scattered through the code.
 
 ### Disadvantages
 
-- Difficult to scale
-- Redundant code
-- Direct and distributed DOM manipulation.
-- Very specific
-- Complex to describe
-- Hard to maintin big projects
-- Bad readability
-- very specific
-
-## Summary
+- Difficult to scale and maintain.
+- Hard to structure/organize.
+- Redundant code.
+- Scattered DOM manipulations.
+- Very specific.
+- State lives in the view.

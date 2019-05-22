@@ -1,3 +1,3 @@
-# Environment
+# Environment / Conventions
 
 - Testing, Bundling, JDoc

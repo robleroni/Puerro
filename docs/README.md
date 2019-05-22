@@ -8,9 +8,12 @@
   - Scope
   - Methodology
 - Environment
-- DOM
+- [DOM](01-DOM)
   - [Manipulating the DOM](03-DOM#manipulating-the-dom)
   - [Event-Driven Actions](03-DOM#event-driven-actions)
+  - [Testable Units](03-DOM#testable-units)
+  - [Use Cases](03-DOM#use-cases)
+  - [Difficulties/Restrictions](03-DOM#Difficulties-/-Restrictions)
 - Virtual DOM
 - Components
 - MVC
