@@ -54,17 +54,84 @@ Puerro has it's own implementation of the virtual DOM. [Check it out](../src/#vi
 
 ## Creating a Virtual DOM
 
+Since the virtual DOM is just an JavaScript objects, we can create it like this:
+
+```js
+const vDOM = {
+  tagName: "tbody",
+  attributes: {},
+  children: [
+    {
+      tagName: "tr",
+      attributes: { class: "row" },
+      children: [
+        { tagName: "td", attributes: { class: "item" }, children: ["Puerro"] }
+      ]
+    },
+    {
+      tagName: "tr",
+      attributes: { class: "row" },
+      children: [
+        { tagName: "td", attributes: { class: "item" }, children: ["Huerto"] }
+      ]
+    }
+  ]
+};
+```
+
+Using Puerro simplifies this a lot:
+
+```js
+const vDOM = h('tbody', {},
+  h('tr', { class: 'row' }, h('td', { class: 'item' }, 'Puerro')),
+  h('tr', { class: 'row' }, h('td', { class: 'item' }, 'Huerto'))
+);
+```
+
+> `h` stands for _hyperscript_ and is a common abbreviation for building virtual elements.
+
+### JSX
+
+
+
 ## Rendering
+
+In order use the virtual DOM, there has to be a way to convert virtual elements into DOM nodes. Therefore, a `render` function is introuduced. This function recursively travels the virtual DOM and uses the DOM API to build up nodes.
+
+```js
+const $tbody = render(vDOM);
+$table.append($tbody);
+```
+
+This, however, doesn't differ a lot of using `$table.innerHTML`. All the nodes are still getting re-created from scratch and previously held references are lost.
+
+The real advantage of the virtual DOM can be seen when diffing is being used to only specifically manipulate the elements which have been changed.
+
+### Identity
+
+
 
 ## Diffing
 
+## Testability
+
 ## Use Cases
 
-- bigger interactivity with more than 1 element which changes in a tree$
+The virtual DOM is useful when multiple elements need to be changed simultaneously or often.
+Instead of directly selecting and manipulating DOM nodes, the structure of the view can be written in a more descriptive way and the access to the DOM API is getting delegated to the general implmenentation of the virtual DOM.
+
+- bigger interactivity with more than 1 element which changes in a tree
 - when contents are dynamic, -> data without saving, table -> fetching data over API - or template string?
-- advantage: testable
+
+### Advantages
+
+- No direct DOM manipulations.
+- Descreptive programming style.
+- Better testability.
 
 ## Problems / Restrictions
+
+- still no state
 
 - focus / identity
 - whitespaces
