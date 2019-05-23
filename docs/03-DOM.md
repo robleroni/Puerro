@@ -381,7 +381,7 @@ It can be used for various tasks:
 
 This approach is getting harder to maintain when either frontent state is being introduced or there are many changing elements. This is especially true when the application starts growing.
 
-When an event triggers a lot of changes, a reference to each dependent element needs to be managed.
+When an event triggers a lot of changes, a reference to each dependent element needs to be managed. If multiple elements need to be updated constantly and in short time frames, it can start to become really expensive to constantly query and update the DOM.
 Furthermore, when updates depend on data stored in the DOM, the decapsulation between view and model is not given.
 
 For large application there probably will be redundant code and all DOM related accesses are scattered through the code.

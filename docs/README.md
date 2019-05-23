@@ -8,7 +8,7 @@
   - Scope
   - Methodology
 - Environment
-- [DOM](01-DOM)
+- [DOM](03-DOM)
   - [Manipulating the DOM](03-DOM#manipulating-the-dom)
   - [Event-Driven Actions](03-DOM#event-driven-actions)
   - [Testable Units](03-DOM#testable-units)
