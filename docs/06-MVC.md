@@ -16,14 +16,12 @@ A Model defines and stores data and is not concerned with how this data gets pre
 Puerro provides Observables which are very useful in the definition of models. The following is an example of a model in a MVC approach with pure JavaScript (No frameworks, only the Observable abstraction from Puerro):
 
 ```js
-const Model = () => {
-    const name = Observable('');
-    const age = Observable(0);
-    return {
-        name,
-        age,
-    }
-}
+import { Observable } from 'puerro';
+
+const Model = ({ name = '', age = 0 } = {}) => ({
+    name: Observable(name),
+    age: Observable(age),
+});
 ```
 
 ### Views
@@ -34,7 +32,8 @@ Users interact with the view which leads to events being fired from the DOM. Rel
 
 ```js
 const View = (model, controller, $form, $output) => {
-    render = () => ($output.innerText = `${model.name.get()} - ${model.age.get()}`);
+    const render = () =>
+    	($output.innerText = `${model.name.get()} - ${model.age.get()}`);
     
     // View-Binding
     $form.name.addEventListener('input', evt => controller.setName(evt.target.value));
@@ -84,8 +83,8 @@ const Controller = model => {
         model.age.set(age);
     }
     
-    const increaseAge = () => setAge(mode.age.get() + 1);
-    const decreaseAge = () => setAge(mode.age.get() - 1);
+    const increaseAge = () => setAge(model.age.get() + 1);
+    const decreaseAge = () => setAge(model.age.get() - 1);
     
     return {
         setName,
@@ -103,7 +102,7 @@ The Model, View and Controller can be separated in to their own files and initia
 
 ```js
 const model = Model();
-const controller = Controller();
+const controller = Controller(model);
 const view = View(model, 
                   controller,
                   document.getElementById('form'),
@@ -115,7 +114,7 @@ As evident by this whole example, MVC can generate some boilerplate code which s
 
 ## Bidirectional binding
 
-As visible in this visualization of the MVC flow, data and user input always flows unidirectionally. This makes the application easier to reason about and more predictable, since the model cannot just be changed from anywhere. 
+Data and user input always flows unidirectionally in MVC. This makes the application easier to reason about and more predictable, since the model cannot just be changed from anywhere. 
 
 Many modern frontend frameworks like Vue.JS and Angular (not React) work with bidirectional bindings of data. This is intuitive at first but as an application grows can become very unpredictable. The model can be changed from anywhere and business logic has to be enforced with different approaches, for example in Vue.JS using [watchers](https://vuejs.org/v2/guide/computed.html#Watchers).
 
@@ -127,9 +126,35 @@ This would defeat the whole purpose of the controller, by leaving it out. With t
 
 ## Testability
 
-As mentioned, the separation of concerns leads to increased testability. The Controller and the view can be tested independently and the controller even without mocking DOM objects.
+Business logic (in form of the controller) can be unit tested in a very efficient manner, since it is separated from the rest of the application.  In previous examples we often had to mock DOM elements to test logic which can be tedious during the initial development but especially during maintenance.
 
+```js
+import { describe }   from 'puerro';
+import { Model, Controller } from './example';
 
+describe('AppController', test => {
+    const model = Model({ name: 'Test', age: 99 });
+    const controller = Controller();
+    
+    test('setName empty', assert => {
+    	// when
+       	controller.setName('');
+        
+        // then
+        assert.is(/* assert the error was properly handled */);
+    });
+});
+```
+
+Since in this case the intention is only to test business logic, there is not even a need to import the view, because it doesn't matter how the data gets rendered into the DOM.
+
+## Global State
+
+The models hold the business data (or state) of our application. What if we have multiple separate MVC constructs which share a common state, but also have a state of their own?
+
+### Multiple Views
+
+MVC does not restrict one model 
 
 - controller
 - seperation of concerns
