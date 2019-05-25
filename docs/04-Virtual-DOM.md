@@ -90,20 +90,39 @@ const vDOM = h('tbody', {},
 
 > `h` stands for _hyperscript_ and is a common abbreviation for building virtual elements.
 
+### toH()?
+
+
+
 ### JSX
 
 
 
 ## Rendering
 
-In order use the virtual DOM, there has to be a way to convert virtual elements into DOM nodes. Therefore, a `render` function is introuduced. This function recursively travels the virtual DOM and uses the DOM API to build up nodes.
+In order use the virtual DOM, there has to be a way to convert virtual elements into DOM nodes. Therefore, a `render` function is introduced. This function recursively travels the virtual DOM and uses the DOM API to build up nodes.
 
 ```js
 const $tbody = render(vDOM);
 $table.append($tbody);
 ```
 
+- Using it in combination with event listeners...
+
+```js
+const handleClick = $table => event => {
+  // createVDOM?
+  $table.append(render(vDOM));
+  return vDOM;
+}
+```
+
 This, however, doesn't differ a lot of using `$table.innerHTML`. All the nodes are still getting re-created from scratch and previously held references are lost.
+
+Problems:
+
+- Identity
+- Time consuming for huge dom tree
 
 ### Identity Problem
 
@@ -111,9 +130,22 @@ This, however, doesn't differ a lot of using `$table.innerHTML`. All the nodes a
 
 ## Diffing
 
-The real advantage of the virtual DOM can be seen when diffing is being used to only specifically manipulate the elements which have been changed.
+The real advantage of the virtual DOM can be seen when diffing is being used to only specifically update the parts and elements which have been changed.
 
-- toH
+For that to work, a diffing algorithm is needed to check the changes between two virtual DOM's and applying the changes to the actual DOM. Puerro has it's own [diffing](../src/#diffing) implementation.
+
+```js
+diff($table, newVDOM, oldVDOM);
+```
+
+This implies that an _old_ or _initial_ version of the virtual DOM must exist. There are basically two approaches to create this first version of the virtual DOM.
+
+1. Create it in JavaScript using the `h` function on initial load and append it to the DOM
+2. Create it in HTML and convert it to a virtual DOM using the `toH` function.
+
+### White-spaces Problem
+
+
 
 ## Testability
 
@@ -150,7 +182,7 @@ Instead of directly selecting and manipulating DOM nodes, the structure of the v
 
 - SPA (Single Page Applications) with huge DOM trees.
 - When the DOM needs to change constantly and a lot.
-- To display dynamically received content (e.g. over an API) without the need to store/update it.
+- To display dynamically received content (e.g. over an API) without the need to store state.
 
 ### Advantages
 
@@ -164,16 +196,19 @@ The virtual DOM is an abstraction of the DOM. Operating on the virtual DOM is in
 
 As in most abstractions, simplicity comes with the price of reduced flexibility. Meaning that it is not possible to handle every single edge case scenario with the virtual DOM.
 
-Furthermore, the virtual DOM requires to completely build up a virtual view with all its sub elements, even though most of the content might never change.
+Furthermore, the virtual DOM requires to completely build up a virtual view with all its sub elements, even though most of the content might never change and could be coded directly into the HTML view.
+
+
 
 - only fetching over API...
 - The problem of using state is still not solved.
+- sometimes not the same because of whitespaces
 
 ### Disadvantages
 
 - Computation overhead.
 - Reduced flexibility.
-- still no state
+- Complicated to handle state.
 - focus / identity
 - whitespaces
 
