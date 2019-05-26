@@ -27,6 +27,8 @@ const vDOM = h('div', {},
 document.body.prepend(render(vDOM));
 ```
 
+### Diffing
+
 ## Components
 
 ```javascript

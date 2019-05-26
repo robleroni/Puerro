@@ -304,7 +304,7 @@ const appendInput = ($input, $output) => _ => {
 };
 
 const changeLabel = $button => event => {
-  $button.textContent = event.target.value;
+  $button.textContent = 'Save: ' + event.target.value;
 };
 ```
 
@@ -352,7 +352,7 @@ describe('Testable Units', test => {
     changeLabel($button)({ target: $input }); // mocking event object
 
     // then
-    assert.is($button.textContent, 'Puerro');
+    assert.is($button.textContent, 'Save: Puerro');
   });
 });
 ```
