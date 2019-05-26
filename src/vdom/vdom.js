@@ -5,7 +5,7 @@
  * @module vdom
  */
 
-export { h, toH, createDomElement, render, mount, diff, changed, mountMVC };
+export { h, toVDOM, createDomElement, render, mount, diff, changed, mountMVC };
 
 /**
  * @typedef {{ tagName: string, attributes: object, children: any  }} VNode
@@ -34,7 +34,7 @@ const h = vNode;
  *
  * @returns {VNode}
  */
-const toVNode = $node => {
+const toVDOM = $node => {
   const tagName = $node.tagName;
   const $children = $node.children;
 
@@ -44,12 +44,11 @@ const toVNode = $node => {
   }, {});
 
   if ($children.length > 0) {
-    return vNode(tagName, attributes, Array.from($children).map(toVNode));
+    return vNode(tagName, attributes, Array.from($children).map(toVDOM));
   }
 
   return vNode(tagName, attributes, $node.textContent);
 };
-const toH = toVNode;
 
 /**
  * Creates a new HTML Element.

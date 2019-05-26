@@ -26,6 +26,6 @@ describe('Testable Units', test => {
     changeLabel($button)({ target: $input });
 
     // then
-    assert.is($button.textContent, 'Puerro');
+    assert.is($button.textContent, 'Save: Puerro');
   });
 });
