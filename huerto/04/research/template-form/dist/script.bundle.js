@@ -35,7 +35,7 @@
    *
    * @returns {VNode}
    */
-  const toVNode = $node => {
+  const toVDOM = $node => {
     const tagName = $node.tagName;
     const $children = $node.children;
 
@@ -45,12 +45,11 @@
     }, {});
 
     if ($children.length > 0) {
-      return vNode(tagName, attributes, Array.from($children).map(toVNode));
+      return vNode(tagName, attributes, Array.from($children).map(toVDOM));
     }
 
     return vNode(tagName, attributes, $node.textContent);
   };
-  const toH = toVNode;
 
   /**
    * Creates a new HTML Element.
@@ -67,7 +66,7 @@
     const $element = document.createElement(tagName);
     $element.innerHTML = innerHTML;
     Object.keys(attributes)
-      .filter(key => null != attributes[key]) // don't render attributes with value null/undefined
+      .filter(key => null != attributes[key]) // don't create attributes with value null/undefined
       .forEach(key => {
         if (typeof attributes[key] === 'function') {
           $element.addEventListener(key, attributes[key]);
@@ -234,7 +233,7 @@
 
     renderVegetableClassifications($form.classification);
 
-    const form = toH($form);
+    const form = toVDOM($form);
 
     mount($main, huertoForm(form), initialState);
   };

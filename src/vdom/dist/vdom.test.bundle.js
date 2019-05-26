@@ -23,7 +23,7 @@
     const $element = document.createElement(tagName);
     $element.innerHTML = innerHTML;
     Object.keys(attributes)
-      .filter(key => null != attributes[key]) // don't render attributes with value null/undefined
+      .filter(key => null != attributes[key]) // don't create attributes with value null/undefined
       .forEach(key => {
         if (typeof attributes[key] === 'function') {
           $element.addEventListener(key, attributes[key]);

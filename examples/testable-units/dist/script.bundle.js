@@ -41,7 +41,7 @@
   };
 
   const changeLabel = $button => event => {
-    $button.textContent = event.target.value;
+    $button.textContent = 'Save: ' + event.target.value;
   };
 
   const $input = document.querySelector('input');
