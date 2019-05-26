@@ -3,11 +3,11 @@
 # Table of Contents
 
 - [Introduction](01-Introduction)
-  - On Web Development
-  - [Purpose](01-Introduction#Purpose)
-  - Scope
-  - Methodology
-- Environment
+  - [About Web Development](01-Introduction#about-web-development)
+  - [Purpose](01-Introduction#purpose)
+  - [Methodology](01-Introduction#methodology)
+  - [Scope](01-Introduction#scope)
+- Coding Conventions
 - [DOM](03-DOM)
   - [Manipulating the DOM](03-DOM#manipulating-the-dom)
   - [Event-Driven Actions](03-DOM#event-driven-actions)

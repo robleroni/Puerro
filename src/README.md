@@ -2,11 +2,6 @@
 
 All the abstractions used will be here.
 
-## Creating DOM Elements
-```js
-const $button = createDOMElement('button', { type: 'button', click: _ => console.log('Clicked')}, 'Go')
-```
-
 ## Observables
 
 ```javascript
@@ -14,6 +9,13 @@ const observable = Observable('Tomato');
 
 observable.onChange((newValue, oldValue) => console.log(newValue)) // Tomato
 observable.set('Leek')                                             // Leek
+```
+
+## DOM
+
+### Creating DOM Elements
+```js
+const $button = createDOMElement('button', { type: 'button', click: _ => console.log('Clicked')}, 'Go')
 ```
 
 ## Virtual Dom
