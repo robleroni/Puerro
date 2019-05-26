@@ -10,7 +10,7 @@
 # Puerro Project
 
 Knowledge acquisition about how to build modern frontend web applications as simple as possible by researching different approaches.
-It can be used as a [knowladge base](docs) or in combination with the provided [abstractions](src).
+It can be used as a [knowledge base](docs) or in combination with the provided [abstractions](src).
 
 ## Folder Structure
 

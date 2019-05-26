@@ -126,7 +126,7 @@ Without the white spaces, there is no gap between the elements.
 > How exactly white spaces are handled can be read in the [CSS Text Module Level 3 Specification](https://www.w3.org/TR/css-text-3).
 
 This needs to be taken into consideration when creating virutal elements since white spaces are not being created.
-A possible solution would be to use an advanced templating language like JSX. 
+A possible workaround could be to use an advanced templating language like JSX. 
 
 #### JSX (JavaScript XML)
 
