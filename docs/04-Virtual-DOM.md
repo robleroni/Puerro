@@ -1,6 +1,6 @@
 # Virtual DOM
 
-When the DOM was invented in 1998, websites were built and managed differently. They did not use the DOM API to constantly modify the structure of the page. Constantly updating multiple elements on a page can get very chunky, hard to maintain and even performance intensive.
+When the DOM was invented in 1998, websites were built and managed differently. It was not common to regularly modify the structure of the page via the DOM API. Constantly updating multiple elements on a page can get very chunky, hard to maintain and even performance intensive.
 
 This is a simple example to change a table item and adding a new row:
 
@@ -54,7 +54,7 @@ Puerro has it's own implementation of the virtual DOM. [Check it out](../src/#vi
 
 ## Creating a Virtual DOM
 
-Since the virtual DOM is just an JavaScript objects, we can create it like this:
+Since the virtual DOM is just an JavaScript objects, it can be created like this:
 
 ```js
 const vDOM = {
@@ -125,7 +125,8 @@ Without the white spaces, there is no gap between the elements.
 
 > How exactly white spaces are handled can be read in the [CSS Text Module Level 3 Specification](https://www.w3.org/TR/css-text-3).
 
-This needs to be taken into consideration when creating virutal elements. A possible solution would be to use an advanced templating language like JSX. 
+This needs to be taken into consideration when creating virutal elements since white spaces are not being created.
+A possible solution would be to use an advanced templating language like JSX. 
 
 #### JSX (JavaScript XML)
 
@@ -171,11 +172,11 @@ One possible solution for this problem is to save the identity before rerenderin
 
 The real advantage of the virtual DOM can be seen when diffing is being used to only specifically update the parts and elements which have been changed.
 
-With diffing the idea is to find which virtual nodes have actually changed and only rerender the parts of the tree which are necessary. This illustration shows how diffing works when the orange node has changed and only the colored nodes which need to be updated are getting rerendered.
+With diffing the idea is to find the virtual nodes which have actually been changed and only rerender the parts of the tree which are necessary. This illustration shows how diffing works when the orange node has changed and only the colored nodes which need to be updated are getting rerendered.
 
 ![without diffing](./assets/img/diffing.png)
 
-For that to work, a diffing algorithm is needed to check the changes between two virtual DOM's and applying the changes to the actual DOM. Puerro has it's own [diffing](../src/#diffing) implementation.
+In order to make this work, a diffing algorithm is needed to check the changes between two virtual DOM's and applying the changes to the actual DOM. Puerro has it's own [diffing](../src/#diffing) implementation.
 
 ```js
 diff($parrent, newVDOM, oldVDOM);
@@ -211,7 +212,7 @@ This is problematic because the diffing algorithm.. // TODO: A good diffing algo
 
 ## Testability
 
-Using virtual elements results in a big benefit for testability. Instead of returning a DOM element and using the DOM API to test the content on the rendered view, the virtual DOM abstraction can be returned and tested with common JavaScript object approaches.
+Using virtual elements results in a big benefit for testability. Instead of returning a DOM element and using the DOM API to test the content of the rendered view, the virtual DOM abstraction can be returned and tested with common JavaScript object approaches.
 
 In case there is a specific need to test the DOM tree directly, the `render` function can be used to convert the virtual DOM into a normal DOM.
 
@@ -238,6 +239,8 @@ The described example can be found in the [Puerro Examples](../examples/vdom).
 
 The virtual DOM is useful when multiple elements need to be changed simultaneously or often.
 Instead of directly selecting and manipulating DOM nodes, the structure of the view can be written in a more descriptive way and the access to the DOM API is getting delegated to the general implementation of the virtual DOM.
+
+Some possible use cases are:
 
 - SPA (Single Page Applications) with huge DOM trees.
 - When the DOM needs to change constantly and a lot.
