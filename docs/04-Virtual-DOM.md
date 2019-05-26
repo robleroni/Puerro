@@ -155,7 +155,7 @@ This, however, doesn't differ a lot of using `$table.innerHTML`. All the nodes a
 
 This illustration shows how rerendering works, when the orange node changed but every node is getting rerenderd. 
 
-![without diffing](/Users/robin/git/IP5-Puerro/docs/assets/img/no_diffing.png)
+![without diffing](./assets/img/no_diffing.png)
 
 ### Identity Problem
 

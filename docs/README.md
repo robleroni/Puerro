@@ -14,13 +14,13 @@
   - [Testable Units](03-DOM#testable-units)
   - [Use Cases](03-DOM#use-cases)
   - [Difficulties/Restrictions](03-DOM#dfficulties-/-restrictions)
-- [Virtual DOM](04-virtual-dom)
-  - [Creating a Virtual DOM](04-virtual-dom/#creating-a-virtual-dom)
-  - [Rendering](04-virtual-dom/#rendering)
-  - [Diffing](04-virtual-dom/#diffing)
-  - [Testability](04-virtual-dom/#testability)
-  - [Use Cases](04-virtual-dom/#use-cases)
-  - [Problems/Restrictions](04-virtual-dom/#problems-/-restrictions)
+- [Virtual DOM](04-Virtual-DOM)
+  - [Creating a Virtual DOM](04-Virtual-DOM/#creating-a-virtual-dom)
+  - [Rendering](04-Virtual-DOM/#rendering)
+  - [Diffing](04-Virtual-DOM/#diffing)
+  - [Testability](04-Virtual-DOM/#testability)
+  - [Use Cases](04-Virtual-DOM/#use-cases)
+  - [Problems/Restrictions](04-Virtual-DOM/#problems-/-restrictions)
 - Components
 - MVC
 - Conclusion
