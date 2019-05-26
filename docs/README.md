@@ -13,8 +13,14 @@
   - [Event-Driven Actions](03-DOM#event-driven-actions)
   - [Testable Units](03-DOM#testable-units)
   - [Use Cases](03-DOM#use-cases)
-  - [Difficulties/Restrictions](03-DOM#Difficulties-/-Restrictions)
-- Virtual DOM
+  - [Difficulties/Restrictions](03-DOM#dfficulties-/-restrictions)
+- [Virtual DOM](04-virtual-dom)
+  - [Creating a Virtual DOM](04-virtual-dom/#creating-a-virtual-dom)
+  - [Rendering](04-virtual-dom/#rendering)
+  - [Diffing](04-virtual-dom/#diffing)
+  - [Testability](04-virtual-dom/#testability)
+  - [Use Cases](04-virtual-dom/#use-cases)
+  - [Problems/Restrictions](04-virtual-dom/#problems-/-restrictions)
 - Components
 - MVC
 - Conclusion
