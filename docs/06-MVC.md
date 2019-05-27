@@ -137,7 +137,7 @@ describe('AppController', test => {
     const controller = Controller();
     
     test('setName empty', assert => {
-    	// when
+    		// when
        	controller.setName('');
         
         // then
@@ -150,11 +150,67 @@ Since in this case the intention is only to test business logic, there is not ev
 
 ## Global State
 
-The models hold the business data (or state) of our application. What if we have multiple separate MVC constructs which share a common state, but also have a state of their own?
+The models hold the business data (or state) of our application. What if we have multiple separate MVC constructs which share a common state, but also have a state of their own? In this case MVC in the frontend gets a bit tricky. 
+
+### Client side persitance systems
+
+In the backend data is usually persisted with a session or database. With that in mind, there is an argument to be made to store the shared data in a persistence system which works on the client, for instance the `localStorage`. The downside to that is, that those systems are not reactive, which means the values they store are not observable. Observable values are essential to ensure the views get updated if a entry is changed from anywhere. That is why those systems are not an optimal solution to global state.
+
+### Global data store
+
+An alternative is to create a reactive global data store, which emits events, when data is changed. This global store has to accessible from every view and controller to retreive and set values.  
+
+The Puerro library offers the `ObservableObject` constructor function. A `ObservableObject` instance provides a data store which is subscribable on each property of the object but also the . 
+
+```js
+const myGlobalData = ObservableObject({ todos: [], userLoggedIn: false });
+
+// subscribe to todo changes
+myGlobalData.subscribe('todos', (newVal, oldVal) => { 
+	console.log(newVal); // logs todos
+});
+
+// subscribe to all changes to the store
+myGlobalData.onChange((newVal, oldVal) => {
+  console.log(newVal.userLoggedIn); // logs userLoggedIn
+});
+
+// add a todo:
+myGlobalData.set({ todos: [...myGlobalData.get().todos, 'My new todo'] });
+```
+
+The rules of MVC still apply to the global store. It can only be changed from controllers and not form anywhere else. 
+
+The downside to this approach is, that it can get confusing for a developer to figure out if data is stored in the global store or in the local model. It might seem obvious during the initial development of an application, but can be very hard to manage while maintaining a codebase with a global store.
 
 ### Multiple Views
 
-MVC does not restrict one model 
+MVC does not restrict one model and controller pair to be bound to exactly one view. A different approach to provide shared data between views is injecting a model-controller pair into multiple views. 
+
+One could for instance extend the example used in previous chapters and create a different view for the input and output of the application:
+
+```js
+const InputView = (model, controller, $form) => {
+    // View-Binding
+    $form.name.addEventListener('input', evt => controller.setName(evt.target.value));
+    
+    $form.increase.addEventListener('click', controller.increaseAge);
+    $form.decrease.addEventListener('click', controller.decreaseAge);
+}
+
+const OutputView = (model, controller, $output) => {
+    const render = () =>
+    	($output.innerText = `${model.name.get()} - ${model.age.get()}`);
+    
+    // Model-Binding
+    model.name.onChange(render);
+    model.age. onChange(render);
+}
+```
+
+With multiple views, we can split the rendering of different parts of our application, but if the application gets larger the controller can get incomprehensible.
+
+
 
 - controller
 - seperation of concerns
