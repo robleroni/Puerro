@@ -1,4 +1,4 @@
-# Introducing State
+# State Management
 
 So far, the state of the application lived inside the view - the DOM.
 

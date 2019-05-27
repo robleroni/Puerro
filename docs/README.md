@@ -21,6 +21,6 @@
   - [Testability](04-Virtual-DOM#testability)
   - [Use Cases](04-Virtual-DOM#use-cases)
   - [Problems/Restrictions](04-Virtual-DOM#problems-/-restrictions)
-- Components
+- State Management
 - MVC
 - Conclusion
