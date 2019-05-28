@@ -2,15 +2,6 @@
 
 All the abstractions used will be here.
 
-## Observables
-
-```javascript
-const observable = Observable('Tomato');
-
-observable.onChange((newValue, oldValue) => console.log(newValue)) // Tomato
-observable.set('Leek')                                             // Leek
-```
-
 ## DOM
 
 ### Creating DOM Elements
@@ -19,6 +10,8 @@ const $button = createDOMElement('button', { type: 'button', click: _ => console
 ```
 
 ## Virtual Dom
+
+### Creating Virtual DOM Elements
 
 ```javascript
 const vDOM = h('div', {}, 
@@ -31,7 +24,11 @@ document.body.prepend(render(vDOM));
 
 ### Diffing
 
-## Components
+## Rendering
+
+2 of 8 nodes https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
+
+## State Managmenet
 
 ```javascript
 const vDOM = ({ state, setState }) =>
@@ -45,3 +42,12 @@ mount(document.body, vDOM, { value: '' }, true);
 ```
 
 ## MVC
+
+### Observables
+
+```javascript
+const observable = Observable('Tomato');
+
+observable.onChange((newValue, oldValue) => console.log(newValue)) // Tomato
+observable.set('Leek')                                             // Leek
+```

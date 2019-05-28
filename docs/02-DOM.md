@@ -48,7 +48,7 @@ As en example let's create an HTML file:
 
 The browser will parse this file to the following DOM:
 
-<img alt='DOM' src='assets/img/dom.png' width=300px>
+<img alt='DOM' src='./assets/img/dom.png' width=300px>
 
 This DOM can now be manipulated via the `document` interface in JavaScript:
 

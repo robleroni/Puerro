@@ -29,7 +29,6 @@ Amongst other reasons, this is why the modern way to develop web applications is
 
 Client-side scripting allows for **Ajax** calls. With these the browser can asynchronously load only the data needed and dynamically change the web page with JavaScript. This provides a much better user experience as the page doesn't need to reload completely.
 
-
 ## Purpose
 
 Nowadays, most web UI's depend on front-end frameworks/libraries (like Angular, Vue or React). These technologies are powerful, but they also lock programmers in by making it difficult to have a presentation layer independent of the rendering technology.
@@ -48,13 +47,13 @@ The goal of this project is to explore new, unconventional, and unorthodox appro
 
 The purpose of this project is to research and evaluate frontend approaches which can be done in different ways. One of the main concerns is, that the different ideas are not only looked at on an abstract level far from reality. That is why the main research for this project is done as a project simulation. This simulation is separated into iterations with ever increasing requirements for a fictional web application.
 
-With each iteration the imaginary customer communicates requirements to the developer which is implementing them. With the specification in place, multiple approaches are evaluated and one is chosen to actually implement the customers whishes. 
+With each iteration the imaginary customer communicates requirements to the developer which is implementing them. With the specification in place, multiple approaches are evaluated and one is chosen to actually implement the customers whishes.
 
-The claims made during this project documentation would lose their significance with a project that is too specific. That is why the outcome of the fictional project is essentially a CRUD (Create, Read, Update, Delete) application with different views. Implementing CRUD's is also one of the main purposes of many of the modern frontend frameworks and generally a good use case to test the hypotheses made during the project. 
+The claims made during this project documentation would lose their significance with a project that is too specific. That is why the outcome of the fictional project is essentially a CRUD (Create, Read, Update, Delete) application with different views. Implementing CRUD's is also one of the main purposes of many of the modern frontend frameworks and generally a good use case to test the hypotheses made during the project.
 
 ## Scope
 
-To make our examples and research work in real-life scenarios there would be a need for backend systems to store data and handle business logic. The scope of this project, however, is limited to client-side scripting. This restriction is put in place to ensure, the project does not scratch the surface of different parts of web development, but to dive deep into the specific world of frontend development. 
+To make our examples and research work in real-life scenarios there would be a need for backend systems to store data and handle business logic. The scope of this project, however, is limited to client-side scripting. This restriction is put in place to ensure, the project does not scratch the surface of different parts of web development, but to dive deep into the specific world of frontend development.
 
 To explore how JavaScript and HTML work and interact with each other in depth, styling, specifically CSS is also considered out of scope.
 
@@ -64,3 +63,54 @@ Build tooling and browser compatibility is a big part in todays frontend world. 
 - CSS3
 - ES6 (JavaScript version)
 
+## Coding Conventions
+
+### Testability
+
+Since the code for the web behaves differently for each browser and version, it is especially important to write test cases. At the same time, the technologies are changing constantly in the web community. Therefore, we need a way to always make sure that the code is running as it is supposed to.
+
+There are many different types of testing. We want to use unit testing and functional (frontend) testing.
+
+- Unit Testing: To test the created abstractions (developer-view)
+- Functional (frontend-only) Testing: To test the Huerto iterations for its functionality (customer-view)
+
+For the actual testing, there are many different tools available to support the process. These are powerful but also complicated. That is why we decided to write our own little [testing utility](../../src/test/test.js).
+
+Basically, we just need a way to compare two values for equality, report the result and give some detailed information in case of failure. Most of our tests will run in the browser and are using the DOM.
+With this testing utility, we are using the executional context of the tests simultaneously for the final report.
+
+This also brings the advantage of being able to run the tests with a desired browser and check if it still works.
+
+### Bundling
+
+In JavaScript, the code to be executed needs to be loaded into the same namespace. This can create name clashes and comes with some safety issues, as suddenly external code can run a module's internal methods.
+
+Until ES5 this problem has been handled with the _Revealing Module Pattern_ which uses IIFE's and its function scope to hide the internal variables and methods. Since ES6, JavaScript supports modules which can be exported and imported.
+
+In this project we presuppose an ES6 environment and use the ES6 modules.
+
+These modules, however, are loaded using the _Same-Origin_ policy. This basically means that a web server is needed to serve the files. To develop locally, we would need to run a local web server or use a bundler.
+
+- The local web server would add the needed headers to comply with the _Same-Origin_ policy but could create cashing problems.
+- The bundler would create IIFE's out of the modules and put it all together in one file. With this approach name clashes could appear.
+
+We decided to use the bundler _rollupjs_ to allow us to develop locally without the use of a web server.
+
+We also want to provide the easiest possible way to interact with our findings. Therefore, we decided to go against the general recommendation of not checking in generated artefacts. This brings the advantage that our GitHub project can be cloned and used, without the need to generate the bundles first.
+
+### JSDoc
+
+To provied a better code understanding, we use the markup language JSDoc to annotate our JavaScript files. Using JSDoc comments, we describe the interface and usage of our functions. As with Javadoc, JSDoc can be used to generate a documentation in accessible formats like HTML. Another powerful feature of JSDoc is that in in modern text editors (e.g. VS Code or WebStorm) the type of the parameters can be taken into consideration. This allows to use a better intellisense and provides a way for checking types.
+
+### Variables Notation
+
+To better differentiate between our variables, we prepend them with the following prefixes:
+
+`$` - when referring to real DOM's, e.g. `$div`
+`v` - when referring to virtual DOM's, e.g. `vDiv`
+
+In case variables are unused and can be ignored, we wil simply use an underscore to signmalize that it is _throwawayable_.
+
+```js
+$element.addEventListener('click', _ => console.log('clicked'));
+```

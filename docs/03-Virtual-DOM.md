@@ -90,7 +90,7 @@ const vDOM = h('tbody', {},
 
 > `h` stands for _hyperscript_ and is a common abbreviation for building virtual elements.
 
-Since the virtual DOM will be modified a lot, it is a good practice to have a function to create the virtual DOM with the changing parts as parameters.
+Since the virtual DOM will be modified frequently, it is a good practice to have a function to create the virtual DOM with the changing parts as parameters.
 
 ```js
 const createVDOM = items => h('tbody', {}, 
