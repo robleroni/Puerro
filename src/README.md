@@ -30,6 +30,8 @@ document.body.prepend(render(vDOM));
 
 ## State Managmenet
 
+## Mounting
+
 ```javascript
 const vDOM = ({ state, setState }) =>
     h("div", {},

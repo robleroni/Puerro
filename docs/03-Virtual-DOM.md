@@ -250,6 +250,7 @@ Some possible use cases are:
 
 - No direct DOM manipulations.
 - Declarative programming style.
+- Reusability / less redundancy.
 - Better testability.
 
 ## Problems / Restrictions

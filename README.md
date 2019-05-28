@@ -2,9 +2,10 @@
   <img src='assets/img/puerro.png' width='100'>
 </p>
 <p align='center'>
-  <img src='https://img.shields.io/badge/License-MIT-blue.svg'>
-  <img src='https://david-dm.org/robin-fhnw/IP5-Puerro.svg'>
-  <img src='https://travis-ci.org/robin-fhnw/IP5-Puerro.svg?branch=master'>
+  <img alt='mit' src='https://img.shields.io/badge/License-MIT-blue.svg'>
+  <img alt='dependnecies' src='https://david-dm.org/robin-fhnw/IP5-Puerro.svg'>
+  <img alt='build' src='https://travis-ci.org/robin-fhnw/IP5-Puerro.svg?branch=master'>
+  <img alt='npm' src='https://img.shields.io/npm/dt/puerro.svg'>
 </p>
 
 # Puerro Project
