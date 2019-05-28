@@ -33,12 +33,32 @@ npm install puerro
 ### Example
 
 ```js
-import { Observable, render, h } from 'puerro';
+import { Observable } from "puerro";
 
-const observable = Observable();
+const Model = ({ name = '' } = {}) => ({ name: Observable(name) });
 
-observable.onChange(value => document.body.prepend(render(h('p', {}, value))));
-observable.set('Puerro');
+const View = (model, controller, $input, $output) => {
+  const render = () => ($output.textContent = model.name.get().length);
+
+  // View-Binding
+  $input.addEventListener('input', event => controller.setName(event.target.value));
+
+  // Model-Binding
+  model.name.onChange(render);
+};
+
+const Controller = model => {
+  const setName = name => model.name.set(name);
+  return { setName };
+};
+
+// Usage
+const model = Model();
+const controller = Controller(model);
+const view = View(model, controller,
+  document.querySelector('input'),
+  document.querySelector('output')
+);
 ```
 
 ## Development
