@@ -53,9 +53,9 @@ const Controller = model => {
 };
 
 // Usage
-const model = Model();
+const model      = Model();
 const controller = Controller(model);
-const view = View(model, controller,
+const view       = View(model, controller,
   document.querySelector('input'),
   document.querySelector('output')
 );
