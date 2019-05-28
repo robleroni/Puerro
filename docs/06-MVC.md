@@ -96,6 +96,8 @@ const Controller = model => {
 
 If the MVC architecture is combined with a revealing model pattern like in this example, we can also use private functions like `setAge`. With this the interface of the controller is clearly defined and actions exposed to the view can be limited.
 
+The controller is also the only place in MVC where side effects (for instance API calls) should be implemented.
+
 ### Bringing it all together
 
 The Model, View and Controller can be separated in to their own files and initialized in a central JavaScript file which is requested by the HTML. 
@@ -150,7 +152,7 @@ Since in this case the intention is only to test business logic, there is not ev
 
 ## Global State
 
-The models hold the business data (or state) of our application. What if we have multiple separate MVC constructs which share a common state, but also have a state of their own? In this case MVC in the frontend gets a bit tricky. 
+The models hold the business data (or state) of our application. What if we have multiple separate MVC constructs which share a common state, but also have a state of their own? In this case MVC in the frontend gets a bit tricky but there are a few ways to share state between controllers and models. 
 
 ### Client side persitance systems
 
@@ -163,6 +165,8 @@ An alternative is to create a reactive global data store, which emits events, wh
 The Puerro library offers the `ObservableObject` constructor function. A `ObservableObject` instance provides a data store which is subscribable on each property of the object but also the . 
 
 ```js
+import { ObservableObject } from 'puerro';
+
 const myGlobalData = ObservableObject({ todos: [], userLoggedIn: false });
 
 // subscribe to todo changes
@@ -210,15 +214,25 @@ const OutputView = (model, controller, $output) => {
 
 With multiple views, we can split the rendering of different parts of our application, but if the application gets larger the controller can get incomprehensible.
 
+## Use Cases
 
+MVC can be used in many different situations but it shines the most, in applications with a high amount of business logic. Since the business logic only lives in the controllers, maintaining and extending this logic becomes way easier than with other approaches. This also increases the overall stability of a system.
 
-- controller
-- seperation of concerns
-- cycle
-- bidirectional vs unidirectional
+- Medium to large data driven applications.
+- Applications which need to have a high maintainability.
+- Businesslogic heavy applications.
 
-mvc only concept: 
-- possible to combine with dom manipulation, vDom/Components
+### Advantages
 
-- restrictions:
-- global store
+- Separation of concerns.
+- Businesslogic and view are independently testable.
+- High maintainability.
+- Minimal amount of redundant code.
+
+## Problems / Restrictions
+
+MVC requires quite a bit of boilerplate code, as well as some sort of observable. This can be an overkill for small applications and interactions. 
+
+- Dependencies.
+- Boilerplate code.
+- Handling global state is hard.
