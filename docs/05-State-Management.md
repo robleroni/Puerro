@@ -86,9 +86,24 @@ Since the state is not mutated directly but set through the `setState` function,
 
 ## Testabilty
 
+Since the Puerro implementation of the state management uses the vDOM, the same advantages in testability apply to this chapter as well.
+
+The described example can be found in the [Puerro Examples](../examples/state-management).
+
 ## Use Cases
 
-State management becomes relevant pretty quickly
+State management becomes relevant pretty quickly. As soon as data not only gets displayed but also has to be changed and stored, the need for some sort of state managment arises.
+
+- Applications which need to store data on the client side.
+- Reactive applications which work with user interactions.
+
+### Advantages
+
+This list is in reference to the Puerro implementation of state management.
+
+- Automatic rerendering.
+- Small amount of boilerplate code.
+- 
 
 ##Problems / Restrictions
 

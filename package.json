@@ -1,6 +1,6 @@
 {
   "name": "puerro",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "Keeping the Web as Lean as a Leek",
   "main": "dist/puerro.js",
   "module": "dist/puerro.module.js",
