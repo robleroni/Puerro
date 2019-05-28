@@ -35,20 +35,20 @@ npm install puerro
 ```js
 import { Observable } from "puerro";
 
-const Model = ({ name = '' } = {}) => ({ name: Observable(name) });
+const Model = ({ text = '' } = {}) => ({ text: Observable(text) });
 
 const View = (model, controller, $input, $output) => {
-  const render = () => ($output.textContent = model.name.get().length);
+  const render = () => ($output.textContent = model.text.get().length);
 
   // View-Binding
   $input.addEventListener('input', event => controller.setName(event.target.value));
 
   // Model-Binding
-  model.name.onChange(render);
+  model.text.onChange(render);
 };
 
 const Controller = model => {
-  const setName = name => model.name.set(name);
+  const setName = text => model.text.set(text);
   return { setName };
 };
 
