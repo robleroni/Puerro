@@ -61,7 +61,7 @@ const view       = View(model, controller,
 );
 ```
 
-## Development
+## Developing
 
 To install and work on Puerro locally:
 
@@ -71,3 +71,14 @@ cd Puerro
 npm install     # install the dev dependency 'rollup'
 npm start       # bundle the scripts and watch for changes
 ```
+
+## Testing
+
+The test results can be viewed [live](https://robin-fhnw.github.io/IP5-Puerro/test/AllTests.html)!
+
+To run and display the tests locally:
+```bash
+open test/AllTests.html
+```
+
+
