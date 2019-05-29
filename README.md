@@ -78,7 +78,7 @@ The test results can be viewed [live](https://robin-fhnw.github.io/IP5-Puerro/te
 
 To run and display the tests locally:
 ```bash
-open test/AllTests.html
+npm test
 ```
 
 
