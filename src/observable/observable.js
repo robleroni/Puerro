@@ -46,7 +46,11 @@ const ObservableObject = object => {
     set:       newObject       => notify({ ...object, ...newObject }),
     push:      (key, value)    => notify({ ...object, ...{ [key]: value } }),
     remove:    key             => notify({ ...object, ...{ [key]: undefined } }),
-    replace:   newObject       => notify(newObject),
+    replace:   newObject       => {
+      const emptyObject = Object.assign({}, object);
+      Object.keys(emptyObject).forEach(key => emptyObject[key] = undefined);
+      notify({ ...emptyObject, ...newObject});
+    },
     onChange:  callback        => { listeners.push(callback); callback(object, object); },
     subscribe: (key, callback) => {
       subscribers[key] = subscribers[key] || [];
