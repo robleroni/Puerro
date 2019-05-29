@@ -1,79 +1,148 @@
 import { describe } from '../test/test';
-import { Observable, ObservableList } from './observable';
+import { Observable, ObservableList, ObservableObject } from './observable';
 
-describe('observable', test => {
-  test('value', assert => {
-    const obs = Observable('');
+describe('Observables', test => {
+  test('Observable Value', assert => {
+    // given
+    const observable1 = Observable('');
+    const observable2 = Observable('');
 
-    //  initial state
-    assert.is(obs.get(), '');
+    let newValue1, oldValue1, newValue2, oldValue2;
+    observable1.onChange((newVal, oldVal) => { newValue1 = newVal; oldValue1 = oldVal; });
+    observable2.onChange((newVal, oldVal) => { newValue2 = newVal; oldValue2 = oldVal; });
+    
+    // initial state
+    assert.is(observable1.get(), '');
 
-    //  subscribers get notified
-    let found;
-    obs.onChange(val => (found = val));
-    obs.set('firstValue');
-    assert.is(found, 'firstValue');
+    // when  
+    observable1.set('Puerro');
 
-    //  value is updated
-    assert.is(obs.get(), 'firstValue');
+    // then 
+    assert.is(newValue1,         'Puerro'); // subscribers got notified  
+    assert.is(oldValue1,         '');       // subscribers got notified  
+    assert.is(observable1.get(), 'Puerro'); // value has updated
 
-    //  it still works when the receiver symbols changes
-    const newRef = obs;
-    newRef.set('secondValue');
-    // listener updates correctly
-    assert.is(found, 'secondValue');
+    // when the receiver symbol changes
+    const newRef = observable1;
+    newRef.set('Huerto');
 
-    //  Attributes are isolated, no "new" needed
-    const secondAttribute = Observable('');
+    // then listener still updates correctly
+    assert.is(newValue1,         'Huerto'); // subscribers got notified  
+    assert.is(oldValue1,         'Puerro'); // subscribers got notified  
+    assert.is(observable1.get(), 'Huerto'); // value has updated
 
-    //  initial state
-    assert.is(secondAttribute.get(), '');
+    // when
+    observable2.set('Puerro');
 
-    //  subscribers get notified
-    let secondFound;
-    secondAttribute.onChange(val => (secondFound = val));
-    secondAttribute.set('thirdValue');
-    assert.is(found, 'secondValue');
-    assert.is(secondFound, 'thirdValue');
-
-    //  value is updated
-    assert.is(secondAttribute.get(), 'thirdValue');
-
-    // subsribers get notified with access on old value
-    let newFound, oldFound;
-    secondAttribute.onChange((newVal, oldVal) => {
-      newFound = newVal;
-      oldFound = oldVal;
-    });
-    secondAttribute.set('fourthValue');
-    assert.is(newFound, 'fourthValue');
-    assert.is(oldFound, 'thirdValue');
-
-    //  value is updated
-    assert.is(secondAttribute.get(), 'fourthValue');
+    // then subscribers get notified
+    assert.is(newValue1,         'Huerto');
+    assert.is(newValue2,         'Puerro');
+    assert.is(oldValue1,         'Puerro');
+    assert.is(oldValue2,         '');
+    assert.is(observable2.get(), 'Puerro'); //  value is updated
   });
 
-  test('list', assert => {
+  test('Observable List', assert => {
+    // given
     const raw = [];
     const list = ObservableList(raw); // decorator pattern
 
-    assert.is(list.count(), 0);
-    let addCount = 0;
-    let removeCount = 0;
-    list.onAdd(item => (addCount += item));
-    list.add(1);
-    assert.is(addCount, 1);
-    assert.is(list.count(), 1);
-    assert.is(raw.length, 1);
+    let addCount = 0, removeCount = 0;
+    list.onAdd   (item => (addCount    += item));
+    list.onRemove(item => (removeCount += item));
 
+    // initial
+    assert.is(list.count(), 0);
+    assert.is(raw.length,   0);
+
+    // when
+    list.add(1);
+
+    // then
     const index = list.indexOf(1);
-    assert.is(index, 0);
+    assert.is(addCount,        1);
+    assert.is(list.count(),    1);
+    assert.is(raw.length,      1);
+    assert.is(index,           0);
     assert.is(list.get(index), 1);
 
-    list.onRemove(item => (removeCount += item));
+    // when
     list.remove(1);
-    assert.is(removeCount, 1);
+
+    // then
+    assert.is(removeCount,  1);
     assert.is(list.count(), 0);
-    assert.is(raw.length, 0);
+    assert.is(raw.length,   0);
+  });
+
+  test('Observable Object', assert => {
+    // given
+    const object = ObservableObject({}); // decorator pattern
+
+    let newObject, oldObject, newValue, oldValue;
+    object.onChange (         (newObj, oldObj) => { newObject = newObj; oldObject = oldObj; });
+    object.subscribe('value', (newVal, oldVal) => { newValue  = newVal; oldValue  = oldVal; });
+    
+    // initial
+    assert.objectIs(object.get(), {});
+    assert.objectIs(oldObject,    {});
+    assert.objectIs(newObject,    {});
+    assert.is      (oldValue,     undefined);
+    assert.is      (newValue,     undefined);
+
+    // when
+    object.set({ value: 1 })
+
+    // then
+    assert.objectIs(oldObject,    {});
+    assert.objectIs(newObject,    { value: 1 });
+    assert.is      (oldValue,     undefined);
+    assert.is      (newValue,     1);
+
+    // when
+    object.push('text', 'Puerro');
+
+    // then
+    assert.objectIs(oldObject,    { value: 1 });
+    assert.objectIs(newObject,    { value: 1, text: 'Puerro' });
+    assert.is      (oldValue,     undefined);
+    assert.is      (newValue,     1);
+
+    // when
+    object.replace({ text: 'Huerto' });
+
+    // then
+    assert.objectIs(oldObject,    { value: 1,         text: 'Puerro' });
+    assert.objectIs(newObject,    { value: undefined, text: 'Huerto' });
+    assert.is      (oldValue,     1);
+    assert.is      (newValue,     undefined);
+
+    // when
+    object.set({ value: 2 });
+
+    // then
+    assert.objectIs(oldObject,    { value: undefined, text: 'Huerto' });
+    assert.objectIs(newObject,    { value: 2,         text: 'Huerto' });
+    assert.is      (oldValue,     undefined);
+    assert.is      (newValue,     2);
+
+    // when
+    object.set({ value: 1 });
+
+    // then
+    assert.objectIs(oldObject,    { value: 2, text: 'Huerto' });
+    assert.objectIs(newObject,    { value: 1, text: 'Huerto' });
+    assert.is      (oldValue,     2);
+    assert.is      (newValue,     1);
+
+    // when
+    object.remove('value');
+
+    // then
+    assert.objectIs(object.get(), newObject);
+    assert.objectIs(oldObject,    { value: 1,         text: 'Huerto' });
+    assert.objectIs(newObject,    { value: undefined, text: 'Huerto' });
+    assert.is      (oldValue,     1);
+    assert.is      (newValue,     undefined);
   });
 });

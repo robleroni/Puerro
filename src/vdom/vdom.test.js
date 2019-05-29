@@ -1,7 +1,7 @@
 import { describe } from '../test/test';
-import { changed, createDomElement } from './vdom';
+import { h, render, diff, mount, changed, createDomElement } from './vdom';
 
-describe('vdom', test => {
+describe('DOM', test => {
 
   test('createDomElement with plain text', assert => {
     // given
@@ -43,8 +43,43 @@ describe('vdom', test => {
     // then
     assert.is($el.getAttribute('style'), 'color: green');
   });
+});
 
-  test('nodeChanged', assert => {
+describe('Virtual DOM', test => {
+
+  test('render', assert => {
+    // given
+    const vDOM = h('div', {}, h('h1', {id: 'puerro'}, 'Puerro'));
+
+    // when
+    const $dom = render(vDOM);
+
+    // then
+    assert.is($dom.innerHTML, '<h1 id="puerro">Puerro</h1>');
+  })
+
+  test('mount', assert => {
+    // given
+    const $root = document.createElement('main');
+    const state = { counter: 1 };
+    const view = ({state, setState}) => 
+      h('div', {}, 
+        h('button', { click: _ => setState({counter: state.counter+2 })}), 
+        h('p', {}, state.counter));
+
+    mount($root, view, state);
+
+    // initial state
+    assert.is($root.innerHTML, '<div><button></button><p>1</p></div>')
+
+    // when
+    $root.querySelector('button').click();
+
+    // then
+    assert.is($root.innerHTML, '<div><button></button><p>3</p></div>');
+  })
+
+  test('diffing - nodeChanged', assert => {
     // given
     let node1 = 1,
       node2 = 1;
@@ -77,7 +112,7 @@ describe('vdom', test => {
     assert.is(result, false);
   });
 
-  test('attributesChanged', assert => {
+  test('diffing - attributesChanged', assert => {
     // given
     let node1 = { attributes: { test: 1 } };
     let node2 = { attributes: { test: 1 } };

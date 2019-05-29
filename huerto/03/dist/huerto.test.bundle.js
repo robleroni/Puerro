@@ -34,41 +34,54 @@
     return $element;
   };
 
-  function Assert() {
-    const ok = [];
-    return {
-      getOk: () => ok,
-      is: (actual, expected) => {
-        const result = actual === expected;
-        if (!result) {
-          console.log(`expected "${expected}" but was "${actual}"`);
-          try {
-            throw Error();
-          } catch (err) {
-            console.log(err);
-          }
-        }
-        ok.push(result);
-      },
-      true: cond => ok.push(cond),
-    };
+  /**
+   * Adds a testGroup to the test report
+   *
+   * @param {String} name
+   * @param {Function} callback
+   */
+  function describe(name, callback) {
+    reportGroup(name);
+    return callback(test);
   }
 
   /**
-   * Reports an executed test to the DOM
+   * Adds and executes a test.
    *
-   * @param {string} origin
-   * @param {Array<bool>} ok
+   * @param {String} name
+   * @param {Function} callback
    */
-  function report(origin, ok) {
-    const style = `
-    color: ${ok.every(elem => elem) ? 'green' : 'red'};
-    padding-left: 20px;
-  `;
-    const $report = createDomElement('div', { style },`
-    ${ok.filter(elem => elem).length}/${ok.length} Tests in ${origin} ok.
-  `);
-    document.body.appendChild($report);
+  function test(name, callback) {
+    const assert = Assert();
+    callback(assert);
+    report(name, assert.getOk());
+  }
+
+
+  function Assert() {
+    const ok = [];
+
+    const assert = (actual, expected, result)=> {
+      if (!result) {
+        console.log(`expected "${expected}" but was "${actual}"`);
+        try {
+          throw Error();
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      ok.push(result);
+    };
+
+    return {
+      getOk: () => ok,
+      is: (actual, expected) => assert(actual, expected, actual === expected),
+      objectIs: (actual, expected) =>
+        assert(actual, expected,
+          Object.entries(actual).toString() === Object.entries(expected).toString()
+        ),
+      true: cond => ok.push(cond),
+    };
   }
 
   /**
@@ -85,27 +98,22 @@
     document.body.appendChild($reportGroup);
   }
 
-  /**
-   * Adds and executes a test.
-   *
-   * @param {String} name
-   * @param {Function} callback
-   */
-  function test(name, callback) {
-    const assert = Assert();
-    callback(assert);
-    report(name, assert.getOk());
-  }
 
   /**
-   * Adds a testGroup to the test report
+   * Reports an executed test to the DOM
    *
-   * @param {String} name
-   * @param {Function} callback
+   * @param {string} origin
+   * @param {Array<bool>} ok
    */
-  function describe(name, callback) {
-    reportGroup(name);
-    return callback(test);
+  function report(origin, ok) {
+    const style = `
+    color: ${ok.every(elem => elem) ? 'green' : 'red'};
+    padding-left: 20px;
+  `;
+    const $report = createDomElement('div', { style },`
+    ${ok.filter(elem => elem).length}/${ok.length} Tests in ${origin} ok.
+  `);
+    document.body.appendChild($report);
   }
 
   const vegetableClassifications = [

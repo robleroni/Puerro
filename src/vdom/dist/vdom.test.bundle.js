@@ -9,6 +9,26 @@
    */
 
   /**
+   * @typedef {{ tagName: string, attributes: object, children: any  }} VNode
+   */
+
+  /**
+   * Creates a node object which can be rendered
+   *
+   * @param {string} tagName
+   * @param {object} attributes
+   * @param {VNode[] | VNode | any} nodes
+   *
+   * @returns {VNode}
+   */
+  const vNode = (tagName, attributes = {}, ...nodes) => ({
+    tagName,
+    attributes: null == attributes ? {} : attributes,
+    children: null == nodes ? [] : [].concat(...nodes), // collapse nested arrays.
+  });
+  const h = vNode;
+
+  /**
    * Creates a new HTML Element.
    * If the attribute is a function it will add it as an EventListener.
    * Otherwise as an attribute.
@@ -35,6 +55,94 @@
   };
 
   /**
+   * renders a given node object
+   *
+   * @param {import('./vdom').VNode} node
+   *
+   * @returns {HTMLElement}
+   */
+  const render = node => {
+    if (null == node) {
+      return document.createTextNode('');
+    }
+    if (typeof node === 'string' || typeof node === 'number') {
+      return document.createTextNode(node);
+    }
+    const $element = createDomElement(node.tagName, node.attributes);
+    node.children.forEach(c => $element.appendChild(render(c)));
+    return $element;
+  };
+
+  /**
+   * Renders given stateful view into given container
+   *
+   * @param {HTMLElement} $root
+   * @param {function(): import('./vdom').VNode} view
+   * @param {object} state
+   * @param {boolean} diffing
+   */
+  const mount = ($root, view, state, diffing = true) => {
+    const params = {
+      get state() {
+        return state;
+      },
+      setState,
+    };
+
+    let vDom = view(params);
+    $root.prepend(render(vDom));
+
+    function setState(newState) {
+      if (typeof newState === 'function') {
+        state = { ...state, ...newState(state) };
+      } else {
+        state = { ...state, ...newState };
+      }
+      refresh();
+    }
+
+    function refresh() {
+      const newVDom = view(params);
+
+      if (diffing) {
+        diff($root, newVDom, vDom);
+      } else {
+        $root.replaceChild(render(newVDom), $root.firstChild);
+      }
+
+      vDom = newVDom;
+    }
+  };
+
+  /**
+   * Compares two VDOM nodes and applies the differences to the dom
+   *
+   * @param {HTMLElement} $parent
+   * @param {import('./vdom').VNode} oldNode
+   * @param {import('./vdom').VNode} newNode
+   * @param {number} index
+   */
+  const diff = ($parent, newNode, oldNode, index = 0) => {
+    if (null == oldNode) {
+      $parent.appendChild(render(newNode));
+      return;
+    }
+    if (null == newNode) {
+      $parent.removeChild($parent.childNodes[index]);
+      return;
+    }
+    if (changed(oldNode, newNode)) {
+      $parent.replaceChild(render(newNode), $parent.childNodes[index]);
+      return;
+    }
+    if (newNode.tagName) {
+      newNode.children.forEach((newNode, i) => {
+        diff($parent.childNodes[index], newNode, oldNode.children[i], i);
+      });
+    }
+  };
+
+  /**
    * compares two VDOM nodes and returns true if they are different
    *
    * @param {VNode} node1
@@ -58,25 +166,70 @@
     return nodeChanged || attributesChanged;
   };
 
+  /**
+   * Adds a testGroup to the test report
+   *
+   * @param {String} name
+   * @param {Function} callback
+   */
+  function describe(name, callback) {
+    reportGroup(name);
+    return callback(test);
+  }
+
+  /**
+   * Adds and executes a test.
+   *
+   * @param {String} name
+   * @param {Function} callback
+   */
+  function test(name, callback) {
+    const assert = Assert();
+    callback(assert);
+    report(name, assert.getOk());
+  }
+
+
   function Assert() {
     const ok = [];
+
+    const assert = (actual, expected, result)=> {
+      if (!result) {
+        console.log(`expected "${expected}" but was "${actual}"`);
+        try {
+          throw Error();
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      ok.push(result);
+    };
+
     return {
       getOk: () => ok,
-      is: (actual, expected) => {
-        const result = actual === expected;
-        if (!result) {
-          console.log(`expected "${expected}" but was "${actual}"`);
-          try {
-            throw Error();
-          } catch (err) {
-            console.log(err);
-          }
-        }
-        ok.push(result);
-      },
+      is: (actual, expected) => assert(actual, expected, actual === expected),
+      objectIs: (actual, expected) =>
+        assert(actual, expected,
+          Object.entries(actual).toString() === Object.entries(expected).toString()
+        ),
       true: cond => ok.push(cond),
     };
   }
+
+  /**
+   * Creates group heading, to group tests together
+   *
+   * @param {string} name
+   */
+  function reportGroup(name) {
+    const style = `
+    font-weight: bold;
+    margin-top: 10px;
+  `;
+    const $reportGroup = createDomElement('div', { style }, `Test ${name}`);
+    document.body.appendChild($reportGroup);
+  }
+
 
   /**
    * Reports an executed test to the DOM
@@ -95,44 +248,7 @@
     document.body.appendChild($report);
   }
 
-  /**
-   * Creates group heading, to group tests together
-   *
-   * @param {string} name
-   */
-  function reportGroup(name) {
-    const style = `
-    font-weight: bold;
-    margin-top: 10px;
-  `;
-    const $reportGroup = createDomElement('div', { style }, `Test ${name}`);
-    document.body.appendChild($reportGroup);
-  }
-
-  /**
-   * Adds and executes a test.
-   *
-   * @param {String} name
-   * @param {Function} callback
-   */
-  function test(name, callback) {
-    const assert = Assert();
-    callback(assert);
-    report(name, assert.getOk());
-  }
-
-  /**
-   * Adds a testGroup to the test report
-   *
-   * @param {String} name
-   * @param {Function} callback
-   */
-  function describe(name, callback) {
-    reportGroup(name);
-    return callback(test);
-  }
-
-  describe('vdom', test => {
+  describe('DOM', test => {
 
     test('createDomElement with plain text', assert => {
       // given
@@ -174,8 +290,43 @@
       // then
       assert.is($el.getAttribute('style'), 'color: green');
     });
+  });
 
-    test('nodeChanged', assert => {
+  describe('Virtual DOM', test => {
+
+    test('render', assert => {
+      // given
+      const vDOM = h('div', {}, h('h1', {id: 'puerro'}, 'Puerro'));
+
+      // when
+      const $dom = render(vDOM);
+
+      // then
+      assert.is($dom.innerHTML, '<h1 id="puerro">Puerro</h1>');
+    });
+
+    test('mount', assert => {
+      // given
+      const $root = document.createElement('main');
+      const state = { counter: 1 };
+      const view = ({state, setState}) => 
+        h('div', {}, 
+          h('button', { click: _ => setState({counter: state.counter+2 })}), 
+          h('p', {}, state.counter));
+
+      mount($root, view, state);
+
+      // initial state
+      assert.is($root.innerHTML, '<div><button></button><p>1</p></div>');
+
+      // when
+      $root.querySelector('button').click();
+
+      // then
+      assert.is($root.innerHTML, '<div><button></button><p>3</p></div>');
+    });
+
+    test('diffing - nodeChanged', assert => {
       // given
       let node1 = 1,
         node2 = 1;
@@ -208,7 +359,7 @@
       assert.is(result, false);
     });
 
-    test('attributesChanged', assert => {
+    test('diffing - attributesChanged', assert => {
       // given
       let node1 = { attributes: { test: 1 } };
       let node2 = { attributes: { test: 1 } };
