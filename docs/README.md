@@ -21,6 +21,12 @@
   - [Testability](03-Virtual-DOM.md#testability)
   - [Use Cases](03-Virtual-DOM.md#use-cases)
   - [Problems/Restrictions](03-Virtual-DOM.md#problems-/-restrictions)
-- State Management
-- MVC
+- [State Management](05-State-Management.md)
+- [MVC](06-MVC.md)
+  - [The MVC Way](06-MVC.md#the-mvc-way)
+  - [Bidirectional Binding](06-MVC.md#bidirectional-binding)
+  - [Global State](06-MVC.md#global-state)
+  - [Testability](06-MVC.md#testability)
+  - [Use Cases](06-MVC.md#use-cases)
+  - [Problems/Restrictions](06-MVC.md#problems--restrictions)
 - Conclusion

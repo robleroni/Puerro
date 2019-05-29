@@ -8,15 +8,15 @@ In previous chapters the state alway lived inside the view and was not used furt
 
 ```js
 const setName = evt => {
-		// what to do with the new name?
+	// what to do with the new name?
 } 
 
 const vDOM = h('form', { },
- 		h('input', { name: 'name', onInput: setName }),
+ 	h('input', { name: 'name', onInput: setName }),
 );
 
 const render = () => {
-		// handle rendering; in this case with the VDOM
+	// handle rendering; in this case with the VDOM
 }
 ```
 
@@ -29,7 +29,7 @@ The simplest way to do state management in the frontend, is storing data in an o
 ```js
 const myState = { name: '' };
 const setName = evt => {
-		myState.name = evt.target.value;
+	myState.name = evt.target.value;
 } 
 ```
 

@@ -126,35 +126,11 @@ MVC does not permit bidirectional binding by design which might feel like a rest
 
 This would defeat the whole purpose of the controller, by leaving it out. With this architecture we can never be quite sure that all the necessary business logic is executed.
 
-## Testability
-
-Business logic (in form of the controller) can be unit tested in a very efficient manner, since it is separated from the rest of the application.  In previous examples we often had to mock DOM elements to test logic which can be tedious during the initial development but especially during maintenance.
-
-```js
-import { describe }   from 'puerro';
-import { Model, Controller } from './example';
-
-describe('AppController', test => {
-    const model = Model({ name: 'Test', age: 99 });
-    const controller = Controller();
-    
-    test('setName empty', assert => {
-    		// when
-       	controller.setName('');
-        
-        // then
-        assert.is(/* assert the error was properly handled */);
-    });
-});
-```
-
-Since in this case the intention is only to test business logic, there is not even a need to import the view, because it doesn't matter how the data gets rendered into the DOM.
-
 ## Global State
 
 The models hold the business data (or state) of our application. What if we have multiple separate MVC constructs which share a common state, but also have a state of their own? In this case MVC in the frontend gets a bit tricky but there are a few ways to share state between controllers and models. 
 
-### Client side persitance systems
+### Client side persitance systems
 
 In the backend data is usually persisted with a session or database. With that in mind, there is an argument to be made to store the shared data in a persistence system which works on the client, for instance the `localStorage`. The downside to that is, that those systems are not reactive, which means the values they store are not observable. Observable values are essential to ensure the views get updated if a entry is changed from anywhere. That is why those systems are not an optimal solution to global state.
 
@@ -214,7 +190,31 @@ const OutputView = (model, controller, $output) => {
 
 With multiple views, we can split the rendering of different parts of our application, but if the application gets larger the controller can get incomprehensible.
 
-## Use Cases
+## Testability
+
+Business logic (in form of the controller) can be unit tested in a very efficient manner, since it is separated from the rest of the application.  In previous examples we often had to mock DOM elements to test logic which can be tedious during the initial development but especially during maintenance.
+
+```js
+import { describe }   from 'puerro';
+import { Model, Controller } from './example';
+
+describe('AppController', test => {
+    const model = Model({ name: 'Test', age: 99 });
+    const controller = Controller();
+    
+    test('setName empty', assert => {
+    		// when
+       	controller.setName('');
+        
+        // then
+        assert.is(/* assert the error was properly handled */);
+    });
+});
+```
+
+Since in this case the intention is only to test business logic, there is not even a need to import the view, because it doesn't matter how the data gets rendered into the DOM.
+
+##Use Cases
 
 MVC can be used in many different situations but it shines the most, in applications with a high amount of business logic. Since the business logic only lives in the controllers, maintaining and extending this logic becomes way easier than with other approaches. This also increases the overall stability of a system.
 
