@@ -39,7 +39,7 @@ This means while this approach is simple it is also very limited and not very us
 
 ## Components
 
-Especially in combination with the vDOM a powerful way to manage state, is to introduce components. The components should not only provide a way to keep state but also be able to take actions in form of rerendering if the state changes.
+Especially in combination with the vDOM a powerful way to manage state, is to introduce components. Each components encapsulates a part of functionality which is used in the application. The components should not only provide a way to keep state but also be able to take actions in form of rerendering if the state changes.
 
 Puerro provides a way to mount components and provide them with state. [Check it out](../src#components).
 
@@ -84,7 +84,36 @@ Since the state is not mutated directly but set through the `setState` function,
 2. The `component` function gets called with the new state.
 3. The new vDOM from the `component` function is compared against the existing tree and updated in the DOM accordingly.
 
-## Testabilty
+### Web Components
+
+A new concept in frontend development are web components. Web components is a generic term to describe a range of different new technologies to create reusable custom elements. 
+
+A custom element is created by first creating a class using the es2015 class syntax extending a HTMLElement. The new custom element can then be registered to the document using the `CustomElementRegistry.define()` function.
+
+These custom elements do not have a render cycle built in natively but are only used to encapsulate logic. But Puerro provides a combination of state management and custom elements which results in highly reusable components. The previously used example of a simple calculator can be found in the [Puerro Examples](../examples/web-components). With the help of custom elements the input component used is abstracted in the example and is reused like a normal HTML element.
+
+```js
+class MainComponent extends PuerroElement {
+  static get Selector() { return 'puerro-main' };
+
+  constructor() {
+    super({ num1: 0, num2: 0 });
+  }
+
+  render() {
+    return h('div', {},
+      h(PuerroInputComponent.Selector, { label: 'num1', valueChanged: evt => this.setState({ num1: +evt.detail }) }),
+      h('span', {}, '+'),
+      h(PuerroInputComponent.Selector, { label: 'num2', valueChanged: evt => this.setState({ num2: +evt.detail }) }),
+      h('span', {}, '= ' + (this.state.num1 + this.state.num2)),
+    )
+  }
+}
+```
+
+
+
+## Testability
 
 Since the Puerro implementation of the state management uses the vDOM, the same advantages in testability apply to this chapter as well.
 
