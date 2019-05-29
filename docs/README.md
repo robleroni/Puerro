@@ -2,7 +2,7 @@
 
 # Table of Contents
 
-- [Introduction](01-Introduction)
+- [Introduction](01-Introduction.md)
   - [About Web Development](01-Introduction#about-web-development)
   - [Purpose](01-Introduction#purpose)
   - [Methodology](01-Introduction#methodology)

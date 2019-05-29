@@ -9,7 +9,7 @@ describe('Testable Units', test => {
     const $output = createDomElement('div');
 
     // when
-    const $element = appendInput($input, $output)();
+    const $element = appendInput($input, $output)(); // event object not needed
 
     // then
     assert.is($output.children.length, 1);
@@ -23,7 +23,7 @@ describe('Testable Units', test => {
     const $button = createDomElement('button', { type: 'button' });
 
     // when
-    changeLabel($button)({ target: $input });
+    changeLabel($button)({ target: $input }); // mocking event object
 
     // then
     assert.is($button.textContent, 'Save: Puerro');

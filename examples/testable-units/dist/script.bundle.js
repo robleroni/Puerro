@@ -37,7 +37,7 @@
   const appendInput = ($input, $output) => _ => {
     const $element = createDomElement('p', {}, $input.value);
     $output.append($element);
-    return $element;
+    return $element; // return for testing purposes
   };
 
   const changeLabel = $button => event => {

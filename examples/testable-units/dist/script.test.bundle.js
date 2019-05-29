@@ -111,7 +111,7 @@
   const appendInput = ($input, $output) => _ => {
     const $element = createDomElement('p', {}, $input.value);
     $output.append($element);
-    return $element;
+    return $element; // return for testing purposes
   };
 
   const changeLabel = $button => event => {
@@ -125,7 +125,7 @@
       const $output = createDomElement('div');
 
       // when
-      const $element = appendInput($input, $output)();
+      const $element = appendInput($input, $output)(); // event object not needed
 
       // then
       assert.is($output.children.length, 1);
@@ -139,7 +139,7 @@
       const $button = createDomElement('button', { type: 'button' });
 
       // when
-      changeLabel($button)({ target: $input });
+      changeLabel($button)({ target: $input }); // mocking event object
 
       // then
       assert.is($button.textContent, 'Save: Puerro');
