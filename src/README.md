@@ -1,36 +1,44 @@
 # Puerro
 
-All the abstractions used will be here.
+Puerro provides the following abstractions
+TODO: See the generated jsdoc for full specifications..
 
-## DOM
+## `createDomElement`
 
-### Creating DOM Elements
+In order to simplify creating DOM elements.
+
+Usage: tagName, attributes, innerHTML
+(Parameters, output)..
+
 ```js
-const $button = createDOMElement('button', { type: 'button', click: _ => console.log('Clicked')}, 'Go')
+const $button = createDomElement('button', { type: 'button', click: _ => console.log('Clicked')}, 'Go')
 ```
 
-## Virtual Dom
+## `vNode` / `h`
 
-### Creating Virtual DOM Elements
+In order to create virtual DOM elements...
 
 ```javascript
 const vDOM = h('div', {}, 
-  h('label', {}, 'Vegetable'),
+  h('button', {type: 'button' }, 'Click'),
   h('input'),
 );
-
-document.body.prepend(render(vDOM));
 ```
 
-### Diffing
+## `render`
 
-## Rendering
+In order to render virtual DOM elements...
 
 2 of 8 nodes https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
 
-## State Managmenet
+```javascript
+const $dom = render(vDOM);
+```
 
-## Mounting
+## `diff`
+
+
+## `mount`
 
 ```javascript
 const vDOM = ({ state, setState }) =>
@@ -43,9 +51,7 @@ const vDOM = ({ state, setState }) =>
 mount(document.body, vDOM, { value: '' }, true);
 ```
 
-## MVC
-
-### Observables
+## `Observable`
 
 ```javascript
 const observable = Observable('Tomato');
@@ -53,3 +59,5 @@ const observable = Observable('Tomato');
 observable.onChange((newValue, oldValue) => console.log(newValue)) // Tomato
 observable.set('Leek')                                             // Leek
 ```
+
+...

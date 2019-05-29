@@ -1,6 +1,6 @@
 # Examples
 
-Examples for the Puerro Abstractions
+Examples/Templates for recommended Puerro usage..
 
 ## Observable
 

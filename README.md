@@ -19,7 +19,7 @@ It can be used as a [knowledge base](docs) or in combination with the provided [
 | ---------------------- | ----------------------------- |
 | [docs/](docs/)         | Documentation / Toolbox       |
 | [src/](src/)           | Abstractions / Utilities      |
-| [examples/](examples/) | Examples for the Abstractions |
+| [examples/](examples/) | Examples / Templates          |
 | [huerto/](huerto/)     | Research / Showcase Project   |
 | [test/](test/)         | Test Results                  |
 
