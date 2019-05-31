@@ -106,8 +106,8 @@ To provied a better code understanding, we use the markup language JSDoc to anno
 
 To better differentiate between our variables, we prepend them with the following prefixes:
 
-`$` - when referring to real DOM's, e.g. `$div`
-`v` - when referring to virtual DOM's, e.g. `vDiv`
+- `$` - when referring to real DOM's, e.g. `$div`
+- `v` - when referring to virtual DOM's, e.g. `vDiv`
 
 In case variables are unused and can be ignored, we wil simply use an underscore to signmalize that it is _throwawayable_.
 
