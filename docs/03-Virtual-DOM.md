@@ -195,21 +195,6 @@ const handleClick = $table => _ => {
 The result is that there are no more direct DOM interactions because the virtual DOM abstractions can handle them.
 Furthermore, only elements which really need to be changed are getting rerendered.
 
-### White-Spaces Problem
-
-Even though, most of the white spaces are not being considered for the final layout, they are still being parsed and appear in the DOM as _text nodes_.
-
-```html
-<body>
-  <button>Puerro</button>
-  <button>Huerto</button>
-</body>
-```
-
-The `body` of the above HTML markup contains `[text, button, text, button, text]` as its `childNodes`.
-
-This is problematic because the diffing algorithm.. // TODO: A good diffing algorithm could probably handle this..
-
 ## Testability
 
 Using virtual elements results in a big benefit for testability. Instead of returning a DOM element and using the DOM API to test the content of the rendered view, the virtual DOM abstraction can be returned and tested with common JavaScript object approaches.

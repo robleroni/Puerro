@@ -214,7 +214,7 @@ describe('AppController', test => {
 
 Since in this case the intention is only to test business logic, there is not even a need to import the view, because it doesn't matter how the data gets rendered into the DOM.
 
-##Use Cases
+## Use Cases
 
 MVC can be used in many different situations but it shines the most, in applications with a high amount of business logic. Since the business logic only lives in the controllers, maintaining and extending this logic becomes way easier than with other approaches. This also increases the overall stability of a system.
 
