@@ -37,13 +37,13 @@ Although the state can now be updated, there is currently no way to get notified
 
 This means while this approach is simple it is also very limited and not very useful in most situations, since updates have to be done manually in each event listener function.
 
-## Components
+## Components
 
 Especially in combination with the vDOM a powerful way to manage state, is to introduce components. Each components encapsulates a part of functionality which is used in the application. The components should not only provide a way to keep state but also be able to take actions in form of rerendering if the state changes.
 
 Puerro provides a way to mount components and provide them with state. [Check it out](../src#components).
 
-### Render Cycle
+### Render Cycle
 
 With each action on the state the component needs to rerender, this leads to a rendering cycle which looks like the following:
 
@@ -111,9 +111,7 @@ class MainComponent extends PuerroElement {
 }
 ```
 
-
-
-## Testability
+## Testability
 
 Since the Puerro implementation of the state management uses the vDOM, the same advantages in testability apply to this chapter as well.
 
@@ -134,11 +132,11 @@ This list is in reference to the Puerro implementation of state management.
 - Small amount of boilerplate code.
 - 
 
-##Problems / Restrictions
+## Problems / Restrictions
 
-### Disadvantages
+### Disadvantages
 
-
+# Topics TODO:
 
 
 - what is
