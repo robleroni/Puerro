@@ -136,7 +136,21 @@ Although not yet supported in all browsers, according to [caniuse.com](https://c
 
 ## Id Management
 
-If data is stored on the client side but changes have to be reflected in a persistence system on the backend id management becomes a difficult task. 
+If data is stored on the client side but changes have to be reflected in a persistence system (like a database) on the backend, id management becomes a difficult task. This is commonly the case for CRUD like applications. For the end user there is usually a master view in which all entries of an entity are shown and a detail view which displays and lets the user edit one selected entry. The problem which now arises is the creation of an ID. The question is when must the ID be created?
+
+Below are a few different approaches which can be taken.
+
+###Create an empty entry
+
+One approach is to initially create an empty entry on the database and let the user update this new entry. The problem with this strategy that the database initially contains an invalid entry which is hard to manage if for instance database constraints are in place.
+
+### Generate the ID on the client side
+
+Generating an ID can also be done on the client side and then sent along with the other properties of an entry to the backend. This approach works well if only one person uses the system but crumbles fast if there are multiple users. If two users create a new entry with the same database state they will generate the same ID (if the id is incremental and not probabilistic). This causes confilct in the database which is hard to resolve.
+
+###Generate the ID on first save
+
+Another approach is to create the entry on the database as soon as it is first saved by the user. With this approach the ID is only known after the entry is sent to the backend once.
 
 ## Testability
 
