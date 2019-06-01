@@ -90,7 +90,7 @@ A new concept in frontend development are web components. Web components is a ge
 
 A custom element is created by first creating a class using the es2015 class syntax extending a HTMLElement. The new custom element can then be registered to the document using the `CustomElementRegistry.define()` function.
 
-These custom elements do not have a render cycle built in natively but are only used to encapsulate logic. But Puerro provides a combination of state management and custom elements which results in highly reusable components. The previously used example of a simple calculator can be found in the [Puerro Examples](../examples/web-components). With the help of custom elements the input component used is abstracted in the example and is reused like a normal HTML element.
+These custom elements do not have a render cycle built in natively but are only used to encapsulate logic. But Puerro provides a combination of state management and custom elements which results in highly reusable components. The previously used example of a simple calculator can be found in the [Puerro Examples](../examples/web-components). With the help of custom elements the input component used is abstracted and is reused like a normal HTML element.
 
 ```js
 class MainComponent extends PuerroElement {
@@ -102,14 +102,41 @@ class MainComponent extends PuerroElement {
 
   render() {
     return h('div', {},
-      h(PuerroInputComponent.Selector, { label: 'num1', valueChanged: evt => this.setState({ num1: +evt.detail }) }),
+      h(PuerroInputComponent.Selector, { 
+      	label: 'num1', 
+      	valueChanged: evt => this.setState({ num1: +evt.detail }) 
+    	}),
       h('span', {}, '+'),
-      h(PuerroInputComponent.Selector, { label: 'num2', valueChanged: evt => this.setState({ num2: +evt.detail }) }),
+      h(PuerroInputComponent.Selector, { 
+      	label: 'num2', 
+      	valueChanged: evt => this.setState({ num2: +evt.detail }) 
+    	}),
       h('span', {}, '= ' + (this.state.num1 + this.state.num2)),
     )
   }
 }
 ```
+
+As previously described, for the custom elements to work they have to be defined with the customElements API:
+
+```js
+window.customElements.define(PuerroInputComponent.Selector, PuerroInputComponent);
+window.customElements.define(MainComponent.Selector, MainComponent);
+```
+
+They can then be used like normal HTML elements with the previously defined selector.
+
+```html
+<body>
+  <puerro-main></puerro-main>
+</body>
+```
+
+Although not yet supported in all browsers, according to [caniuse.com](https://caniuse.com/#search=custom elements) custom elements are already supported for 86% of internet users.
+
+## Id Management
+
+If data is stored on the client side but changes have to be reflected in a persistence system on the backend id management becomes a difficult task. 
 
 ## Testability
 
@@ -130,11 +157,13 @@ This list is in reference to the Puerro implementation of state management.
 
 - Automatic rerendering.
 - Small amount of boilerplate code.
-- 
+- Unidirectional dataflow.
 
 ## Problems / Restrictions
 
 ### Disadvantages
+
+- 
 
 # Topics TODO:
 
