@@ -115,8 +115,14 @@ In case variables are unused and can be ignored, we wil simply use an underscore
 $element.addEventListener('click', _ => console.log('clicked'));
 ```
 
-[← Table of Content](README.md)
-<a style="float: right;" href="02-DOM.md">DOM →</a>
-<a style="text-align: right" href="02-DOM.md">DOM →</a>
-<a class="pull-right" href="02-DOM.md">DOM →</a>
+<p>
+  <a style="float: left;" href="README.md">← Table of Content</a>
+  <a style="float: right;" href="02-DOM.md">DOM →</a>
+</p>
 
+Another idea
+
+<p>
+  <a align="left" href="README.md">← Table of Content</a>
+  <a align="right" href="02-DOM.md">DOM →</a>
+</p>
