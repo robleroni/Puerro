@@ -116,8 +116,15 @@ $element.addEventListener('click', _ => console.log('clicked'));
 ```
 
 <p>
-  <a style="text-align: left" href="README.md">← Table of Content</a>
-  <a style="text-align: right" href="02-DOM.md">DOM →</a>
+  <a align="left" href="README.md">← Table of Content</a>
+  <a align="right" href="02-DOM.md">DOM →</a>
+</p>
+
+more
+
+<p>
+  <span align="left">Content</span>
+  <span align="right">DOM</span>
 </p>
 
 Another idea
