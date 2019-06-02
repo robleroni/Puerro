@@ -126,3 +126,9 @@ Another idea
   <a align="left" href="README.md">← Table of Content</a>
   <a align="right" href="02-DOM.md">DOM →</a>
 </p>
+
+Using Tables...
+
+
+| [← Table of Content](README.md) | [DOM →](02-DOM.md) |
+| =============================== | ================== | 
