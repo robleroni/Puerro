@@ -116,19 +116,26 @@ $element.addEventListener('click', _ => console.log('clicked'));
 ```
 
 <p>
-  <a style="float: left;" href="README.md">← Table of Content</a>
-  <a style="float: right;" href="02-DOM.md">DOM →</a>
+  <a style="text-align: left" href="README.md">← Table of Content</a>
+  <a style="text-align: right" href="02-DOM.md">DOM →</a>
 </p>
 
 Another idea
 
 <p>
-  <a align="left" href="README.md">← Table of Content</a>
-  <a align="right" href="02-DOM.md">DOM →</a>
+  <a style="align: left" href="README.md">← Table of Content</a>
+  <a style="align: right" href="02-DOM.md">DOM →</a>
 </p>
 
 Using Tables...
 
 
 | [← Table of Content](README.md) | [DOM →](02-DOM.md) |
-| =============================== | ================== | 
+| :---                            |               ---: |
+
+Newline in between
+
+[← Table of Content](README.md)
+<p align="right">
+  <a href="02-DOM.md">DOM →</a>
+</p>
