@@ -114,3 +114,5 @@ In case variables are unused and can be ignored, we wil simply use an underscore
 ```js
 $element.addEventListener('click', _ => console.log('clicked'));
 ```
+<a align="left" href="README.md">:arrow_left: Table of Content</a>
+<a align="right" href="02-DOM.md">DOM :arrow_right:</a>

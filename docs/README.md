@@ -25,6 +25,7 @@
   - [State inside the view](04-State-Management.md#state-inside-the-view)
   - [Keep it simple](04-State-Management.md#keep-it-simple)
   - [Components](04-State-Management.md#components)
+  - [ID Management](04-State-Management.md#id-management)
   - [Testability](04-State-Management.md#testability)
   - [Use Cases](04-State-Management.md#use-cases)
   - [Problems/Restrictions](04-State-Management.md#problems--restrictions)

@@ -140,7 +140,7 @@ If data is stored on the client side but changes have to be reflected in a persi
 
 Below are a few different approaches which can be taken.
 
-###Create an empty entry
+### Create an empty entry
 
 One approach is to create an empty entry on the database and then let the user update this new entry. The problem with this strategy that the database initially contains an invalid entry which is hard to manage if for instance database constraints are in place.
 
@@ -148,7 +148,7 @@ One approach is to create an empty entry on the database and then let the user u
 
 Generating an ID can also be done on the client side and then sent along with the other properties of an entry to the backend. This approach works well if only one person uses the system but crumbles fast if there are multiple users. If two users create a new entry with the same database state they will generate the same ID (if the id is incremental and not probabilistic). This causes a conflict in the database which is hard to resolve.
 
-###Generate the ID on first save
+### Generate the ID on first save
 
 Another approach is to create the entry on the database as soon as it is first saved by the user. With this approach the ID is only known after the entry is sent to the backend once. It then has to be updated with this new ID for the master view.
 
