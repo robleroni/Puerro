@@ -117,3 +117,4 @@ $element.addEventListener('click', _ => console.log('clicked'));
 
 [← Table of Content](README.md)
 <a style="float: right;" href="02-DOM.md">DOM →</a>
+<a float="right" href="02-DOM.md">DOM →</a>
