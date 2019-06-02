@@ -120,7 +120,7 @@
           a =>
             node1.attributes[a] !== node2.attributes[a] &&
             (null == node1.attributes[a] ? '' : node1.attributes[a]).toString() !==
-            (null == node2.attributes[a] ? '' : node2.attributes[a]).toString()
+              (null == node2.attributes[a] ? '' : node2.attributes[a]).toString()
         ));
     return nodeChanged || attributesChanged;
   };
@@ -150,7 +150,7 @@
     }
 
     /**
-     * refreshes the Dom
+     * Refreshes the DOM
      */
     refresh() {
       const newVNode = this.render();
@@ -162,7 +162,14 @@
       this.vNode = newVNode;
     }
 
-    render() { }
+    /**
+     * Defines the VDOM
+     * 
+     * @returns {import('../vdom/vdom').VNode}
+     */
+    render() { 
+      return h('div', {});
+    }
   }
 
   class PuerroInputComponent extends PuerroElement {
@@ -185,6 +192,9 @@
       this.dispatchEvent(new CustomEvent('valueChanged', { detail: evt.target.value }));
     }
 
+    /**
+     * @override
+     */
     render() {
       return h('input', {
         type: 'number',
@@ -197,15 +207,14 @@
 
   class MainComponent extends PuerroElement {
     static get Selector() { return 'puerro-main' };
-
-    connectedCallback() {
-      super.connectedCallback();
-    }
-
+    
     constructor() {
       super({ num1: 0, num2: 0 });
     }
 
+    /**
+     * @override
+     */
     render() {
       return h('div', {},
         h(PuerroInputComponent.Selector, { label: 'num1', valueChanged: evt => this.setState({ num1: +evt.detail }) }),

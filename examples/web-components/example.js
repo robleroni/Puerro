@@ -26,6 +26,9 @@ class PuerroInputComponent extends PuerroElement {
     this.dispatchEvent(new CustomEvent('valueChanged', { detail: evt.target.value }));
   }
 
+  /**
+   * @override
+   */
   render() {
     return h('input', {
       type: 'number',
@@ -38,15 +41,14 @@ class PuerroInputComponent extends PuerroElement {
 
 class MainComponent extends PuerroElement {
   static get Selector() { return 'puerro-main' };
-
-  connectedCallback() {
-    super.connectedCallback();
-  }
-
+  
   constructor() {
     super({ num1: 0, num2: 0 });
   }
 
+  /**
+   * @override
+   */
   render() {
     return h('div', {},
       h(PuerroInputComponent.Selector, { label: 'num1', valueChanged: evt => this.setState({ num1: +evt.detail }) }),

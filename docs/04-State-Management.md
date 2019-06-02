@@ -90,7 +90,7 @@ A new concept in frontend development are web components. Web components is a ge
 
 A custom element is created by first creating a class using the es2015 class syntax extending a HTMLElement. The new custom element can then be registered to the document using the `CustomElementRegistry.define()` function.
 
-These custom elements do not have a render cycle built in natively but are only used to encapsulate logic. But Puerro provides a combination of state management and custom elements which results in highly reusable components. The previously used example of a simple calculator can be found in the [Puerro Examples](../examples/web-components). With the help of custom elements the input component used is abstracted and is reused like a normal HTML element.
+These custom elements do not have a render cycle built in natively but are only used to encapsulate logic. Puerro provides a combination of state management and custom elements which results in highly reusable components. The previously used example of a simple calculator can be found in the [Puerro Examples](../examples/web-components). With the help of custom elements the input component used is abstracted and can then be reused like a normal HTML element.
 
 ```js
 class MainComponent extends PuerroElement {
@@ -105,19 +105,19 @@ class MainComponent extends PuerroElement {
       h(PuerroInputComponent.Selector, { 
       	label: 'num1', 
       	valueChanged: evt => this.setState({ num1: +evt.detail }) 
-    	}),
+      }),
       h('span', {}, '+'),
       h(PuerroInputComponent.Selector, { 
       	label: 'num2', 
-      	valueChanged: evt => this.setState({ num2: +evt.detail }) 
-    	}),
+        valueChanged: evt => this.setState({ num2: +evt.detail }) 
+      }),
       h('span', {}, '= ' + (this.state.num1 + this.state.num2)),
     )
   }
 }
 ```
 
-As previously described, for the custom elements to work they have to be defined with the customElements API:
+As described before, for the custom elements to work they have to be defined with the `customElements` API:
 
 ```js
 window.customElements.define(PuerroInputComponent.Selector, PuerroInputComponent);
@@ -132,7 +132,7 @@ They can then be used like normal HTML elements with the previously defined sele
 </body>
 ```
 
-Although not yet supported in all browsers, according to [caniuse.com](https://caniuse.com/#search=custom elements) custom elements are already supported for 86% of internet users.
+Although not yet supported in all browsers, according to [caniuse.com](https://caniuse.com/#search=custom elements) custom elements are already supported for 86% of internet users. For all 
 
 ## Id Management
 
@@ -142,15 +142,15 @@ Below are a few different approaches which can be taken.
 
 ###Create an empty entry
 
-One approach is to initially create an empty entry on the database and let the user update this new entry. The problem with this strategy that the database initially contains an invalid entry which is hard to manage if for instance database constraints are in place.
+One approach is to create an empty entry on the database and then let the user update this new entry. The problem with this strategy that the database initially contains an invalid entry which is hard to manage if for instance database constraints are in place.
 
 ### Generate the ID on the client side
 
-Generating an ID can also be done on the client side and then sent along with the other properties of an entry to the backend. This approach works well if only one person uses the system but crumbles fast if there are multiple users. If two users create a new entry with the same database state they will generate the same ID (if the id is incremental and not probabilistic). This causes confilct in the database which is hard to resolve.
+Generating an ID can also be done on the client side and then sent along with the other properties of an entry to the backend. This approach works well if only one person uses the system but crumbles fast if there are multiple users. If two users create a new entry with the same database state they will generate the same ID (if the id is incremental and not probabilistic). This causes a conflict in the database which is hard to resolve.
 
 ###Generate the ID on first save
 
-Another approach is to create the entry on the database as soon as it is first saved by the user. With this approach the ID is only known after the entry is sent to the backend once.
+Another approach is to create the entry on the database as soon as it is first saved by the user. With this approach the ID is only known after the entry is sent to the backend once. It then has to be updated with this new ID for the master view.
 
 ## Testability
 
@@ -175,22 +175,6 @@ This list is in reference to the Puerro implementation of state management.
 
 ## Problems / Restrictions
 
-### Disadvantages
+With a managed state an application can become harder to manage. It is imperative, that state is always stored in the same way to keep consistency and maintainability. This is a restriction that is tedious for small projects. 
 
-- 
-
-# Topics TODO:
-
-
-- what is
-- render cycle
-- id mgmgt
-- immutability
-- stateless vs stateful
-
-advantages: 
-- reusability
-
-when to use:
-- one pagers with data stored in frotend
-
+If the state updates the UI automatically, bugs can be hard to trace through the abstractions. 
