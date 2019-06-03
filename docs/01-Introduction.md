@@ -130,8 +130,8 @@ more
 Another idea
 
 <p>
-  <a style="align: left" href="README.md">← Table of Content</a>
-  <a style="align: right" href="02-DOM.md">DOM →</a>
+  <a style="float: left" href="README.md">← Table of Content</a>
+  <a style="float: right" href="02-DOM.md">DOM →</a>
 </p>
 
 Using Tables...
