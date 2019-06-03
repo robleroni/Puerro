@@ -115,35 +115,4 @@ In case variables are unused and can be ignored, we wil simply use an underscore
 $element.addEventListener('click', _ => console.log('clicked'));
 ```
 
-<p>
-  <a align="left" href="README.md">← Table of Content</a>
-  <a align="right" href="02-DOM.md">DOM →</a>
-</p>
-
-more
-
-<p>
-  <span align="left">Content</span>
-  <span align="right">DOM</span>
-</p>
-
-Another idea
-
-<p style="display: flex; justify-content: space-between">
-  [← Table of Content](README.md)
-  [DOM →](02-DOM.md)
-</p>
-
-
-Using Tables...
-
-
-| [← Table of Content](README.md) | [DOM →](02-DOM.md) |
-| :---                            |               ---: |
-
-Newline in between
-<p>
-  <a href="README.md">← Table of Content</a>
-    <a style="align: right"href="02-DOM.md">DOM →</a>
-  </p>
-</p>
+[← Table of Content](README.md) | [DOM →](02-DOM.md)

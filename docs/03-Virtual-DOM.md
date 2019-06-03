@@ -257,6 +257,6 @@ Handling state in the frontent is still not controlled in a structured way and u
 - Possible problems with the identity of elements.
 - State lives in the view.
 
-
+[← DOM](02-DOM.md) | [State Management →](04-State-Management.md)
 
 

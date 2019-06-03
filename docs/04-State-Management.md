@@ -178,3 +178,5 @@ This list is in reference to the Puerro implementation of state management.
 With a managed state an application can become harder to manage. It is imperative, that state is always stored in the same way to keep consistency and maintainability. This is a restriction that is tedious for small projects. 
 
 If the state updates the UI automatically, bugs can be hard to trace through the abstractions. 
+
+[← Virtual DOM](03-Virtual-DOM.md) | [MVC →](05-MVC.md)

@@ -395,8 +395,4 @@ For large application there probably will be redundant code and all DOM related 
 - Very specific.
 - State lives in the view.
 
-[← Table of Content]() | [DOM →]()
-
-| [← Table of Content]() |     |     |     |     |     | [DOM →]() |
-| :--------------------- | :-: | :-: | :-: | :-: | :-: | --------: |
-
+[← Introduction](01-Introduction.md) | [Virtual DOM →](03-Virtual-DOM.md)
