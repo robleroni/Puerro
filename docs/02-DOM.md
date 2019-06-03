@@ -396,4 +396,6 @@ For large application there probably will be redundant code and all DOM related 
 - State lives in the view.
 
 
-← Table of Content <img align="right"> DOM → 
+<p align="center">
+[← Table of Content]() |[DOM →]()
+</p>
