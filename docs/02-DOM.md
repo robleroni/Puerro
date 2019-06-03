@@ -397,5 +397,7 @@ For large application there probably will be redundant code and all DOM related 
 
 
 <p align="center">
-[← Table of Content]() |[DOM →]()
+
+[← Table of Content]() | [DOM →]()
+
 </p>
