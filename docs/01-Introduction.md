@@ -129,10 +129,11 @@ more
 
 Another idea
 
-<p>
-  <a style="float: left" href="README.md">← Table of Content</a>
-  <a style="float: right" href="02-DOM.md">DOM →</a>
+<p style="display: flex; justify-content: space-between">
+  <a href="README.md">← Table of Content</a>
+  <a href="02-DOM.md">DOM →</a>
 </p>
+
 
 Using Tables...
 
@@ -143,6 +144,6 @@ Using Tables...
 Newline in between
 
 [← Table of Content](README.md)
-<p align="right">
+<p style="display:inline; float: right">
   <a href="02-DOM.md">DOM →</a>
 </p>
