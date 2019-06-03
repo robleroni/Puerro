@@ -130,8 +130,8 @@ more
 Another idea
 
 <p style="display: flex; justify-content: space-between">
-  <a href="README.md">← Table of Content</a>
-  <a href="02-DOM.md">DOM →</a>
+  [← Table of Content](README.md)
+  [DOM →](02-DOM.md)
 </p>
 
 
@@ -142,8 +142,8 @@ Using Tables...
 | :---                            |               ---: |
 
 Newline in between
-
-[← Table of Content](README.md)
-<p style="display:inline; float: right">
-  <a href="02-DOM.md">DOM →</a>
+<p>
+  <a href="README.md">← Table of Content</a>
+    <a style="align: right"href="02-DOM.md">DOM →</a>
+  </p>
 </p>
