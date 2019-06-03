@@ -395,9 +395,8 @@ For large application there probably will be redundant code and all DOM related 
 - Very specific.
 - State lives in the view.
 
-
-<p align="center">
-
 [← Table of Content]() | [DOM →]()
 
-</p>
+| [← Table of Content]() |     |     |     |     |     | [DOM →]() |
+| :--------------------- | :-: | :-: | :-: | :-: | :-: | --------: |
+
