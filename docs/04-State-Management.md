@@ -4,7 +4,7 @@ So far, the state of the application lived inside the view / the DOM and was not
 
 ## State inside the view
 
-In previous chapters the state alway lived inside the view and was not used further. In the following example we have a from with an `input` element, where the user can insert their name. The question now is how to handle this name?
+In previous chapters the state alway lived inside the view and was not used further. In the following example we have a from with an `input` element, where the user can insert their name. The question which poses itself now, is how to handle this name?
 
 ```js
 const setName = evt => {
