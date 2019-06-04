@@ -1,9 +1,15 @@
 import { diff, render } from '../vdom/vdom';
 
+
 export {
   PuerroElement
 };
 
+
+/**
+ * @class PuerroElement
+ * @description Abstract class which provides state to custom HTML elements.
+ */
 class PuerroElement extends HTMLElement {
   constructor(initialState = {}) {
     super();
@@ -16,8 +22,8 @@ class PuerroElement extends HTMLElement {
 
   /**
    * Sets a new state based on a given object or function
-   * 
-   * @param {object | Function} newState 
+   *
+   * @param {object | Function} newState
    */
   setState(newState) {
     if (typeof newState === 'function') {
