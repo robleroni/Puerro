@@ -57,7 +57,7 @@ To make our examples and research work in real-life scenarios there would be a n
 
 To explore how JavaScript and HTML work and interact with each other in depth, styling, specifically CSS is also considered out of scope.
 
-Build tooling and browser compatibility is a big part in todays frontend world. Again to keep the focus and not get distracted by tooling, this project is respecting the following standards and the browsers which support those:
+Build tooling and browser compatibility is a big part in today's frontend world. Again to keep the focus and not get distracted by tooling, this project is respecting the following standards and the browsers which support those:
 
 - HTML5
 - CSS3
@@ -115,35 +115,4 @@ In case variables are unused and can be ignored, we wil simply use an underscore
 $element.addEventListener('click', _ => console.log('clicked'));
 ```
 
-<p>
-  <a align="left" href="README.md">← Table of Content</a>
-  <a align="right" href="02-DOM.md">DOM →</a>
-</p>
-
-more
-
-<p>
-  <span align="left">Content</span>
-  <span align="right">DOM</span>
-</p>
-
-Another idea
-
-<p style="display: flex; justify-content: space-between">
-  [← Table of Content](README.md)
-  [DOM →](02-DOM.md)
-</p>
-
-
-Using Tables...
-
-
-| [← Table of Content](README.md) | [DOM →](02-DOM.md) |
-| :---                            |               ---: |
-
-Newline in between
-<p>
-  <a href="README.md">← Table of Content</a>
-    <a style="align: right"href="02-DOM.md">DOM →</a>
-  </p>
-</p>
+[← Table of Content](README.md) | [DOM →](02-DOM.md)
