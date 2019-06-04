@@ -237,4 +237,4 @@ MVC requires quite a bit of boilerplate code, as well as some sort of observable
 - Boilerplate code.
 - Handling global state is hard.
 
-[← State Management](04-MVC.md) | [Conclusion →](06-Conclusion.md)
+[← State Management](04-State-Management.md) | [Conclusion →](06-Conclusion.md)
