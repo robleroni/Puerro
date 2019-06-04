@@ -85,7 +85,7 @@ This gets slightly more challenging for appending or modifying nodes to an alrea
 Re-parsing the whole structure of the element is also bad for the performance.
 
 ```js
-document.body.innerHTML =  '<h1>Tomato</h1>';
+document.body.innerHTML = '<h1>Tomato</h1>';
 const $h1 = document.querySelector('h1');
 document.body.innerHTML += '<p>Lean as a Leek</p>'; // Whole body element is being reparsed
 $h1.textContent = 'Puerro';			    // Reference does not point to the DOM instance
@@ -94,7 +94,7 @@ $h1.textContent = 'Puerro';			    // Reference does not point to the DOM instanc
 There is a solution for this called [`element.insertAdjacentHTML`](https://developer.mozilla.org/de/docs/Web/API/Element/insertAdjacentHTML) which does not re-parse all it's child elements.
 
 ```js
-document.body.innerHTML =  '<h1>Tomato</h1>';
+document.body.innerHTML = '<h1>Tomato</h1>';
 const $h1 = document.querySelector('h1');
 document.body.insertAdjacentHTML('beforeend', '<p>Lean as a Leek</p>'); // No complete reparsing
 $h1.textContent = 'Puerro';				                // Reference still works
@@ -115,7 +115,7 @@ $button.addEventListener('click', _ => console.log($input.value));
 document.body.append($input, $button);
 ```
 
-Puerro provides an abstraction to make it more convenient to create elements. [Check it out!](../src/#creating-dom-elements) 
+Puerro provides an abstraction to make it more convenient to create elements. [Check it out!](../src/#creating-dom-elements)
 
 ```js
 const $input = createDomElement('input', { type: 'number', value: 1 });
@@ -268,7 +268,7 @@ In order to use the `<form>` tag without it being submitted, an event handler ha
 
 When event handler functions receive events, they can in turn manipulate the DOM.
 
-![Event-Flow](assets/img/events.png) 
+![Event-Flow](assets/img/events.png)
 
 For an hanlder function to manipulate the DOM, references to the elements to be manipulate are needed.
 
@@ -281,11 +281,11 @@ const handleEvent = event => {
 $element.addEventListener('click', handleEvent);
 ```
 
->Because of eta reductions, parameter can be shortened when using curried functions.
->`x => foo(x) ` can be shortened to `foo`
+> Because of eta reductions, parameter can be shortened when using curried functions.
+> `x => foo(x)` can be shortened to `foo`
 
 This gets problematic when the intentention is to test this unit, since the DOM might not be available.
-Furthermore, this approach can quickly become difficult to mantain. 
+Furthermore, this approach can quickly become difficult to mantain.
 
 A better approach is to receive the nodes which are being manipulated as a parameter.
 The element which fires the event does not have to be passed as an argument because it is available trough `event.target`.
@@ -368,7 +368,7 @@ It can be used for various tasks:
 - Reactive content without side effects.
 - Experimenting/Prototyping.
 - Simple Web application without many changing parts.
-- Server-Side rendered web applications. 
+- Server-Side rendered web applications.
 
 ### Advantages
 
@@ -377,7 +377,7 @@ It can be used for various tasks:
 - Easy to understand.
 - Fast.
 
-##  Difficulties / Restrictions
+## Difficulties / Restrictions
 
 This approach is getting harder to maintain when either frontent state is being introduced or there are many changing elements. This is especially true when the application starts growing.
 
