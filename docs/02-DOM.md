@@ -1,6 +1,6 @@
 # DOM
 
-While a browser receives an HTML source file, it starts to parse it piece by piece to construct an object representation of the document called the DOM ([Document Object Model](https://www.w3.org/DOM/)) tree. Simultaneously, the DOM is being converted into a _render tree_, which represents what eventually is being painted. The document can start being rendered and paintend in the browser before it is fully loaded. Unless it is blocked by CSS or JavaScript.
+While a browser receives an HTML source file, it starts to parse it piece by piece to construct an object representation of the document called the DOM ([Document Object Model](https://www.w3.org/DOM/)) tree. Simultaneously, the DOM is being converted into a _render tree_, which represents what eventually is being painted. The document can start being rendered and painted in the browser before it is fully loaded. Unless it is blocked by CSS or JavaScript.
 
 When the parser comes across CSS code, the rendering process is being blocked until the the CSS is fully parsed.
 Similar as before, the browser now constructs a CSSOM ([CSS Object Model](https://www.w3.org/TR/cssom-1/)) tree which associates the styles to each node. After parsing the CSS, a combination of the DOM and CSSOM are being used for continue creating the _render tree_.
