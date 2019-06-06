@@ -165,13 +165,13 @@ A drawback with this approach is that it is only possible to assign one listener
 
 #### Using `addEventListener()`
 
-The most moden approach ist to use the `element.addEventListener()` function. It allows to register as many event handlers as needed.
+The most modern approach is to use the `element.addEventListener()` function. It allows to register as many event handlers as needed.
 
 ```js
 $button.addEventListener('click', event => console.log('Button clicked'));
 ```
 
-With this approach it is also possible ro remove listeners with the `element.removeEventListener()`function.
+With this approach it is also possible ro remove listeners with the `element.removeEventListener()` function.
 Another advantage is the ability to choose between event bubbling and capturing.
 
 ### Bubbling and Capturing
@@ -270,7 +270,7 @@ When event handler functions receive events, they can in turn manipulate the DOM
 
 ![Event-Flow](assets/img/events.png)
 
-For an hanlder function to manipulate the DOM, references to the elements to be manipulate are needed.
+For a handler function to manipulate the DOM, references to the elements to be manipulate are needed.
 
 ```js
 const handleEvent = event => {
@@ -281,13 +281,16 @@ const handleEvent = event => {
 $element.addEventListener('click', handleEvent);
 ```
 
-> Because of eta reductions, parameter can be shortened when using curried functions.
+> With the help of eta reduction, the parameter can be removed when there is only one argument or when using curried functions.
 > `x => foo(x)` can be shortened to `foo`
 
-This gets problematic when the intentention is to test this unit, since the DOM might not be available.
-Furthermore, this approach can quickly become difficult to mantain.
+This gets problematic when the intention is to test this unit, since the DOM might not be available.
+Furthermore, this approach can quickly become difficult to maintain.
 
 A better approach is to receive the nodes which are being manipulated as a parameter.
+
+**TODO dk: this is not the only alternative. Very often you have a suitable reference in the surrounding scope!**
+
 The element which fires the event does not have to be passed as an argument because it is available trough `event.target`.
 
 When new elements are being created, it is a good practice to return them for a more convenient testing.
