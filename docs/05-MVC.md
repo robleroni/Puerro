@@ -1,9 +1,9 @@
 # MVC
-MVC has been around in the software development world for quite a while and is a well established way to create software. It is a type of application architecture which focuses very much on separation of concerns.
+MVC has been around in the software development world for quite a while and is a well-established way to create software. It is a type of application architecture which focuses very much on separation of concerns.
 
 ## The MVC Way
 
-A MVC (Model-View-Controller) application is, as the name suggests, divided into _Model_, _View_ and _Controller_. The following illustration represent how the data and events flow through the three components:
+An MVC (Model-View-Controller) application is, as the name suggests, divided into _Model_, _View_ and _Controller_. The following illustration represent how the data and events flow through the three components:
 
 ![MVC](assets/img/MVC.png)
 
@@ -13,7 +13,7 @@ A MVC (Model-View-Controller) application is, as the name suggests, divided into
 
 A Model defines and stores data and is not concerned with how this data gets presented to the user. A model has to be observable, so when the data changes views get notified and can take action accordingly. 
 
-Puerro provides Observables which are very useful in the definition of models. The following is an example of a model in a MVC approach with pure JavaScript (No frameworks, only the Observable abstraction from Puerro):
+Puerro provides Observables which are very useful in the definition of models. The following is an example of a model in an MVC approach with pure JavaScript (No frameworks, only the Observable abstraction from Puerro):
 
 ```js
 import { Observable } from 'puerro';
@@ -28,7 +28,7 @@ const Model = ({ name = '', age = 0 } = {}) => ({
 
 The view is used to present the model to the user. It is the only component of a frontend MVC application which interacts with the DOM. The view subscribes to changes of the model and takes the required actions in the DOM to represent the new model state.
 
-Users interact with the view which leads to events being fired from the DOM. Relevant DOM events are listened to by the view and in turn passed to the controller if the user interaction requires a change to the model. The following code snippet is a view which could take the previous example model to represent data . The view also interacts with a controller which is introduced in the next chapter.
+Users interact with the view which leads to events being fired from the DOM. Relevant DOM events are listened to by the view and in turn passed to the controller if the user interaction requires a change to the model. The following code snippet is a view which could take the previous example model to represent data. The view also interacts with a controller which is introduced in the next chapter.
 
 ```js
 const View = (model, controller, $form, $output) => {
@@ -66,7 +66,7 @@ const View = (model, controller, $form, $output) => {
 
 ### Controllers
 
-The controller sits between models and views and is responsible for handling updates to the model. Any and all actions which change the model have to go through the controller. Because all actions are handled by the controller, the application becomes very predictable and easier to reason about.
+The controller sits between models and views and is responsible for handling updates to the model. All actions which change the model have to go through the controller. Because all actions are handled by the controller, the application becomes very predictable and easier to reason about.
 
 A controller for our example could look like the following: 
 
@@ -98,7 +98,7 @@ If the MVC architecture is combined with a revealing model pattern like in this 
 
 The controller is also the only place in MVC where side effects (for instance API calls) should be implemented.
 
-### Bringing it all together
+### Bringing it all Together
 
 The Model, View and Controller can be separated in to their own files and initialized in a central JavaScript file which is requested by the HTML. 
 
@@ -114,9 +114,9 @@ const view = View(model,
 
 As evident by this whole example, MVC can generate some boilerplate code which seems over the top for small applications. But especially when the application scales, the advantages become very visible, the business logic sits in one place and the model cannot be changed but through this business logic. Especially compared to the just mutating the DOM and application state from anywhere in the code this approach makes the application way more predictable and easier to understand.
 
-## Bidirectional binding
+## Bidirectional Binding
 
-Data and user input always flows unidirectionally in MVC. This makes the application easier to reason about and more predictable, since the model cannot just be changed from anywhere. 
+Data and user inputs always flows unidirectionally in MVC. This makes the application easier to reason about and more predictable, since the model cannot just be changed from anywhere. 
 
 Many modern frontend frameworks like Vue.JS and Angular (not React) work with bidirectional bindings of data. This is intuitive at first but as an application grows can become very unpredictable. The model can be changed from anywhere and business logic has to be enforced with different approaches, for example in Vue.JS using [watchers](https://vuejs.org/v2/guide/computed.html#Watchers).
 
@@ -130,15 +130,15 @@ This would defeat the whole purpose of the controller, by leaving it out. With t
 
 The models hold the business data (or state) of our application. What if we have multiple separate MVC constructs which share a common state, but also have a state of their own? In this case MVC in the frontend gets a bit tricky but there are a few ways to share state between controllers and models. 
 
-### Client side persitance systems
+### Client-Side Persistence Systems
 
-In the backend data is usually persisted with a session or database. With that in mind, there is an argument to be made to store the shared data in a persistence system which works on the client, for instance the `localStorage`. The downside to that is, that those systems are not reactive, which means the values they store are not observable. Observable values are essential to ensure the views get updated if a entry is changed from anywhere. That is why those systems are not an optimal solution to global state.
+In the backend data is usually persisted with a session or database. With that in mind, there is an argument to be made to store the shared data in a persistence system which works on the client, for instance the `localStorage`. The downside to that is, that those systems are not reactive, which means the values they store are not observable. Observable values are essential to ensure the views get updated if an entry is changed from anywhere. That is why those systems are not an optimal solution to global state.
 
-### Global data store
+### Global Data Store
 
-An alternative is to create a reactive global data store, which emits events, when data is changed. This global store has to accessible from every view and controller to retreive and set values.  
+An alternative is to create a reactive global data store, which emits events, when data is changed. This global store has to accessible from every view and controller to retrieve and set values.  
 
-The Puerro library offers the `ObservableObject` constructor function. A `ObservableObject` instance provides a data store which is subscribable on each property of the object but also the . 
+The Puerro library offers the `ObservableObject` constructor function. A `ObservableObject` instance provides a data store which is subscribable on each property of the object but also the . **TODO: Continue..?** 
 
 ```js
 import { ObservableObject } from 'puerro';
@@ -161,7 +161,7 @@ myGlobalData.set({ todos: [...myGlobalData.get().todos, 'My new todo'] });
 
 The rules of MVC still apply to the global store. It can only be changed from controllers and not form anywhere else. 
 
-The downside to this approach is, that it can get confusing for a developer to figure out if data is stored in the global store or in the local model. It might seem obvious during the initial development of an application, but can be very hard to manage while maintaining a codebase with a global store.
+The downside to this approach is, that it can get confusing for a developer to figure out if data is stored in the global store or in the local model. It might seem obvious during the initial development of an application but can be very hard to manage while maintaining a codebase with a global store.
 
 ### Multiple Views
 
@@ -225,7 +225,7 @@ MVC can be used in many different situations but it shines the most, in applicat
 ### Advantages
 
 - Separation of concerns.
-- Businesslogic and view are independently testable.
+- Business logic and view are independently testable.
 - High maintainability.
 - Minimal amount of redundant code.
 

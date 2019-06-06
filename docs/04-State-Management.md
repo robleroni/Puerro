@@ -2,9 +2,9 @@
 
 So far, the state of the application lived inside the view / the DOM and was not stored anywhere else. This might be ok for small applications which more or less only display data. As soon as a user is able to change and interact with data a need arises for storing state in an organized manner. That is where state management comes into play. 
 
-## State inside the view
+## State Inside the View
 
-In previous chapters the state alway lived inside the view and was not used further. In the following example we have a from with an `input` element, where the user can insert their name. The question which poses itself now, is how to handle this name?
+In previous chapters the state always lived inside the view and was not used further. In the following example we have a from with an `input` element, where the user can insert their name. The question which poses itself now, is how to handle this name?
 
 ```js
 const setName = evt => {
@@ -20,11 +20,11 @@ const render = () => {
 }
 ```
 
-Until now the name would have been rendered right back out to the user but what if we want to store it and use this data later on?
+Until now the name would have been rendered right back out to the user but what if we want to store it and use this data later?
 
-## Keep it simple
+## Keep it Simple
 
-The simplest way to do state management in the frontend, is storing data in an object. Setting and retreiving state is very straight forward:
+The simplest way to do state management in the frontend, is storing data in an object. Setting and retrieving state is very straight forward:
 
 ```js
 const myState = { name: '' };
@@ -39,7 +39,7 @@ This means while this approach is simple it is also very limited and not very us
 
 ## Components
 
-Especially in combination with the vDOM a powerful way to manage state, is to introduce components. Each components encapsulates a part of functionality which is used in the application. The components should not only provide a way to keep state but also be able to take actions in form of rerendering if the state changes.
+Especially in combination with the virtual DOM a powerful way to manage state, is to introduce components. Each component encapsulates a part of functionality which is used in the application. The components should not only provide a way to keep state but also be able to take actions in form of rerendering if the state changes.
 
 Puerro provides a way to mount components and provide them with state. [Check it out](../src#components).
 
@@ -82,7 +82,7 @@ Since the state is not mutated directly but set through the `setState` function,
 
 1. The actual state object is set with the updated state.
 2. The `component` function gets called with the new state.
-3. The new vDOM from the `component` function is compared against the existing tree and updated in the DOM accordingly.
+3. The new virtual DOM from the `component` function is compared against the existing tree and updated in the DOM accordingly.
 
 ### Web Components
 
@@ -90,7 +90,7 @@ A new concept in frontend development are web components. Web components is a ge
 
 A custom element is created by first creating a class using the es2015 class syntax extending a HTMLElement. The new custom element can then be registered to the document using the `CustomElementRegistry.define()` function.
 
-These custom elements do not have a render cycle built in natively but are only used to encapsulate logic. Puerro provides a combination of state management and custom elements which results in highly reusable components. The previously used example of a simple calculator can be found in the [Puerro Examples](../examples/web-components). With the help of custom elements the input component used is abstracted and can then be reused like a normal HTML element.
+These custom elements do not have a render cycle built in natively but are only used to encapsulate logic. Puerro provides a combination of state management and custom elements which results in highly reusable components. The previously used example of a simple calculator can be found in the [Puerro Examples](../examples/web-components). With the help of custom elements, the input component used is abstracted and can then be reused like a normal HTML element.
 
 ```js
 class MainComponent extends PuerroElement {
@@ -134,33 +134,33 @@ They can then be used like normal HTML elements with the previously defined sele
 
 Although not yet supported in all browsers, according to [caniuse.com](https://caniuse.com/#search=custom elements) custom elements are already supported for 86% of internet users. For all 
 
-## Id Management
+## ID Management
 
 If data is stored on the client side but changes have to be reflected in a persistence system (like a database) on the backend, id management becomes a difficult task. This is commonly the case for CRUD like applications. For the end user there is usually a master view in which all entries of an entity are shown and a detail view which displays and lets the user edit one selected entry. The problem which now arises is the creation of an ID. The question is when must the ID be created?
 
 Below are a few different approaches which can be taken.
 
-### Create an empty entry
+### Create an Empty Entry
 
 One approach is to create an empty entry on the database and then let the user update this new entry. The problem with this strategy that the database initially contains an invalid entry which is hard to manage if for instance database constraints are in place.
 
-### Generate the ID on the client side
+### Generate the ID on the Client-Side
 
-Generating an ID can also be done on the client side and then sent along with the other properties of an entry to the backend. This approach works well if only one person uses the system but crumbles fast if there are multiple users. If two users create a new entry with the same database state they will generate the same ID (if the id is incremental and not probabilistic). This causes a conflict in the database which is hard to resolve.
+Generating an ID can also be done on the client side and then sent along with the other properties of an entry to the backend. This approach works well if only one person uses the system but crumbles fast if there are multiple users. If two users create a new entry with the same database state, they will generate the same ID (if the id is incremental and not probabilistic). This causes a conflict in the database which is hard to resolve.
 
-### Generate the ID on first save
+### Generate the ID on First Save
 
 Another approach is to create the entry on the database as soon as it is first saved by the user. With this approach the ID is only known after the entry is sent to the backend once. It then has to be updated with this new ID for the master view.
 
 ## Testability
 
-Since the Puerro implementation of the state management uses the vDOM, the same advantages in testability apply to this chapter as well.
+Since the Puerro implementation of the state management uses the virtual DOM, the same advantages in testability apply to this chapter as well.
 
 The described example can be found in the [Puerro Examples](../examples/state-management).
 
 ## Use Cases
 
-State management becomes relevant pretty quickly. As soon as data not only gets displayed but also has to be changed and stored, the need for some sort of state managment arises.
+State management becomes relevant pretty quickly. As soon as data not only gets displayed but also has to be changed and stored, the need for some sort of state management arises.
 
 - Applications which need to store data on the client side.
 - Reactive applications which work with user interactions.

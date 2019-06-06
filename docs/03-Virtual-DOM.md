@@ -32,7 +32,7 @@ This is a simple example to change a table item and adding a new row:
 </body>
 ```
 Most of the time it is easier to perform more expensive operations and updating larger parts of the DOM.
-This includes the re-rendering of nodes which don't change. As seen in the last chapter, this has some disadvantages, as references and registered event listeners are getting lost. Plus it can be vulnerable for XSS attacks if the content is not being sanitized first.
+This includes the re-rendering of nodes which don't change. As seen in the last chapter, this has some disadvantages, as references and registered event listeners are getting lost. Plus, it can be vulnerable for XSS attacks if the content is not being sanitized first.
 
 ```js
 const $tbody = document.querySelector('tbody');
@@ -46,15 +46,15 @@ $tbody.innerHTML = `
 `;
 ```
 
-The virtual DOM solves this problem of needing to frequently update the DOM. It is not an official specification, but rather a new method of interfacing with the DOM. It can be thought of as a abstraction or copy of the DOM.
+The virtual DOM solves this problem of needing to frequently update the DOM. It is not an official specification, but rather a new method of interfacing with the DOM. It can be thought of as an abstraction or copy of the DOM.
 
 Basically, the virtual DOM is just a regular JavaScript object representing HTML markup. It can be manipulated freely and frequently without using the DOM API. Whenever needed, it can execute the specific changes it needs to make to the original DOM. 
 
-Puerro has it's own implementation of the virtual DOM. [Check it out](../src/#virtual-dom).
+Puerro has its own implementation of the virtual DOM. [Check it out](../src/#virtual-dom).
 
 ## Creating a Virtual DOM
 
-Since the virtual DOM is just an JavaScript objects, it can be created like this:
+Since the virtual DOM is just a JavaScript objects, it can be created like this:
 
 ```js
 const vDOM = {
@@ -102,7 +102,7 @@ const createVDOM = items => h('tbody', {},
 
 Spaces, tabs, or line breaks are all white spaces which are used to format code. In HTML markup, these white spaces are normally only for readability purposes and are not impacting the layout of a page.
 
-However, there are exceptions. In case there are white spaces between inline elements, the are getting collapsed and displayed as a single space.
+However, there are exceptions. In case there are white spaces between inline elements, they are getting collapsed and displayed as a single space.
 
 ```html
 <button>Puerro</button>
@@ -125,12 +125,12 @@ Without the white spaces, there is no gap between the elements.
 
 > How exactly white spaces are handled can be read in the [CSS Text Module Level 3 Specification](https://www.w3.org/TR/css-text-3).
 
-This needs to be taken into consideration when creating virutal elements since white spaces are not being created.
+This needs to be taken into consideration when creating virtual elements since white spaces are not being created.
 A possible workaround could be to use an advanced templating language like JSX. 
 
 #### JSX (JavaScript XML)
 
-JSX is a preprocessor step which allows to write virtual DOM elements with the HTML/XML syntax. Basically, it compiles XML syntax into the above described notation using the `h` function before usinging it as a JavaScript file.
+JSX is a pre-processor step which allows to write virtual DOM elements with the HTML/XML syntax. Basically, it compiles XML syntax into the above described notation using the `h` function before using it as a JavaScript file.
 
 This project does not go into more detail on how it works and how to use it.
 
@@ -160,7 +160,7 @@ This illustration shows how rerendering works, when the orange node changed but 
 
 ### Identity Problem
 
-Another problem when completly rerendering a large amount of elements is that they loose their identity. This is noticable when a selected element or an element containing temporary state is being rerender. In that case, the focus is being lost which is not good from a usability point of view.
+Another problem when completely rerendering a large amount of elements is that they lose their identity. This is noticeable when a selected element or an element containing temporary state is being rerender. In that case, the focus is being lost which is not good from a usability point of view.
 
 // TODO: GIF show problem.
 
@@ -246,7 +246,7 @@ As in most abstractions, simplicity comes with the price of reduced flexibility.
 
 Furthermore, the virtual DOM requires to completely build up a virtual view with all its sub elements, even though most of the content might never change and could be coded directly into the HTML view.
 
-Handling state in the frontent is still not controlled in a structured way and updates on the view need to be triggered manually.
+Handling state in the frontend is still not controlled in a structured way and updates on the view need to be triggered manually.
 
 ### Disadvantages
 

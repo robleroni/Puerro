@@ -25,7 +25,7 @@ Both approaches have their advantages and disadvantages.
 
 One disadvantage of the server-side approach is, that with every request the browser needs to reload the whole page. This is very time consuming and doesn't provide a great user experience.
 
-Amongst other reasons, this is why the modern way to develop web applications is with client-side scripting.
+Amongst other reasons, that is why the modern way to develop web applications is with client-side scripting.
 
 Client-side scripting allows for remote API calls (also known as **Ajax** calls). With these the browser can asynchronously load only the data needed and dynamically change the web page with JavaScript. This provides a much better user experience as the page doesn't need to reload completely.
 
@@ -37,7 +37,7 @@ Each technology has their own _way of working_ which doesn't integrate well with
 This makes it, especially in the fast changing web front-end world, a challenging problem.
 
 It takes a lot of time to learn a new framework/library and to build an application with it.
-This could be a bad investment, as the technology is very likely outdated soon and the application would need to be rebuild nearly from scratch.
+This could be a bad investment, as the technology is very likely outdated soon, and the application would need to be rebuild nearly from scratch.
 
 Additionally, they usually build up a huge dependency chain. This means that you, as the end-developer, can't control every part of your application. If only one of the dependencies is insecurely built, fails, or runs something which it is not supposed to, it puts your entire application at risk.
 
@@ -47,7 +47,7 @@ The goal of this project is to explore new, unconventional, and unorthodox appro
 
 The purpose of this project is to research and evaluate frontend approaches which can be done in different ways. One of the main concerns is, that the different ideas are not only looked at on an abstract level far from reality. That is why the main research for this project is done as a project simulation. This simulation is separated into iterations with ever increasing requirements for a fictional web application.
 
-With each iteration the imaginary customer communicates requirements to the developer which is implementing them. With the specification in place, multiple approaches are evaluated and one is chosen to actually implement the customers whishes.
+With each iteration the imaginary customer communicates requirements to the developer which is implementing them. With the specification in place, multiple approaches are evaluated, and one is chosen to actually implement the customers wishes.
 
 The claims made during this project documentation would lose their significance with a project that is too specific. That is why the outcome of the fictional project is essentially a CRUD (Create, Read, Update, Delete) application with different views. Implementing CRUD's is also one of the main purposes of many of the modern frontend frameworks and generally a good use case to test the hypotheses made during the project.
 
@@ -57,7 +57,7 @@ To make our examples and research work in real-life scenarios there would be a n
 
 To explore how JavaScript and HTML work and interact with each other in depth, styling, specifically CSS is also considered out of scope.
 
-Build tooling and browser compatibility is a big part in today's frontend world. Again to keep the focus and not get distracted by tooling, this project is respecting the following standards and the browsers which support those:
+Build tooling and browser compatibility is a big part in today's frontend world. Again, to keep the focus and not get distracted by tooling, this project is respecting the following standards and the browsers which support those:
 
 - HTML5
 - CSS3
@@ -100,7 +100,7 @@ We also want to provide the easiest possible way to interact with our findings. 
 
 ### JSDoc
 
-To provied a better code understanding, we use the markup language JSDoc to annotate our JavaScript files. Using JSDoc comments, we describe the interface and usage of our functions. As with Javadoc, JSDoc can be used to generate a documentation in accessible formats like HTML. Another powerful feature of JSDoc is that in in modern text editors (e.g. VS Code or WebStorm) the type of the parameters can be taken into consideration. This allows to use a better intellisense and provides a way for checking types.
+To provide a better code understanding, we use the markup language JSDoc to annotate our JavaScript files. Using JSDoc comments, we describe the interface and usage of our functions. As with Javadoc, JSDoc can be used to generate a documentation in accessible formats like HTML. Another powerful feature of JSDoc is that in in modern text editors (e.g. VS Code or WebStorm) the type of the parameters can be taken into consideration. This allows to use a better intellisense and provides a way for checking types.
 
 ### Variables Notation
 
@@ -109,7 +109,7 @@ To better differentiate between our variables, we prepend them with the followin
 - `$` - when referring to real DOM's, e.g. `$div`
 - `v` - when referring to virtual DOM's, e.g. `vDiv`
 
-In case variables are unused and can be ignored, we wil simply use an underscore to signmalize that it is _throwawayable_.
+In case variables are unused and can be ignored, we will simply use an underscore to signalize  that it is _throwawayable_.
 
 ```js
 $element.addEventListener('click', _ => console.log('clicked'));

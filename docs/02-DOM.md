@@ -2,10 +2,10 @@
 
 While a browser receives an HTML source file, it starts to parse it piece by piece to construct an object representation of the document called the DOM ([Document Object Model](https://www.w3.org/DOM/)) tree. Simultaneously, the DOM is being converted into a _render tree_, which represents what eventually is being painted. The document can start being rendered and painted in the browser before it is fully loaded. Unless it is blocked by CSS or JavaScript.
 
-When the parser comes across CSS code, the rendering process is being blocked until the the CSS is fully parsed.
-Similar as before, the browser now constructs a CSSOM ([CSS Object Model](https://www.w3.org/TR/cssom-1/)) tree which associates the styles to each node. After parsing the CSS, a combination of the DOM and CSSOM are being used for continue creating the _render tree_.
+When the parser comes across CSS code, the rendering process is being blocked until the CSS is fully parsed.
+Similar as before, the browser now constructs a CSSOM ([CSS Object Model](https://www.w3.org/TR/cssom-1/)) tree which associates the styles to each node. After parsing the CSS, a combination of the DOM and CSSOM are being used for continuing creating the _render tree_.
 
-Even though the rendering process can be blocked by CSS, the DOM is still being parsed. Unless it comes across JavaScript. When the parser reaches a `<script>` tag, the parsing stops and the script is being executed.
+Even though the rendering process can be blocked by CSS, the DOM is still being parsed. Unless it comes across JavaScript. When the parser reaches a `<script>` tag, the parsing stops, and the script is being executed.
 This is the reason that a JavaScript file needs to be placed after the appearance of a referenced element in the script.
 
 Previously, it has been best practice to always include the `<script>` tags at the end of the document to make sure that all the elements are available and to not block the rendering and therefore painting process of the browser.
@@ -27,7 +27,7 @@ Nowadays, there are other options to avoid that JavaScript is being parser block
 
 ## Manipulating the DOM
 
-Basically, the DOM in an interface for HTML (and XML) documents which represents the page. It is dynamic and the browsers provide an API to read and change the content, structure, and style of the document via JavaScript.
+Basically, the DOM in an interface for HTML (and XML) documents which represents the page. It is dynamic, and the browsers provide an API to read and change the content, structure, and style of the document via JavaScript.
 This allows for changing parts of the website without the need of a refresh and therefore a repaint of the whole page.
 
 JavaScript has access to a global object. In a browser, `window` is the global object and represents the window/tab of the browser in which the script is running. One of its property is `window.document` which serves as an entry point to the parsed DOM tree.
@@ -36,7 +36,7 @@ JavaScript has access to a global object. In a browser, `window` is the global o
 
 The `document` interface can now be used to manipulate the DOM.
 
-As en example let's create an HTML file:
+As an example let's create an HTML file:
 
 ```html
 <!DOCTYPE html>
@@ -70,8 +70,8 @@ document.body.appendChild($button);               // Changing DOM structure
 
 There are three different ways to access the content of a DOM element.
 
-1. **`element.textContent`**: represents the text content of a node as it is in the DOM. Therefore, it doesn't include the HTML tags but keeps the content of non visible elements. For example the content of `<script>`or `<style>` tags.
-2. **`element.innerText`**: similar to `textContent`but uses CSS knowledge and only returns visible content. This has the disadvantages that reading a value with `innerText`triggers a reflow to ensure up-to-date computed styles. This can be computationally expensive and should be avoided when possible.
+1. **`element.textContent`**: represents the text content of a node as it is in the DOM. Therefore, it doesn't include the HTML tags but keeps the content of non-visible elements. For example, the content of `<script>` or `<style>` tags.
+2. **`element.innerText`**: similar to `textContent` but uses CSS knowledge and only returns visible content. This has the disadvantages that reading a value with `innerText`triggers a reflow to ensure up-to-date computed styles. This can be computationally expensive and should be avoided when possible.
 3. **`element.innerHTML`**: represents the HTML source of the element. It should only be used when the intention is to work with HTML markup. Misusing it for text is not optimal for performance and it is vulnerable to XSS attacks.
 
 ### Creating Elements
@@ -105,7 +105,7 @@ document.body.insertAdjacentHTML('beforeend', '<p>Lean as a Leek</p>'); // No co
 $h1.textContent = 'Puerro';				                // Reference still works
 ```
 
-This combination between `innerHTML` and references is not very readable. Plus when dealing with registering event listeners as well, it can get complicated. If a reference to a created element should exist at a later time, it is advisable to use the `document.createElement` method.
+This combination between `innerHTML` and references is not very readable. Plus, when dealing with registering event listeners as well, it can get complicated. If a reference to a created element should exist at a later time, it is advisable to use the `document.createElement` method.
 
 ```js
 const $input = document.createElement('input');
@@ -133,9 +133,9 @@ document.body.append($input, $button);
 After the HTML has been parsed, rendered and painted, the browser is usually waiting for user interactions.
 For this to work the browser uses an event-driven programming model to notify the JavaScript code about what's happening on the page.
 
-There are a lot of different events. For example, when the dom is finished with loading, clicking elements, typing on the keyboard, scrolling and many more.
+There are a lot of different events. For example, when the DOM is finished with loading, clicking elements, typing on the keyboard, scrolling and many more.
 
-In order react to an event, `Event Handlers`are used. It is a function which is being called from the browser when an event occurs.
+In order react to an event, `Event Handlers` are used. It is a function which is being called from the browser when an event occurs.
 
 When an event is fired, the first parameter an handler receives is an [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event) object which contains useful information and methods. The most used are:
 
@@ -160,7 +160,7 @@ But especially for larger projects this is considered a bad practice as it is ha
 
 #### DOM on-Event Handlers
 
-A better way is to register the event handlers in the JavaScript code. It is similar to the inline event handlers but it respects the separation of concerns and the scope is more controllable.
+A better way is to register the event handlers in the JavaScript code. It is similar to the inline event handlers, but it respects the separation of concerns and the scope is more controllable.
 
 ```js
 $button.onclick = event => console.log('Button clicked');
@@ -176,7 +176,7 @@ The most modern approach is to use the `element.addEventListener()` function. It
 $button.addEventListener('click', event => console.log('Button clicked'));
 ```
 
-With this approach it is also possible ro remove listeners with the `element.removeEventListener()` function.
+With this approach it is also possible to remove listeners with the `element.removeEventListener()` function.
 Another advantage is the ability to choose between event bubbling and capturing.
 
 ### Bubbling and Capturing
@@ -209,7 +209,7 @@ With the following example, the events bubble. Meaning they are propagated upwar
 </body>
 ```
 
-In order to make sure that the DIV event listeners triggers first, the methods `useCapture`parameter needs to be true.
+To make sure that the DIV event listeners triggers first, the methods `useCapture` parameter needs to be true.
 All the event handlers with `useCapture` enabled run first (top down), afterwards the bubbling handlers (bottom up).
 
 ```js
@@ -264,9 +264,9 @@ In order to use the `<form>` tag without it being submitted, an event handler ha
 
 > A button can have 3 different types: `submit`, `reset` and `button`.
 > The default type is `submit` which will attempt to submit form data when clicked.
-> When the intention is to use a button without a default behavior, explicitly specify `type="button"`.
+> When the intention is to use a button without a default behaviour, explicitly specify `type="button"`.
 
-> A `<form>` can also be submitted by pressing _enter_ or via JavaScript. Therefore using a `<button type="button">` with a click event handler won't be enough.
+> A `<form>` can also be submitted by pressing _enter_ or via JavaScript. Therefore, using a `<button type="button">` with a click event handler won't be enough.
 > Plus receiving the target form in the event is a huge benefit.
 
 ## Testability
@@ -295,7 +295,7 @@ Furthermore, this approach can quickly become difficult to maintain.
 
 A better approach for a simplified testability is to receive the nodes which are being manipulated as a parameter.
 
-The element which fires the event does not have to be passed as an argument because it is available trough `event.target`.
+The element which fires the event does not have to be passed as an argument because it is available through `event.target`.
 
 When new elements are being created, it is a good practice to return them for a more convenient testing.
 
@@ -386,9 +386,9 @@ It can be used for various tasks:
 
 ## Problems / Restrictions
 
-This approach is getting harder to maintain when either frontent state is being introduced or there are many changing elements. This is especially true when the application starts growing.
+This approach is getting harder to maintain when either frontend state is being introduced or there are many changing elements. This is especially true when the application starts growing.
 
-When an event triggers a lot of changes, a reference to each dependent element needs to be managed. If multiple elements need to be updated constantly and in short time frames, it can start to become really expensive to constantly query and update the DOM.
+When an event triggers a lot of changes, a reference to each dependent element needs to be managed. If multiple elements need to be updated constantly and in short time frames, it can start to become expensive to constantly query and update the DOM.
 Furthermore, when updates depend on data stored in the DOM, the decapsulation between view and model is not given.
 
 For large application there probably will be redundant code and all DOM related accesses are scattered through the code.
