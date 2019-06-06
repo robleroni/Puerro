@@ -4,30 +4,30 @@ The Puerro project is a knowledge acquisition about how to build modern frontend
 
 ## About Web Development
 
-Coding for the web means that the end-user can access the result trough a browser (e.g.: Chrome, Firefox, Safari, Edge or - unfortunately - Internet Explorer).
+Coding for the web means that the end-user can access the result trough a browser (e.g.: Chrome, Firefox, Safari, Edge or Internet Explorer).
 
 A browser can request data from different sources (servers) and display the received content.
 This content is usually a combination between these 3 different programming languages:
 
-- **HTML**: Describes the structure of the page
+- **HTML**: Describes the content and structure of the page
 - **CSS**: Describes the presentation of the page
 - **JavaScript**: Adds behaviour to the page - and makes it more dynamic
 
 A website is **static** when its content is fixed. It only uses HTML/CSS and there is no way to interact with it (other than linking to other pages). If you print it out, it still works.
 
-A website is **dynamic** when its content can change. This can be achieved with server-side (backend) or client-side (frontend) scripting. When the content changes from being just informational to being more interactive, we say that it is a **web application**.
+A website is **dynamic** when its content or structure changes. This can be achieved with a server-side (backend) or client-side (frontend) approach. When the content changes from being just informational to being more interactive, we say that it is a **web application**.
 
-With **Server-Side Scripting**, the script runs on the server, modifies the web page and sends the result back to the client. There are several programming languages available to work with it, like _PHP_, _Ruby_, etc.
+With a **Server-Side** approach, the logic runs on the server, modifies the web page and sends the result back to the client. There are several programming languages available to work with it, like _PHP_, _Ruby_, _Java_ etc.
 
-With **Client-Side Scripting** the script runs in the browser of the user. This is being achieved with the delivered **JavaScript**.
+With a **Client-Side** approach, a script runs in the browser of the user. This is being achieved with the delivered **JavaScript**.
 
-Both scripting approaches have their advantages and disadvantages.
+Both approaches have their advantages and disadvantages.
 
-One disadvantage of the server-side scripting is, that with every request the browser needs to reload the whole page. This is very time consuming and doesn't provide a great user experience.
+One disadvantage of the server-side approach is, that with every request the browser needs to reload the whole page. This is very time consuming and doesn't provide a great user experience.
 
 Amongst other reasons, this is why the modern way to develop web applications is with client-side scripting.
 
-Client-side scripting allows for **Ajax** calls. With these the browser can asynchronously load only the data needed and dynamically change the web page with JavaScript. This provides a much better user experience as the page doesn't need to reload completely.
+Client-side scripting allows for remote API calls (also known as **Ajax** calls). With these the browser can asynchronously load only the data needed and dynamically change the web page with JavaScript. This provides a much better user experience as the page doesn't need to reload completely.
 
 ## Purpose
 

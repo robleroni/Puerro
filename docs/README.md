@@ -11,9 +11,9 @@
 * [DOM](02-DOM.md)
   * [Manipulating the DOM](02-DOM.md#manipulating-the-dom)
   * [Event-Driven Actions](02-DOM.md#event-driven-actions)
-  * [Testable Units](02-DOM.md#testable-units)
+  * [Testability](02-DOM.md#testability)
   * [Use Cases](02-DOM.md#use-cases)
-  * [Difficulties/Restrictions](02-DOM.md#dfficulties--restrictions)
+  * [Problems/Restrictions](02-DOM.md#problems--restrictions)
 * [Virtual DOM](03-Virtual-DOM.md)
   * [Creating a Virtual DOM](03-Virtual-DOM.md#creating-a-virtual-dom)
   * [Rendering](03-Virtual-DOM.md#rendering)
@@ -36,4 +36,4 @@
   * [Testability](05-MVC.md#testability)
   * [Use Cases](05-MVC.md#use-cases)
   * [Problems/Restrictions](05-MVC.md#problems--restrictions)
-* Conclusion
+* [Conclusion](06-Conclusion.md)

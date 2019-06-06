@@ -10,7 +10,7 @@ This is the reason that a JavaScript file needs to be placed after the appearanc
 
 Previously, it has been best practice to always include the `<script>` tags at the end of the document to make sure that all the elements are available and to not block the rendering and therefore painting process of the browser.
 
-Nowadays, there are other options to avoid that JavaScript is being parser blocking:
+Nowadays, there are other options to avoid that JavaScript is being parser blocking. For example:
 
 ```html
 <script async src="script.js"> // Script is executed asynchronously, while the page continues parsing
@@ -20,12 +20,17 @@ Nowadays, there are other options to avoid that JavaScript is being parser block
 <script defer src="script.js"> // Script is executed when the page has finished parsing
 ```
 
+> This image summarizes the many different approaches to load JavaScript code.
+> ![Script-Loadings](assets/img/asyncdefer.svg)
+> More information can be found in the [HTML5 specification](https://html.spec.whatwg.org/multipage/scripting.html)
+
+
 ## Manipulating the DOM
 
 Basically, the DOM in an interface for HTML (and XML) documents which represents the page. It is dynamic and the browsers provide an API to read and change the content, structure, and style of the document via JavaScript.
 This allows for changing parts of the website without the need of a refresh and therefore a repaint of the whole page.
 
-JavaScript has access to the global `window` object which represents the window/tab of the browser in which the script is running. One of its property is `window.document` which serves as an entry point to the parsed DOM tree.
+JavaScript has access to a global object. In a browser, `window` is the global object and represents the window/tab of the browser in which the script is running. One of its property is `window.document` which serves as an entry point to the parsed DOM tree.
 
 > Because `window` is the global object, there is no need to reference its properties (e.g. `document`) via `window`. The property name can be used directly as the script will figure out the global object at runtime.
 
@@ -264,13 +269,14 @@ In order to use the `<form>` tag without it being submitted, an event handler ha
 > A `<form>` can also be submitted by pressing _enter_ or via JavaScript. Therefore using a `<button type="button">` with a click event handler won't be enough.
 > Plus receiving the target form in the event is a huge benefit.
 
-## Testable Units
+## Testability
 
 When event handler functions receive events, they can in turn manipulate the DOM.
 
 ![Event-Flow](assets/img/events.png)
 
 For a handler function to manipulate the DOM, references to the elements to be manipulate are needed.
+This reference can either be already available in the surrounding scope or can be created in the function itself.
 
 ```js
 const handleEvent = event => {
@@ -287,9 +293,7 @@ $element.addEventListener('click', handleEvent);
 This gets problematic when the intention is to test this unit, since the DOM might not be available.
 Furthermore, this approach can quickly become difficult to maintain.
 
-A better approach is to receive the nodes which are being manipulated as a parameter.
-
-**TODO dk: this is not the only alternative. Very often you have a suitable reference in the surrounding scope!**
+A better approach for a simplified testability is to receive the nodes which are being manipulated as a parameter.
 
 The element which fires the event does not have to be passed as an argument because it is available trough `event.target`.
 
@@ -380,7 +384,7 @@ It can be used for various tasks:
 - Easy to understand.
 - Fast.
 
-## Difficulties / Restrictions
+## Problems / Restrictions
 
 This approach is getting harder to maintain when either frontent state is being introduced or there are many changing elements. This is especially true when the application starts growing.
 
