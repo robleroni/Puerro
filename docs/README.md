@@ -1,5 +1,27 @@
 # Abstract
 
+Nowadays, most web UI's depend on frontend frameworks/libraries (like Angular, Vue or React). These technologies are powerful, but they also lock programmers in by making it difficult to have a presentation layer independent of the rendering technology.
+
+Each technology has their own _way of working_ which doesn't integrate well with others. Therefore, learning a new framework/library could be a bad investment, as the technology might be outdated soon.
+
+With this project, we want to research and evaluate different approaches to build modern frontend web applications as simple as possible. In order to not lose our train of thoughts, we limit this project's scope to frontend development using the technology standards HTML5, CSS3 and ES6.
+
+To simulate real problems, the research process is built around a fictitious CRUD (Create, Read, Update, Delete) [application](../huerto).
+
+It turned out, that there is not one single best way to handle every problem. Depending on the size and complexity of the application, different approaches should be considered.
+
+If the goal is a dynamic informational website or a small web application, without a lot of internal state and little changing parts, the easiest solution is using plain and direct DOM maipulations with JavaScript.
+
+As soon as there is a lot of changing content, direct DOM manipulations can get chunky and hard to maintain. Therefore, it is advisable to use a virtual DOM in order to change multiple elements regularly. A virtual DOM abstraction is useful for single view applications with huge and periodically changing DOM trees.
+
+When developing frontend applications, handling and storing data on the client becomes quickly relevant. Normally, when state changes, the DOM needs to be updated accordingly. Doing this manually could lead to redundant code and doesn't comply with the separation of concerns pattern. Among other options, there is the possibility to combine state management with the virtual DOM and delegating the DOM access to a centralized location.
+
+Another approach to separate the data, view and logic is with the well-known MVC pattern. Using its unidirectionally dataflow has the benefit of an improved understandability and maintainability especially for larger applications with a lot of logic. The only abstraction needed for this to work are observables.
+
+For most applications, using a framework is not necessary. It comes with many dependencies, more features you will ever need, and it is hard to fully understand every peculiarity. Plus, it locks a developer in a predefined structure which makes it hard to switch the technology once started.
+
+Therefore, it is often better to reach for simplicity instead of predetermined complexity.
+
 # Table of Contents
 
 * [Introduction](01-Introduction.md)

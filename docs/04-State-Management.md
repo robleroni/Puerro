@@ -16,7 +16,7 @@ const vDOM = h('form', { },
 );
 
 const render = () => {
-	// handle rendering; in this case with the VDOM
+	// handle rendering; in this case with the virtual DOM
 }
 ```
 

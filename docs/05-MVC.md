@@ -5,7 +5,7 @@ MVC has been around in the software development world for quite a while and is a
 
 An MVC (Model-View-Controller) application is, as the name suggests, divided into _Model_, _View_ and _Controller_. The following illustration represent how the data and events flow through the three components:
 
-![MVC](assets/img/MVC.png)
+<img alt='MVC' src='./assets/img/MVC.png' width=400px>
 
 [MVC Wikipedia](https://en.wikipedia.org/wiki/Model–view–controller)
 
@@ -122,7 +122,7 @@ Many modern frontend frameworks like Vue.JS and Angular (not React) work with bi
 
 MVC does not permit bidirectional binding by design which might feel like a restriction from time to time but is essential to prevent bugs and keep the codebase understandable and maintainable. If it would allow bidirectional binding the graph would look like this:
 
-![MVC](assets/img/MVC-Bidirectional.png)
+<img alt='MVC' src='./assets/img/MVC-Bidirectional.png' width=400px>
 
 This would defeat the whole purpose of the controller, by leaving it out. With this architecture we can never be quite sure that all the necessary business logic is executed.
 
