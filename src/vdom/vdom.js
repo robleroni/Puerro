@@ -5,11 +5,37 @@
  * @module vdom
  */
 
-export { h, toVDOM, createDomElement, render, mount, diff, changed, mountMVC };
+export { createDomElement, h, toVDOM, render, mount, diff, changed, mountMVC };
 
 /**
  * @typedef {{ tagName: string, attributes: object, children: any  }} VNode
  */
+
+ /**
+ * Creates a new HTML Element.
+ * If the attribute is a function it will add it as an EventListener.
+ * Otherwise as an attribute.
+ *
+ * @param {string} tagName name of the tag
+ * @param {object} attributes attributes or listeners to set in element
+ * @param {*} innerHTML content of the tag
+ *
+ * @returns {function(content): HTMLElement}
+ */
+const createDomElement = (tagName, attributes = {}, innerHTML = '') => {
+  const $element = document.createElement(tagName);
+  $element.innerHTML = innerHTML;
+  Object.keys(attributes)
+    .filter(key => null != attributes[key]) // don't create attributes with value null/undefined
+    .forEach(key => {
+      if (typeof attributes[key] === 'function') {
+        $element.addEventListener(key, attributes[key]);
+      } else {
+        $element.setAttribute(key, attributes[key]);
+      }
+    });
+  return $element;
+};
 
 /**
  * Creates a node object which can be rendered
@@ -51,33 +77,8 @@ const toVDOM = $node => {
 };
 
 /**
- * Creates a new HTML Element.
- * If the attribute is a function it will add it as an EventListener.
- * Otherwise as an attribute.
- *
- * @param {string} tagName name of the tag
- * @param {object} attributes attributes or listeners to set in element
- * @param {*} innerHTML content of the tag
- *
- * @returns {function(content): HTMLElement}
- */
-const createDomElement = (tagName, attributes = {}, innerHTML = '') => {
-  const $element = document.createElement(tagName);
-  $element.innerHTML = innerHTML;
-  Object.keys(attributes)
-    .filter(key => null != attributes[key]) // don't create attributes with value null/undefined
-    .forEach(key => {
-      if (typeof attributes[key] === 'function') {
-        $element.addEventListener(key, attributes[key]);
-      } else {
-        $element.setAttribute(key, attributes[key]);
-      }
-    });
-  return $element;
-};
-
-/**
  * renders a given node object
+ * 2 of 8 nodes https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
  *
  * @param {VNode} node
  *

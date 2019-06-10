@@ -1,3 +1,9 @@
+/**
+ * A Module that abstracts MVC interactions using the virtual DOM as a renderer.
+ *
+ * @module mvc
+ */
+
 import { render, diff } from '../vdom/vdom';
 import { ObservableObject } from '../observable/observable';
 

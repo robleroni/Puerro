@@ -17,55 +17,37 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
-
-    
-
-
-
-    
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
+    <h1>Puerro</h1>
 
     <section>
-        <article><h1>Puerro</h1>
-<p>Puerro provides the following abstractions
-TODO: See the generated jsdoc for full specifications..</p>
-<h2><code>createDomElement</code></h2>
-<p>In order to simplify creating DOM elements.</p>
-<p>Usage: tagName, attributes, innerHTML
-(Parameters, output)..</p>
+        <article>
+Puerro provides the following abstractions:</p>
+<h2>Virtual DOM</h2>
+<h3><code>createDomElement</code></h3>
+<p>Simplifying creating DOM elements.</p>
 <pre class="prettyprint source lang-js"><code>const $button = createDomElement('button', { type: 'button', click: _ => console.log('Clicked')}, 'Go')
 </code></pre>
-<h2><code>vNode</code> / <code>h</code></h2>
-<p>In order to create virtual DOM elements...</p>
+<h3><code>h</code></h3>
+<p>Creating virtual DOM elements.</p>
 <pre class="prettyprint source lang-javascript"><code>const vDOM = h('div', {}, 
   h('button', {type: 'button' }, 'Click'),
   h('input'),
 );
 </code></pre>
-<h2><code>render</code></h2>
-<p>In order to render virtual DOM elements...</p>
-<p>2 of 8 nodes https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType</p>
+<h3><code>toVDOM</code></h3>
+<p>Converting DOM elements to virtual DOM elements.</p>
+<pre class="prettyprint source lang-javascript"><code>const vDOM = toVDOM(createDomElement('button'));
+</code></pre>
+<h3><code>render</code></h3>
+<p>Rendering virtual DOM elements.</p>
 <pre class="prettyprint source lang-javascript"><code>const $dom = render(vDOM);
 </code></pre>
-<h2><code>diff</code></h2>
-<h2><code>mount</code></h2>
+<h3><code>diff</code></h3>
+<p>Applying virtual DOM differences to DOM element.</p>
+<pre class="prettyprint source lang-js"><code>diff(document.body, h('h1', {}, 'Puerro'), toVDOM(document.body.firstElementChild));
+</code></pre>
+<h3><code>mount</code></h3>
+<p>Mounting stateful virtual DOM to DOM.</p>
 <pre class="prettyprint source lang-javascript"><code>const vDOM = ({ state, setState }) =>
     h(&quot;div&quot;, {},
         h(&quot;label&quot;, {}, &quot;Vegetable&quot;),
@@ -75,13 +57,82 @@ TODO: See the generated jsdoc for full specifications..</p>
 
 mount(document.body, vDOM, { value: '' }, true);
 </code></pre>
-<h2><code>Observable</code></h2>
+<h2>Web Components</h2>
+<h3><code>PuerroElement</code></h3>
+<pre class="prettyprint source lang-javascript"><code>class MyComponent extends PuerroElement {
+  static get Selector() { return 'my-component' };
+  
+  constructor() {
+    super({ counter: 0 });
+  }
+
+  render() {
+    return h('div', {}, 
+      h('button', { click: evt => this.setState({ counter: this.state.counter + 1})}, 'Increment'),
+      h('output', {}, this.state.counter),
+    );
+  }
+}
+
+window.customElements.define(MyComponent.Selector, MyComponent);
+
+document.body.append(createDomElement('my-component'));
+</code></pre>
+<h2>MVC</h2>
+<h3><code>Observable</code></h3>
+<p>Creating and handling observables.</p>
 <pre class="prettyprint source lang-javascript"><code>const observable = Observable('Tomato');
 
-observable.onChange((newValue, oldValue) => console.log(newValue)) // Tomato
-observable.set('Leek')                                             // Leek
+observable.onChange((newValue, oldValue) => console.log(newValue)); // Tomato
+observable.set('Leek');                                             // Leek
 </code></pre>
-<p>...</p></article>
+<h3><code>ObservableList</code></h3>
+<p>Creating and handling observable lists.</p>
+<pre class="prettyprint source lang-javascript"><code>const list = ObservableList([]);
+
+list.onAdd(value => console.log(value));
+list.add('Puerro');
+</code></pre>
+<h3><code>ObservableObject</code></h3>
+<p>Creating and handling observable objects.</p>
+<pre class="prettyprint source lang-javascript"><code>const object = ObservableObject({});
+
+object.onChange (         console.log);
+object.subscribe('value', console.log);
+
+object.set({ value: 1 });
+</code></pre>
+<h3><code>Controller</code></h3>
+<p>Controller for rendering with virtual DOM.</p>
+<pre class="prettyprint source lang-javascript"><code>class MyController extends Controller {
+  increment() {
+    this.state.push('counter', this.model.counter + 1);
+  }
+}
+
+const model = { counter: 0 };                                          // model
+const view = controller => h('outtput', {}, controller.model.counter); // view
+const controller = new MyController(document.body, model, view);
+
+controller.increment();
+</code></pre>
+<h2>Testing</h2>
+<h3><code>describe</code></h3>
+<pre class="prettyprint source lang-javascript"><code>describe('TestSuite Name', test => {
+  test('creatingDOMElement', assert => {
+    // given
+    const tagName = 'div';
+    const content = 'test123';
+
+    // when
+    const $el = createDomElement(tagName, {}, content);
+
+    // then
+    assert.is($el.innerText, content);
+    assert.is($el.tagName.toLowerCase(), tagName);
+  });
+});
+</code></pre></article>
     </section>
 
 
@@ -92,13 +143,13 @@ observable.set('Leek')                                             // Leek
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-observable.html">observable</a></li><li><a href="module-vdom.html">vdom</a></li></ul><h3>Classes</h3><ul><li><a href="PuerroElement.html">PuerroElement</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-mvc.html">mvc</a></li><li><a href="module-observable.html">observable</a></li><li><a href="module-vdom.html">vdom</a></li><li><a href="module-web-components.html">web-components</a></li></ul><h3>Classes</h3><ul><li><a href="module-web-components-PuerroElement.html">PuerroElement</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.2</a> on Mon Jun 10 2019 18:43:39 GMT+0200 (GMT+02:00)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.2</a> on Mon Jun 10 2019 19:42:02 GMT+0200 (GMT+02:00)
 </footer>
 
 <script> prettyPrint(); </script>

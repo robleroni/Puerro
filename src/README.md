@@ -1,22 +1,21 @@
 # Puerro
 
-See the generated [JSDoc](jsdocs) for the full documentation.
-Puerro provides the following abstractions
+See the generated [JSDoc](https://robin-fhnw.github.io/IP5-Puerro/src/jsdocs/) for the full documentation.
+Puerro provides the following abstractions:
 
-## `createDomElement`
+## Virtual DOM
 
-In order to simplify creating DOM elements.
+### `createDomElement`
 
-Usage: tagName, attributes, innerHTML
-(Parameters, output)..
+Simplifying creating DOM elements.
 
 ```js
 const $button = createDomElement('button', { type: 'button', click: _ => console.log('Clicked')}, 'Go')
 ```
 
-## `vNode` / `h`
+### `h`
 
-In order to create virtual DOM elements...
+Creating virtual DOM elements.
 
 ```javascript
 const vDOM = h('div', {}, 
@@ -25,20 +24,34 @@ const vDOM = h('div', {},
 );
 ```
 
-## `render`
+### `toVDOM`
 
-In order to render virtual DOM elements...
+Converting DOM elements to virtual DOM elements.
 
-2 of 8 nodes https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
+```javascript
+const vDOM = toVDOM(createDomElement('button'));
+```
+
+
+### `render`
+
+Rendering virtual DOM elements.
 
 ```javascript
 const $dom = render(vDOM);
 ```
 
-## `diff`
+### `diff`
 
+Applying virtual DOM differences to DOM element.
 
-## `mount`
+```js
+diff(document.body, h('h1', {}, 'Puerro'), toVDOM(document.body.firstElementChild));
+```
+
+### `mount`
+
+Mounting stateful virtual DOM to DOM.
 
 ```javascript
 const vDOM = ({ state, setState }) =>
@@ -51,13 +64,104 @@ const vDOM = ({ state, setState }) =>
 mount(document.body, vDOM, { value: '' }, true);
 ```
 
-## `Observable`
+## Web Components
+
+### `PuerroElement`
+
+```javascript
+class MyComponent extends PuerroElement {
+  static get Selector() { return 'my-component' };
+  
+  constructor() {
+    super({ counter: 0 });
+  }
+
+  render() {
+    return h('div', {}, 
+      h('button', { click: evt => this.setState({ counter: this.state.counter + 1})}, 'Increment'),
+      h('output', {}, this.state.counter),
+    );
+  }
+}
+
+window.customElements.define(MyComponent.Selector, MyComponent);
+
+document.body.append(createDomElement('my-component'));
+```
+
+## MVC
+
+### `Observable`
+
+Creating and handling observables.
 
 ```javascript
 const observable = Observable('Tomato');
 
-observable.onChange((newValue, oldValue) => console.log(newValue)) // Tomato
-observable.set('Leek')                                             // Leek
+observable.onChange((newValue, oldValue) => console.log(newValue)); // Tomato
+observable.set('Leek');                                             // Leek
 ```
 
-...
+### `ObservableList`
+
+Creating and handling observable lists.
+
+```javascript
+const list = ObservableList([]);
+
+list.onAdd(value => console.log(value));
+list.add('Puerro');
+```
+
+### `ObservableObject`
+
+Creating and handling observable objects.
+
+```javascript
+const object = ObservableObject({});
+
+object.onChange (         console.log);
+object.subscribe('value', console.log);
+
+object.set({ value: 1 });
+```
+
+### `Controller`
+
+Controller for rendering with virtual DOM.
+
+```javascript
+class MyController extends Controller {
+  increment() {
+    this.state.push('counter', this.model.counter + 1);
+  }
+}
+
+const model = { counter: 0 };                                          // model
+const view = controller => h('outtput', {}, controller.model.counter); // view
+const controller = new MyController(document.body, model, view);
+
+controller.increment();
+```
+
+## Testing
+
+### `describe`
+
+```javascript
+describe('TestSuite Name', test => {
+  test('creatingDOMElement', assert => {
+    // given
+    const tagName = 'div';
+    const content = 'test123';
+
+    // when
+    const $el = createDomElement(tagName, {}, content);
+
+    // then
+    assert.is($el.innerText, content);
+    assert.is($el.tagName.toLowerCase(), tagName);
+  });
+});
+```
+

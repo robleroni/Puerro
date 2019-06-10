@@ -1,3 +1,9 @@
+/**
+ * A Module that abstracts web components.
+ *
+ * @module web-components
+ */
+
 import { diff, render } from '../vdom/vdom';
 
 

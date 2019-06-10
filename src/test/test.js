@@ -1,3 +1,9 @@
+/**
+ * A Module that abstracts testing.
+ *
+ * @module test
+ */
+
 import { createDomElement } from '../vdom/vdom';
 
 export { describe }

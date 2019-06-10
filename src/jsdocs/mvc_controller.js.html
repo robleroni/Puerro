@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: web-components/web-components.js</title>
+    <title>JSDoc: Source: mvc/controller.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: web-components/web-components.js</h1>
+    <h1 class="page-title">Source: mvc/controller.js</h1>
 
     
 
@@ -27,62 +27,60 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * A Module that abstracts web components.
+ * A Module that abstracts MVC interactions using the virtual DOM as a renderer.
  *
- * @module web-components
+ * @module mvc
  */
 
-import { diff, render } from '../vdom/vdom';
+import { render, diff } from '../vdom/vdom';
+import { ObservableObject } from '../observable/observable';
 
+export { Controller };
 
-export {
-  PuerroElement
-};
+const store = ObservableObject({});
 
-
-/**
- * @class PuerroElement
- * @description Abstract class which provides state to custom HTML elements.
- */
-class PuerroElement extends HTMLElement {
-  constructor(initialState = {}) {
-    super();
-    this.state = initialState;
+class Controller {
+  constructor($root, state, view, diffing = true) {
+    this.$root = $root;
+    this.state = ObservableObject({ ...state });
+    this.view = view;
+    this.diffing = diffing;
+    this.vDom = null;
+    this.init();
+    this.onInit();
   }
 
-  connectedCallback() {
-    this.refresh();
+  init() {
+    this.vDom = this.view(this);
+    this.$root.prepend(render(this.vDom));
+    this.store.onChange(s => this.refresh());
+    this.state.onChange(s => this.refresh());
   }
 
-  /**
-   * Sets a new state based on a given object or function
-   *
-   * @param {object | Function} newState
-   */
-  setState(newState) {
-    if (typeof newState === 'function') {
-      this.state = { ...this.state, ...newState(state) };
-    } else {
-      this.state = { ...this.state, ...newState };
-    }
-    this.refresh();
-  }
+  onInit() {}
 
-  /**
-   * refreshes the Dom
-   */
   refresh() {
-    const newVNode = this.render();
-    if (null == this.vNode) {
-      this.prepend(render(this.render()));
-    } else {
-      diff(this, newVNode, this.vNode);
-    }
-    this.vNode = newVNode;
+    const newVDom = this.view(this);
+    this.repaint(newVDom);
+    this.vDom = newVDom;
   }
 
-  render() { }
-}</code></pre>
+  repaint(newVDom) {
+    if (this.diffing) {
+      diff(this.$root, newVDom, this.vDom);
+    } else {
+      this.$root.replaceChild(render(newVDom), this.$root.firstChild);
+    }
+  }
+
+  get model() {
+    return { ...store.get(), ...this.state.get() };
+  }
+
+         get store() { return store; }
+  static get store() { return store; }
+}
+</code></pre>
         </article>
     </section>
 
