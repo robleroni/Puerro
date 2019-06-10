@@ -1,7 +1,7 @@
 # Puerro
 
+See the generated [JSDoc](jsdocs) for the full documentation.
 Puerro provides the following abstractions
-TODO: See the generated jsdoc for full specifications..
 
 ## `createDomElement`
 
