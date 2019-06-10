@@ -1,10 +1,10 @@
 import { h } from '../../src/vdom/vdom';
 
 export {
-  component
+  view
 }
 
-const component = ({ state, setState }) =>
+const view = ({ state, setState }) =>
   h('div', { },
     h('input', {
       type:  'number',

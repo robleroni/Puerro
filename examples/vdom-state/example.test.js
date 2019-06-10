@@ -1,5 +1,5 @@
 import { describe } from '../../src/test/test';
-import { component } from './example';
+import { view } from './example';
 
 describe('vDOM', test => {
   test('sum numbers', assert => {
@@ -11,7 +11,7 @@ describe('vDOM', test => {
     }
 
     // when
-    const vDOM = component({ state, setState });
+    const vDOM = view({ state, setState });
 
     // then
     assert.is(vDOM.children[vDOM.children.length - 1].children[0], '= 5');
