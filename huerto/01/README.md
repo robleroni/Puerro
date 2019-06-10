@@ -84,7 +84,7 @@ Let's start and try to implement it with and without a framework.
 JavaScript can listen on events that happen to HTML elements and change the DOM (Document Object Model).
 There is not much more needed for this task than an event listener on the input field.
 
-![Flow Charts](assets/diagrams/flowchart.png)
+![Flow Charts](assets/img/flowchart.png)
 
 #### Angular, React, Vue
 

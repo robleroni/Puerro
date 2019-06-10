@@ -8,29 +8,25 @@
   <img alt='npm' src='https://img.shields.io/npm/dt/puerro.svg'>
 </p>
 
-# Puerro Project
+# Puerro
 
 Knowledge acquisition about how to build modern frontend web applications as simple as possible by researching different approaches.
-It can be used as a [knowledge base](docs) or in combination with the provided [abstractions](src).
-
-## Folder Structure
-
-| Folder                 | Description                   |
-| ---------------------- | ----------------------------- |
-| [docs/](docs/)         | Documentation / Toolbox       |
-| [src/](src/)           | Abstractions / Utilities      |
-| [examples/](examples/) | Examples / Templates          |
-| [huerto/](huerto/)     | Research / Showcase Project   |
-| [test/](test/)         | Test Results                  |
-
 
 ## Getting Started
+
+It can be used as a [knowledge base](docs) or in combination with the provided [abstractions](src).
+
+Also checkout our [examples](examples) or the [research showcase project](huerto).
+
+### Install
+
+Directly copy the desired [abstractions](src) in your project or use NPM to install Puerro fully:
 
 ```bash
 npm install puerro
 ```
 
-### Example
+### Example Usage
 
 ```js
 import { Observable } from 'puerro';
