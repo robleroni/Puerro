@@ -1,12 +1,12 @@
 import { describe } from '../test/test';
 import { h } from '../vdom/vdom';
-import { Controller } from './controller';
+import { PuerroController } from './controller';
 import { PreactController } from './preact.controller';
 
 describe('Controller', test => {
   test('Puerro Controller', assert => {
     // before
-    class MyController extends Controller {
+    class MyController extends PuerroController {
       increment() {
         this.state.push('counter', this.model.counter + 1);
       }

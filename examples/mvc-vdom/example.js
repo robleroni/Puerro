@@ -1,4 +1,4 @@
-import { Controller } from "../../src/mvc/controller";
+import { PuerroController } from "../../src/mvc/controller";
 import { h } from "../../src/vdom/vdom";
 
 export {
@@ -15,7 +15,7 @@ const view = controller => h('div', {},
   h('output', {}, controller.model.counter),
 );
 
-class MyController extends Controller {
+class MyController extends PuerroController {
 
   increment() {
     this.state.set({counter: this.model.counter + 1})

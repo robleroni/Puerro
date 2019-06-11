@@ -1,11 +1,11 @@
 import { h } from "../../../../src/vdom/vdom";
-import { Controller } from "../../../../src/mvc/controller";
+import { PuerroController } from "../../../../src/mvc/controller";
 
 export { model, CounterController, View}
 
 const model = { counter: 0 }
 
-class CounterController extends Controller {
+class CounterController extends PuerroController {
     increment() {
         this.state.push('counter', ++this.model.counter)
     }

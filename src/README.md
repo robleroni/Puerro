@@ -127,12 +127,12 @@ object.subscribe('value', console.log);
 object.set({ value: 1 });
 ```
 
-### `Controller`
+### `PuerroController`
 
-Controller for rendering with virtual DOM.
+Controller for rendering using the virtual DOM.
 
 ```javascript
-class MyController extends Controller {
+class MyController extends PuerroController {
   increment() {
     this.state.push('counter', this.model.counter + 1);
   }

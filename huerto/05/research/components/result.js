@@ -1,5 +1,5 @@
 import { h } from "../../../../src/vdom/vdom";
-import { Controller } from "../../../../src/mvc/controller";
+import { PuerroController } from "../../../../src/mvc/controller";
 
 export { model, ResultController, View }
 
@@ -10,7 +10,7 @@ const model = {
     product:  0,
 };
 
-class ResultController extends Controller {
+class ResultController extends PuerroController {
     setCounter1(counter) {
         this.state.push('counter1', counter)
         this.state.push('sum',      this.model.counter1 + this.model.counter2);

@@ -1,6 +1,6 @@
 import { describe } from '../../../src/test/test';
 import { createDomElement } from '../../../src/vdom/vdom';
-import { Controller } from '../../../src/mvc/controller';
+import { PuerroController } from '../../../src/mvc/controller';
 import { OverviewController } from '../controllers/overview';
 import { overviewView } from '../views/overview';
 

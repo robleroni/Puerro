@@ -1,8 +1,8 @@
-import { Controller } from '../../../../src/mvc/controller';
+import { PuerroController } from '../../../../src/mvc/controller';
 import { h, render } from 'preact';
 
 
-class ViewController extends Controller {
+class ViewController extends PuerroController {
 
   repaint(newVdom) {
     render(newVdom, this.$root, this.$root.firstChild);

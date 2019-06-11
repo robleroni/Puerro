@@ -1,8 +1,8 @@
-import { Controller } from '../../../../../src/mvc/controller';
+import { PuerroController } from '../../../../../src/mvc/controller';
 
 export { ResearchController };
 
-class ResearchController extends Controller {
+class ResearchController extends PuerroController {
   /**
    *
    * @param {number} count

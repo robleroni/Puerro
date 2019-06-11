@@ -3,7 +3,7 @@ import { createDomElement } from '../../../src/vdom/vdom';
 import { FormController } from '../controllers/form';
 import { formModel } from '../models/form';
 import { formView } from '../views/form';
-import { Controller } from '../../../src/mvc/controller';
+import { PuerroController } from '../../../src/mvc/controller';
 
 describe('05 - Huerto - FormController', test => {
   // before

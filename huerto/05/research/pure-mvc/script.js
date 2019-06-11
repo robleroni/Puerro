@@ -1,4 +1,4 @@
-import { Controller, FormView, OutputView, ErrorView } from './mvc';
+import { FormView, OutputView, ErrorView } from './mvc';
 
 const controller = Controller();
 const $form      = document.getElementById('form');
