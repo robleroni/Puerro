@@ -11,7 +11,7 @@ import { listView } from './views/list.js';
 import { overviewView } from './views/overview.js';
 
 
-Controller.store.set({
+PuerroController.store.set({
     vegetables: [],
 });
 
