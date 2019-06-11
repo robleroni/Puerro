@@ -4,7 +4,11 @@ import { ObservableObject } from '../observable/observable';
 export { PuerroController };
 
 /**
- * @global store object
+ * @typedef {{ tagName: string, attributes: object, children: any  }} VNode
+ */
+
+/**
+ * Global store object
  */
 const store = ObservableObject({});
 
@@ -18,7 +22,7 @@ class PuerroController {
    * 
    * @param {HTMLElement} $root DOM element to mount view
    * @param {object} state initial state
-   * @param {function(controller) import('./vdom').VNode} view Virtual DOM creator
+   * @param {function(controller): VNode} view Virtual DOM creator
    * @param {boolean} diffing if diffing should be used
    */
   constructor($root, state, view, diffing = true) {
@@ -47,7 +51,7 @@ class PuerroController {
   onInit() {}
 
   /**
-   * Refresh the view
+   * Refreshs the view
    */
   refresh() {
     const newVDom = this.view(this);
@@ -58,7 +62,7 @@ class PuerroController {
   /**
    * Repaint the virtual DOM using the DOM API
    * 
-   * @param {import('../vdom/vdom').VNode} newVDom 
+   * @param {VNode} newVDom vDom to be paintend
    */
   repaint(newVDom) {
     if (this.diffing) {

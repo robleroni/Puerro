@@ -77,8 +77,8 @@ const toVDOM = $node => {
 };
 
 /**
- * renders a given node object
- * 2 of 8 nodes https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
+ * Renders a given node object
+ * Considers ELEMENT_NODE AND TEXT_NODE https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
  *
  * @param {VNode} node
  *

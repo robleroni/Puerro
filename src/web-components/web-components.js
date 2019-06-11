@@ -1,22 +1,17 @@
-/**
- * A Module that abstracts web components.
- *
- * @module web-components
- */
 
 import { diff, render } from '../vdom/vdom';
 
-
-export {
-  PuerroElement
-};
-
+export { PuerroElement };
 
 /**
- * @class PuerroElement
- * @description Abstract class which provides state to custom HTML elements.
+ * Abstract class which provides state to custom HTML elements.
  */
 class PuerroElement extends HTMLElement {
+  /**
+   * Creates a new Puerro Element
+   * 
+   * @param {Object} initialState initial state
+   */
   constructor(initialState = {}) {
     super();
     this.state = initialState;
@@ -41,7 +36,7 @@ class PuerroElement extends HTMLElement {
   }
 
   /**
-   * refreshes the Dom
+   * Refreshes the Dom
    */
   refresh() {
     const newVNode = this.render();
@@ -53,5 +48,9 @@ class PuerroElement extends HTMLElement {
     this.vNode = newVNode;
   }
 
+  /**
+   * Render function
+   * @abstract
+   */
   render() { }
 }

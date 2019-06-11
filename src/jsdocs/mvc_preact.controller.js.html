@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: web-components/web-components.js</title>
+    <title>JSDoc: Source: mvc/preact.controller.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: web-components/web-components.js</h1>
+    <h1 class="page-title">Source: mvc/preact.controller.js</h1>
 
     
 
@@ -26,62 +26,40 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>
-import { diff, render } from '../vdom/vdom';
+            <pre class="prettyprint source linenums"><code>import { render } from 'preact';
+import { PuerroController } from './controller';
 
-export { PuerroElement };
+export {
+  PreactController
+}
 
 /**
- * Abstract class which provides state to custom HTML elements.
+ * @typedef {{ tagName: string, attributes: object, children: any  }} VNode
  */
-class PuerroElement extends HTMLElement {
+
+/**
+ * Controller to use a MVC approach using the virtual DOM renderer of [preact](http://preactjs.com).
+ */
+class PreactController extends PuerroController {
+  
   /**
-   * Creates a new Puerro Element
+   * Initial function of the Preact Controller
+   */
+  init() {
+    this.store.onChange(s => this.refresh());
+    this.state.onChange(s => this.refresh());
+  }
+
+  /**
+   * Painting virtual DOM with the preact renderer.
    * 
-   * @param {Object} initialState initial state
+   * @param {VNode} newVdom vDom to be paintend
    */
-  constructor(initialState = {}) {
-    super();
-    this.state = initialState;
+  repaint(newVdom) {
+    render(newVdom, this.$root, this.$root.firstChild);
   }
-
-  connectedCallback() {
-    this.refresh();
-  }
-
-  /**
-   * Sets a new state based on a given object or function
-   *
-   * @param {object | Function} newState
-   */
-  setState(newState) {
-    if (typeof newState === 'function') {
-      this.state = { ...this.state, ...newState(state) };
-    } else {
-      this.state = { ...this.state, ...newState };
-    }
-    this.refresh();
-  }
-
-  /**
-   * Refreshes the Dom
-   */
-  refresh() {
-    const newVNode = this.render();
-    if (null == this.vNode) {
-      this.prepend(render(this.render()));
-    } else {
-      diff(this, newVNode, this.vNode);
-    }
-    this.vNode = newVNode;
-  }
-
-  /**
-   * Render function
-   * @abstract
-   */
-  render() { }
-}</code></pre>
+}
+</code></pre>
         </article>
     </section>
 

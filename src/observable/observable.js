@@ -1,5 +1,5 @@
 /**
- * Observable Pattern Implementation
+ * Observable Pattern Implementations
  *
  * @module observable
  */

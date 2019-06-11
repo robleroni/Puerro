@@ -1,5 +1,5 @@
 /**
- * A Module that abstracts testing.
+ * A Module to use for testing.
  *
  * @module test
  */
