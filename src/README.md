@@ -1,6 +1,7 @@
 # Puerro
 
 See the generated [JSDoc](https://robin-fhnw.github.io/IP5-Puerro/src/jsdocs/) for the full documentation.
+
 Puerro provides the following abstractions:
 
 ## Virtual DOM

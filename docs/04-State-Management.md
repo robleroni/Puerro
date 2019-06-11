@@ -132,7 +132,7 @@ They can then be used like normal HTML elements with the previously defined sele
 </body>
 ```
 
-Although not yet supported in all browsers, according to [caniuse.com](https://caniuse.com/#search=custom elements) custom elements are already supported for 86% of internet users. For all 
+Although not yet supported in all browsers, according to [caniuse.com](https://caniuse.com/#search=custom elements) custom elements are already supported for 86% of internet users. For all **TODO: Continue? ..**
 
 ## ID Management
 
