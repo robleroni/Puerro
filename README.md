@@ -14,7 +14,7 @@ Knowledge acquisition about how to build modern frontend web applications as sim
 
 ## Getting Started
 
-It can be used as a [knowledge base](docs) or in combination with the provided [abstractions](src).
+It can be used as a [knowledge base](docs) ([GitBook](https://robin-christen.gitbook.io/puerro/)) or in combination with the provided [abstractions](src).
 
 Also checkout our [examples](examples) or the [research showcase project](huerto).
 
