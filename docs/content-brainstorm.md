@@ -1,6 +1,6 @@
 # Table of Contents Brainstorm
 
-Präsi: (Anwednung - Huerto - Recomedations)
+Präsi: (Anwendung - Huerto - Recomedations)
 
 Topics:
 - Components (React)

@@ -4,7 +4,7 @@ So far, the state of the application lived inside the view / the DOM and was not
 
 ## State Inside the View
 
-In previous chapters the state always lived inside the view and was not used further. In the following example we have a from with an `input` element, where the user can insert their name. The question which poses itself now, is how to handle this name?
+In previous chapters the state always lived inside the view and was not used further. In the following example we have a from with an `input` element, where the user can insert their name. The question which poses itself now, is how to handle and where to store this name?
 
 ```js
 const setName = evt => {
@@ -35,7 +35,7 @@ const setName = evt => {
 
 Although the state can now be updated, there is currently no way to get notified if it changes. The notification is imperative since the state might be used in different parts of the application. 
 
-This means while this approach is simple it is also very limited and not very useful in most situations, since updates have to be done manually in each event listener function.
+This means while this approach is simple it is also very limited and not useful in most situations, since updates have to be done manually in each event listener function.
 
 ## Components
 
@@ -132,7 +132,7 @@ They can then be used like normal HTML elements with the previously defined sele
 </body>
 ```
 
-Although not yet supported in all browsers, according to [caniuse.com](https://caniuse.com/#search=custom elements) custom elements are already supported for 86% of internet users. For all **TODO: Continue? ..**
+Although not yet supported in all browsers, according to [caniuse.com](https://caniuse.com/#search=custom elements) custom elements are already supported for 86% of internet users. For all other browsers, polyfills can be used to guarantee the support.
 
 ## ID Management
 
@@ -175,7 +175,7 @@ This list is in reference to the Puerro implementation of state management.
 
 ## Problems / Restrictions
 
-With a managed state an application can become harder to manage. It is imperative, that state is always stored in the same way to keep consistency and maintainability. This is a restriction that is tedious for small projects. 
+With a managed state an application can become harder to manage and comprehend. It is important, that state is always stored in the same way to keep consistency and maintainability. This is a restriction that can be tedious for small projects.
 
 If the state updates the UI automatically, bugs can be hard to trace through the abstractions. 
 

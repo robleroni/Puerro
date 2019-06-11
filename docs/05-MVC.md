@@ -7,8 +7,6 @@ An MVC (Model-View-Controller) application is, as the name suggests, divided int
 
 <img alt='MVC' src='./assets/img/MVC.png' width=400px>
 
-[MVC Wikipedia](https://en.wikipedia.org/wiki/Model–view–controller)
-
 ### Models
 
 A Model defines and stores data and is not concerned with how this data gets presented to the user. A model has to be observable, so when the data changes views get notified and can take action accordingly. 
