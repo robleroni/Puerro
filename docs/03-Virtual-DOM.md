@@ -162,8 +162,6 @@ This illustration shows how rerendering works, when the orange node changed but 
 
 Another problem when completely rerendering a large amount of elements is that they lose their identity. This is noticeable when a selected element or an element containing temporary state is being rerender. In that case, the focus is being lost which is not good from a usability point of view.
 
-// TODO: GIF show problem.
-
 This could for example be the case inside a form, when the structure of the form changes based on the input and the whole form is being rerendered.
 
 One possible solution for this problem is to save the identity before rerendering and manually applying it back afterwards. Another approach is to use diffing and only update elements which need to change.
