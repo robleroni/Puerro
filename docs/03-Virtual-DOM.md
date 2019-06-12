@@ -46,7 +46,7 @@ $tbody.innerHTML = `
 `;
 ```
 
-The virtual DOM solves this problem of needing to frequently update the DOM. It is not an official specification, but rather a new method of interfacing with the DOM. It can be thought of as an abstraction or copy of the DOM.
+The virtual DOM solves the problem of needing to frequently update the DOM. It is not an official specification, but rather a new method of interfacing with the DOM. It can be thought of as an abstraction or copy of the DOM.
 
 Basically, the virtual DOM is just a regular JavaScript object representing HTML markup. It can be manipulated freely and frequently without using the DOM API. Whenever needed, it can execute the specific changes it needs to make to the original DOM. 
 
@@ -54,7 +54,7 @@ Puerro has its own implementation of the virtual DOM. [Check it out](../src/#vir
 
 ## Creating a Virtual DOM
 
-Since the virtual DOM is just a JavaScript objects, it can be created like this:
+Since a virtual DOM element is just a JavaScript object, which can be created like this:
 
 ```js
 const vDOM = {
@@ -154,7 +154,7 @@ const handleClick = $table => _ => {
 
 This, however, doesn't differ a lot of using `$table.innerHTML`. All the nodes are still getting re-created from scratch and previously held references are lost. It could also lead to a bad performance when dealing with huge DOM trees.
 
-This illustration shows how rerendering works, when the orange node changed but every node is getting rerenderd. 
+This illustration shows how rerendering works, when the orange node changed but every node is getting rerendered. 
 
 ![without diffing](./assets/img/no_diffing.png)
 
