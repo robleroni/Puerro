@@ -29,7 +29,7 @@ npm install puerro
 ### Example Usage
 
 ```js
-import { Observable } from 'puerro';
+import { Observable } from 'puerro'; // bundler specific, or wherever source is located
 
 const Model = ({ text = '' } = {}) => ({ text: Observable(text) });
 
