@@ -155,7 +155,9 @@
     report(name, assert.getOk());
   }
 
-
+  /**
+   * Creates a new Assert object
+   */
   function Assert() {
     const ok = [];
 
@@ -228,6 +230,9 @@
       this.state = initialState;
     }
 
+    /**
+     * Connected Callback
+     */
     connectedCallback() {
       this.refresh();
     }
@@ -266,13 +271,26 @@
     render() { }
   }
 
+  /**
+   * Create a new PuerroInput Component
+   */
   class PuerroInputComponent extends PuerroElement {
+    /**
+     * Returns the selector of the element
+     */
     static get Selector() { return 'puerro-input' };
 
+    /**
+     * Returns the label
+     */
     get label() {
       return this.hasAttribute('label') && this.getAttribute('label');
     }
 
+    /**
+     * Sets the label
+     * @param value label to be set
+     */
     set label(value) {
       if (null == value) {
         this.removeAttribute('label');
@@ -282,11 +300,17 @@
       }
     }
 
+    /**
+     * Dispatches the value changed event.
+     * @param {Event} evt 
+     */
     _onInput(evt) {
       this.dispatchEvent(new CustomEvent('valueChanged', { detail: evt.target.value }));
     }
 
     /**
+     * Renders the view
+     * 
      * @override
      */
     render() {
@@ -299,14 +323,25 @@
     }
   }
 
+  /**
+   * Creats a new Main Component
+   */
   class MainComponent extends PuerroElement {
+    /**
+    * Returns the selector of the element
+    */
     static get Selector() { return 'puerro-main' };
 
+    /**
+     * Sets the initail state
+     */
     constructor() {
       super({ num1: 0, num2: 0 });
     }
 
     /**
+     * Renders the view
+     * 
      * @override
      */
     render() {

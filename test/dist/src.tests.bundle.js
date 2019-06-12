@@ -157,7 +157,9 @@
       report(name, assert.getOk());
     }
 
-
+    /**
+     * Creates a new Assert object
+     */
     function Assert() {
       const ok = [];
 
@@ -1147,7 +1149,9 @@
       report(name, assert.getOk());
     }
 
-
+    /**
+     * Creates a new Assert object
+     */
     function Assert() {
       const ok = [];
 
@@ -1658,7 +1662,9 @@
       report(name, assert.getOk());
     }
 
-
+    /**
+     * Creates a new Assert object
+     */
     function Assert() {
       const ok = [];
 
@@ -2013,7 +2019,9 @@
       report(name, assert.getOk());
     }
 
-
+    /**
+     * Creates a new Assert object
+     */
     function Assert() {
       const ok = [];
 
@@ -2086,6 +2094,9 @@
         this.state = initialState;
       }
 
+      /**
+       * Connected Callback
+       */
       connectedCallback() {
         this.refresh();
       }

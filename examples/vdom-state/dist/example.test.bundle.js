@@ -83,7 +83,9 @@
     report(name, assert.getOk());
   }
 
-
+  /**
+   * Creates a new Assert object
+   */
   function Assert() {
     const ok = [];
 
@@ -142,6 +144,11 @@
     document.body.appendChild($report);
   }
 
+  /**
+   * Creates a view with the given state interface
+   * 
+   * @param {object} object used for state managemend 
+   */
   const view = ({ state, setState }) =>
     h('div', { },
       h('input', {

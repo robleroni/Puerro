@@ -196,7 +196,9 @@
     report(name, assert.getOk());
   }
 
-
+  /**
+   * Creates a new Assert object
+   */
   function Assert() {
     const ok = [];
 
