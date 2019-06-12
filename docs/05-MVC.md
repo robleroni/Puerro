@@ -92,7 +92,7 @@ const Controller = model => {
 }
 ```
 
-If the MVC architecture is combined with the revealing model pattern as shown in the above example, it is possible to use private functions like `setAge`. With this the interface of the controller is clearly defined and actions exposed to the view can be limited.
+If the MVC architecture is combined with the revealing module pattern as shown in the above example, it is possible to use private functions like `setAge`. With this the interface of the controller is clearly defined and actions exposed to the view can be limited.
 
 The controller is also the only place in the MVC architecture where side effects (for instance API calls) should be implemented.
 
