@@ -1,5 +1,5 @@
 import { describe } from '../../src/test/test';
-import { view, MyController } from './example';
+import { CounterController } from './example';
 import { createDomElement, h } from '../../src/vdom/vdom';
 
 describe('MVC with virtual DOM', test => {
@@ -7,8 +7,8 @@ describe('MVC with virtual DOM', test => {
   // before
   const $root = createDomElement('div');
   const model = { counter: 0 };
-  const view = x => h(); // not necessary for testing the logic
-  const controller = new MyController($root, model, view);
+  const view = x => h(); // not important for testing the logic
+  const controller = new CounterController($root, model, view);
 
   test('using counter', assert => {
     // inital

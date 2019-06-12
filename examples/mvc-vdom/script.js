@@ -1,3 +1,5 @@
-import { model, view, MyController } from './example';
+import { view, CounterController } from './example';
 
-new MyController(document.body, model, view);
+const model = { counter: 0 };
+
+new CounterController(document.body, model, view);
