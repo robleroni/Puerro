@@ -275,8 +275,7 @@
 
     test('handleClick', assert => {
       // given
-      const $table  = createDomElement('table', {}, '<tbody><tbody>');
-      const $button = createDomElement('button', { type: 'button' });
+      const $table  = render(createVDOM(['Puerro']));
 
       // when
       handleClick($table)();
