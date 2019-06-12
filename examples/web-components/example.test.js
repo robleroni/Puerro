@@ -3,7 +3,7 @@ import { describe } from '../../src/test/test';
 import { PuerroInputComponent, MainComponent } from './example';
 import { createDomElement } from '../../src/vdom/vdom';
 
-describe('Web-Components example', test => {
+describe('Examples - State Management with Web-Components', test => {
   window.customElements.define(PuerroInputComponent.Selector, PuerroInputComponent);
   window.customElements.define(MainComponent.Selector, MainComponent);
 

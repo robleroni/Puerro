@@ -151,7 +151,7 @@
       $button.textContent = 'Save: ' + event.target.value;
     };
 
-    describe('Testable Units', test => {
+    describe('Examples - DOM API', test => {
       test('appendInput', assert => {
         // given
         const $input = createDomElement('input', { value: 'Puerro' });
@@ -431,7 +431,7 @@
       }
     };
 
-    describe('MVC with virtual DOM', test => {
+    describe('Examples - MVC with Observables', test => {
 
       // before
       const model = Model();
@@ -834,7 +834,7 @@
       }
     }
 
-    describe('MVC with virtual DOM', test => {
+    describe('Examples - MVC with virtual DOM', test => {
 
       // before
       const $root = createDomElement('div');
@@ -1123,7 +1123,7 @@
       return vDOM;
     };
 
-    describe('vDOM', test => {
+    describe('Examples - virtual DOM', test => {
       test('createVDOM', assert => {
         // given
         const items = ['Puerro', 'Huerto'];
@@ -1316,7 +1316,7 @@
         h('span', { }, '= ' + (state.num1+state.num2)),
       );
 
-    describe('vDOM', test => {
+    describe('Examples - State Management with virtual DOM', test => {
       test('sum numbers', assert => {
         // given
         const setState = () => {};
@@ -1690,7 +1690,7 @@
       }
     }
 
-    describe('Web-Components example', test => {
+    describe('Examples - State Management with Web-Components', test => {
       window.customElements.define(PuerroInputComponent.Selector, PuerroInputComponent);
       window.customElements.define(MainComponent.Selector, MainComponent);
 

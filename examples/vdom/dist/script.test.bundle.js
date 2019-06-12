@@ -260,7 +260,7 @@
     return vDOM;
   };
 
-  describe('vDOM', test => {
+  describe('Examples - virtual DOM', test => {
     test('createVDOM', assert => {
       // given
       const items = ['Puerro', 'Huerto'];

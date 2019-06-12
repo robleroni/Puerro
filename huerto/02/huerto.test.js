@@ -1,7 +1,7 @@
 import { describe } from '../../src/test/test';
 import { onFormSubmit, onPlantedChecked, renderVegetableClassifications } from './huerto';
 
-describe('02 - Huerto', test => {
+describe('Huerto - 02', test => {
 
   test('adding vegetable', assert => {
     // given

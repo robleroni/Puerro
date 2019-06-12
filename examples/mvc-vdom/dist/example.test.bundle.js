@@ -371,7 +371,7 @@
     }
   }
 
-  describe('MVC with virtual DOM', test => {
+  describe('Examples - MVC with virtual DOM', test => {
 
     // before
     const $root = createDomElement('div');

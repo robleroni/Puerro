@@ -1,7 +1,7 @@
 import { describe } from '../../src/test/test';
 import { view } from './example';
 
-describe('vDOM', test => {
+describe('Examples - State Management with virtual DOM', test => {
   test('sum numbers', assert => {
     // given
     const setState = () => {};

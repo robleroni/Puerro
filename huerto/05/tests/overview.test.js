@@ -5,7 +5,7 @@ import { OverviewController } from '../controllers/overview';
 import { overviewView } from '../views/overview';
 
 
-describe('05 - Huerto - OverviewController', test => {
+describe('Huerto - 05 - OverviewController', test => {
   // before
   Controller.store.set({ vegetables: [{ id: 1 }] });
   const $root = createDomElement('div');

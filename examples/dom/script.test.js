@@ -2,7 +2,7 @@ import { describe } from '../../src/test/test';
 import { appendInput, changeLabel } from './example';
 import { createDomElement } from '../../src/vdom/vdom';
 
-describe('Testable Units', test => {
+describe('Examples - DOM API', test => {
   test('appendInput', assert => {
     // given
     const $input = createDomElement('input', { value: 'Puerro' });

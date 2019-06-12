@@ -2,7 +2,7 @@ import { describe } from '../../src/test/test';
 
 import { Model, Controller } from './example';
 
-describe('MVC with virtual DOM', test => {
+describe('Examples - MVC with Observables', test => {
 
   // before
   const model = Model();

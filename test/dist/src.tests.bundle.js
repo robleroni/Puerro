@@ -1025,7 +1025,7 @@
       }
     }
 
-    describe('Controller', test => {
+    describe('MVC Controller with virtual DOM', test => {
       test('Puerro Controller', assert => {
         // before
         class MyController extends PuerroController {

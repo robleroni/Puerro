@@ -1133,7 +1133,7 @@
       )
     );
 
-  describe('05 - Huerto - ListController', test => {
+  describe('Huerto - 05 - ListController', test => {
     // before
     PuerroController.store.set({ vegetables: [{ id: 1 }] });
     const $root = createDomElement('div');

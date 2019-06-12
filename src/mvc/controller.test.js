@@ -3,7 +3,7 @@ import { h } from '../vdom/vdom';
 import { PuerroController } from './controller';
 import { PreactController } from './preact.controller';
 
-describe('Controller', test => {
+describe('MVC Controller with virtual DOM', test => {
   test('Puerro Controller', assert => {
     // before
     class MyController extends PuerroController {

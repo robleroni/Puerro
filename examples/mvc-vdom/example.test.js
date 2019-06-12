@@ -2,7 +2,7 @@ import { describe } from '../../src/test/test';
 import { CounterController } from './example';
 import { createDomElement, h } from '../../src/vdom/vdom';
 
-describe('MVC with virtual DOM', test => {
+describe('Examples - MVC with virtual DOM', test => {
 
   // before
   const $root = createDomElement('div');

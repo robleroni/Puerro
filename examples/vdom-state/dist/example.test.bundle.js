@@ -165,7 +165,7 @@
       h('span', { }, '= ' + (state.num1+state.num2)),
     );
 
-  describe('vDOM', test => {
+  describe('Examples - State Management with virtual DOM', test => {
     test('sum numbers', assert => {
       // given
       const setState = () => {};

@@ -354,7 +354,7 @@
     }
   }
 
-  describe('Web-Components example', test => {
+  describe('Examples - State Management with Web-Components', test => {
     window.customElements.define(PuerroInputComponent.Selector, PuerroInputComponent);
     window.customElements.define(MainComponent.Selector, MainComponent);
 

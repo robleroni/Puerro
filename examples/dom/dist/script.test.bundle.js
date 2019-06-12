@@ -149,7 +149,7 @@
     $button.textContent = 'Save: ' + event.target.value;
   };
 
-  describe('Testable Units', test => {
+  describe('Examples - DOM API', test => {
     test('appendInput', assert => {
       // given
       const $input = createDomElement('input', { value: 'Puerro' });

@@ -6,7 +6,7 @@ import { listModel } from '../models/list';
 import { listView } from '../views/list';
 
 
-describe('05 - Huerto - ListController', test => {
+describe('Huerto - 05 - ListController', test => {
   // before
   Controller.store.set({ vegetables: [{ id: 1 }] });
   const $root = createDomElement('div');

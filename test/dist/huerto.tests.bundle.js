@@ -132,7 +132,7 @@
 
     const sum = (a, b) => a + b;
 
-    describe('01 - Research - Testability', test => {
+    describe('Research - 01 - Testability', test => {
       test('adding numbers', assert => {
         // given
         const a = 1;
@@ -296,7 +296,7 @@
       });
     }
 
-    describe('01 - Huerto', test => {
+    describe('Huerto - 01', test => {
       test('add Vegetable', assert => {
         // given
         const $vegetableInput = document.createElement('input');
@@ -509,7 +509,7 @@
     $form.planted.checked ? `planted (${$form.amount.value})` : 'not planted'
   }, ${$form.comments.value}`;
 
-    describe('02 - Huerto', test => {
+    describe('Huerto - 02', test => {
 
       test('adding vegetable', assert => {
         // given
@@ -781,7 +781,7 @@
     $form.planted.checked ? `planted (${$form.amount.value})` : 'not planted'
   }, ${$form.comments.value}`;
 
-    describe('03 - Huerto', test => {
+    describe('Huerto - 03', test => {
 
       test('adding vegetable', assert => {
         // given
@@ -1246,7 +1246,7 @@
       vegetableClassifications.forEach(c => $select.append(render(h('option', {}, c))));
     };
 
-    describe('04 - Huerto', test => {
+    describe('Huerto - 04', test => {
       test('renderVegetableClassifications', assert => {
         // given
         const $select = document.createElement('select');
@@ -2547,7 +2547,7 @@
         ),
       );
 
-    describe('05 - Huerto - FormController', test => {
+    describe('Huerto - 05 - FormController', test => {
       // before
       PuerroController.store.set({ vegetables: [{ id: 1 }] });
       const $root = createDomElement('div');
@@ -3762,7 +3762,7 @@
         )
       );
 
-    describe('05 - Huerto - ListController', test => {
+    describe('Huerto - 05 - ListController', test => {
       // before
       PuerroController.store.set({ vegetables: [{ id: 1 }] });
       const $root = createDomElement('div');
@@ -4873,7 +4873,7 @@
     const view = controller =>
       h('label', {}, controller.getPlantedCounts() + '/' + controller.model.vegetables.length);
 
-    describe('05 - Huerto - OverviewController', test => {
+    describe('Huerto - 05 - OverviewController', test => {
       // before
       PuerroController.store.set({ vegetables: [{ id: 1 }] });
       const $root = createDomElement('div');

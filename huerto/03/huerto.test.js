@@ -7,7 +7,7 @@ import {
   onClassification,
 } from './huerto';
 
-describe('03 - Huerto', test => {
+describe('Huerto - 03', test => {
 
   test('adding vegetable', assert => {
     // given

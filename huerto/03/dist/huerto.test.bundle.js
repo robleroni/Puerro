@@ -201,7 +201,7 @@
     $form.planted.checked ? `planted (${$form.amount.value})` : 'not planted'
   }, ${$form.comments.value}`;
 
-  describe('03 - Huerto', test => {
+  describe('Huerto - 03', test => {
 
     test('adding vegetable', assert => {
       // given

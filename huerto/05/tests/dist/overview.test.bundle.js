@@ -1069,7 +1069,7 @@
   const view = controller =>
     h('label', {}, controller.getPlantedCounts() + '/' + controller.model.vegetables.length);
 
-  describe('05 - Huerto - OverviewController', test => {
+  describe('Huerto - 05 - OverviewController', test => {
     // before
     PuerroController.store.set({ vegetables: [{ id: 1 }] });
     const $root = createDomElement('div');

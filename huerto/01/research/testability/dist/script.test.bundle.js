@@ -130,7 +130,7 @@
 
   const sum = (a, b) => a + b;
 
-  describe('01 - Research - Testability', test => {
+  describe('Research - 01 - Testability', test => {
     test('adding numbers', assert => {
       // given
       const a = 1;
