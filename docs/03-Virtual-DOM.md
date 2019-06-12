@@ -174,7 +174,7 @@ The real advantage of the virtual DOM can be seen when diffing is being used to 
 
 With diffing the idea is to find the virtual nodes which have actually been changed and only rerender the parts of the tree which are necessary. This illustration shows how diffing works when the orange node has changed and only the colored nodes which need to be updated are getting rerendered.
 
-![without diffing](./assets/img/diffing.png)
+![with diffing](./assets/img/diffing.png)
 
 In order to make this work, a diffing algorithm is needed to check the changes between two virtual DOM's and applying the changes to the actual DOM. Puerro has it's own [diffing](../src/#diffing) implementation.
 

@@ -364,7 +364,7 @@ describe('Testable Units', test => {
 });
 ```
 
-The above example can be found in the [Puerro Examples](../examples/testable-units).
+The above example can be found in the [Puerro Examples](../examples/dom).
 
 ## Use Cases
 
