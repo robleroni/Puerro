@@ -137,6 +137,15 @@ const mount = ($root, view, state, diffing = true) => {
   }
 };
 
+ /**
+  * Renders given stateful view into given container (MVC approach)
+  * 
+  * @param {HTMLElement} $root 
+  * @param {object} model 
+  * @param {function(): VNode} view 
+  * @param {any} controller 
+  * @param {boolean} diffing 
+  */
 const mountMVC = ($root, model, view, controller, diffing = true) => {
   let vDom = view(controller(model, refresh));
   $root.prepend(render(vDom));

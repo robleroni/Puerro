@@ -1,9 +1,7 @@
 import { render } from 'preact';
 import { PuerroController } from './controller';
 
-export {
-  PreactController
-}
+export { PreactController }
 
 /**
  * @typedef {{ tagName: string, attributes: object, children: any  }} VNode
