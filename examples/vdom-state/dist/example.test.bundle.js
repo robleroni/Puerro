@@ -12,17 +12,17 @@
    * @typedef {{ tagName: string, attributes: object, children: any  }} VNode
    */
 
-   /**
-   * Creates a new HTML Element.
-   * If the attribute is a function it will add it as an EventListener.
-   * Otherwise as an attribute.
-   *
-   * @param {string} tagName name of the tag
-   * @param {object} attributes attributes or listeners to set in element
-   * @param {*} innerHTML content of the tag
-   *
-   * @returns {function(content): HTMLElement}
-   */
+  /**
+  * Creates a new HTML Element.
+  * If the attribute is a function it will add it as an EventListener.
+  * Otherwise as an attribute.
+  *
+  * @param {string} tagName name of the tag
+  * @param {object} attributes attributes or listeners to set in element
+  * @param {*} innerHTML content of the tag
+  *
+  * @returns {HTMLElement}
+  */
   const createDomElement = (tagName, attributes = {}, innerHTML = '') => {
     const $element = document.createElement(tagName);
     $element.innerHTML = innerHTML;
@@ -55,7 +55,7 @@
   const h = vNode;
 
   /**
-   * A Module that abstracts testing.
+   * A Module to use for testing.
    *
    * @module test
    */

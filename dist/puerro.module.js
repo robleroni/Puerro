@@ -1,9 +1,13 @@
 /**
- * Observable Pattern Implementation
+ * Observable Pattern Implementations
  *
  * @module observable
  */
 
+/**
+ * Creates an Observable
+ * @param {any} item
+ */
 const Observable = item => {
   const listeners = [];
   return {
@@ -21,6 +25,10 @@ const Observable = item => {
   };
 };
 
+/**
+ * Creates an object on which each property is observable
+ * @param {any} object
+ */
 const ObservableObject = object => {
   const listeners   = [];
   const subscribers = {};
@@ -60,7 +68,7 @@ const ObservableObject = object => {
 };
 
 /**
- *
+ * Creates an Observable list
  * @param {any[]} list
  */
 const ObservableList = list => {
@@ -109,32 +117,16 @@ const ObservableList = list => {
  */
 
 /**
- * Creates a node object which can be rendered
- *
- * @param {string} tagName
- * @param {object} attributes
- * @param {VNode[] | VNode | any} nodes
- *
- * @returns {VNode}
- */
-const vNode = (tagName, attributes = {}, ...nodes) => ({
-  tagName,
-  attributes: null == attributes ? {} : attributes,
-  children: null == nodes ? [] : [].concat(...nodes), // collapse nested arrays.
-});
-const h = vNode;
-
-/**
- * Creates a new HTML Element.
- * If the attribute is a function it will add it as an EventListener.
- * Otherwise as an attribute.
- *
- * @param {string} tagName name of the tag
- * @param {object} attributes attributes or listeners to set in element
- * @param {*} innerHTML content of the tag
- *
- * @returns {function(content): HTMLElement}
- */
+* Creates a new HTML Element.
+* If the attribute is a function it will add it as an EventListener.
+* Otherwise as an attribute.
+*
+* @param {string} tagName name of the tag
+* @param {object} attributes attributes or listeners to set in element
+* @param {*} innerHTML content of the tag
+*
+* @returns {HTMLElement}
+*/
 const createDomElement = (tagName, attributes = {}, innerHTML = '') => {
   const $element = document.createElement(tagName);
   $element.innerHTML = innerHTML;
@@ -151,9 +143,26 @@ const createDomElement = (tagName, attributes = {}, innerHTML = '') => {
 };
 
 /**
- * renders a given node object
+ * Creates a node object which can be rendered
  *
- * @param {import('./vdom').VNode} node
+ * @param {string} tagName
+ * @param {object} attributes
+ * @param {VNode[] | VNode | any} nodes
+ *
+ * @returns {VNode}
+ */
+const vNode = (tagName, attributes = {}, ...nodes) => ({
+  tagName,
+  attributes: null == attributes ? {} : attributes,
+  children: null == nodes ? [] : [].concat(...nodes), // collapse nested arrays.
+});
+const h = vNode;
+
+/**
+ * Renders a given node object
+ * Considers ELEMENT_NODE AND TEXT_NODE https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
+ *
+ * @param {VNode} node
  *
  * @returns {HTMLElement}
  */
@@ -173,7 +182,7 @@ const render = node => {
  * Renders given stateful view into given container
  *
  * @param {HTMLElement} $root
- * @param {function(): import('./vdom').VNode} view
+ * @param {function(): VNode} view
  * @param {object} state
  * @param {boolean} diffing
  */
@@ -214,8 +223,8 @@ const mount = ($root, view, state, diffing = true) => {
  * Compares two VDOM nodes and applies the differences to the dom
  *
  * @param {HTMLElement} $parent
- * @param {import('./vdom').VNode} oldNode
- * @param {import('./vdom').VNode} newNode
+ * @param {VNode} oldNode
+ * @param {VNode} newNode
  * @param {number} index
  */
 const diff = ($parent, newNode, oldNode, index = 0) => {
@@ -257,14 +266,33 @@ const changed = (node1, node2) => {
         a =>
           node1.attributes[a] !== node2.attributes[a] &&
           (null == node1.attributes[a] ? '' : node1.attributes[a]).toString() !==
-            (null == node2.attributes[a] ? '' : node2.attributes[a]).toString()
+          (null == node2.attributes[a] ? '' : node2.attributes[a]).toString()
       ));
   return nodeChanged || attributesChanged;
 };
 
+/**
+ * @typedef {{ tagName: string, attributes: object, children: any  }} VNode
+ */
+
+/**
+ * Global store object
+ */
 const store = ObservableObject({});
 
-class Controller {
+/**
+ * Abstract controller to use a MVC approach using the virtual DOM as a renderer.
+ */
+class PuerroController {
+
+  /**
+   * Creating a new PuerroController
+   * 
+   * @param {HTMLElement} $root DOM element to mount view
+   * @param {object} state initial state
+   * @param {function(controller): VNode} view Virtual DOM creator
+   * @param {boolean} diffing if diffing should be used
+   */
   constructor($root, state, view, diffing = true) {
     this.$root = $root;
     this.state = ObservableObject({ ...state });
@@ -275,6 +303,9 @@ class Controller {
     this.onInit();
   }
 
+  /**
+   * Initial function of the Puerro Controller
+   */
   init() {
     this.vDom = this.view(this);
     this.$root.prepend(render(this.vDom));
@@ -282,14 +313,25 @@ class Controller {
     this.state.onChange(s => this.refresh());
   }
 
+  /**
+   * On Init Hook 
+   */
   onInit() {}
 
+  /**
+   * Refreshs the view
+   */
   refresh() {
     const newVDom = this.view(this);
     this.repaint(newVDom);
     this.vDom = newVDom;
   }
 
+  /**
+   * Repaint the virtual DOM using the DOM API
+   * 
+   * @param {VNode} newVDom vDom to be paintend
+   */
   repaint(newVDom) {
     if (this.diffing) {
       diff(this.$root, newVDom, this.vDom);
@@ -298,12 +340,74 @@ class Controller {
     }
   }
 
+  /**
+   * Returns the model (store and state)
+   */
   get model() {
     return { ...store.get(), ...this.state.get() };
   }
 
-         get store() { return store; }
+  /**
+   * Returns the store
+   */
+  get store() { return store; }
+
+  /**
+   * Static method for returning the store
+   */
   static get store() { return store; }
 }
 
-export { Observable, ObservableList, ObservableObject, render, mount, h, Controller };
+/**
+ * Abstract class which provides state to custom HTML elements.
+ */
+class PuerroElement extends HTMLElement {
+  /**
+   * Creates a new Puerro Element
+   * 
+   * @param {Object} initialState initial state
+   */
+  constructor(initialState = {}) {
+    super();
+    this.state = initialState;
+  }
+
+  connectedCallback() {
+    this.refresh();
+  }
+
+  /**
+   * Sets a new state based on a given object or function
+   *
+   * @param {object | Function} newState
+   */
+  setState(newState) {
+    if (typeof newState === 'function') {
+      this.state = { ...this.state, ...newState(state) };
+    } else {
+      this.state = { ...this.state, ...newState };
+    }
+    this.refresh();
+  }
+
+  /**
+   * Refreshes the Dom
+   */
+  refresh() {
+    const newVNode = this.render();
+    if (null == this.vNode) {
+      this.prepend(render(this.render()));
+    } else {
+      diff(this, newVNode, this.vNode);
+    }
+    this.vNode = newVNode;
+  }
+
+  /**
+   * Render function
+   * @abstract
+   */
+  render() { }
+}
+
+export { Observable, ObservableList, ObservableObject, render, mount, h, PuerroController, PuerroElement };

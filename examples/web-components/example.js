@@ -41,7 +41,7 @@ class PuerroInputComponent extends PuerroElement {
 
 class MainComponent extends PuerroElement {
   static get Selector() { return 'puerro-main' };
-  
+
   constructor() {
     super({ num1: 0, num2: 0 });
   }

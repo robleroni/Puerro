@@ -13,32 +13,16 @@
    */
 
   /**
-   * Creates a node object which can be rendered
-   *
-   * @param {string} tagName
-   * @param {object} attributes
-   * @param {VNode[] | VNode | any} nodes
-   *
-   * @returns {VNode}
-   */
-  const vNode = (tagName, attributes = {}, ...nodes) => ({
-    tagName,
-    attributes: null == attributes ? {} : attributes,
-    children: null == nodes ? [] : [].concat(...nodes), // collapse nested arrays.
-  });
-  const h = vNode;
-
-  /**
-   * Creates a new HTML Element.
-   * If the attribute is a function it will add it as an EventListener.
-   * Otherwise as an attribute.
-   *
-   * @param {string} tagName name of the tag
-   * @param {object} attributes attributes or listeners to set in element
-   * @param {*} innerHTML content of the tag
-   *
-   * @returns {function(content): HTMLElement}
-   */
+  * Creates a new HTML Element.
+  * If the attribute is a function it will add it as an EventListener.
+  * Otherwise as an attribute.
+  *
+  * @param {string} tagName name of the tag
+  * @param {object} attributes attributes or listeners to set in element
+  * @param {*} innerHTML content of the tag
+  *
+  * @returns {HTMLElement}
+  */
   const createDomElement = (tagName, attributes = {}, innerHTML = '') => {
     const $element = document.createElement(tagName);
     $element.innerHTML = innerHTML;
@@ -55,7 +39,24 @@
   };
 
   /**
-   * renders a given node object
+   * Creates a node object which can be rendered
+   *
+   * @param {string} tagName
+   * @param {object} attributes
+   * @param {VNode[] | VNode | any} nodes
+   *
+   * @returns {VNode}
+   */
+  const vNode = (tagName, attributes = {}, ...nodes) => ({
+    tagName,
+    attributes: null == attributes ? {} : attributes,
+    children: null == nodes ? [] : [].concat(...nodes), // collapse nested arrays.
+  });
+  const h = vNode;
+
+  /**
+   * Renders a given node object
+   * Considers ELEMENT_NODE AND TEXT_NODE https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
    *
    * @param {VNode} node
    *
@@ -120,10 +121,16 @@
           a =>
             node1.attributes[a] !== node2.attributes[a] &&
             (null == node1.attributes[a] ? '' : node1.attributes[a]).toString() !==
-              (null == node2.attributes[a] ? '' : node2.attributes[a]).toString()
+            (null == node2.attributes[a] ? '' : node2.attributes[a]).toString()
         ));
     return nodeChanged || attributesChanged;
   };
+
+  /**
+   * A Module to use for testing.
+   *
+   * @module test
+   */
 
   /**
    * Adds a testGroup to the test report
@@ -208,10 +215,14 @@
   }
 
   /**
-   * @class PuerroElement
-   * @description Abstract class which provides state to custom HTML elements.
+   * Abstract class which provides state to custom HTML elements.
    */
   class PuerroElement extends HTMLElement {
+    /**
+     * Creates a new Puerro Element
+     * 
+     * @param {Object} initialState initial state
+     */
     constructor(initialState = {}) {
       super();
       this.state = initialState;
@@ -236,7 +247,7 @@
     }
 
     /**
-     * refreshes the Dom
+     * Refreshes the Dom
      */
     refresh() {
       const newVNode = this.render();
@@ -248,6 +259,10 @@
       this.vNode = newVNode;
     }
 
+    /**
+     * Render function
+     * @abstract
+     */
     render() { }
   }
 
