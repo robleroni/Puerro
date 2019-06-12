@@ -11,7 +11,7 @@ An MVC (Model-View-Controller) application is, as the name suggests, divided int
 
 A Model defines and stores data and is not concerned with how this data gets presented to the user. A model has to be observable, so when the data changes, the views get notified and can take action accordingly. 
 
-Puerro provides [observables](..src#observable) which are very useful for the definition of models. The following is an example of a model in an MVC approach with pure JavaScript (without frameworks, only the observable abstraction from Puerro):
+Puerro provides [observables](../src#observable) which are very useful for the definition of models. The following is an example of a model in an MVC approach with pure JavaScript (without frameworks, only the observable abstraction from Puerro):
 
 ```js
 import { Observable } from 'puerro';
@@ -136,7 +136,7 @@ In the backend data is usually persisted with a session or a database. With that
 
 An alternative is to create a reactive global data store, which emits events, when data changes. This global store has to be accessible from every view and controller to retrieve and set values.
 
-The Puerro library offers the `ObservableObject` constructor function. An `ObservableObject` instance provides a data store which is subscribable on each property of the object but also the . **TODO: Continue...?** 
+The Puerro library offers the [`ObservableObject`](../src#observableobject) constructor function. An `ObservableObject` has the same functionality as an `Observable` with the addition that each property is seperatly subscribable as well.
 
 ```js
 import { ObservableObject } from 'puerro';
