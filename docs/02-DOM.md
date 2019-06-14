@@ -21,7 +21,7 @@ Nowadays, there are other options to avoid that JavaScript is being parser block
 ```
 
 > This image summarizes the many different approaches to load JavaScript code.
-> ![Script-Loadings](assets/img/asyncdefer.svg)
+> ![Script-Loadings](assets/img/asyncdefer.png)
 > More information can be found in the [HTML5 specification](https://html.spec.whatwg.org/multipage/scripting.html)
 
 
@@ -96,7 +96,7 @@ document.body.innerHTML += '<p>Lean as a Leek</p>'; // Whole body element is bei
 $h1.textContent = 'Puerro';			    // Reference does not point to the DOM instance
 ```
 
-There is a solution for this called [`element.insertAdjacentHTML`](https://developer.mozilla.org/de/docs/Web/API/Element/insertAdjacentHTML) which does not re-parse all it's child elements.
+There is a solution for this called [`element.insertAdjacentHTML`](https://developer.mozilla.org/de/docs/Web/API/Element/insertAdjacentHTML) which does not re-parse all its child elements.
 
 ```js
 document.body.innerHTML = '<h1>Tomato</h1>';
@@ -120,7 +120,7 @@ $button.addEventListener('click', _ => console.log($input.value));
 document.body.append($input, $button);
 ```
 
-Puerro provides an abstraction to make it more convenient to create elements. [Check it out!](../src/#creating-dom-elements)
+Puerro provides an [abstraction](https://github.com/robin-fhnw/IP5-Puerro/tree/master/src#createdomelement) to make it more convenient to create elements.
 
 ```js
 const $input = createDomElement('input', { type: 'number', value: 1 });

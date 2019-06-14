@@ -170,7 +170,7 @@ One possible solution for this problem is to save the identity before rerenderin
 
 The real advantage of the virtual DOM can be seen when diffing is being used to only specifically update the parts and elements which have been changed.
 
-With diffing the idea is to find the virtual nodes which have actually been changed and only rerender the parts of the tree which are necessary. This illustration shows how diffing works when the orange node has changed and only the colored nodes which need to be updated are getting rerendered.
+With diffing the idea is to find the virtual nodes which have been changed and only rerender the parts of the tree which are necessary. This illustration shows how diffing works when the orange node has changed and only the colored nodes which need to be updated are getting rerendered.
 
 ![with diffing](./assets/img/diffing.png)
 

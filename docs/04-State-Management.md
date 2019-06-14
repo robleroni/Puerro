@@ -138,7 +138,7 @@ Although not yet supported in all browsers, according to [caniuse.com](https://c
 
 If data is stored on the client side but changes have to be reflected in a persistence system (like a database) on the backend, id management becomes a difficult task. This is commonly the case for CRUD like applications. For the end user there is usually a master view in which all entries of an entity are shown and a detail view which displays and lets the user edit one selected entry. The problem which now arises is the creation of an ID. The question is, when must the ID be created?
 
-Below are a few different approaches which can be taken.
+Below are a few different approaches which can be considered.
 
 ### Create an Empty Entry
 
@@ -160,7 +160,7 @@ The described example can be found in the [Puerro Examples](../examples/vdom-sta
 
 ## Use Cases
 
-State management becomes relevant pretty quickly. As soon as data not only gets displayed but also has to be changed and stored, the need for some sort of state management arises.
+State management becomes relevant relatively fast. As soon as data not only gets displayed but also has to be changed and stored, the need for some sort of state management arises.
 
 Possible scenarios are:
 
@@ -169,7 +169,7 @@ Possible scenarios are:
 
 ### Advantages
 
-This list is in reference to the Puerro implementation of state management.
+This list refers to the Puerro implementation of state management.
 
 - Automatic rerendering.
 - Small amount of boilerplate code.

@@ -4,7 +4,7 @@ The Puerro project is a knowledge acquisition about how to build modern frontend
 
 ## About Web Development
 
-Coding for the web means that the end-user can access the result trough a browser (e.g.: Chrome, Firefox, Safari, Edge or Internet Explorer).
+Coding for the web means that the end-user can access the result through a browser (e.g.: Chrome, Firefox, Safari, Edge or Internet Explorer).
 
 A browser can request data from different sources (servers) and display the received content.
 This content is usually a combination between these 3 different programming languages:
@@ -47,7 +47,7 @@ The goal of this project is to explore new, unconventional, and unorthodox appro
 
 The purpose of this project is to research and evaluate frontend approaches which can be done in different ways. One of the main concerns is, that the different ideas are not only looked at on an abstract level far from reality. That is why the main research for this project is done as a project simulation. This simulation is separated into iterations with ever increasing requirements for a fictional web application.
 
-With each iteration the imaginary customer communicates requirements to the developer which is implementing them. With the specification in place, multiple approaches are evaluated, and one is chosen to actually implement the customers wishes.
+With each iteration the imaginary customer communicates requirements to the developer which is implementing them. With the specification in place, multiple approaches are evaluated, and one is chosen to implement the customers wishes.
 
 The claims made during this project documentation would lose their significance with a project that is too specific. That is why the outcome of the fictional project is essentially a CRUD (Create, Read, Update, Delete) application with different views. Implementing CRUD's is also one of the main purposes of many of the modern frontend frameworks and generally a good use case to test the hypotheses made during the project.
 

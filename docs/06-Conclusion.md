@@ -10,7 +10,7 @@ To make JavaScript code more testable it is advisable to separate business logic
 
 Out of scope for this project were asynchronous side effects, like API calls. With such side effects and interaction with other systems web applications become even more complex and it is much more important to maintain a clean codebase.
 
-Frameworks are not inherently bad! A good deal of frameworks have a big community which provides extensions and other solution for a lot of problems that might occur. Some frameworks are also backed and developed by big companies which gives them stability. Frameworks can be quite restrictive but that is also an advantage, it gives structure to a codebase. This structure is also good for teams with rotating members. For instance a new hire which is proficient in Angular knows how an Angular project looks like and understands the code faster than they would with an application without a framework.
+Frameworks are not inherently bad! A good deal of frameworks have a big community which provides extensions and other solution for a lot of problems that might occur. Some frameworks are also backed and developed by big companies which gives them stability. Frameworks can be quite restrictive but that is also an advantage, it gives structure to a codebase. This structure is also good for teams with rotating members. For instance, a new hire which is proficient in Angular knows how an Angular project looks like and understands the code faster than they would with an application without a framework.
 
 All that to say, frameworks tend to be overused and are not needed for every project. The dependency management alone can become a nightmare very quickly. That's why our recommendation is:
 

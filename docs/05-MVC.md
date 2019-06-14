@@ -110,7 +110,7 @@ const view = View(model,
                  );
 ```
 
-As evidenced by this example, MVC can generate some boilerplate code which seems over the top for small applications. But especially when the application scales, the advantages become very visible. The business logic is containted in one place and the model cannot be changed except through this business logic. Especially compared to the direct manipulation of the DOM and application state from anywhere in the code. This approach makes the application way more predictable and easier to understand.
+As evidenced by this example, MVC can generate some boilerplate code which seems over the top for small applications. But especially when the application scales, the advantages become very visible. The business logic is contained in one place and the model cannot be changed except through this business logic. Especially compared to the direct manipulation of the DOM and application state from anywhere in the code. This approach makes the application way more predictable and easier to understand.
 
 ## Bidirectional Binding
 
@@ -118,7 +118,7 @@ Data and user inputs always flow unidirectionally in MVC. This makes the applica
 
 Many modern frontend frameworks like Vue.JS and Angular (not React) work with bidirectional bindings of data. This is intuitive at first but as an application grows it can become very unpredictable. The model can be changed from anywhere and business logic has to be enforced with different approaches, for example in Vue.JS using [watchers](https://vuejs.org/v2/guide/computed.html#Watchers).
 
-MVC does not permit bidirectional binding by design which might feel like a restriction sometimes but it is essential to prevent bugs and keep the codebase understandable and maintainable. If it would allow bidirectional binding the graph would look like this:
+MVC does not permit bidirectional binding by design which might feel like a restriction sometimes, but it is essential to prevent bugs and keep the codebase understandable and maintainable. If it would allow bidirectional binding the graph would look like this:
 
 <img alt='MVC' src='./assets/img/MVC-Bidirectional.png' width=400px>
 
@@ -136,7 +136,7 @@ In the backend data is usually persisted with a session or a database. With that
 
 An alternative is to create a reactive global data store, which emits events, when data changes. This global store has to be accessible from every view and controller to retrieve and set values.
 
-The Puerro library offers the [`ObservableObject`](../src#observableobject) constructor function. An `ObservableObject` has the same functionality as an `Observable` with the addition that each property is seperatly subscribable as well.
+The Puerro library offers the [`ObservableObject`](../src#observableobject) constructor function. An `ObservableObject` has the same functionality as an `Observable` with the addition that each property is separately subscribable as well.
 
 ```js
 import { ObservableObject } from 'puerro';
@@ -220,7 +220,7 @@ Possible scenarios are:
 
 - Medium to large data driven applications.
 - Applications which need to have a high maintainability.
-- Businesslogic heavy applications.
+- Business logic heavy applications.
 
 ### Advantages
 
