@@ -11,17 +11,17 @@ export { createDomElement, h, toVDOM, render, mount, diff, changed, mountMVC };
  * @typedef {{ tagName: string, attributes: object, children: any  }} VNode
  */
 
- /**
- * Creates a new HTML Element.
- * If the attribute is a function it will add it as an EventListener.
- * Otherwise as an attribute.
- *
- * @param {string} tagName name of the tag
- * @param {object} attributes attributes or listeners to set in element
- * @param {*} innerHTML content of the tag
- *
- * @returns {function(content): HTMLElement}
- */
+/**
+* Creates a new HTML Element.
+* If the attribute is a function it will add it as an EventListener.
+* Otherwise as an attribute.
+*
+* @param {string} tagName name of the tag
+* @param {object} attributes attributes or listeners to set in element
+* @param {*} innerHTML content of the tag
+*
+* @returns {HTMLElement}
+*/
 const createDomElement = (tagName, attributes = {}, innerHTML = '') => {
   const $element = document.createElement(tagName);
   $element.innerHTML = innerHTML;
@@ -137,6 +137,15 @@ const mount = ($root, view, state, diffing = true) => {
   }
 };
 
+ /**
+  * Renders given stateful view into given container (MVC approach)
+  * 
+  * @param {HTMLElement} $root 
+  * @param {object} model 
+  * @param {function(): VNode} view 
+  * @param {any} controller 
+  * @param {boolean} diffing 
+  */
 const mountMVC = ($root, model, view, controller, diffing = true) => {
   let vDom = view(controller(model, refresh));
   $root.prepend(render(vDom));
@@ -201,7 +210,7 @@ const changed = (node1, node2) => {
         a =>
           node1.attributes[a] !== node2.attributes[a] &&
           (null == node1.attributes[a] ? '' : node1.attributes[a]).toString() !==
-            (null == node2.attributes[a] ? '' : node2.attributes[a]).toString()
+          (null == node2.attributes[a] ? '' : node2.attributes[a]).toString()
       ));
   return nodeChanged || attributesChanged;
 };

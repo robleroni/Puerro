@@ -17,6 +17,9 @@ class PuerroElement extends HTMLElement {
     this.state = initialState;
   }
 
+  /**
+   * Connected Callback
+   */
   connectedCallback() {
     this.refresh();
   }

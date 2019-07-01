@@ -9,16 +9,20 @@
    */
 
   /**
-   * Creates a new HTML Element.
-   * If the attribute is a function it will add it as an EventListener.
-   * Otherwise as an attribute.
-   *
-   * @param {string} tagName name of the tag
-   * @param {object} attributes attributes or listeners to set in element
-   * @param {*} innerHTML content of the tag
-   *
-   * @returns {function(content): HTMLElement}
+   * @typedef {{ tagName: string, attributes: object, children: any  }} VNode
    */
+
+  /**
+  * Creates a new HTML Element.
+  * If the attribute is a function it will add it as an EventListener.
+  * Otherwise as an attribute.
+  *
+  * @param {string} tagName name of the tag
+  * @param {object} attributes attributes or listeners to set in element
+  * @param {*} innerHTML content of the tag
+  *
+  * @returns {HTMLElement}
+  */
   const createDomElement = (tagName, attributes = {}, innerHTML = '') => {
     const $element = document.createElement(tagName);
     $element.innerHTML = innerHTML;
@@ -35,9 +39,10 @@
   };
 
   /**
-   * renders a given node object
+   * Renders a given node object
+   * Considers ELEMENT_NODE AND TEXT_NODE https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
    *
-   * @param {import('./vdom').VNode} node
+   * @param {VNode} node
    *
    * @returns {HTMLElement}
    */
@@ -57,8 +62,8 @@
    * Compares two VDOM nodes and applies the differences to the dom
    *
    * @param {HTMLElement} $parent
-   * @param {import('./vdom').VNode} oldNode
-   * @param {import('./vdom').VNode} newNode
+   * @param {VNode} oldNode
+   * @param {VNode} newNode
    * @param {number} index
    */
   const diff = ($parent, newNode, oldNode, index = 0) => {
@@ -100,17 +105,21 @@
           a =>
             node1.attributes[a] !== node2.attributes[a] &&
             (null == node1.attributes[a] ? '' : node1.attributes[a]).toString() !==
-              (null == node2.attributes[a] ? '' : node2.attributes[a]).toString()
+            (null == node2.attributes[a] ? '' : node2.attributes[a]).toString()
         ));
     return nodeChanged || attributesChanged;
   };
 
   /**
-   * Observable Pattern Implementation
+   * Observable Pattern Implementations
    *
    * @module observable
    */
 
+  /**
+   * Creates an object on which each property is observable
+   * @param {any} object
+   */
   const ObservableObject = object => {
     const listeners   = [];
     const subscribers = {};
@@ -149,9 +158,28 @@
     };
   };
 
+  /**
+   * @typedef {{ tagName: string, attributes: object, children: any  }} VNode
+   */
+
+  /**
+   * Global store object
+   */
   const store = ObservableObject({});
 
-  class Controller {
+  /**
+   * Abstract controller to use a MVC approach using the virtual DOM as a renderer.
+   */
+  class PuerroController {
+
+    /**
+     * Creating a new PuerroController
+     * 
+     * @param {HTMLElement} $root DOM element to mount view
+     * @param {object} state initial state
+     * @param {function(controller): VNode} view Virtual DOM creator
+     * @param {boolean} diffing if diffing should be used
+     */
     constructor($root, state, view, diffing = true) {
       this.$root = $root;
       this.state = ObservableObject({ ...state });
@@ -162,6 +190,9 @@
       this.onInit();
     }
 
+    /**
+     * Initial function of the Puerro Controller
+     */
     init() {
       this.vDom = this.view(this);
       this.$root.prepend(render(this.vDom));
@@ -169,14 +200,25 @@
       this.state.onChange(s => this.refresh());
     }
 
+    /**
+     * On Init Hook 
+     */
     onInit() {}
 
+    /**
+     * Refreshs the view
+     */
     refresh() {
       const newVDom = this.view(this);
       this.repaint(newVDom);
       this.vDom = newVDom;
     }
 
+    /**
+     * Repaint the virtual DOM using the DOM API
+     * 
+     * @param {VNode} newVDom vDom to be paintend
+     */
     repaint(newVDom) {
       if (this.diffing) {
         diff(this.$root, newVDom, this.vDom);
@@ -185,11 +227,21 @@
       }
     }
 
+    /**
+     * Returns the model (store and state)
+     */
     get model() {
       return { ...store.get(), ...this.state.get() };
     }
 
-           get store() { return store; }
+    /**
+     * Returns the store
+     */
+    get store() { return store; }
+
+    /**
+     * Static method for returning the store
+     */
     static get store() { return store; }
   }
 
@@ -890,12 +942,28 @@
     return diff$1(merge, vnode, {}, false, parent, false);
   }
 
-  class PreactController extends Controller {
+  /**
+   * @typedef {{ tagName: string, attributes: object, children: any  }} VNode
+   */
+
+  /**
+   * Controller to use a MVC approach using the virtual DOM renderer of [preact](http://preactjs.com).
+   */
+  class PreactController extends PuerroController {
+    
+    /**
+     * Initial function of the Preact Controller
+     */
     init() {
       this.store.onChange(s => this.refresh());
       this.state.onChange(s => this.refresh());
     }
 
+    /**
+     * Painting virtual DOM with the preact renderer.
+     * 
+     * @param {VNode} newVdom vDom to be paintend
+     */
     repaint(newVdom) {
       render$1(newVdom, this.$root, this.$root.firstChild);
     }
@@ -1099,7 +1167,7 @@
   const view$2 = controller =>
     h('label', {}, controller.getPlantedCounts() + '/' + controller.model.vegetables.length);
 
-  Controller.store.set({
+  PuerroController.store.set({
       vegetables: [],
   });
 

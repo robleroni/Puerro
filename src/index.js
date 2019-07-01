@@ -1,15 +1,20 @@
 import { Observable, ObservableList, ObservableObject } from './observable/observable';
-import { render, mount, h } from './vdom/vdom';
+import { createDomElement, h, toVDOM, render, mount, diff } from './vdom/vdom';
 import { PuerroController } from './mvc/controller';
 import { PuerroElement } from './web-components/web-components';
+import { describe } from './test/test'
 
 export {
   Observable,
   ObservableList,
   ObservableObject,
-  render,
-  mount,
-  h,
+  createDomElement, 
+  h, 
+  toVDOM, 
+  render, 
+  mount, 
+  diff,
   PuerroController,
-  PuerroElement 
+  PuerroElement,
+  describe
 };

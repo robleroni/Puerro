@@ -1,8 +1,8 @@
 import { describe } from '../../src/test/test';
 import { createVDOM, handleClick } from './example';
-import { createDomElement, render } from '../../src/vdom/vdom';
+import { render } from '../../src/vdom/vdom';
 
-describe('vDOM', test => {
+describe('Examples - virtual DOM', test => {
   test('createVDOM', assert => {
     // given
     const items = ['Puerro', 'Huerto'];
@@ -17,8 +17,7 @@ describe('vDOM', test => {
 
   test('handleClick', assert => {
     // given
-    const $table  = createDomElement('table', {}, '<tbody><tbody>');
-    const $button = createDomElement('button', { type: 'button' });
+    const $table  = render(createVDOM(['Puerro']));
 
     // when
     handleClick($table)();

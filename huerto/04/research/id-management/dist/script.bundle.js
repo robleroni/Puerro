@@ -13,32 +13,16 @@
    */
 
   /**
-   * Creates a node object which can be rendered
-   *
-   * @param {string} tagName
-   * @param {object} attributes
-   * @param {VNode[] | VNode | any} nodes
-   *
-   * @returns {VNode}
-   */
-  const vNode = (tagName, attributes = {}, ...nodes) => ({
-    tagName,
-    attributes: null == attributes ? {} : attributes,
-    children: null == nodes ? [] : [].concat(...nodes), // collapse nested arrays.
-  });
-  const h = vNode;
-
-  /**
-   * Creates a new HTML Element.
-   * If the attribute is a function it will add it as an EventListener.
-   * Otherwise as an attribute.
-   *
-   * @param {string} tagName name of the tag
-   * @param {object} attributes attributes or listeners to set in element
-   * @param {*} innerHTML content of the tag
-   *
-   * @returns {function(content): HTMLElement}
-   */
+  * Creates a new HTML Element.
+  * If the attribute is a function it will add it as an EventListener.
+  * Otherwise as an attribute.
+  *
+  * @param {string} tagName name of the tag
+  * @param {object} attributes attributes or listeners to set in element
+  * @param {*} innerHTML content of the tag
+  *
+  * @returns {HTMLElement}
+  */
   const createDomElement = (tagName, attributes = {}, innerHTML = '') => {
     const $element = document.createElement(tagName);
     $element.innerHTML = innerHTML;
@@ -55,9 +39,26 @@
   };
 
   /**
-   * renders a given node object
+   * Creates a node object which can be rendered
    *
-   * @param {import('./vdom').VNode} node
+   * @param {string} tagName
+   * @param {object} attributes
+   * @param {VNode[] | VNode | any} nodes
+   *
+   * @returns {VNode}
+   */
+  const vNode = (tagName, attributes = {}, ...nodes) => ({
+    tagName,
+    attributes: null == attributes ? {} : attributes,
+    children: null == nodes ? [] : [].concat(...nodes), // collapse nested arrays.
+  });
+  const h = vNode;
+
+  /**
+   * Renders a given node object
+   * Considers ELEMENT_NODE AND TEXT_NODE https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
+   *
+   * @param {VNode} node
    *
    * @returns {HTMLElement}
    */
@@ -87,11 +88,15 @@
   ];
 
   /**
-   * Observable Pattern Implementation
+   * Observable Pattern Implementations
    *
    * @module observable
    */
 
+  /**
+   * Creates an Observable
+   * @param {any} item
+   */
   const Observable = item => {
     const listeners = [];
     return {
@@ -110,7 +115,7 @@
   };
 
   /**
-   *
+   * Creates an Observable list
    * @param {any[]} list
    */
   const ObservableList = list => {

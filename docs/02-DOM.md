@@ -21,13 +21,13 @@ Nowadays, there are other options to avoid that JavaScript is being parser block
 ```
 
 > This image summarizes the many different approaches to load JavaScript code.
-> ![Script-Loadings](assets/img/asyncdefer.svg)
+> ![Script-Loadings](assets/img/asyncdefer.png)
 > More information can be found in the [HTML5 specification](https://html.spec.whatwg.org/multipage/scripting.html)
 
 
 ## Manipulating the DOM
 
-Basically, the DOM in an interface for HTML (and XML) documents which represents the page. It is dynamic, and the browsers provide an API to read and change the content, structure, and style of the document via JavaScript.
+Basically, the DOM is an interface for HTML (and XML) documents which represents the page. It is dynamic, and the browsers provide an API to read and change the content, structure, and style of the document via JavaScript.
 This allows for changing parts of the website without the need of a refresh and therefore a repaint of the whole page.
 
 JavaScript has access to a global object. In a browser, `window` is the global object and represents the window/tab of the browser in which the script is running. One of its property is `window.document` which serves as an entry point to the parsed DOM tree.
@@ -85,7 +85,7 @@ document.body.innerHTML = `
 `;
 ```
 
-This gets slightly more challenging for appending or modifying nodes to an already existing DOM as all its child elements are being re-parsed and recreated completely. This means that saved references to nodes are no long pointing to the supposed elements.
+This gets slightly more challenging for appending or modifying nodes to an already existing DOM as all its child elements are being re-parsed and recreated completely. This means that saved references to nodes are no longer pointing to the supposed elements.
 
 Re-parsing the whole structure of the element is also bad for the performance.
 
@@ -96,7 +96,7 @@ document.body.innerHTML += '<p>Lean as a Leek</p>'; // Whole body element is bei
 $h1.textContent = 'Puerro';			    // Reference does not point to the DOM instance
 ```
 
-There is a solution for this called [`element.insertAdjacentHTML`](https://developer.mozilla.org/de/docs/Web/API/Element/insertAdjacentHTML) which does not re-parse all it's child elements.
+There is a solution for this called [`element.insertAdjacentHTML`](https://developer.mozilla.org/de/docs/Web/API/Element/insertAdjacentHTML) which does not re-parse all its child elements.
 
 ```js
 document.body.innerHTML = '<h1>Tomato</h1>';
@@ -120,7 +120,7 @@ $button.addEventListener('click', _ => console.log($input.value));
 document.body.append($input, $button);
 ```
 
-Puerro provides an abstraction to make it more convenient to create elements. [Check it out!](../src/#creating-dom-elements)
+Puerro provides an [abstraction](https://github.com/robin-fhnw/IP5-Puerro/tree/master/src#createdomelement) to make it more convenient to create elements.
 
 ```js
 const $input = createDomElement('input', { type: 'number', value: 1 });
@@ -135,7 +135,7 @@ For this to work the browser uses an event-driven programming model to notify th
 
 There are a lot of different events. For example, when the DOM is finished with loading, clicking elements, typing on the keyboard, scrolling and many more.
 
-In order react to an event, `Event Handlers` are used. It is a function which is being called from the browser when an event occurs.
+In order react to an event, `Event Handlers` are used. Event handlers are functions which are being called from the browser when an event occurs.
 
 When an event is fired, the first parameter an handler receives is an [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event) object which contains useful information and methods. The most used are:
 
@@ -209,7 +209,7 @@ With the following example, the events bubble. Meaning they are propagated upwar
 </body>
 ```
 
-To make sure that the DIV event listeners triggers first, the methods `useCapture` parameter needs to be true.
+To make sure that the `DIV` event listeners triggers first, the methods `useCapture` parameter needs to be true.
 All the event handlers with `useCapture` enabled run first (top down), afterwards the bubbling handlers (bottom up).
 
 ```js
@@ -227,10 +227,10 @@ $button.addEventListener('click', event => {
 
 ### Forms
 
-Building forms is a widely used pattern for web applications. In HTML exists a `<form>` tag, which allows to group interactive controls together for submitting data to a server. When a form is being submitted, an HTTP Request with the specified method is sent to the specified resource. With this traditional approach, the page always will be refreshed and new rendered based on the response.
+Building forms is a widely used pattern for web applications. HTML provides a `<form>` tag, which allows to group interactive controls together for submitting data to a server. When a form is being submitted, an HTTP Request with the specified method is sent to the specified resource. With this traditional approach, the page always will be refreshed and new rendered based on the response.
 
 This approach is acceptable if we want to display a completely different view after submitting the form.
-However, for modern web application it is usually not desirable. Instead, it is better to use an Ajax request in the background without affecting the page and to manipulate the DOM based on the response.
+However, for modern web application this is usually not desirable. Instead, it is better to use an Ajax request in the background without affecting the page and to manipulate the DOM based on the response.
 
 Nevertheless, using the `<form>` tag has many advantages and should still be used for grouping interactive controls:
 
@@ -275,8 +275,8 @@ When event handler functions receive events, they can in turn manipulate the DOM
 
 ![Event-Flow](assets/img/events.png)
 
-For a handler function to manipulate the DOM, references to the elements to be manipulate are needed.
-This reference can either be already available in the surrounding scope or can be created in the function itself.
+For a handler function to manipulate the DOM, references to the elements which have to be manipulated are needed.
+Those references can either be already available in the surrounding scope or can be created in the function itself.
 
 ```js
 const handleEvent = event => {
@@ -364,7 +364,7 @@ describe('Testable Units', test => {
 });
 ```
 
-The above example can be found in the [Puerro Examples](../examples/testable-units).
+The above example can be found in the [Puerro Examples](../examples/dom).
 
 ## Use Cases
 

@@ -1,12 +1,12 @@
 import { describe } from '../../../src/test/test';
 import { createDomElement } from '../../../src/vdom/vdom';
-import { PuerroController } from '../../../src/mvc/controller';
+import { PuerroController as Controller } from '../../../src/mvc/controller';
 import { ListController } from '../controllers/list';
 import { listModel } from '../models/list';
 import { listView } from '../views/list';
 
 
-describe('05 - Huerto - ListController', test => {
+describe('Huerto - 05 - ListController', test => {
   // before
   Controller.store.set({ vegetables: [{ id: 1 }] });
   const $root = createDomElement('div');

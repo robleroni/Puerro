@@ -2,58 +2,10 @@
   'use strict';
 
   /**
-   * Observable Pattern Implementation
+   * Observable Pattern Implementations
    *
    * @module observable
    */
-
-  const Observable = item => {
-    const listeners = [];
-    return {
-      get: () => item,
-      set: newItem => {
-        if (item === newItem) return;
-        const oldItem = item;
-        item = newItem;
-        listeners.forEach(notify => notify(newItem, oldItem));
-      },
-      onChange: callback => {
-        listeners.push(callback);
-        callback(item, item);
-      },
-    };
-  };
-
-  const Model = () => {
-    const nameAttr = Observable('');
-    const errorAttr = Observable('');
-    return {
-      nameAttr,
-      errorAttr,
-    }
-  };
-
-  const Controller = () => {
-    const model = Model();
-
-    function setName(name) {
-      if(!name && !model.errorAttr.get()) {
-        model.errorAttr.set('Name is required!');
-      }
-      if (name && model.errorAttr.get()) {
-        model.errorAttr.set('');
-      }
-      model.nameAttr.set(name);
-    }
-
-    return {
-      onNameChange: model.nameAttr.onChange,
-      onErrorChange: model.errorAttr.onChange,
-      getName: model.nameAttr.get,
-      getError: model.errorAttr.get,
-      setName,
-    }
-  };
 
   /**
    *

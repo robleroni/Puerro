@@ -1,9 +1,12 @@
 import { h } from '../../src/vdom/vdom';
 
-export {
-  view
-}
+export { view }
 
+/**
+ * Creates a view with the given state interface
+ * 
+ * @param {object} object used for state managemend 
+ */
 const view = ({ state, setState }) =>
   h('div', { },
     h('input', {

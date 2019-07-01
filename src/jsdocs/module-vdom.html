@@ -269,7 +269,7 @@ It's purpose is to perform actions on DOM-like Objects</p></div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="vdom_vdom.js.html">vdom/vdom.js</a>, <a href="vdom_vdom.js.html#line191">line 191</a>
+        <a href="vdom_vdom.js.html">vdom/vdom.js</a>, <a href="vdom_vdom.js.html#line200">line 200</a>
     </li></ul></dd>
     
 
@@ -305,7 +305,7 @@ It's purpose is to perform actions on DOM-like Objects</p></div>
     
 
     
-    <h4 class="name" id="~createDomElement"><span class="type-signature">(inner) </span>createDomElement<span class="signature">(tagName, attributes, innerHTML)</span><span class="type-signature"> &rarr; {function}</span></h4>
+    <h4 class="name" id="~createDomElement"><span class="type-signature">(inner) </span>createDomElement<span class="signature">(tagName, attributes, innerHTML)</span><span class="type-signature"> &rarr; {HTMLElement}</span></h4>
     
 
     
@@ -490,7 +490,7 @@ Otherwise as an attribute.</p>
     </dt>
     <dd>
         
-<span class="param-type">function</span>
+<span class="param-type">HTMLElement</span>
 
 
     </dd>
@@ -678,7 +678,7 @@ Otherwise as an attribute.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="vdom_vdom.js.html">vdom/vdom.js</a>, <a href="vdom_vdom.js.html#line165">line 165</a>
+        <a href="vdom_vdom.js.html">vdom/vdom.js</a>, <a href="vdom_vdom.js.html#line174">line 174</a>
     </li></ul></dd>
     
 
@@ -905,6 +905,259 @@ Otherwise as an attribute.</p>
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="vdom_vdom.js.html">vdom/vdom.js</a>, <a href="vdom_vdom.js.html#line107">line 107</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~mountMVC"><span class="type-signature">(inner) </span>mountMVC<span class="signature">($root, model, view, controller, diffing)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Renders given stateful view into given container (MVC approach)</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>$root</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">HTMLElement</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>model</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>view</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>controller</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">any</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>diffing</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="vdom_vdom.js.html">vdom/vdom.js</a>, <a href="vdom_vdom.js.html#line149">line 149</a>
     </li></ul></dd>
     
 
@@ -1574,7 +1827,7 @@ Considers ELEMENT_NODE AND TEXT_NODE https://developer.mozilla.org/en-US/docs/We
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.2</a> on Tue Jun 11 2019 12:37:00 GMT+0200 (GMT+02:00)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.2</a> on Wed Jun 12 2019 16:23:12 GMT+0200 (Central European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

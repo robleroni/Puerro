@@ -3,9 +3,9 @@ import { createDomElement } from '../../../src/vdom/vdom';
 import { FormController } from '../controllers/form';
 import { formModel } from '../models/form';
 import { formView } from '../views/form';
-import { PuerroController } from '../../../src/mvc/controller';
+import { PuerroController as Controller } from '../../../src/mvc/controller';
 
-describe('05 - Huerto - FormController', test => {
+describe('Huerto - 05 - FormController', test => {
   // before
   Controller.store.set({ vegetables: [{ id: 1 }] });
   const $root = createDomElement('div');

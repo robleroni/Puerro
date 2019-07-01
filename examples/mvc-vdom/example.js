@@ -1,26 +1,34 @@
 import { PuerroController } from "../../src/mvc/controller";
 import { h } from "../../src/vdom/vdom";
 
-export {
-  model, view, MyController
-}
+export { view, CounterController }
 
-const model = {
-  counter: 0
-};
-
+/**
+ * Creates the view
+ * 
+ * @param {any} controller to for interacting with state
+ */
 const view = controller => h('div', {}, 
   h('button', { click: _ => controller.decrement() }, '-'),
   h('button', { click: _ => controller.increment() }, '+'),
   h('output', {}, controller.model.counter),
 );
 
-class MyController extends PuerroController {
+/**
+ * Create a new CounterController
+ */
+class CounterController extends PuerroController {
 
+  /**
+   * Increment the counter
+   */
   increment() {
     this.state.set({counter: this.model.counter + 1})
   }
 
+  /**
+   * Decrement the counter
+   */
   decrement() {
     this.state.set({counter: this.model.counter - 1})
   }

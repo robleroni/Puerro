@@ -10,7 +10,7 @@ To simulate real problems, the research process is built around a fictitious CRU
 
 It turned out, that there is not one single best way to handle every problem. Depending on the size and complexity of the application, different approaches should be considered.
 
-If the goal is a dynamic informational website or a small web application, without a lot of internal state and little changing parts, the easiest solution is using plain and direct DOM maipulations with JavaScript.
+If the goal is a dynamic informational website or a small web application, without a lot of internal state and little changing parts, the easiest solution is using plain and direct DOM manipulations with JavaScript.
 
 As soon as there is a lot of changing content, direct DOM manipulations can get chunky and hard to maintain. Therefore, it is advisable to use a virtual DOM in order to change multiple elements regularly. A virtual DOM abstraction is useful for single view applications with huge and periodically changing DOM trees.
 

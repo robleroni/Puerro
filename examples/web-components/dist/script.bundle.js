@@ -13,32 +13,16 @@
    */
 
   /**
-   * Creates a node object which can be rendered
-   *
-   * @param {string} tagName
-   * @param {object} attributes
-   * @param {VNode[] | VNode | any} nodes
-   *
-   * @returns {VNode}
-   */
-  const vNode = (tagName, attributes = {}, ...nodes) => ({
-    tagName,
-    attributes: null == attributes ? {} : attributes,
-    children: null == nodes ? [] : [].concat(...nodes), // collapse nested arrays.
-  });
-  const h = vNode;
-
-  /**
-   * Creates a new HTML Element.
-   * If the attribute is a function it will add it as an EventListener.
-   * Otherwise as an attribute.
-   *
-   * @param {string} tagName name of the tag
-   * @param {object} attributes attributes or listeners to set in element
-   * @param {*} innerHTML content of the tag
-   *
-   * @returns {function(content): HTMLElement}
-   */
+  * Creates a new HTML Element.
+  * If the attribute is a function it will add it as an EventListener.
+  * Otherwise as an attribute.
+  *
+  * @param {string} tagName name of the tag
+  * @param {object} attributes attributes or listeners to set in element
+  * @param {*} innerHTML content of the tag
+  *
+  * @returns {HTMLElement}
+  */
   const createDomElement = (tagName, attributes = {}, innerHTML = '') => {
     const $element = document.createElement(tagName);
     $element.innerHTML = innerHTML;
@@ -55,9 +39,26 @@
   };
 
   /**
-   * renders a given node object
+   * Creates a node object which can be rendered
    *
-   * @param {import('./vdom').VNode} node
+   * @param {string} tagName
+   * @param {object} attributes
+   * @param {VNode[] | VNode | any} nodes
+   *
+   * @returns {VNode}
+   */
+  const vNode = (tagName, attributes = {}, ...nodes) => ({
+    tagName,
+    attributes: null == attributes ? {} : attributes,
+    children: null == nodes ? [] : [].concat(...nodes), // collapse nested arrays.
+  });
+  const h = vNode;
+
+  /**
+   * Renders a given node object
+   * Considers ELEMENT_NODE AND TEXT_NODE https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
+   *
+   * @param {VNode} node
    *
    * @returns {HTMLElement}
    */
@@ -77,8 +78,8 @@
    * Compares two VDOM nodes and applies the differences to the dom
    *
    * @param {HTMLElement} $parent
-   * @param {import('./vdom').VNode} oldNode
-   * @param {import('./vdom').VNode} newNode
+   * @param {VNode} oldNode
+   * @param {VNode} newNode
    * @param {number} index
    */
   const diff = ($parent, newNode, oldNode, index = 0) => {
@@ -120,25 +121,36 @@
           a =>
             node1.attributes[a] !== node2.attributes[a] &&
             (null == node1.attributes[a] ? '' : node1.attributes[a]).toString() !==
-              (null == node2.attributes[a] ? '' : node2.attributes[a]).toString()
+            (null == node2.attributes[a] ? '' : node2.attributes[a]).toString()
         ));
     return nodeChanged || attributesChanged;
   };
 
+  /**
+   * Abstract class which provides state to custom HTML elements.
+   */
   class PuerroElement extends HTMLElement {
+    /**
+     * Creates a new Puerro Element
+     * 
+     * @param {Object} initialState initial state
+     */
     constructor(initialState = {}) {
       super();
       this.state = initialState;
     }
 
+    /**
+     * Connected Callback
+     */
     connectedCallback() {
       this.refresh();
     }
 
     /**
      * Sets a new state based on a given object or function
-     * 
-     * @param {object | Function} newState 
+     *
+     * @param {object | Function} newState
      */
     setState(newState) {
       if (typeof newState === 'function') {
@@ -150,7 +162,7 @@
     }
 
     /**
-     * Refreshes the DOM
+     * Refreshes the Dom
      */
     refresh() {
       const newVNode = this.render();
@@ -163,22 +175,32 @@
     }
 
     /**
-     * Defines the VDOM
-     * 
-     * @returns {import('../vdom/vdom').VNode}
+     * Render function
+     * @abstract
      */
-    render() { 
-      return h('div', {});
-    }
+    render() { }
   }
 
+  /**
+   * Create a new PuerroInput Component
+   */
   class PuerroInputComponent extends PuerroElement {
+    /**
+     * Returns the selector of the element
+     */
     static get Selector() { return 'puerro-input' };
 
+    /**
+     * Returns the label
+     */
     get label() {
       return this.hasAttribute('label') && this.getAttribute('label');
     }
 
+    /**
+     * Sets the label
+     * @param value label to be set
+     */
     set label(value) {
       if (null == value) {
         this.removeAttribute('label');
@@ -188,11 +210,17 @@
       }
     }
 
+    /**
+     * Dispatches the value changed event.
+     * @param {Event} evt 
+     */
     _onInput(evt) {
       this.dispatchEvent(new CustomEvent('valueChanged', { detail: evt.target.value }));
     }
 
     /**
+     * Renders the view
+     * 
      * @override
      */
     render() {
@@ -205,14 +233,25 @@
     }
   }
 
+  /**
+   * Creats a new Main Component
+   */
   class MainComponent extends PuerroElement {
+    /**
+    * Returns the selector of the element
+    */
     static get Selector() { return 'puerro-main' };
-    
+
+    /**
+     * Sets the initail state
+     */
     constructor() {
       super({ num1: 0, num2: 0 });
     }
 
     /**
+     * Renders the view
+     * 
      * @override
      */
     render() {

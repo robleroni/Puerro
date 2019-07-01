@@ -9,16 +9,20 @@
    */
 
   /**
-   * Creates a new HTML Element.
-   * If the attribute is a function it will add it as an EventListener.
-   * Otherwise as an attribute.
-   *
-   * @param {string} tagName name of the tag
-   * @param {object} attributes attributes or listeners to set in element
-   * @param {*} innerHTML content of the tag
-   *
-   * @returns {function(content): HTMLElement}
+   * @typedef {{ tagName: string, attributes: object, children: any  }} VNode
    */
+
+  /**
+  * Creates a new HTML Element.
+  * If the attribute is a function it will add it as an EventListener.
+  * Otherwise as an attribute.
+  *
+  * @param {string} tagName name of the tag
+  * @param {object} attributes attributes or listeners to set in element
+  * @param {*} innerHTML content of the tag
+  *
+  * @returns {HTMLElement}
+  */
   const createDomElement = (tagName, attributes = {}, innerHTML = '') => {
     const $element = document.createElement(tagName);
     $element.innerHTML = innerHTML;
@@ -33,6 +37,12 @@
       });
     return $element;
   };
+
+  /**
+   * A Module to use for testing.
+   *
+   * @module test
+   */
 
   /**
    * Adds a testGroup to the test report
@@ -57,7 +67,9 @@
     report(name, assert.getOk());
   }
 
-
+  /**
+   * Creates a new Assert object
+   */
   function Assert() {
     const ok = [];
 
@@ -118,7 +130,7 @@
 
   const sum = (a, b) => a + b;
 
-  describe('01 - Research - Testability', test => {
+  describe('Research - 01 - Testability', test => {
     test('adding numbers', assert => {
       // given
       const a = 1;

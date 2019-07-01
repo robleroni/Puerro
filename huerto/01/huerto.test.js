@@ -1,7 +1,7 @@
 import { describe } from '../../src/test/test';
 import { ENTER_KEYCODE, registerAddingVegetableEvent } from './huerto';
 
-describe('01 - Huerto', test => {
+describe('Huerto - 01', test => {
   test('add Vegetable', assert => {
     // given
     const $vegetableInput = document.createElement('input');

@@ -1,7 +1,7 @@
 import { describe } from '../../../../src/test/test';
 import { sum } from './script';
 
-describe('01 - Research - Testability', test => {
+describe('Research - 01 - Testability', test => {
   test('adding numbers', assert => {
     // given
     const a = 1;
