@@ -1,0 +1,11 @@
+Feedback:
+ - Referenzen angeben für Bachelorarbeit!
+    Kann Link sein, normalerweise Verweis
+ - z.T. Grammatik, durchlesen lassen!
+ - Aussagen, die Sachen implizieren aber nicht ausformilieren vermeiden (z.B. etc.)
+ - Wiederholungen vermeiden
+ - Auf Browsables (listings, image, table, code snipptes.) verweisen und sagen warum es da ist.
+ - Synonyme für häufige Wörter verwenden.
+ - Technische Aussagen immer gut überlegen, verifizieren und referenzen angeben
+ - Für listings vollständige Sätze bevorzugen
+ -
