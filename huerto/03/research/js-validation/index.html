@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Huerto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <h1>Huerto - Your vegetable garden</h1>
+    <form id="vegetableForm">
+      <h2>Add vegetable</h2>
+      <div>
+        <label for="name">Vegetable name</label>
+        <input name="name" />
+      </div>
+      <div>
+        <label for="amount">Amount</label>
+        <input name="amount" type="number" />
+      </div>
+      <button type="submit" disabled>Submit</button>
+    </form>
+    <ul id="vegetables"></ul>
+    <script src="dist/script.bundle.js"></script>
+  </body>
+</html>

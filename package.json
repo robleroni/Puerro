@@ -1,0 +1,29 @@
+{
+  "name": "puerro",
+  "version": "0.1.0",
+  "description": "Keeping the Web as Lean as a Leek",
+  "main": "dist/puerro.js",
+  "module": "dist/puerro.module.js",
+  "scripts": {
+    "start": "rollup -c -w",
+    "build": "rollup -c",
+    "prepublishOnly": "npm run build",
+    "test": "open test/AllTests.html",
+    "docs": "npx jsdoc -c jsdoc.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robleroni/Puerro.git"
+  },
+  "author": "Etienne Gobeli, Robin Christen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/robleroni/Puerro/issues"
+  },
+  "homepage": "https://github.com/robleroni/Puerro#readme",
+  "devDependencies": {
+    "rollup": "1.4.1",
+    "rollup-plugin-node-resolve": "^4.2.3",
+    "preact": "^8.4.2"
+  }
+}

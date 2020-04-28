@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>02 - Research - Form Tag</title>
+    <style>
+      form {
+        display: flex;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <input id="input" />
+      <textarea></textarea>
+      <button type="reset">Reset</button>
+      <button>Submit</button>
+    </form>
+
+    <script>
+      const $form = document.querySelector('form');
+      window.setInterval(() => {
+        $form.reset();               // allows reseting the elements of the form
+        $form.input.value = 'Lorem'; // easy access to form elements
+      }, 1000);
+    </script>
+  </body>
+</html>

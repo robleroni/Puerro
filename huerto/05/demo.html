@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Huerto</title>
+    <script defer src="dist/script.bundle.js"></script>
+    <style>
+      * {
+        margin: 2px;
+      }
+
+      main {
+        display: flex;
+      }
+
+      section {
+        flex: 1;
+        padding: 1rem;
+      }
+
+      #vegetable-input {
+        border-right: 1px solid;
+      }
+
+      #vegetable-input::backdrop {
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      fieldset {
+        display: flex;
+        flex-direction: column;
+      }
+
+      table {
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        border: 1px solid;
+        word-wrap: break-word;
+      }
+
+      tr:hover:not(:first-child) {
+        background-color: #ffa;
+      }
+
+      .selected {
+        background-color: lightgrey;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Huerto - Your Vegetable Garden</h1>
+    <main>
+      <section id="vegetable-input"></section>
+
+      <section id="vegetable-output"></section>
+
+      <section id="vegetable-overview"></section>
+    </main>
+  </body>
+</html>

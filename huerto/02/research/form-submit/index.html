@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>02 - Research - Form Submit</title>
+  </head>
+  <body>
+    <form>
+      <input id="input" />
+      <button>Submit</button>
+    </form>
+
+    <script>
+      const $form   = document.querySelector('form');
+      const $button = document.querySelector('button');
+
+      // using submit event
+      $form.onsubmit = event => {
+        event.preventDefault();
+
+        const $form = event.target;
+        console.log('Form Submit: ' + $form.input.value);
+      };
+
+      // using button click event
+      $button.onclick = () => {
+        console.log('Button Click: ' + $form.input.value);
+      };
+    </script>
+  </body>
+</html>

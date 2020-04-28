@@ -1,0 +1,57 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Helvetica, sans-serif;
+}
+
+.container {
+  width: 1200px;
+  max-width: 100%;
+  margin: auto;
+  padding: 2rem;
+}
+
+main {
+  display: flex;
+}
+
+form,
+.output {
+  flex: 1;
+  padding: 20px;
+}
+
+form {
+  border-right: 1px solid black;
+}
+
+.output > ul {
+  background-color: #eee;
+  padding: 20px;
+  list-style-type: none;
+}
+
+input,
+select,
+textarea {
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  border: 1px solid #bbb;
+}
+
+input.invalid,
+select.invalid {
+  border-color: red;
+}
+
+input:not([type='radio']):not([type='checkbox']),
+select,
+textarea {
+  display: block;
+  width: 100%;
+}

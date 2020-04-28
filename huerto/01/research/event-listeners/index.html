@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>01 - Research - Event Listeners</title>
+  </head>
+
+  <body>
+    <label>Add vegetable</label>
+    <input id="vegetable" />
+    <ul id="vegetables"></ul>
+  </body>
+
+  <script>
+    const ENTER_KEYCODE = 13;
+
+    const $vegetableInput = document.getElementById('vegetable');
+    const $vegetables     = document.getElementById('vegetables');
+
+    $vegetableInput.addEventListener('keydown', event => {
+      if (event.keyCode === ENTER_KEYCODE) {
+        const $vegetable = document.createElement('li');
+        $vegetable.textContent = $vegetableInput.value;
+        $vegetables.appendChild($vegetable);
+      }
+    });
+  </script>
+</html>

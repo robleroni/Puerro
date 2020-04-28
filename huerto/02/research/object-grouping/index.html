@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>02 - Research - Object Grouping</title>
+    <style>
+      form {
+        display: flex;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <input id="name" />
+      <input id="amount" type="number" />
+      <button>Submit</button>
+    </form>
+
+    <script src="dist/script.bundle.js"></script>
+    <script>
+      const $form = document.querySelector('form');
+      $form.onsubmit = event => {
+        event.preventDefault();
+        const vegetable = _.Vegetable($form.name.value, $form.amount.value);
+        console.log(vegetable.toString());
+        console.log(`${$form.name.value}: ${$form.amount.value}`);
+      };
+    </script>
+  </body>
+</html>

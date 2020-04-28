@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Pure MVC</title>
+  <script defer src="dist/script.bundle.js"></script>
+  <style>
+    .error {
+      color: red;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <form id="form">
+      <label for="name">Your name</label>
+      <input type="text" name="name" id="name">
+      <label class="error hidden" id="error"></label>
+    </form>
+    <div>Hello "<span id="output"></span>"!</div>
+  </main>
+</body>
+</html>
