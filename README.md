@@ -3,8 +3,8 @@
 </p>
 <p align='center'>
   <img alt='mit' src='https://img.shields.io/badge/License-MIT-blue.svg'>
-  <img alt='dependnecies' src='https://david-dm.org/robin-fhnw/IP5-Puerro.svg'>
-  <img alt='build' src='https://travis-ci.org/robin-fhnw/IP5-Puerro.svg?branch=master'>
+  <img alt='dependnecies' src='https://david-dm.org/robleroni/Puerro.svg'>
+  <img alt='build' src='https://travis-ci.org/robleroni/Puerro.svg?branch=master'>
   <img alt='npm' src='https://img.shields.io/npm/dt/puerro.svg'>
 </p>
 
@@ -62,7 +62,7 @@ const view       = View(model, controller,
 To install and work on Puerro locally:
 
 ```bash
-git clone git@github.com:robin-fhnw/IP5-Puerro.git Puerro
+git clone git@github.com:robleroni/Puerro.git Puerro
 cd Puerro
 npm install     # install the dev dependency 'rollup'
 npm start       # bundle the scripts and watch for changes
@@ -70,7 +70,7 @@ npm start       # bundle the scripts and watch for changes
 
 ## Testing
 
-The test results can be viewed [live](https://robin-fhnw.github.io/IP5-Puerro/test/AllTests.html)!
+The test results can be viewed [live](https://robleroni.github.io/Puerro/test/AllTests.html)!
 
 To run and display the tests locally:
 ```bash

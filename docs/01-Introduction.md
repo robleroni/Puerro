@@ -1,6 +1,6 @@
 # Introduction
 
-The Puerro project is a knowledge acquisition about how to build modern frontend web applications as simple as possible by researching different approaches. It can be used as a [knowledge base](https://robin-fhnw.github.io/IP5-Puerro/docs) or in combination with the provided [abstractions](https://robin-fhnw.github.io/IP5-Puerro/src).
+The Puerro project is a knowledge acquisition about how to build modern frontend web applications as simple as possible by researching different approaches. It can be used as a [knowledge base](https://robleroni.github.io/Puerro/docs) or in combination with the provided [abstractions](https://robleroni.github.io/Puerro/src).
 
 ## About Web Development
 

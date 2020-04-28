@@ -120,7 +120,7 @@ $button.addEventListener('click', _ => console.log($input.value));
 document.body.append($input, $button);
 ```
 
-Puerro provides an [abstraction](https://github.com/robin-fhnw/IP5-Puerro/tree/master/src#createdomelement) to make it more convenient to create elements.
+Puerro provides an [abstraction](https://github.com/robleroni/Puerro/tree/master/src#createdomelement) to make it more convenient to create elements.
 
 ```js
 const $input = createDomElement('input', { type: 'number', value: 1 });

@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/robin-fhnw/IP5-Puerro.git"
+    "url": "git+https://github.com/robleroni/Puerro.git"
   },
   "author": "Etienne Gobeli, Robin Christen",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/robin-fhnw/IP5-Puerro/issues"
+    "url": "https://github.com/robleroni/Puerro/issues"
   },
-  "homepage": "https://github.com/robin-fhnw/IP5-Puerro#readme",
+  "homepage": "https://github.com/robleroni/Puerro#readme",
   "devDependencies": {
     "rollup": "1.4.1",
     "rollup-plugin-node-resolve": "^4.2.3",
